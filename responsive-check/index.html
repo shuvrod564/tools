@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, shrink-to-fit=no">
+  <title>Website Device Preview</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <style>
+    #previewContainer {
+        background-color: #fff; 
+        background-image:  linear-gradient(#f5f5f5 2px, transparent 2px), linear-gradient(90deg, #f5f5f5 2px, transparent 2px), linear-gradient(#f5f5f5 1px, transparent 1px), linear-gradient(90deg, #f5f5f5 1px, #fff 1px);
+        background-size: 50px 50px, 50px 50px, 10px 10px, 10px 10px;
+        background-position: -2px -2px, -2px -2px, -1px -1px, -1px -1px;
+    }
+  </style>
+</head>
+<body class="bg-gray-100">
+
+  <!-- Navbar -->
+  <nav class="py-4 text-center">
+    <div class="container mx-auto bg-white rounded-full max-w-xl flex items-center justify-between p-3">
+      <a href="/" class="inline-block">
+        <img src="../assets/images/shuvrodev.webp" alt="shuvrodev" class="w-auto h-8 md:h-10 xl:h-10">
+      </a>
+      <a href="/" class="px-4 py-2 bg-gray-100 rounded-full text-sm md:text-base duration-300 hover:bg-gray-300">
+        All Tools
+      </a>
+    </div>
+  </nav>
+
+  <!-- Main -->
+  <div class="py-12">
+    <div class="container mx-auto 2xl:max-w-[1120px] px-4">
+      <h1 class="text-center text-black font-bold mb-5 text-xl sm:text-2xl md:text-3xl lg:text-4xl">
+        Is your website/page device friendly?
+      </h1>
+
+      <!-- Input + Button -->
+      <div class="max-w-xl bg-white mx-auto flex items-center border rounded-md overflow-hidden">
+        <input 
+          id="urlInput"
+          type="text"
+          class="w-full h-12 p-4 border-0 ring-0 outline-none text-gray-700"
+          placeholder="Enter website URL, e.g. https://example.com"
+        >
+        <button 
+          id="previewBtn"
+          class="h-12 px-5 bg-green-500 hover:bg-green-600 text-white font-semibold"
+        >
+          Preview
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fullscreen Preview Modal -->
+  <div id="previewContainer" class="fixed top-0 left-0 w-full h-full z-50 bg-gray-100 block flex flex-col">
+    <!-- Header -->
+    <div class="bg-gray-50 border-b text-black">
+        <div class="container mx-auto"> 
+            <div class="grid grid-cols-1 md:grid-cols-3">
+                <div class="py-2"> 
+                    <h2 id="previewTitle" class="font-semibold text-lg truncate max-w-[45%]">Preview</h2>
+                </div>
+          
+                <div class="border-x py-1.5">
+                    <!-- Device Buttons -->
+                    <div class="flex gap-2 flex-wrap justify-center border-b pb-1.5">
+                       <button data-width="100%" class="device-btn active px-3 py-1 rounded-md bg-gray-800 hover:bg-green-700 text-white text-sm">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d='M9 20h3m3 0h-3m0 0v-3m0 0h7a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2z'/></svg>
+                       </button>
+                       <button data-width="1360px" class="device-btn px-3 py-1 rounded-md bg-gray-200 hover:bg-gray-400 text-white text-sm">
+                        <svg class="size-6" id="Layer_1" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" data-name="Layer 1"><path d="m205.588 108.631a8 8 0 1 1 -8.02-8h.019a8 8 0 0 1 8 8zm116.841 0a8 8 0 0 1 -8 8h-92.739a8 8 0 0 1 0-16h92.738a8 8 0 0 1 8 8zm173.558 294.409a24.137 24.137 0 0 1 -24.108 24.122h-431.758a24.149 24.149 0 0 1 -24.121-24.122v-24.127h144.062l10.544 32.468a8 8 0 0 0 7.614 5.529h155.57a7.99 7.99 0 0 0 7.6-5.529l10.549-32.468h144.048zm-467.198-293.008v252.878h454.411v-252.878a25.206 25.206 0 0 0 -25.193-25.193h-404.02a25.229 25.229 0 0 0 -25.2 25.193zm475.218 252.878h-4.807v-252.878a41.216 41.216 0 0 0 -41.186-41.191h-404.027a41.24 41.24 0 0 0 -41.2 41.191v252.878h-4.787a8 8 0 0 0 -8 8v32.13a40.167 40.167 0 0 0 40.12 40.12h431.759a40.147 40.147 0 0 0 40.1-40.12v-32.128a7.966 7.966 0 0 0 -7.972-8.002z" fill-rule="evenodd"/></svg>
+                       </button>
+                       <button data-width="768px" class="device-btn px-3 py-1 rounded-md bg-gray-200 hover:bg-gray-400 text-gray-600 text-sm">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d='M17.714 3H6.286C5.023 3 4 3.806 4 4.8v14.4c0 .994 1.023 1.8 2.286 1.8h11.428C18.977 21 20 20.194 20 19.2V4.8c0-.994-1.023-1.8-2.286-1.8M10.5 6h3'/></svg>
+                       </button>
+                       <button data-width="375px" class="device-btn px-3 py-1 rounded-md bg-gray-200 hover:bg-gray-400 text-gray-600 text-sm">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d='M16.286 3H7.714C6.768 3 6 3.806 6 4.8v14.4c0 .994.768 1.8 1.714 1.8h8.572c.947 0 1.714-.806 1.714-1.8V4.8c0-.994-.767-1.8-1.714-1.8M10.5 6h3'/></svg>
+                       </button>
+                    </div>
+                    <!-- Viewport Display -->
+                    <div id="viewportInfo" class="text-sm text-gray-500 font-mono text-center pt-1">Viewport: -- × --</div>
+                 </div>
+          
+                 <div class="py-2"> 
+                    <div class="flex justify-end">
+    
+                        <button id="closeBtn" class="bg-red-500 hover:bg-red-600 text-white px-4 py-1 rounded-md">Close</button>
+                    </div>
+                 </div>
+    
+            </div>
+        </div><!--.container-->
+    </div> 
+
+    <!-- Error Message -->
+    <div id="errorBox" class="hidden flex-1 flex items-center justify-center bg-gray-50">
+      <div class="text-center">
+        <p class="text-red-600 font-semibold text-lg mb-2">❌ Unable to load the website</p>
+        <p class="text-gray-600">Make sure the URL is valid or accessible.</p>
+      </div>
+    </div>
+
+    <!-- Iframe Container -->
+    <div id="iframeWrapper" class="flex-1 flex justify-center items-center overflow-auto max-w-[80%] max-h-[calc(100vh-6rem)] mt-4 w-full mx-auto [&::-webkit-scrollbar-track]:bg-gray-100">
+        <!-- Loader -->
+    <div id="loader" class="flex-1 flex-col items-center justify-center block">
+      <div class="flex flex-col items-center justify-center h-full">
+        <div class="w-10 h-10 border-4 border-gray-900 border-t-transparent rounded-full animate-spin"></div>
+        <p class="mt-3 text-gray-500 font-medium text-base md:text-lg lg:text-xl tracking-wider">Loading preview...</p>
+      </div>
+    </div>
+      <iframe 
+        id="previewFrame"
+        src=""
+        frameborder="0"
+        class="border rounded-lg bg-white hidden transition-all duration-300 shadow-lg w-full h-full" 
+      ></iframe>
+    </div>
+  </div>
+
+  <script>
+    const input = document.getElementById('urlInput');
+    const button = document.getElementById('previewBtn');
+    const iframe = document.getElementById('previewFrame');
+    const loader = document.getElementById('loader');
+    const errorBox = document.getElementById('errorBox');
+    const previewContainer = document.getElementById('previewContainer');
+    const closeBtn = document.getElementById('closeBtn');
+    const previewTitle = document.getElementById('previewTitle');
+    const deviceButtons = document.querySelectorAll('.device-btn');
+    const viewportInfo = document.getElementById('viewportInfo');
+    const sitepreviewbox = document.getElementById('iframeWrapper')
+
+    function updateViewportInfo() {
+      const width = iframe.clientWidth;
+      const height = iframe.clientHeight;
+      viewportInfo.textContent = `Viewport: ${width}px × ${height}px`;
+    }
+
+    function loadPreview() {
+      let url = input.value.trim();
+
+      // Add https:// if missing
+      if (url && !/^https?:\/\//i.test(url)) {
+        url = 'https://' + url;
+      }
+
+      if (!url) {
+        alert('Please enter a valid URL.');
+        return;
+      }
+
+      // Show modal and loader
+      previewContainer.classList.remove('hidden');
+      loader.classList.remove('hidden');
+      errorBox.classList.add('hidden');
+      iframe.classList.add('hidden');
+
+      previewTitle.textContent = url;
+      iframe.src = url;
+
+      const errorTimeout = setTimeout(() => {
+        loader.classList.add('hidden');
+        errorBox.classList.remove('hidden');
+        iframe.classList.add('hidden');
+      }, 10000);
+
+      iframe.onload = () => {
+        clearTimeout(errorTimeout);
+        loader.classList.add('hidden');
+        errorBox.classList.add('hidden');
+        iframe.classList.remove('hidden');
+        updateViewportInfo();
+      };
+    }
+
+    // Load preview on click or Enter key
+    button.addEventListener('click', loadPreview);
+    input.addEventListener('keypress', e => {
+      if (e.key === 'Enter') loadPreview();
+    });
+
+    // Close preview
+    closeBtn.addEventListener('click', () => {
+      previewContainer.classList.add('hidden');
+      iframe.src = '';
+    });
+
+    // Handle device buttons
+    deviceButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const width = btn.getAttribute('data-width');
+
+        // Remove active from all buttons
+        deviceButtons.forEach(b => b.classList.remove('active', 'bg-gray-800'));
+        deviceButtons.forEach(b => b.classList.add('bg-gray-200'));
+
+        // Set active to current
+        btn.classList.remove('bg-gray-700');
+        btn.classList.add('bg-gray-800', 'active');
+
+        // Apply width to iframe
+        sitepreviewbox.style.width = width === '100%' ? '100%' : width;
+
+        updateViewportInfo();
+      });
+    });
+
+    // Update viewport info on window resize
+    window.addEventListener('resize', () => {
+      if (!previewContainer.classList.contains('hidden')) {
+        updateViewportInfo();
+      }
+    });
+  </script>
+
+</body>
+</html>
