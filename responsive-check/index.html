@@ -5,6 +5,31 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, shrink-to-fit=no">
   <title>Website Device Preview</title>
+  <!-- Mobile & Responsive -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, shrink-to-fit=no">
+  <meta name="HandheldFriendly" content="true">
+  <meta name="MobileOptimized" content="width">
+
+  <!-- SEO -->
+  <meta name="description" content="Check if your website or webpage is device-friendly with live preview on desktop, tablet, and mobile.">
+  <meta name="keywords" content="responsive, website preview, device preview, mobile friendly, web testing, desktop preview, tablet preview">
+  <meta name="author" content="Shuvro D.">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:title" content="Website Device Preview">
+  <meta property="og:description" content="Check if your website or webpage is device-friendly with live preview on desktop, tablet, and mobile.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://usefull-tools.netlify.app/responsive-check/">
+  <meta property="og:image" content="https://usefull-tools.netlify.app/assets/images/banners/responsive-checker.webp">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Website Device Preview">
+  <meta name="twitter:description" content="Check if your website or webpage is device-friendly with live preview on desktop, tablet, and mobile.">
+  <meta name="twitter:image" content="https://usefull-tools.netlify.app/assets/images/banners/responsive-checker.webp">
+
+
+
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="../assets/css/style.css">
   <style>
@@ -13,6 +38,13 @@
         background-image:  linear-gradient(#f5f5f5 2px, transparent 2px), linear-gradient(90deg, #f5f5f5 2px, transparent 2px), linear-gradient(#f5f5f5 1px, transparent 1px), linear-gradient(90deg, #f5f5f5 1px, #fff 1px);
         background-size: 50px 50px, 50px 50px, 10px 10px, 10px 10px;
         background-position: -2px -2px, -2px -2px, -1px -1px, -1px -1px;
+    }
+    #iframeWrapper {
+      overflow: hidden;
+      max-width: 100%;
+      max-height: 100%;
+      margin: 0 auto;
+      transition: transform 0.3s ease;
     }
   </style>
 </head>
@@ -36,6 +68,9 @@
       <h1 class="text-center text-black font-bold mb-5 text-xl sm:text-2xl md:text-3xl lg:text-4xl">
         Is your website/page device friendly?
       </h1>
+      <p class="text-center mb-12 text-gray-500 font-normal">
+        Quickly test if any website is mobile, tablet, or desktop-friendly in real time.
+      </p>
 
       <!-- Input + Button -->
       <div class="max-w-xl bg-white mx-auto flex items-center border rounded-md overflow-hidden">
@@ -56,7 +91,7 @@
   </div>
 
   <!-- Fullscreen Preview Modal -->
-  <div id="previewContainer" class="fixed top-0 left-0 w-full h-full z-50 bg-gray-100 block flex flex-col">
+  <div id="previewContainer" class="fixed top-0 left-0 w-full h-full z-50 bg-gray-100 hidden flex flex-col">
     <!-- Header -->
     <div class="bg-gray-50 border-b text-black">
         <div class="container mx-auto"> 
@@ -68,16 +103,16 @@
                 <div class="border-x py-1.5">
                     <!-- Device Buttons -->
                     <div class="flex gap-2 flex-wrap justify-center border-b pb-1.5">
-                       <button data-width="100%" class="device-btn active px-3 py-1 rounded-md bg-gray-800 hover:bg-green-700 text-white text-sm">
-                        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d='M9 20h3m3 0h-3m0 0v-3m0 0h7a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2z'/></svg>
+                       <button data-width="1920" data-height="1080" class="device-btn active px-3 py-1 rounded-md bg-gray-800 hover:bg-green-700 text-white text-sm">
+                          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d='M9 20h3m3 0h-3m0 0v-3m0 0h7a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2z'/></svg>
                        </button>
-                       <button data-width="1360px" class="device-btn px-3 py-1 rounded-md bg-gray-200 hover:bg-gray-400 text-white text-sm">
-                        <svg class="size-6" id="Layer_1" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" data-name="Layer 1"><path d="m205.588 108.631a8 8 0 1 1 -8.02-8h.019a8 8 0 0 1 8 8zm116.841 0a8 8 0 0 1 -8 8h-92.739a8 8 0 0 1 0-16h92.738a8 8 0 0 1 8 8zm173.558 294.409a24.137 24.137 0 0 1 -24.108 24.122h-431.758a24.149 24.149 0 0 1 -24.121-24.122v-24.127h144.062l10.544 32.468a8 8 0 0 0 7.614 5.529h155.57a7.99 7.99 0 0 0 7.6-5.529l10.549-32.468h144.048zm-467.198-293.008v252.878h454.411v-252.878a25.206 25.206 0 0 0 -25.193-25.193h-404.02a25.229 25.229 0 0 0 -25.2 25.193zm475.218 252.878h-4.807v-252.878a41.216 41.216 0 0 0 -41.186-41.191h-404.027a41.24 41.24 0 0 0 -41.2 41.191v252.878h-4.787a8 8 0 0 0 -8 8v32.13a40.167 40.167 0 0 0 40.12 40.12h431.759a40.147 40.147 0 0 0 40.1-40.12v-32.128a7.966 7.966 0 0 0 -7.972-8.002z" fill-rule="evenodd"/></svg>
+                       <button data-width="1360" data-height="768" class="device-btn px-3 py-1 rounded-md bg-gray-200 hover:bg-gray-400 text-white text-sm">
+                          <svg class="size-6" id="Layer_1" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" data-name="Layer 1"><path d="m205.588 108.631a8 8 0 1 1 -8.02-8h.019a8 8 0 0 1 8 8zm116.841 0a8 8 0 0 1 -8 8h-92.739a8 8 0 0 1 0-16h92.738a8 8 0 0 1 8 8zm173.558 294.409a24.137 24.137 0 0 1 -24.108 24.122h-431.758a24.149 24.149 0 0 1 -24.121-24.122v-24.127h144.062l10.544 32.468a8 8 0 0 0 7.614 5.529h155.57a7.99 7.99 0 0 0 7.6-5.529l10.549-32.468h144.048zm-467.198-293.008v252.878h454.411v-252.878a25.206 25.206 0 0 0 -25.193-25.193h-404.02a25.229 25.229 0 0 0 -25.2 25.193zm475.218 252.878h-4.807v-252.878a41.216 41.216 0 0 0 -41.186-41.191h-404.027a41.24 41.24 0 0 0 -41.2 41.191v252.878h-4.787a8 8 0 0 0 -8 8v32.13a40.167 40.167 0 0 0 40.12 40.12h431.759a40.147 40.147 0 0 0 40.1-40.12v-32.128a7.966 7.966 0 0 0 -7.972-8.002z" fill-rule="evenodd"/></svg>
                        </button>
-                       <button data-width="768px" class="device-btn px-3 py-1 rounded-md bg-gray-200 hover:bg-gray-400 text-gray-600 text-sm">
+                       <button data-width="768" data-height="1024" class="device-btn px-3 py-1 rounded-md bg-gray-200 hover:bg-gray-400 text-gray-600 text-sm">
                         <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d='M17.714 3H6.286C5.023 3 4 3.806 4 4.8v14.4c0 .994 1.023 1.8 2.286 1.8h11.428C18.977 21 20 20.194 20 19.2V4.8c0-.994-1.023-1.8-2.286-1.8M10.5 6h3'/></svg>
                        </button>
-                       <button data-width="375px" class="device-btn px-3 py-1 rounded-md bg-gray-200 hover:bg-gray-400 text-gray-600 text-sm">
+                       <button data-width="375" data-height="812" class="device-btn px-3 py-1 rounded-md bg-gray-200 hover:bg-gray-400 text-gray-600 text-sm">
                         <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d='M16.286 3H7.714C6.768 3 6 3.806 6 4.8v14.4c0 .994.768 1.8 1.714 1.8h8.572c.947 0 1.714-.806 1.714-1.8V4.8c0-.994-.767-1.8-1.714-1.8M10.5 6h3'/></svg>
                        </button>
                     </div>
@@ -105,7 +140,7 @@
     </div>
 
     <!-- Iframe Container -->
-    <div id="iframeWrapper" class="flex-1 flex justify-center items-center overflow-auto max-w-[80%] max-h-[calc(100vh-6rem)] mt-4 w-full mx-auto [&::-webkit-scrollbar-track]:bg-gray-100">
+    <div id="iframeWrapper" class="flex-1 flex justify-center items-center mt-4 w-full ">
         <!-- Loader -->
     <div id="loader" class="flex-1 flex-col items-center justify-center block">
       <div class="flex flex-col items-center justify-center h-full">
@@ -193,22 +228,34 @@
     // Handle device buttons
     deviceButtons.forEach(btn => {
       btn.addEventListener('click', () => {
-        const width = btn.getAttribute('data-width');
+        const deviceWidth = parseInt(btn.getAttribute('data-width')) || window.innerWidth;
+        const deviceHeight = parseInt(btn.getAttribute('data-height')) || window.innerHeight;
 
         // Remove active from all buttons
         deviceButtons.forEach(b => b.classList.remove('active', 'bg-gray-800'));
         deviceButtons.forEach(b => b.classList.add('bg-gray-200'));
 
         // Set active to current
-        btn.classList.remove('bg-gray-700');
-        btn.classList.add('bg-gray-800', 'active');
+        btn.classList.add('active', 'bg-gray-800');
 
-        // Apply width to iframe
-        sitepreviewbox.style.width = width === '100%' ? '100%' : width;
+        // Set iframe wrapper size
+        sitepreviewbox.style.width = deviceWidth + 'px';
+        sitepreviewbox.style.height = deviceHeight + 'px';
 
-        updateViewportInfo();
+        // Scale to fit screen
+        const scaleX = window.innerWidth / deviceWidth;
+        const scaleY = window.innerHeight / deviceHeight;
+        const scale = Math.min(scaleX, scaleY, 1); // max 1 (no zoom in)
+
+        sitepreviewbox.style.transform = `scale(${scale})`;
+        sitepreviewbox.style.transformOrigin = 'center left';
+
+        // Update viewport info (real device size)
+        viewportInfo.textContent = `Viewport: ${deviceWidth}px × ${deviceHeight}px`;
       });
     });
+
+  
 
     // Update viewport info on window resize
     window.addEventListener('resize', () => {
