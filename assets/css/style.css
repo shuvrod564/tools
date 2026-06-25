@@ -2,7 +2,7 @@
 
 body {
    font-family: "Stack Sans Headline", sans-serif;
-    background-color: #f3f4f6;
+    background-color: #f3f4f6;font-weight: 300;
 }
 .container {
     max-width: 900px;

@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+.custom-select-wrapper {
+    position: relative;
+    user-select: none;
+}
+
+.custom-select-wrapper select {
+    display: none;
+}
+
+.custom-select-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.custom-select-options {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 1050;
+    display: none;
+    max-height: 250px;
+    overflow-y: auto;
+}
+
+.custom-select-wrapper.open .custom-select-options {
+    display: block;
+}
+
+.custom-select-search-box {
+    padding: 0.5rem;
+    position: sticky;
+    top: 0;
+    background: #fff;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.custom-select-option {
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+}
+
+.custom-select-option:hover,
+.custom-select-option.highlighted {
+    background-color: #f8f9fa;
+}
+
+.custom-select-option.selected {
+    background-color: #0d6efd;
+    color: #fff;
+}
+.pinhead--arrow {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 15 15'%3E%3Cpath fill='%23b0b0b0' d='m7.5 0l4 6.5h-8zm0 15l-4-6.5h8z'/%3E%3C/svg%3E");
+}
+
+</style>
+
+<div class="container mt-5" style="max-width: 500px;">
+    <div class="mb-4">
+        <label class="form-label fw-bold">Vehicle Type</label>
+        <div class="custom-select-wrapper js-custom-select" data-placeholder="Select a vehicle...">
+            <select name="vehicle_type">
+                <option value="">Select a vehicle...</option>
+                <option value="sedan">Standard Sedan</option>
+                <option value="suv">SUV XL</option>
+                <option value="luxury">Luxury Business</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="mb-4">
+        <label class="form-label fw-bold">Payment Method</label>
+        <div class="custom-select-wrapper js-custom-select" data-placeholder="Select payment...">
+            <select name="payment_method">
+                <option value="">Select payment...</option>
+                <option value="cash">Cash</option>
+                <option value="card">Credit Card</option>
+                <option value="paypal">PayPal</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    class CustomSelect {
+        constructor(wrapperElement) {
+            this.container = wrapperElement;
+            this.realSelect = this.container.querySelector('select');
+            this.placeholder = this.container.dataset.placeholder || 'Select an option...';
+            
+            this.optionsData = [];
+            
+            this.buildDOM();
+            this.initElements();
+            this.parseOptions();
+            this.renderOptions(this.optionsData);
+            this.bindEvents();
+        }
+
+        // Dynamically build structural markup to avoid repeating HTML blocks manually
+        buildDOM() {
+            const trigger = document.createElement('div');
+            trigger.className = 'custom-select-trigger form-control';
+            trigger.innerHTML = `<span>${this.placeholder}</span><span class="pinhead--arrow"></span>`;
+            
+            const optionsMenu = document.createElement('div');
+            optionsMenu.className = 'custom-select-options shadow card mt-1';
+            optionsMenu.innerHTML = `
+                <div class="custom-select-search-box">
+                    <input type="text" class="form-control form-control-sm custom-select-search" placeholder="Search...">
+                </div>
+                <div class="custom-select-list"></div>
+            `;
+            
+            this.container.appendChild(trigger);
+            this.container.appendChild(optionsMenu);
+        }
+
+        initElements() {
+            this.trigger = this.container.querySelector('.custom-select-trigger');
+            this.triggerText = this.trigger.querySelector('span');
+            this.optionsContainer = this.container.querySelector('.custom-select-options');
+            this.searchInp = this.container.querySelector('.custom-select-search');
+            this.listContainer = this.container.querySelector('.custom-select-list');
+        }
+
+        parseOptions() {
+            this.optionsData = Array.from(this.realSelect.options).map(opt => ({
+                value: opt.value,
+                text: opt.textContent,
+                selected: opt.selected
+            }));
+        }
+
+        renderOptions(data) {
+            this.listContainer.innerHTML = '';
+            
+            const visibleItems = data.filter(item => item.value !== "");
+
+            if (visibleItems.length === 0) {
+                const noResult = document.createElement('div');
+                noResult.className = 'text-muted p-2 text-center small';
+                noResult.textContent = 'No results found';
+                this.listContainer.appendChild(noResult);
+                return;
+            }
+
+            visibleItems.forEach(item => {
+                const optEl = document.createElement('div');
+                optEl.className = `custom-select-option ${item.selected ? 'selected' : ''}`;
+                optEl.dataset.value = item.value;
+                optEl.textContent = item.text;
+
+                optEl.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    this.selectValue(item.value);
+                    this.close();
+                });
+
+                this.listContainer.appendChild(optEl);
+            });
+
+            this.updateTriggerText();
+        }
+
+        selectValue(value) {
+            this.realSelect.value = value;
+            this.realSelect.dispatchEvent(new Event('change'));
+
+            this.optionsData.forEach(item => {
+                item.selected = (item.value === value);
+            });
+
+            this.renderOptions(this.optionsData);
+        }
+
+        updateTriggerText() {
+            const selected = this.optionsData.find(item => item.selected && item.value !== "");
+            this.triggerText.textContent = selected ? selected.text : this.placeholder;
+        }
+
+        filterOptions(searchTerm) {
+            const filtered = this.optionsData.filter(item => 
+                item.text.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+            this.renderOptions(filtered);
+        }
+
+        open() {
+            // Global step: Close any other open dropdowns across the page first
+            document.querySelectorAll('.custom-select-wrapper.open').forEach(el => {
+                if (el !== this.container) el.classList.remove('open');
+            });
+
+            this.container.classList.add('open');
+            this.searchInp.focus();
+            this.searchInp.value = '';
+        }
+
+        close() {
+            this.container.classList.remove('open');
+            this.renderOptions(this.optionsData);
+        }
+
+        bindEvents() {
+            this.trigger.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const isOpen = this.container.classList.contains('open');
+                isOpen ? this.close() : this.open();
+            });
+
+            this.searchInp.addEventListener('input', (e) => {
+                this.filterOptions(e.target.value);
+            });
+
+            this.searchInp.addEventListener('click', (e) => e.stopPropagation());
+        }
+    }
+
+    // Global Initialization Loop
+    document.querySelectorAll('.js-custom-select').forEach(el => {
+        new CustomSelect(el);
+    });
+
+    // Global click listener to close dropdowns when clicking outside
+    document.addEventListener('click', () => {
+        document.querySelectorAll('.custom-select-wrapper.open').forEach(el => {
+            el.classList.remove('open');
+        });
+    });
+});
+</script>
+</body>
+</html>
