@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, shrink-to-fit=no">
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon-16x16.png">
+    <link rel="manifest" href="../assets/images/site.webmanifest">
+    <title>Global File Input Component</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --bs-body-font-family: 'DM Sans', sans-serif;
+            --bs-body-bg: #f5f6f8;
+            --bs-body-color: #1a1d27;
+            --bg: #f5f6f8;
+            --bg-raised: #ffffff;
+            --bg-card: #ffffff;
+            --fg: #1a1d27;
+            --fg-muted: #6b7186;
+            --accent: #00a87a;
+            --accent-dim: rgba(0, 168, 122, 0.08);
+            --accent-glow: rgba(0, 168, 122, 0.18);
+            --danger: #d93654;
+            --danger-dim: rgba(217, 54, 84, 0.07);
+            --border: #e2e4ea;
+            --border-hover: #c8cbd5;
+            --radius: 12px;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--fg);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Background atmosphere */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -30%;
+            left: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(0,168,122,0.04) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+        body::after {
+            content: '';
+            position: fixed;
+            bottom: -20%;
+            right: -5%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(0,168,122,0.03) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .page-wrapper {
+            position: relative;
+            z-index: 1;
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .page-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+            letter-spacing: -0.02em;
+        }
+        .page-subtitle {
+            color: var(--fg-muted);
+            font-size: 0.95rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .demo-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.75rem;
+            margin-bottom: 1.5rem;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+        }
+        .demo-section:hover {
+            border-color: var(--border-hover);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+        }
+        .demo-section-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 0.25rem;
+        }
+        .demo-section-desc {
+            color: var(--fg-muted);
+            font-size: 0.85rem;
+            margin-bottom: 1.25rem;
+        }
+
+        /* ============================
+           GLOBAL FILE INPUT STYLES
+           ============================ */
+        .file-drop-zone {
+            position: relative;
+            border: 2px dashed var(--border);
+            border-radius: var(--radius);
+            padding: 2rem 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: var(--bg);
+            overflow: hidden;
+        }
+        .file-drop-zone::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 50%, var(--accent-dim), transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+        .file-drop-zone:hover {
+            border-color: var(--accent);
+            background: rgba(0, 168, 122, 0.02);
+        }
+        .file-drop-zone:hover::before {
+            opacity: 1;
+        }
+        .file-drop-zone.drag-over {
+            border-color: var(--accent);
+            background: rgba(0, 168, 122, 0.04);
+            transform: scale(1.01);
+            box-shadow: 0 0 30px var(--accent-glow);
+        }
+        .file-drop-zone.drag-over::before {
+            opacity: 1;
+        }
+        .file-drop-zone.has-file {
+            border-style: solid;
+            border-color: var(--border);
+            padding: 1rem;
+            background: var(--bg-raised);
+        }
+        .file-drop-zone.has-file:hover {
+            border-color: var(--border-hover);
+        }
+        .file-drop-zone.has-file::before {
+            display: none;
+        }
+        .file-drop-zone input[type="file"] {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            cursor: pointer;
+            z-index: 2;
+        }
+
+        /* Upload prompt (default state) */
+        .file-upload-prompt {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.75rem;
+            position: relative;
+            z-index: 1;
+        }
+        .file-upload-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: var(--accent-dim);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+            font-size: 1.25rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .file-drop-zone:hover .file-upload-icon {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px var(--accent-glow);
+        }
+        .file-upload-text {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--fg);
+        }
+        .file-upload-text span {
+            color: var(--accent);
+            text-decoration: underline;
+            text-underline-offset: 2px;
+        }
+        .file-upload-hint {
+            color: var(--fg-muted);
+            font-size: 0.8rem;
+        }
+
+        /* File preview card (selected state) */
+        .file-preview-card {
+            display: none;
+            position: relative;
+            z-index: 1;
+            animation: fileSlideIn 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .file-drop-zone.has-file .file-preview-card {
+            display: flex;
+        }
+        .file-drop-zone.has-file .file-upload-prompt {
+            display: none;
+        }
+
+        @keyframes fileSlideIn {
+            from { opacity: 0; transform: translateY(8px) scale(0.98); }
+            to   { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* Image preview thumbnail */
+        .file-preview-thumb {
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            overflow: hidden;
+            flex-shrink: 0;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .file-preview-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .file-preview-thumb .file-type-icon {
+            font-size: 1.6rem;
+            color: var(--fg-muted);
+        }
+
+        /* File info */
+        .file-preview-info {
+            flex: 1;
+            margin-left: 1rem;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 0.25rem;
+        }
+        .file-preview-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--fg);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .file-preview-meta {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .file-preview-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            font-size: 0.75rem;
+            color: var(--fg-muted);
+            background: var(--bg);
+            padding: 0.15rem 0.55rem;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+        }
+        .file-preview-badge i {
+            font-size: 0.65rem;
+            color: var(--accent);
+        }
+
+        /* Upload progress bar */
+        .file-preview-progress {
+            margin-top: 0.4rem;
+            height: 3px;
+            background: var(--border);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: opacity 0.4s;
+        }
+        .file-preview-progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--accent), #00d49a);
+            border-radius: 10px;
+            transition: width 0.15s linear;
+        }
+        .file-preview-progress-bar.complete {
+            width: 100% !important;
+        }
+
+        /* Remove button */
+        .file-preview-remove {
+            flex-shrink: 0;
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: var(--bg);
+            color: var(--fg-muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.2s;
+            align-self: center;
+        }
+        .file-preview-remove:hover {
+            background: var(--danger-dim);
+            border-color: var(--danger);
+            color: var(--danger);
+            transform: scale(1.08);
+        }
+
+        /* Existing image (pre-loaded from server) */
+        .file-existing {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-top: 0.75rem;
+            padding: 0.65rem 0.85rem;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            animation: fileSlideIn 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .file-existing-thumb {
+            width: 48px;
+            height: 48px;
+            border-radius: 6px;
+            overflow: hidden;
+            flex-shrink: 0;
+            border: 1px solid var(--border);
+        }
+        .file-existing-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .file-existing-label {
+            font-size: 0.8rem;
+            color: var(--fg-muted);
+        }
+        .file-existing-label strong {
+            color: var(--fg);
+            font-weight: 600;
+        }
+        .file-existing-actions {
+            margin-left: auto;
+            display: flex;
+            gap: 0.4rem;
+        }
+        .file-existing-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            background: var(--bg-raised);
+            color: var(--fg-muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 0.7rem;
+            transition: all 0.2s;
+        }
+        .file-existing-btn:hover {
+            border-color: var(--border-hover);
+            color: var(--fg);
+        }
+        .file-existing-btn.danger:hover {
+            background: var(--danger-dim);
+            border-color: var(--danger);
+            color: var(--danger);
+        }
+
+        /* Label */
+        .file-label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+            color: var(--fg);
+        }
+        .file-label .required {
+            color: var(--danger);
+            margin-left: 2px;
+        }
+
+        /* Error state */
+        .file-drop-zone.error {
+            border-color: var(--danger);
+            background: var(--danger-dim);
+        }
+        .file-error-msg {
+            display: none;
+            color: var(--danger);
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+            align-items: center;
+            gap: 0.35rem;
+        }
+        .file-error-msg.visible {
+            display: flex;
+        }
+
+        /* Toast notification */
+        .toast-container {
+            position: fixed;
+            top: 1.25rem;
+            right: 1.25rem;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .file-toast {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 0.75rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 0.85rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1), 0 2px 8px rgba(0,0,0,0.06);
+            animation: toastIn 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            min-width: 260px;
+            color: var(--fg);
+        }
+        .file-toast.success { border-left: 3px solid var(--accent); }
+        .file-toast.error   { border-left: 3px solid var(--danger); }
+        .file-toast-icon { font-size: 0.9rem; }
+        .file-toast.success .file-toast-icon { color: var(--accent); }
+        .file-toast.error .file-toast-icon   { color: var(--danger); }
+
+        @keyframes toastIn {
+            from { opacity: 0; transform: translateX(30px); }
+            to   { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes toastOut {
+            from { opacity: 1; transform: translateX(0); }
+            to   { opacity: 0; transform: translateX(30px); }
+        }
+
+        /* Full-width preview variant */
+        .file-drop-zone.preview-full .file-preview-card {
+            flex-direction: column;
+            align-items: stretch;
+        }
+        .file-drop-zone.preview-full .file-preview-thumb {
+            width: 100%;
+            height: 180px;
+            border-radius: 8px;
+        }
+        .file-drop-zone.preview-full .file-preview-info {
+            margin-left: 0;
+            margin-top: 0.75rem;
+        }
+
+        /* Code block for demo */
+        .code-block {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+            margin-top: 1.5rem;
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+            font-size: 0.8rem;
+            color: var(--fg-muted);
+            line-height: 1.7;
+            overflow-x: auto;
+            white-space: pre;
+        }
+        .code-block .tag  { color: var(--accent); }
+        .code-block .attr { color: #c26b2e; }
+        .code-block .str  { color: #2e8b57; }
+
+        /* Hint section */
+        .demo-section.hint-section {
+            border-color: var(--accent);
+            border-style: dashed;
+            background: var(--accent-dim);
+        }
+        .demo-section.hint-section .demo-section-title {
+            color: var(--accent);
+        }
+        .demo-section.hint-section code {
+            background: var(--bg);
+            padding: 0.1rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            border: 1px solid var(--border);
+        }
+
+        /* Responsive tweaks */
+        @media (max-width: 576px) {
+            .file-preview-thumb { width: 60px; height: 60px; }
+            .file-drop-zone { padding: 1.5rem 1rem; }
+            .page-title { font-size: 1.5rem; }
+            .page-wrapper { padding: 1rem 0.75rem; }
+        }
+
+        /* Reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Override Bootstrap's form-control on our hidden input */
+        .file-drop-zone input[type="file"] {
+            border: none !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            box-shadow: none !important;
+            height: 100% !important;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Custom toast container (separate from Bootstrap toasts) -->
+<div class="toast-container" id="toastContainer"></div>
+
+<div class="page-wrapper">
+    <h1 class="page-title">File Input Component</h1>
+    <p class="page-subtitle">A globally reusable file input with drag-and-drop, preview, metadata, and validation. Works for any file type.</p>
+
+    <!-- Demo 1: Image upload (banner style) -->
+    <div class="demo-section">
+        <div class="demo-section-title">Banner Image Upload</div>
+        <div class="demo-section-desc">Single image file with thumbnail preview. Shows existing image from server.</div>
+
+        <label class="file-label">Detail Banner Image <span class="required">*</span></label>
+
+        <div class="file-drop-zone"
+             data-file-input
+             data-accept="image/*"
+             data-max-size="2"
+             data-preview="thumb"
+             data-label="Banner Image">
+            <input type="file" class="form-control" name="banner_image" accept="image/*">
+            <div class="file-upload-prompt">
+                <div class="file-upload-icon">
+                    <i class="fas fa-cloud-arrow-up"></i>
+                </div>
+                <div class="file-upload-text">Drag & drop or <span>browse files</span></div>
+                <div class="file-upload-hint">PNG, JPG, WEBP up to 2MB</div>
+            </div>
+            <div class="file-preview-card">
+                <div class="file-preview-thumb">
+                    <img src="" alt="Preview">
+                </div>
+                <div class="file-preview-info">
+                    <div class="file-preview-name"></div>
+                    <div class="file-preview-meta">
+                        <span class="file-preview-badge"><i class="fas fa-weight-hanging"></i> <span class="file-size-text"></span></span>
+                        <span class="file-preview-badge"><i class="fas fa-image"></i> <span class="file-type-text"></span></span>
+                        <span class="file-preview-badge"><i class="fas fa-expand"></i> <span class="file-dim-text"></span></span>
+                    </div>
+                    <div class="file-preview-progress">
+                        <div class="file-preview-progress-bar"></div>
+                    </div>
+                </div>
+                <button type="button" class="file-preview-remove" title="Remove file" aria-label="Remove selected file">
+                    <i class="fas fa-xmark"></i>
+                </button>
+            </div>
+        </div>
+        <div class="file-error-msg" data-error-for="banner_image">
+            <i class="fas fa-circle-exclamation"></i>
+            <span></span>
+        </div>
+
+        <!-- Existing image from server (simulated) -->
+        <div class="file-existing" id="existingBanner">
+            <div class="file-existing-thumb">
+                <img src="https://picsum.photos/seed/school-banner/200/200.jpg" alt="Current banner">
+            </div>
+            <div class="file-existing-label"><strong>current-banner.jpg</strong> &mdash; Existing image</div>
+            <div class="file-existing-actions">
+                <button class="file-existing-btn danger" title="Remove existing" aria-label="Remove existing image" onclick="removeExisting(this)">
+                    <i class="fas fa-trash-can"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Demo 2: Document upload -->
+    <div class="demo-section">
+        <div class="demo-section-title">Document Upload</div>
+        <div class="demo-section-desc">Any file type with icon-based preview instead of thumbnail.</div>
+
+        <label class="file-label">Upload Document</label>
+
+        <div class="file-drop-zone"
+             data-file-input
+             data-accept=".pdf,.doc,.docx,.xls,.xlsx,.csv,.txt"
+             data-max-size="5"
+             data-preview="icon"
+             data-label="Document">
+            <input type="file" class="form-control" name="document" accept=".pdf,.doc,.docx,.xls,.xlsx,.csv,.txt">
+            <div class="file-upload-prompt">
+                <div class="file-upload-icon">
+                    <i class="fas fa-file-arrow-up"></i>
+                </div>
+                <div class="file-upload-text">Drag & drop or <span>choose document</span></div>
+                <div class="file-upload-hint">PDF, DOC, XLS, CSV, TXT up to 5MB</div>
+            </div>
+            <div class="file-preview-card">
+                <div class="file-preview-thumb">
+                    <i class="fas fa-file file-type-icon"></i>
+                </div>
+                <div class="file-preview-info">
+                    <div class="file-preview-name"></div>
+                    <div class="file-preview-meta">
+                        <span class="file-preview-badge"><i class="fas fa-weight-hanging"></i> <span class="file-size-text"></span></span>
+                        <span class="file-preview-badge"><i class="fas fa-file-lines"></i> <span class="file-type-text"></span></span>
+                    </div>
+                    <div class="file-preview-progress">
+                        <div class="file-preview-progress-bar"></div>
+                    </div>
+                </div>
+                <button type="button" class="file-preview-remove" title="Remove file" aria-label="Remove selected file">
+                    <i class="fas fa-xmark"></i>
+                </button>
+            </div>
+        </div>
+        <div class="file-error-msg" data-error-for="document">
+            <i class="fas fa-circle-exclamation"></i>
+            <span></span>
+        </div>
+    </div>
+
+    <!-- Demo 3: Full-width image preview -->
+    <div class="demo-section">
+        <div class="demo-section-title">Gallery Image (Full Preview)</div>
+        <div class="demo-section-desc">Larger preview area suitable for gallery or hero images.</div>
+
+        <label class="file-label">Gallery Image</label>
+
+        <div class="file-drop-zone preview-full"
+             data-file-input
+             data-accept="image/*"
+             data-max-size="4"
+             data-preview="full"
+             data-label="Gallery Image">
+            <input type="file" class="form-control" name="gallery_image" accept="image/*">
+            <div class="file-upload-prompt">
+                <div class="file-upload-icon">
+                    <i class="fas fa-panorama"></i>
+                </div>
+                <div class="file-upload-text">Drop a high-res image or <span>browse</span></div>
+                <div class="file-upload-hint">PNG, JPG, WEBP up to 4MB</div>
+            </div>
+            <div class="file-preview-card">
+                <div class="file-preview-thumb">
+                    <img src="" alt="Preview">
+                </div>
+                <div class="file-preview-info">
+                    <div class="file-preview-name"></div>
+                    <div class="file-preview-meta">
+                        <span class="file-preview-badge"><i class="fas fa-weight-hanging"></i> <span class="file-size-text"></span></span>
+                        <span class="file-preview-badge"><i class="fas fa-image"></i> <span class="file-type-text"></span></span>
+                        <span class="file-preview-badge"><i class="fas fa-expand"></i> <span class="file-dim-text"></span></span>
+                    </div>
+                    <div class="file-preview-progress">
+                        <div class="file-preview-progress-bar"></div>
+                    </div>
+                </div>
+                <button type="button" class="file-preview-remove" title="Remove file" aria-label="Remove selected file" style="position:absolute;top:0.75rem;right:0.75rem;background:rgba(255,255,255,0.85);backdrop-filter:blur(4px);border-color:rgba(0,0,0,0.1);color:#555;">
+                    <i class="fas fa-xmark"></i>
+                </button>
+            </div>
+        </div>
+        <div class="file-error-msg" data-error-for="gallery_image">
+            <i class="fas fa-circle-exclamation"></i>
+            <span></span>
+        </div>
+    </div>
+
+    <!-- Usage guide -->
+    <div class="demo-section hint-section">
+        <div class="demo-section-title">How to Use Globally</div>
+        <div class="demo-section-desc">Add <code>data-file-input</code> to any drop zone. The script handles everything automatically.</div>
+        <div class="code-block"><span class="tag">&lt;div</span> <span class="attr">class=</span><span class="str">"file-drop-zone"</span>
+     <span class="attr">data-file-input</span>
+     <span class="attr">data-accept=</span><span class="str">"image/*"</span>
+     <span class="attr">data-max-size=</span><span class="str">"2"</span>
+     <span class="attr">data-preview=</span><span class="str">"thumb"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;input</span> <span class="attr">type=</span><span class="str">"file"</span> <span class="attr">class=</span><span class="str">"form-control"</span> <span class="attr">name=</span><span class="str">"banner_image"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;div</span> <span class="attr">class=</span><span class="str">"file-upload-prompt"</span><span class="tag">&gt;</span>...<span class="tag">&lt;/div&gt;</span>
+  <span class="tag">&lt;div</span> <span class="attr">class=</span><span class="str">"file-preview-card"</span><span class="tag">&gt;</span>...<span class="tag">&lt;/div&gt;</span>
+<span class="tag">&lt;/div&gt;</span>
+
+<span style="color:#999;">// data-accept   → MIME types or extensions</span>
+<span style="color:#999;">// data-max-size → max MB (optional)</span>
+<span style="color:#999;">// data-preview  → "thumb" | "full" | "icon"</span>
+<span style="color:#999;">// data-label    → label for toast messages</span></div>
+    </div>
+</div>
+
+<!-- Bootstrap 5 JS Bundle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+/**
+ * GlobalFileInput — Reusable file input component
+ * Automatically initializes all [data-file-input] elements on the page.
+ * Works alongside Bootstrap without conflicts.
+ *
+ * Features:
+ *  - Drag & drop with visual feedback
+ *  - Image thumbnail / full preview via FileReader
+ *  - File type icons for non-image files
+ *  - File name, size, type, and image dimensions display
+ *  - Simulated upload progress bar
+ *  - File type and size validation with inline errors
+ *  - Toast notifications for select/remove actions
+ *  - Existing server image display with remove option
+ */
+class GlobalFileInput {
+    constructor(zone) {
+        this.zone = zone;
+        this.input = zone.querySelector('input[type="file"]');
+        this.previewCard = zone.querySelector('.file-preview-card');
+        this.thumbContainer = zone.querySelector('.file-preview-thumb');
+        this.thumbImg = zone.querySelector('.file-preview-thumb img');
+        this.typeIcon = zone.querySelector('.file-preview-thumb .file-type-icon');
+        this.nameEl = zone.querySelector('.file-preview-name');
+        this.sizeEl = zone.querySelector('.file-size-text');
+        this.typeTextEl = zone.querySelector('.file-type-text');
+        this.dimEl = zone.querySelector('.file-dim-text');
+        this.progressBar = zone.querySelector('.file-preview-progress-bar');
+        this.removeBtn = zone.querySelector('.file-preview-remove');
+        this.errorEl = document.querySelector(`[data-error-for="${this.input.name}"]`);
+
+        // Config from data attributes
+        this.acceptTypes = zone.dataset.accept || '*';
+        this.maxSizeMB = parseFloat(zone.dataset.maxSize) || 0;
+        this.previewMode = zone.dataset.preview || 'thumb';
+        this.label = zone.dataset.label || 'File';
+
+        this.currentFile = null;
+        this.init();
+    }
+
+    init() {
+        // Drag events
+        this.zone.addEventListener('dragenter', (e) => {
+            e.preventDefault();
+            this.zone.classList.add('drag-over');
+        });
+        this.zone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            this.zone.classList.add('drag-over');
+        });
+        this.zone.addEventListener('dragleave', (e) => {
+            // Only remove when actually leaving the zone
+            if (!this.zone.contains(e.relatedTarget)) {
+                this.zone.classList.remove('drag-over');
+            }
+        });
+        this.zone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            this.zone.classList.remove('drag-over');
+            if (e.dataTransfer.files.length) {
+                this.input.files = e.dataTransfer.files;
+                this.handleFile(e.dataTransfer.files[0]);
+            }
+        });
+
+        // Standard file select
+        this.input.addEventListener('change', () => {
+            if (this.input.files.length) {
+                this.handleFile(this.input.files[0]);
+            }
+        });
+
+        // Remove button — stop propagation so the hidden input doesn't re-trigger
+        if (this.removeBtn) {
+            this.removeBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                this.clearFile();
+            });
+        }
+    }
+
+    handleFile(file) {
+        this.clearError();
+
+        // Validate file type
+        if (!this.validateType(file)) {
+            this.showError(`Invalid file type. Allowed: ${this.acceptTypes}`);
+            this.input.value = '';
+            return;
+        }
+
+        // Validate file size
+        if (this.maxSizeMB > 0 && file.size > this.maxSizeMB * 1024 * 1024) {
+            this.showError(`File too large. Maximum size is ${this.maxSizeMB}MB.`);
+            this.input.value = '';
+            return;
+        }
+
+        this.currentFile = file;
+        this.zone.classList.add('has-file');
+
+        // Populate metadata
+        this.nameEl.textContent = file.name;
+        this.sizeEl.textContent = this.formatSize(file.size);
+        this.typeTextEl.textContent = this.getExtension(file.name).toUpperCase() || file.type || 'Unknown';
+
+        // Image preview or file icon
+        if (file.type.startsWith('image/') && this.previewMode !== 'icon') {
+            this.showImagePreview(file);
+        } else {
+            this.showIconPreview(file);
+        }
+
+        // Hide dimension badge for non-images
+        const dimBadge = this.dimEl ? this.dimEl.closest('.file-preview-badge') : null;
+        if (dimBadge) {
+            dimBadge.style.display = file.type.startsWith('image/') ? '' : 'none';
+        }
+
+        this.simulateProgress();
+        showToast('success', `${this.label} selected successfully`);
+    }
+
+    showImagePreview(file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            if (this.thumbImg) {
+                this.thumbImg.src = e.target.result;
+                this.thumbImg.style.display = 'block';
+            }
+            if (this.typeIcon) this.typeIcon.style.display = 'none';
+
+            // Extract image dimensions
+            const img = new Image();
+            img.onload = () => {
+                if (this.dimEl) {
+                    this.dimEl.textContent = `${img.naturalWidth} \u00d7 ${img.naturalHeight}`;
+                }
+            };
+            img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    }
+
+    showIconPreview(file) {
+        if (this.thumbImg) this.thumbImg.style.display = 'none';
+        if (this.typeIcon) {
+            this.typeIcon.style.display = '';
+            this.typeIcon.className = 'fas file-type-icon ' + this.getFileIcon(file);
+        }
+    }
+
+    simulateProgress() {
+        if (!this.progressBar) return;
+        this.progressBar.style.width = '0%';
+        this.progressBar.classList.remove('complete');
+        this.progressBar.parentElement.style.opacity = '1';
+
+        let progress = 0;
+        const interval = setInterval(() => {
+            progress += Math.random() * 25 + 10;
+            if (progress >= 100) {
+                progress = 100;
+                this.progressBar.classList.add('complete');
+                clearInterval(interval);
+                // Fade out progress bar after completion
+                setTimeout(() => {
+                    this.progressBar.parentElement.style.opacity = '0';
+                }, 600);
+            }
+            this.progressBar.style.width = progress + '%';
+        }, 120);
+    }
+
+    clearFile() {
+        this.currentFile = null;
+        this.input.value = '';
+        this.zone.classList.remove('has-file');
+
+        // Reset progress
+        if (this.progressBar) {
+            this.progressBar.style.width = '0%';
+            this.progressBar.classList.remove('complete');
+            this.progressBar.parentElement.style.opacity = '1';
+        }
+
+        // Reset image
+        if (this.thumbImg) {
+            this.thumbImg.src = '';
+            this.thumbImg.style.display = 'none';
+        }
+
+        this.clearError();
+        showToast('error', `${this.label} removed`);
+    }
+
+    validateType(file) {
+        if (this.acceptTypes === '*') return true;
+
+        // Check by extension
+        const ext = '.' + this.getExtension(file.name);
+        const allowedExts = this.acceptTypes.split(',').map(s => s.trim().toLowerCase());
+        if (allowedExts.includes(ext)) return true;
+
+        // Check by MIME pattern (e.g. "image/*")
+        return allowedExts.some(pattern => {
+            if (pattern.endsWith('/*')) {
+                return file.type.startsWith(pattern.replace('/*', '/'));
+            }
+            return file.type === pattern;
+        });
+    }
+
+    showError(msg) {
+        if (this.errorEl) {
+            this.errorEl.querySelector('span').textContent = msg;
+            this.errorEl.classList.add('visible');
+        }
+        this.zone.classList.add('error');
+        // Auto-clear after 5 seconds
+        setTimeout(() => this.clearError(), 5000);
+    }
+
+    clearError() {
+        if (this.errorEl) this.errorEl.classList.remove('visible');
+        this.zone.classList.remove('error');
+    }
+
+    formatSize(bytes) {
+        if (bytes === 0) return '0 B';
+        const units = ['B', 'KB', 'MB', 'GB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(1024));
+        return (bytes / Math.pow(1024, i)).toFixed(i > 0 ? 1 : 0) + ' ' + units[i];
+    }
+
+    getExtension(filename) {
+        const parts = filename.split('.');
+        return parts.length > 1 ? parts.pop().toLowerCase() : '';
+    }
+
+    getFileIcon(file) {
+        const ext = this.getExtension(file.name);
+        const iconMap = {
+            'pdf': 'fa-file-pdf',
+            'doc': 'fa-file-word', 'docx': 'fa-file-word',
+            'xls': 'fa-file-excel', 'xlsx': 'fa-file-excel', 'csv': 'fa-file-csv',
+            'ppt': 'fa-file-powerpoint', 'pptx': 'fa-file-powerpoint',
+            'zip': 'fa-file-zipper', 'rar': 'fa-file-zipper', '7z': 'fa-file-zipper',
+            'txt': 'fa-file-lines',
+            'mp3': 'fa-file-audio', 'wav': 'fa-file-audio',
+            'mp4': 'fa-file-video', 'mov': 'fa-file-video', 'avi': 'fa-file-video',
+            'js': 'fa-file-code', 'html': 'fa-file-code', 'css': 'fa-file-code',
+            'php': 'fa-file-code', 'json': 'fa-file-code',
+        };
+        return iconMap[ext] || 'fa-file';
+    }
+}
+
+/**
+ * Toast notifications — custom implementation
+ * Uses class "file-toast" to avoid collision with Bootstrap's .toast component.
+ */
+function showToast(type, message) {
+    const container = document.getElementById('toastContainer');
+    const toast = document.createElement('div');
+    toast.className = `file-toast ${type}`;
+    const icon = type === 'success' ? 'fa-circle-check' : 'fa-circle-xmark';
+    toast.innerHTML = `<i class="fas ${icon} file-toast-icon"></i><span>${message}</span>`;
+    container.appendChild(toast);
+
+    setTimeout(() => {
+        toast.style.animation = 'toastOut 0.3s forwards';
+        setTimeout(() => toast.remove(), 300);
+    }, 2500);
+}
+
+/** Remove an existing server-side image block */
+function removeExisting(btn) {
+    const block = btn.closest('.file-existing');
+    block.style.animation = 'toastOut 0.3s forwards';
+    setTimeout(() => block.remove(), 300);
+    showToast('error', 'Existing image removed');
+}
+
+/**
+ * Auto-initialize every [data-file-input] on the page.
+ * Place this script after the HTML or inside a DOMContentLoaded listener.
+ */
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('[data-file-input]').forEach(zone => {
+        new GlobalFileInput(zone);
+    });
+});
+</script>
+</body>
+</html>
