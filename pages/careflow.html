@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CareFlow — Care Coordination, Reimagined</title>
+<meta name="description" content="The modern care management platform that unifies records, scheduling, telehealth and billing into one calm, fast workspace.">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --brand: #0d9488;
+    --brand-dark: #0f766e;
+    --brand-soft: #ccfbf1;
+    --accent: #f97316;
+    --accent-soft: #ffedd5;
+    --ink: #0f172a;
+    --muted: #64748b;
+    --line: #e2e8f0;
+    --bg-soft: #f8fafc;
+  }
+  * { -webkit-font-smoothing: antialiased; }
+  body { font-family: 'DM Sans', system-ui, sans-serif; color: var(--ink); background: #fff; }
+  h1, h2, h3, h4, h5, h6, .display-1, .display-2, .display-3, .display-4, .display-5, .display-6 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    letter-spacing: -0.025em;
+    font-weight: 700;
+  }
+  .text-brand { color: var(--brand) !important; }
+  .text-brand-dark { color: var(--brand-dark) !important; }
+  .text-accent { color: var(--accent) !important; }
+  .text-muted-2 { color: var(--muted) !important; }
+  .bg-brand { background-color: var(--brand) !important; }
+  .bg-brand-dark { background-color: var(--brand-dark) !important; }
+  .bg-brand-soft { background-color: var(--brand-soft) !important; }
+  .bg-accent { background-color: var(--accent) !important; }
+  .bg-accent-soft { background-color: var(--accent-soft) !important; }
+  .bg-soft { background-color: var(--bg-soft) !important; }
+  .border-line { border-color: var(--line) !important; }
+
+  .btn-brand {
+    background: var(--brand); border: 1px solid var(--brand); color: #fff;
+    font-weight: 600; padding: 0.7rem 1.5rem; border-radius: 999px;
+    transition: all .25s ease;
+  }
+  .btn-brand:hover {
+    background: var(--brand-dark); border-color: var(--brand-dark); color: #fff;
+    transform: translateY(-2px); box-shadow: 0 12px 24px -8px rgba(13,148,136,.45);
+  }
+  .btn-outline-brand {
+    border: 1px solid var(--line); color: var(--ink); background: #fff;
+    font-weight: 600; padding: 0.7rem 1.5rem; border-radius: 999px;
+    transition: all .25s ease;
+  }
+  .btn-outline-brand:hover { border-color: var(--brand); color: var(--brand); background: #fff; }
+  .btn-ghost-light {
+    background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.25); color: #fff;
+    font-weight: 600; padding: 0.7rem 1.5rem; border-radius: 999px; backdrop-filter: blur(6px);
+    transition: all .25s ease;
+  }
+  .btn-ghost-light:hover { background: rgba(255,255,255,.22); color: #fff; }
+
+  .gradient-text {
+    background: linear-gradient(120deg, #0d9488 0%, #14b8a6 40%, #f97316 100%);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .hero-bg {
+    position: relative; overflow: hidden;
+    background:
+      radial-gradient(55% 50% at 12% 18%, rgba(13,148,136,.14) 0%, transparent 60%),
+      radial-gradient(50% 45% at 92% 8%, rgba(249,115,22,.12) 0%, transparent 60%),
+      radial-gradient(45% 45% at 80% 85%, rgba(13,148,136,.08) 0%, transparent 60%);
+  }
+  .glass {
+    background: rgba(255,255,255,.78);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,.65);
+  }
+  .glass-nav {
+    background: rgba(255,255,255,.82);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    border-bottom: 1px solid rgba(226,232,240,.7);
+  }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: .5rem;
+    padding: .4rem .9rem; border-radius: 999px;
+    background: var(--brand-soft); color: var(--brand-dark);
+    font-size: .78rem; font-weight: 600; text-transform: uppercase; letter-spacing: .08em;
+  }
+  .eyebrow-accent { background: var(--accent-soft); color: #c2410c; }
+
+  .feature-card {
+    background: #fff; border: 1px solid var(--line); border-radius: 22px;
+    padding: 1.75rem; transition: all .3s ease; height: 100%;
+  }
+  .feature-card:hover {
+    border-color: var(--brand); transform: translateY(-4px);
+    box-shadow: 0 24px 48px -18px rgba(13,148,136,.22);
+  }
+  .feature-card.featured-card {
+    background: linear-gradient(160deg, #f0fdfa 0%, #ffffff 70%);
+    border-color: var(--brand-soft);
+  }
+  .icon-wrap {
+    width: 52px; height: 52px; border-radius: 14px;
+    display: inline-flex; align-items: center; justify-content: center; font-size: 1.4rem;
+  }
+  .icon-brand { background: var(--brand-soft); color: var(--brand-dark); }
+  .icon-accent { background: var(--accent-soft); color: #c2410c; }
+  .icon-indigo { background: #e0e7ff; color: #4338ca; }
+  .icon-rose { background: #ffe4e6; color: #be123c; }
+  .icon-amber { background: #fef3c7; color: #b45309; }
+  .icon-emerald { background: #d1fae5; color: #047857; }
+
+  .step-num {
+    width: 52px; height: 52px; border-radius: 16px;
+    background: linear-gradient(135deg, var(--brand) 0%, var(--brand-dark) 100%);
+    color: #fff; display: inline-flex; align-items: center; justify-content: center;
+    font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 1.25rem;
+    box-shadow: 0 10px 22px -8px rgba(13,148,136,.5);
+  }
+  .step-line {
+    position: absolute; top: 26px; left: calc(50% + 28px); right: calc(-50% + 28px);
+    height: 2px; background: linear-gradient(90deg, var(--brand-soft), var(--line));
+    z-index: 0;
+  }
+
+  .price-card {
+    border: 1px solid var(--line); border-radius: 24px; padding: 2rem;
+    background: #fff; height: 100%; transition: all .3s ease;
+  }
+  .price-card:hover { transform: translateY(-4px); box-shadow: 0 24px 48px -16px rgba(15,23,42,.12); }
+  .price-card.featured {
+    border: 2px solid var(--brand);
+    background: linear-gradient(180deg, #f0fdfa 0%, #ffffff 55%);
+    position: relative;
+  }
+
+  .testimonial-card {
+    background: #fff; border: 1px solid var(--line); border-radius: 22px;
+    padding: 1.85rem; height: 100%;
+  }
+  .quote-mark {
+    font-family: 'Plus Jakarta Sans', serif; font-size: 3.5rem; line-height: 1;
+    color: var(--brand-soft); font-weight: 800;
+  }
+
+  .nav-link-custom {
+    color: var(--ink) !important; font-weight: 500;
+    padding: .5rem 1rem !important; border-radius: 999px; transition: all .2s ease;
+  }
+  .nav-link-custom:hover { color: var(--brand) !important; background: var(--brand-soft); }
+
+  .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+  .mockup-card {
+    background: #fff; border-radius: 20px; border: 1px solid var(--line);
+    box-shadow: 0 30px 70px -25px rgba(15,23,42,.22);
+  }
+  .avatar {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--brand-soft); color: var(--brand-dark);
+    display: inline-flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: .82rem; font-family: 'Plus Jakarta Sans', sans-serif;
+    border: 2px solid #fff;
+  }
+  .avatar-accent { background: var(--accent-soft); color: #c2410c; }
+  .avatar-rose { background: #ffe4e6; color: #be123c; }
+  .avatar-indigo { background: #e0e7ff; color: #4338ca; }
+
+  .vital-bar { height: 6px; border-radius: 4px; background: var(--bg-soft); overflow: hidden; }
+  .vital-bar > span { display: block; height: 100%; background: linear-gradient(90deg, var(--brand), #14b8a6); border-radius: 4px; }
+  .chart-bar { background: linear-gradient(180deg, #14b8a6 0%, var(--brand-dark) 100%); border-radius: 4px 4px 0 0; width: 100%; }
+  .chart-bar.accent { background: linear-gradient(180deg, #fb923c 0%, #ea580c 100%); }
+
+  .faq-accordion .accordion-item {
+    border: 1px solid var(--line) !important; border-radius: 16px !important;
+    overflow: hidden; margin-bottom: 1rem; background: #fff;
+  }
+  .faq-accordion .accordion-button {
+    font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 600;
+    padding: 1.25rem 1.5rem; background: #fff; color: var(--ink);
+  }
+  .faq-accordion .accordion-button:not(.collapsed) {
+    background: var(--brand-soft); color: var(--brand-dark); box-shadow: none;
+  }
+  .faq-accordion .accordion-button:focus { box-shadow: none; border-color: var(--brand); }
+  .faq-accordion .accordion-body { padding: 0 1.5rem 1.25rem; color: var(--muted); }
+
+  .cta-section {
+    background: linear-gradient(135deg, #0f766e 0%, #0d9488 55%, #134e4a 100%);
+    border-radius: 32px; position: relative; overflow: hidden;
+  }
+  .cta-section::before {
+    content: ''; position: absolute; inset: 0;
+    background:
+      radial-gradient(40% 50% at 92% 8%, rgba(249,115,22,.28), transparent 60%),
+      radial-gradient(40% 50% at 5% 95%, rgba(255,255,255,.16), transparent 60%);
+    pointer-events: none;
+  }
+
+  .partner-logo {
+    font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700;
+    color: var(--muted); font-size: 1.15rem; letter-spacing: -.02em;
+    opacity: .65; transition: opacity .2s ease;
+    display: inline-flex; align-items: center; gap: .4rem;
+  }
+  .partner-logo:hover { opacity: 1; color: var(--brand); }
+
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  .tab-pill {
+    border: 1px solid var(--line); background: #fff; color: var(--ink);
+    padding: .55rem 1.2rem; border-radius: 999px; font-weight: 600; cursor: pointer;
+    transition: all .2s ease; font-size: .95rem;
+  }
+  .tab-pill.active { background: var(--brand); border-color: var(--brand); color: #fff; }
+  .tab-pill:not(.active):hover { border-color: var(--brand); color: var(--brand); }
+
+  .scrollbar-hide::-webkit-scrollbar { display: none; }
+  .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+    .feature-card, .price-card { transition: none; }
+    .btn-brand:hover, .feature-card:hover, .price-card:hover { transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ NAVBAR ============ -->
+<nav class="navbar navbar-expand-lg glass-nav sticky-top py-3">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center gap-2" href="#">
+      <span class="d-inline-flex align-items-center justify-content-center rounded-4 bg-brand text-white" style="width:38px;height:38px;">
+        <i class="bi bi-activity-heart-pulse"></i>
+      </span>
+      <span class="fw-bold fs-4" style="font-family:'Plus Jakarta Sans',sans-serif;">CareFlow</span>
+    </a>
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navMain" aria-label="Toggle navigation">
+      <i class="bi bi-list fs-2 text-brand"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navMain">
+      <ul class="navbar-nav mx-auto gap-1">
+        <li class="nav-item"><a class="nav-link nav-link-custom" href="#features">Features</a></li>
+        <li class="nav-item"><a class="nav-link nav-link-custom" href="#solutions">Solutions</a></li>
+        <li class="nav-item"><a class="nav-link nav-link-custom" href="#how">How it works</a></li>
+        <li class="nav-item"><a class="nav-link nav-link-custom" href="#pricing">Pricing</a></li>
+        <li class="nav-item"><a class="nav-link nav-link-custom" href="#faq">FAQ</a></li>
+      </ul>
+      <div class="d-flex align-items-center gap-2">
+        <a href="#" class="btn btn-sm btn-outline-brand">Sign in</a>
+        <a href="#" class="btn btn-sm btn-brand">Book a demo</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<section class="hero-bg py-5">
+  <div class="container py-4 py-lg-5">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-6">
+        <span class="eyebrow mb-4">
+          <span class="dot bg-brand"></span>
+          HIPAA · SOC 2 · GDPR compliant
+        </span>
+        <h1 class="display-3 mb-3" style="line-height:1.04;">
+          Care coordination, <span class="gradient-text">reimagined</span> for modern teams.
+        </h1>
+        <p class="lead text-muted-2 mb-4 pe-lg-3" style="font-size:1.18rem;">
+          CareFlow unifies patient records, scheduling, telehealth and billing into one calm, fast and beautiful workspace — so your team spends less time clicking and more time caring.
+        </p>
+        <div class="d-flex flex-wrap gap-3 mb-4">
+          <a href="#" class="btn btn-brand btn-lg">
+            Start free trial <i class="bi bi-arrow-right ms-1"></i>
+          </a>
+          <a href="#" class="btn btn-outline-brand btn-lg">
+            <i class="bi bi-play-circle me-1"></i> Watch 2-min tour
+          </a>
+        </div>
+        <div class="d-flex flex-wrap align-items-center gap-4 mt-4 pt-2">
+          <div class="d-flex align-items-center">
+            <span class="avatar me-2">JM</span>
+            <span class="avatar avatar-accent me-2">SR</span>
+            <span class="avatar avatar-rose me-2">AK</span>
+            <span class="avatar avatar-indigo">+2k</span>
+          </div>
+          <div>
+            <div class="fw-semibold small">2,000+ care teams onboard</div>
+            <div class="small text-muted-2">
+              <i class="bi bi-star-fill text-warning"></i>
+              <i class="bi bi-star-fill text-warning"></i>
+              <i class="bi bi-star-fill text-warning"></i>
+              <i class="bi bi-star-fill text-warning"></i>
+              <i class="bi bi-star-fill text-warning"></i>
+              <span class="ms-1">4.9/5 average rating</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="position-relative ps-lg-3">
+          <!-- Floating card top-right -->
+          <div class="glass rounded-4 p-3 shadow position-absolute d-none d-md-block" style="top:-18px; right:-8px; z-index:3; max-width:230px;">
+            <div class="d-flex align-items-center gap-2">
+              <span class="icon-wrap icon-brand" style="width:38px;height:38px;font-size:1.05rem;">
+                <i class="bi bi-shield-check"></i>
+              </span>
+              <div>
+                <div class="fw-semibold small mb-0">Compliance</div>
+                <div class="small text-muted-2">All checks passed</div>
+              </div>
+              <i class="bi bi-check-circle-fill text-success ms-auto"></i>
+            </div>
+          </div>
+          <!-- Floating card bottom-left -->
+          <div class="glass rounded-4 p-3 shadow position-absolute d-none d-md-block" style="bottom:-22px; left:-12px; z-index:3; max-width:260px;">
+            <div class="d-flex align-items-center gap-2 mb-2">
+              <span class="icon-wrap icon-accent" style="width:38px;height:38px;font-size:1.05rem;">
+                <i class="bi bi-graph-up-arrow"></i>
+              </span>
+              <div>
+                <div class="fw-semibold small mb-0">Throughput</div>
+                <div class="small text-muted-2">vs. last month</div>
+              </div>
+              <span class="badge bg-success-subtle text-success ms-auto">+34%</span>
+            </div>
+          </div>
+
+          <!-- Main dashboard mockup -->
+          <div class="mockup-card p-3">
+            <div class="d-flex align-items-center justify-content-between mb-3 px-2">
+              <div class="d-flex align-items-center gap-2">
+                <span class="dot" style="background:#ff5f57;"></span>
+                <span class="dot" style="background:#febc2e;"></span>
+                <span class="dot" style="background:#28c840;"></span>
+              </div>
+              <span class="small text-muted-2">careflow.app/dashboard</span>
+              <div class="d-flex gap-2">
+                <i class="bi bi-search small text-muted-2"></i>
+                <i class="bi bi-bell small text-muted-2"></i>
+              </div>
+            </div>
+
+            <div class="row g-3">
+              <!-- Patient list -->
+              <div class="col-5">
+                <div class="bg-soft rounded-3 p-3 h-100">
+                  <div class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="small fw-bold text-uppercase text-muted-2" style="letter-spacing:.06em;">Today</span>
+                    <span class="badge bg-brand text-white rounded-pill">12</span>
+                  </div>
+                  <div class="d-flex align-items-center gap-2 mb-3">
+                    <span class="avatar">EL</span>
+                    <div class="flex-grow-1">
+                      <div class="fw-semibold small">Elena López</div>
+                      <div class="small text-muted-2">09:00 · Check-up</div>
+                    </div>
+                    <span class="badge bg-brand-soft text-brand-dark rounded-pill">Due</span>
+                  </div>
+                  <div class="d-flex align-items-center gap-2 mb-3">
+                    <span class="avatar avatar-accent">MK</span>
+                    <div class="flex-grow-1">
+                      <div class="fw-semibold small">Marcus Kim</div>
+                      <div class="small text-muted-2">09:30 · Follow-up</div>
+                    </div>
+                    <span class="badge bg-accent-soft text-accent rounded-pill">Soon</span>
+                  </div>
+                  <div class="d-flex align-items-center gap-2 mb-3">
+                    <span class="avatar avatar-rose">PA</span>
+                    <div class="flex-grow-1">
+                      <div class="fw-semibold small">Priya Anand</div>
+                      <div class="small text-muted-2">10:15 · Telehealth</div>
+                    </div>
+                    <span class="badge bg-success-subtle text-success rounded-pill">Ready</span>
+                  </div>
+                  <div class="d-flex align-items-center gap-2">
+                    <span class="avatar avatar-indigo">JT</span>
+                    <div class="flex-grow-1">
+                      <div class="fw-semibold small">Jonas Weber</div>
+                      <div class="small text-muted-2">11:00 · New patient</div>
+                    </div>
+                    <i class="bi bi-clock small text-muted-2"></i>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Right column -->
+              <div class="col-7">
+                <!-- Chart card -->
+                <div class="border border-line rounded-3 p-3 mb-3">
+                  <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div>
+                      <div class="small text-muted-2">Patient throughput · 30d</div>
+                      <div class="fw-bold fs-5">1,284 <span class="small text-success ms-1"><i class="bi bi-arrow-up-right"></i> 12%</span></div>
+                    </div>
+                    <div class="btn-group btn-group-sm" role="group">
+                      <button type="button" class="btn btn-outline-secondary btn-sm">7d</button>
+                      <button type="button" class="btn btn-brand btn-sm active">30d</button>
+                      <button type="button" class="btn btn-outline-secondary btn-sm">90d</button>
+                    </div>
+                  </div>
+                  <div class="d-flex align-items-end gap-1" style="height:78px;">
+                    <div class="chart-bar" style="height:40%"></div>
+                    <div class="chart-bar" style="height:55%"></div>
+                    <div class="chart-bar" style="height:35%"></div>
+                    <div class="chart-bar" style="height:65%"></div>
+                    <div class="chart-bar accent" style="height:80%"></div>
+                    <div class="chart-bar" style="height:50%"></div>
+                    <div class="chart-bar" style="height:70%"></div>
+                    <div class="chart-bar" style="height:45%"></div>
+                    <div class="chart-bar" style="height:60%"></div>
+                    <div class="chart-bar" style="height:75%"></div>
+                    <div class="chart-bar accent" style="height:90%"></div>
+                    <div class="chart-bar" style="height:65%"></div>
+                  </div>
+                </div>
+                <!-- Vitals -->
+                <div class="row g-2">
+                  <div class="col-6">
+                    <div class="border border-line rounded-3 p-2">
+                      <div class="d-flex align-items-center gap-1 mb-1">
+                        <i class="bi bi-heart-pulse text-danger small"></i>
+                        <span class="small text-muted-2">Heart rate</span>
+                      </div>
+                      <div class="fw-bold">72 <span class="small text-muted-2">bpm</span></div>
+                      <div class="vital-bar mt-1"><span style="width:60%"></span></div>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="border border-line rounded-3 p-2">
+                      <div class="d-flex align-items-center gap-1 mb-1">
+                        <i class="bi bi-droplet-half text-primary small"></i>
+                        <span class="small text-muted-2">Blood pressure</span>
+                      </div>
+                      <div class="fw-bold">118/76 <span class="small text-success">OK</span></div>
+                      <div class="vital-bar mt-1"><span style="width:48%"></span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PARTNERS ============ -->
+<section class="py-4 py-lg-5 border-bottom border-line">
+  <div class="container">
+    <p class="text-center small text-muted-2 text-uppercase mb-4" style="letter-spacing:.1em;">Trusted by leading care networks</p>
+    <div class="row row-cols-2 row-cols-md-3 row-cols-lg-6 g-4 align-items-center justify-content-center">
+      <div class="col text-center"><span class="partner-logo"><i class="bi bi-heart-pulse"></i> NorthPeak Health</span></div>
+      <div class="col text-center"><span class="partner-logo"><i class="bi bi-clipboard2-pulse"></i> Meridian Care</span></div>
+      <div class="col text-center"><span class="partner-logo"><i class="bi bi-shield-plus"></i> Helix Clinics</span></div>
+      <div class="col text-center"><span class="partner-logo"><i class="bi bi-activity"></i> Vitalis Group</span></div>
+      <div class="col text-center"><span class="partner-logo"><i class="bi bi-flower1"></i> Anima Medical</span></div>
+      <div class="col text-center"><span class="partner-logo"><i class="bi bi-stars"></i> Lumen Health</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ STATS ============ -->
+<section class="py-5 bg-soft">
+  <div class="container">
+    <div class="row row-cols-2 row-cols-lg-4 g-4 text-center">
+      <div class="col">
+        <div class="display-5 fw-bold text-brand mb-1">2M+</div>
+        <div class="text-muted-2 small">Patients managed</div>
+      </div>
+      <div class="col">
+        <div class="display-5 fw-bold text-brand mb-1">200+</div>
+        <div class="text-muted-2 small">EHR & tool integrations</div>
+      </div>
+      <div class="col">
+        <div class="display-5 fw-bold text-brand mb-1">99.9%</div>
+        <div class="text-muted-2 small">Platform uptime SLA</div>
+      </div>
+      <div class="col">
+        <div class="display-5 fw-bold text-brand mb-1">38%</div>
+        <div class="text-muted-2 small">Avg. admin time saved</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FEATURES BENTO ============ -->
+<section id="features" class="py-5 py-lg-6">
+  <div class="container py-3">
+    <div class="row justify-content-center text-center mb-5">
+      <div class="col-lg-8">
+        <span class="eyebrow mb-3">Platform</span>
+        <h2 class="display-5 mb-3">Everything your care team needs, <span class="gradient-text">nothing they don't.</span></h2>
+        <p class="lead text-muted-2 mb-0">A single, unified workspace that replaces the patchwork of tabs, logins and sticky notes.</p>
+      </div>
+    </div>
+
+    <div class="row g-4">
+      <!-- Large card -->
+      <div class="col-lg-6">
+        <div class="feature-card featured-card h-100 d-flex flex-column">
+          <div class="d-flex align-items-center gap-3 mb-3">
+            <span class="icon-wrap icon-brand"><i class="bi bi-person-vcard"></i></span>
+            <span class="badge bg-brand-soft text-brand-dark rounded-pill">Core</span>
+          </div>
+          <h3 class="h4 mb-2">Unified patient records</h3>
+          <p class="text-muted-2 mb-4">A single timeline for every patient — history, meds, labs, notes and imaging, all in one place. Smart search finds anything in milliseconds.</p>
+          <!-- mini timeline mock -->
+          <div class="mt-auto">
+            <div class="d-flex align-items-center gap-2 mb-2">
+              <span class="dot bg-brand"></span>
+              <span class="small fw-semibold">Today · 09:14</span>
+              <span class="small text-muted-2">— Check-up note added</span>
+            </div>
+            <div class="d-flex align-items-center gap-2 mb-2">
+              <span class="dot bg-accent"></span>
+              <span class="small fw-semibold">3 days ago</span>
+              <span class="small text-muted-2">— Lab results received</span>
+            </div>
+            <div class="d-flex align-items-center gap-2 mb-2">
+              <span class="dot bg-secondary"></span>
+              <span class="small fw-semibold">2 weeks ago</span>
+              <span class="small text-muted-2">— Prescription renewed</span>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+              <span class="dot bg-secondary opacity-50"></span>
+              <span class="small fw-semibold">Last year</span>
+              <span class="small text-muted-2">— Annual physical</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right column with two stacked cards -->
+      <div class="col-lg-6">
+        <div class="row g-4">
+          <div class="col-12">
+            <div class="feature-card">
+              <div class="d-flex align-items-start gap-3">
+                <span class="icon-wrap icon-accent"><i class="bi bi-calendar2-week"></i></span>
+                <div>
+                  <h3 class="h5 mb-2">Smart scheduling that respects everyone's time</h3>
+                  <p class="text-muted-2 mb-0">AI-built schedules that optimize for clinician preference, room availability and patient needs. No-shows drop by up to 41%.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="feature-card">
+              <span class="icon-wrap icon-indigo mb-3"><i class="bi bi-camera-video"></i></span>
+              <h3 class="h5 mb-2">Telehealth in one click</h3>
+              <p class="text-muted-2 mb-0">HD video, screen sharing and side-by-side chart review. No app installs for patients.</p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="feature-card">
+              <span class="icon-wrap icon-rose mb-3"><i class="bi bi-receipt"></i></span>
+              <h3 class="h5 mb-2">Billing & claims, simplified</h3>
+              <p class="text-muted-2 mb-0">Auto-coded claims, real-time eligibility checks and payments — all from the same chart.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom row -->
+      <div class="col-md-4">
+        <div class="feature-card">
+          <span class="icon-wrap icon-amber mb-3"><i class="bi bi-graph-up-arrow"></i></span>
+          <h3 class="h5 mb-2">Analytics that drive outcomes</h3>
+          <p class="text-muted-2 mb-0">Pre-built dashboards for population health, clinician performance and revenue — no SQL required.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="feature-card">
+          <span class="icon-wrap icon-emerald mb-3"><i class="bi bi-chat-dots"></i></span>
+          <h3 class="h5 mb-2">Secure team chat</h3>
+          <p class="text-muted-2 mb-0">Threaded conversations linked to patient records. Handoffs and escalations never get lost.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="feature-card">
+          <span class="icon-wrap icon-brand mb-3"><i class="bi bi-puzzle"></i></span>
+          <h3 class="h5 mb-2">200+ integrations</h3>
+          <p class="text-muted-2 mb-0">Connect your labs, pharmacy, imaging and accounting tools. Open API for everything else.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TABBED SHOWCASE ============ -->
+<section id="solutions" class="py-5 py-lg-6 bg-soft">
+  <div class="container py-3">
+    <div class="row justify-content-center text-center mb-5">
+      <div class="col-lg-8">
+        <span class="eyebrow eyebrow-accent mb-3">Built for every role</span>
+        <h2 class="display-5 mb-3">One platform, tailored to <span class="gradient-text">how you work.</span></h2>
+      </div>
+    </div>
+
+    <div class="row justify-content-center mb-4">
+      <div class="col-auto">
+        <div class="d-flex flex-wrap gap-2 justify-content-center" role="tablist" id="roleTabs">
+          <button class="tab-pill active" data-role="clinicians" type="button">For clinicians</button>
+          <button class="tab-pill" data-role="admins" type="button">For administrators</button>
+          <button class="tab-pill" data-role="patients" type="button">For patients</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="row align-items-center g-5" id="rolePanel">
+      <div class="col-lg-6">
+        <div id="roleText">
+          <h3 class="h2 mb-3" id="roleTitle">Less charting. More caring.</h3>
+          <p class="text-muted-2 mb-4" id="roleDesc" style="font-size:1.1rem;">
+            Voice-to-note, smart templates and pre-filled summaries cut documentation time by half. Your focus stays on the patient, not the screen.
+          </p>
+          <ul class="list-unstyled mb-4" id="roleList">
+            <li class="d-flex align-items-start gap-2 mb-3">
+              <i class="bi bi-check-circle-fill text-brand mt-1"></i>
+              <span><strong>AI scribe</strong> captures the visit and writes the note for you.</span>
+            </li>
+            <li class="d-flex align-items-start gap-2 mb-3">
+              <i class="bi bi-check-circle-fill text-brand mt-1"></i>
+              <span><strong>One-tap prescriptions</strong> with allergy and interaction checks.</span>
+            </li>
+            <li class="d-flex align-items-start gap-2">
+              <i class="bi bi-check-circle-fill text-brand mt-1"></i>
+              <span><strong>Side-by-side chart review</strong> during telehealth visits.</span>
+            </li>
+          </ul>
+          <a href="#" class="btn btn-brand">Explore clinician tools <i class="bi bi-arrow-right ms-1"></i></a>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="mockup-card p-3">
+          <div class="d-flex align-items-center justify-content-between mb-3 px-2">
+            <span class="fw-semibold small">Daily overview</span>
+            <span class="badge bg-brand-soft text-brand-dark rounded-pill">Live</span>
+          </div>
+          <div class="row g-3">
+            <div class="col-7">
+              <div class="border border-line rounded-3 p-3 h-100">
+                <div class="small text-muted-2 mb-2">Appointments today</div>
+                <div class="d-flex align-items-end gap-1 mb-2" style="height:90px;">
+                  <div class="chart-bar" style="height:30%"></div>
+                  <div class="chart-bar" style="height:55%"></div>
+                  <div class="chart-bar" style="height:75%"></div>
+                  <div class="chart-bar accent" style="height:90%"></div>
+                  <div class="chart-bar" style="height:65%"></div>
+                  <div class="chart-bar" style="height:80%"></div>
+                  <div class="chart-bar" style="height:45%"></div>
+                </div>
+                <div class="d-flex justify-content-between small text-muted-2">
+                  <span>8a</span><span>10a</span><span>12p</span><span>2p</span><span>4p</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-5">
+              <div class="border border-line rounded-3 p-3 mb-2">
+                <div class="small text-muted-2">Open tasks</div>
+                <div class="fw-bold fs-4 text-brand">14</div>
+                <div class="small text-success"><i class="bi bi-arrow-down-right"></i> 5 vs. yesterday</div>
+              </div>
+              <div class="border border-line rounded-3 p-3">
+                <div class="small text-muted-2">Avg. wait time</div>
+                <div class="fw-bold fs-4">6m 12s</div>
+                <div class="vital-bar mt-1"><span style="width:30%"></span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOW IT WORKS ============ -->
+<section id="how" class="py-5 py-lg-6">
+  <div class="container py-3">
+    <div class="row justify-content-center text-center mb-5">
+      <div class="col-lg-8">
+        <span class="eyebrow mb-3">How it works</span>
+        <h2 class="display-5 mb-3">Live in <span class="gradient-text">three simple steps.</span></h2>
+        <p class="lead text-muted-2 mb-0">Most teams go live in under two weeks — no migrations to dread, no consultants to hire.</p>
+      </div>
+    </div>
+
+    <div class="row g-4 position-relative">
+      <div class="col-md-4 position-relative">
+        <div class="text-center px-3">
+          <div class="step-num mx-auto mb-4">1</div>
+          <h3 class="h5 mb-2">Connect your data</h3>
+          <p class="text-muted-2 mb-0">Import from your existing EHR, practice management tool or spreadsheets. Our migration assistant handles the heavy lifting.</p>
+        </div>
+        <div class="step-line d-none d-md-block"></div>
+      </div>
+      <div class="col-md-4 position-relative">
+        <div class="text-center px-3">
+          <div class="step-num mx-auto mb-4">2</div>
+          <h3 class="h5 mb-2">Tailor the workflow</h3>
+          <p class="text-muted-2 mb-0">Pick templates, build care pathways and configure roles to match how your team already works — not the other way around.</p>
+        </div>
+        <div class="step-line d-none d-md-block"></div>
+      </div>
+      <div class="col-md-4">
+        <div class="text-center px-3">
+          <div class="step-num mx-auto mb-4">3</div>
+          <h3 class="h5 mb-2">Go live with confidence</h3>
+          <p class="text-muted-2 mb-0">White-glove onboarding, live chat support and a dedicated success manager. We don't disappear after launch.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center mt-5">
+      <a href="#" class="btn btn-brand btn-lg">Book a demo <i class="bi bi-arrow-right ms-1"></i></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TESTIMONIALS ============ -->
+<section class="py-5 py-lg-6 bg-soft">
+  <div class="container py-3">
+    <div class="row justify-content-center text-center mb-5">
+      <div class="col-lg-8">
+        <span class="eyebrow eyebrow-accent mb-3">Customer stories</span>
+        <h2 class="display-5 mb-3">Care teams love <span class="gradient-text">working with CareFlow.</span></h2>
+      </div>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="testimonial-card">
+          <div class="quote-mark mb-1">"</div>
+          <p class="mb-4">We cut documentation time by 47% in the first quarter. Clinicians actually leave on time now — that alone was worth the switch.</p>
+          <div class="d-flex align-items-center">
+            <span class="avatar me-3" style="width:48px;height:48px;">SR</span>
+            <div>
+              <div class="fw-semibold">Dr. Sarah Reyes</div>
+              <div class="small text-muted-2">Medical Director, Meridian Care</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="testimonial-card">
+          <div class="quote-mark mb-1">"</div>
+          <p class="mb-4">The scheduling alone paid for itself in two months. No-shows are down 41% and our front desk finally has breathing room.</p>
+          <div class="d-flex align-items-center">
+            <span class="avatar avatar-accent me-3" style="width:48px;height:48px;">AK</span>
+            <div>
+              <div class="fw-semibold">Amelia Koh</div>
+              <div class="small text-muted-2">Operations Lead, Helix Clinics</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="testimonial-card">
+          <div class="quote-mark mb-1">"</div>
+          <p class="mb-4">CareFlow is the first tool our entire team actually agrees on. It's calm, fast, and feels like it was designed by people who know healthcare.</p>
+          <div class="d-flex align-items-center">
+            <span class="avatar avatar-rose me-3" style="width:48px;height:48px;">JM</span>
+            <div>
+              <div class="fw-semibold">James Mwangi</div>
+              <div class="small text-muted-2">CEO, NorthPeak Health</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRICING ============ -->
+<section id="pricing" class="py-5 py-lg-6">
+  <div class="container py-3">
+    <div class="row justify-content-center text-center mb-5">
+      <div class="col-lg-8">
+        <span class="eyebrow mb-3">Pricing</span>
+        <h2 class="display-5 mb-3">Simple, transparent <span class="gradient-text">per-clinician pricing.</span></h2>
+        <p class="lead text-muted-2 mb-0">No setup fees. No per-patient surprises. Cancel anytime.</p>
+      </div>
+    </div>
+
+    <div class="row g-4 justify-content-center">
+      <div class="col-lg-4">
+        <div class="price-card">
+          <h3 class="h5 mb-1">Starter</h3>
+          <p class="text-muted-2 small mb-4">For solo practices getting started.</p>
+          <div class="d-flex align-items-baseline mb-1">
+            <span class="display-5 fw-bold">$29</span>
+            <span class="text-muted-2 ms-2">/ clinician / mo</span>
+          </div>
+          <p class="small text-muted-2 mb-4">Billed annually</p>
+          <a href="#" class="btn btn-outline-brand w-100 mb-4">Start free trial</a>
+          <ul class="list-unstyled mb-0 small">
+            <li class="d-flex gap-2 mb-2"><i class="bi bi-check-lg text-brand"></i> Up to 200 patients</li>
+            <li class="d-flex gap-2 mb-2"><i class="bi bi-check-lg text-brand"></i> Patient records & timeline</li>
+            <li class="d-flex gap-2 mb-2"><i class="bi bi-check-lg text-brand"></i> Smart scheduling</li>
+            <li class="d-flex gap-2 mb-2"><i class="bi bi-check-lg text-brand"></i> 5 integrations</li>
+            <li class="d-flex gap-2 text-muted-2"><i class="bi bi-x-lg"></i> Telehealth add-on</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="col-lg-4">
+        <div class="price-card featured">
+          <span class="badge bg-brand text-white rounded-pill mb-2 px-3 py-2">Most popular</span>
+          <h3 class="h5 mb-1">Professional</h3>
+          <p class="text-muted-2 small mb-4">For growing care teams.</p>
+          <div class="d-flex align-items-baseline mb-1">
+            <span class="display-5 fw-bold">$59</span>
+            <span class="text-muted-2 ms-2">/ clinician / mo</span>
+          </div>
+          <p class="small text-muted-2 mb-4">Billed annually</p>
+          <a href="#" class="btn btn-brand w-100 mb-4">Start free trial</a>
+          <ul class="list-unstyled mb-0 small">
+            <li class="d-flex gap-2 mb-2"><i class="bi bi-check-lg text-brand"></i> Unlimited patients</li>
+            <li class="d-flex gap-2 mb-2"><i class="bi bi-check-lg text-brand"></i> Telehealth included</li>
+            <li class="d-flex gap-2 mb-2"><i class="bi bi-check-lg text-brand"></i> AI scribe & smart templates</li>
+            <li class="d-flex gap-2 mb-2"><i class="bi bi-check-lg text-brand"></i> Billing & claims</li>
+            <li class="d-flex gap-2 mb-2"><i class="bi bi-check-lg text-brand"></i> 50+ integrations</li>
+            <li class="d-flex gap-2"><i class="bi bi-check-lg text-brand"></i> Priority support</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="col-lg-4">
+        <div class="price-card">
+          <h3 class="h5 mb-1">Enterprise</h3>
+          <p class="text-muted-2 small mb-4">For health systems & networks.</p>
+          <div class="d-flex align-items-baseline mb-1">
+            <span class="display-5 fw-bold">Custom</span>
+          </div>
+          <p class="small text-muted-2 mb-4">Tailored to your scale</p>
+          <a href="#" class="btn btn-outline-brand w-100 mb-4">Talk to sales</a>
+          <ul class="list-unstyled mb-0 small">
+            <li class="d-flex gap-2 mb-2"><i class="bi bi-check-lg text-brand"></i> Everything in Professional</li>
+            <li class="d-flex gap-2 mb-2"><i class="bi bi-check-lg text-brand"></i> SSO & advanced RBAC</li>
+            <li class="d-flex gap-2 mb-2"><i class="bi bi-check-lg text-brand"></i> Custom integrations & API</li>
+            <li class="d-flex gap-2 mb-2"><i class="bi bi-check-lg text-brand"></i> Dedicated success manager</li>
+            <li class="d-flex gap-2"><i class="bi bi-check-lg text-brand"></i> 99.9% uptime SLA</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section id="faq" class="py-5 py-lg-6 bg-soft">
+  <div class="container py-3">
+    <div class="row justify-content-center text-center mb-5">
+      <div class="col-lg-8">
+        <span class="eyebrow mb-3">FAQ</span>
+        <h2 class="display-5 mb-3">Questions, <span class="gradient-text">answered.</span></h2>
+      </div>
+    </div>
+
+    <div class="row justify-content-center">
+      <div class="col-lg-9">
+        <div class="accordion faq-accordion" id="faqAccordion">
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                How long does it take to get started with CareFlow?
+              </button>
+            </h2>
+            <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+              <div class="accordion-body">
+                Most small teams are live within 2–5 days. For practices migrating from another EHR, our import assistant and onboarding team typically have you fully operational in under two weeks — including data migration, workflow configuration and team training.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                Is CareFlow compliant with HIPAA and other regulations?
+              </button>
+            </h2>
+            <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+              <div class="accordion-body">
+                Yes. CareFlow is HIPAA-compliant, SOC 2 Type II certified and GDPR-ready. All data is encrypted in transit and at rest with AES-256. We sign BAAs with every customer and undergo annual third-party security audits.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                Can I migrate data from my existing EHR?
+              </button>
+            </h2>
+            <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+              <div class="accordion-body">
+                Absolutely. We support direct imports from 30+ popular EHR systems, plus standard formats like CCDA, CSV and FHIR. Our migration team handles the mapping and verification — your historical data, including patient records, appointments and claims, comes with you.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                What integrations are available out of the box?
+              </button>
+            </h2>
+            <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+              <div class="accordion-body">
+                CareFlow connects with 200+ tools including major labs (Quest, LabCorp), pharmacies, imaging systems, accounting software and telephony providers. We also expose a fully documented REST API and webhooks for anything custom your team needs.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5">
+                Do you offer training for new teams?
+              </button>
+            </h2>
+            <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+              <div class="accordion-body">
+                Yes — onboarding is white-glove from day one. Every plan includes live chat support and a library of self-paced courses. Professional and Enterprise plans also get live group training sessions and a dedicated success manager for the first 90 days.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq6">
+                What happens to my data if I cancel?
+              </button>
+            </h2>
+            <div id="faq6" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+              <div class="accordion-body">
+                Your data is always yours. If you cancel, you can export everything in standard formats (CCDA, CSV, FHIR) for up to 90 days after termination. We never sell customer data and we never use it to train third-party models.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FINAL CTA ============ -->
+<section class="py-5 py-lg-6">
+  <div class="container py-3">
+    <div class="cta-section p-4 p-md-5 p-lg-5">
+      <div class="row align-items-center position-relative" style="z-index:1;">
+        <div class="col-lg-7 text-center text-lg-start">
+          <h2 class="display-4 text-white mb-3" style="font-weight:800;">Ready to flow?</h2>
+          <p class="lead text-white opacity-75 mb-0 pe-lg-5">Join 2,000+ care teams who replaced chaos with calm. Start your 14-day free trial — no credit card required.</p>
+        </div>
+        <div class="col-lg-5 text-center text-lg-end mt-4 mt-lg-0">
+          <a href="#" class="btn btn-light btn-lg me-2 mb-2" style="font-weight:600; padding:.8rem 1.8rem; border-radius:999px;">
+            Start free trial <i class="bi bi-arrow-right ms-1"></i>
+          </a>
+          <a href="#" class="btn btn-ghost-light btn-lg mb-2">
+            <i class="bi bi-calendar3 me-1"></i> Book a demo
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="pt-5 pb-4 border-top border-line">
+  <div class="container">
+    <div class="row g-4 pb-4">
+      <div class="col-lg-4">
+        <a class="navbar-brand d-flex align-items-center gap-2 mb-3" href="#">
+          <span class="d-inline-flex align-items-center justify-content-center rounded-4 bg-brand text-white" style="width:38px;height:38px;">
+            <i class="bi bi-activity-heart-pulse"></i>
+          </span>
+          <span class="fw-bold fs-4" style="font-family:'Plus Jakarta Sans',sans-serif;">CareFlow</span>
+        </a>
+        <p class="text-muted-2 mb-4 pe-lg-4" style="max-width:340px;">The modern care management platform for teams who believe healthcare deserves better software.</p>
+        <div class="d-flex gap-2">
+          <a href="#" class="icon-wrap icon-brand" style="width:40px;height:40px;font-size:1.1rem;"><i class="bi bi-twitter-x"></i></a>
+          <a href="#" class="icon-wrap icon-brand" style="width:40px;height:40px;font-size:1.1rem;"><i class="bi bi-linkedin"></i></a>
+          <a href="#" class="icon-wrap icon-brand" style="width:40px;height:40px;font-size:1.1rem;"><i class="bi bi-github"></i></a>
+          <a href="#" class="icon-wrap icon-brand" style="width:40px;height:40px;font-size:1.1rem;"><i class="bi bi-youtube"></i></a>
+        </div>
+      </div>
+
+      <div class="col-6 col-lg-2">
+        <h6 class="fw-bold mb-3" style="font-family:'Plus Jakarta Sans',sans-serif;">Product</h6>
+        <ul class="list-unstyled mb-0 small">
+          <li class="mb-2"><a href="#" class="text-muted-2 text-decoration-none">Features</a></li>
+          <li class="mb-2"><a href="#" class="text-muted-2 text-decoration-none">Solutions</a></li>
+          <li class="mb-2"><a href="#" class="text-muted-2 text-decoration-none">Integrations</a></li>
+          <li class="mb-2"><a href="#" class="text-muted-2 text-decoration-none">Pricing</a></li>
+          <li class="mb-2"><a href="#" class="text-muted-2 text-decoration-none">Changelog</a></li>
+        </ul>
+      </div>
+
+      <div class="col-6 col-lg-2">
+        <h6 class="fw-bold mb-3" style="font-family:'Plus Jakarta Sans',sans-serif;">Company</h6>
+        <ul class="list-unstyled mb-0 small">
+          <li class="mb-2"><a href="#" class="text-muted-2 text-decoration-none">About</a></li>
+          <li class="mb-2"><a href="#" class="text-muted-2 text-decoration-none">Careers</a></li>
+          <li class="mb-2"><a href="#" class="text-muted-2 text-decoration-none">Customers</a></li>
+          <li class="mb-2"><a href="#" class="text-muted-2 text-decoration-none">Press</a></li>
+          <li class="mb-2"><a href="#" class="text-muted-2 text-decoration-none">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="col-6 col-lg-2">
+        <h6 class="fw-bold mb-3" style="font-family:'Plus Jakarta Sans',sans-serif;">Resources</h6>
+        <ul class="list-unstyled mb-0 small">
+          <li class="mb-2"><a href="#" class="text-muted-2 text-decoration-none">Help center</a></li>
+          <li class="mb-2"><a href="#" class="text-muted-2 text-decoration-none">API docs</a></li>
+          <li class="mb-2"><a href="#" class="text-muted-2 text-decoration-none">Blog</a></li>
+          <li class="mb-2"><a href="#" class="text-muted-2 text-decoration-none">Webinars</a></li>
+          <li class="mb-2"><a href="#" class="text-muted-2 text-decoration-none">Community</a></li>
+        </ul>
+      </div>
+
+      <div class="col-6 col-lg-2">
+        <h6 class="fw-bold mb-3" style="font-family:'Plus Jakarta Sans',sans-serif;">Legal</h6>
+        <ul class="list-unstyled mb-0 small">
+          <li class="mb-2"><a href="#" class="text-muted-2 text-decoration-none">Privacy</a></li>
+          <li class="mb-2"><a href="#" class="text-muted-2 text-decoration-none">Terms</a></li>
+          <li class="mb-2"><a href="#" class="text-muted-2 text-decoration-none">HIPAA</a></li>
+          <li class="mb-2"><a href="#" class="text-muted-2 text-decoration-none">Security</a></li>
+          <li class="mb-2"><a href="#" class="text-muted-2 text-decoration-none">BAA</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="row align-items-center pt-4 border-top border-line">
+      <div class="col-md-6 text-center text-md-start small text-muted-2">
+        © 2025 CareFlow, Inc. All rights reserved.
+      </div>
+      <div class="col-md-6 text-center text-md-end small text-muted-2">
+        <span class="me-3"><i class="bi bi-shield-check text-brand"></i> SOC 2 Type II</span>
+        <span class="me-3"><i class="bi bi-lock-fill text-brand"></i> HIPAA</span>
+        <span><i class="bi bi-globe2 text-brand"></i> GDPR</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.feature-card, .price-card, .testimonial-card, .step-num, .mockup-card')
+    .forEach(el => {
+      el.classList.add('reveal');
+      observer.observe(el);
+    });
+
+  // Role tab switcher
+  const roleData = {
+    clinicians: {
+      title: 'Less charting. More caring.',
+      desc: 'Voice-to-note, smart templates and pre-filled summaries cut documentation time by half. Your focus stays on the patient, not the screen.',
+      items: [
+        '<strong>AI scribe</strong> captures the visit and writes the note for you.',
+        '<strong>One-tap prescriptions</strong> with allergy and interaction checks.',
+        '<strong>Side-by-side chart review</strong> during telehealth visits.'
+      ],
+      cta: 'Explore clinician tools'
+    },
+    admins: {
+      title: 'Run a tighter, calmer operation.',
+      desc: 'Real-time dashboards, automated claims and smart scheduling give administrators total visibility — without drowning in spreadsheets.',
+      items: [
+        '<strong>Live operations dashboard</strong> across all locations and teams.',
+        '<strong>Automated claim scrubbing</strong> reduces denials by up to 63%.',
+        '<strong>Role-based access</strong> and full audit logs for every action.'
+      ],
+      cta: 'Explore admin tools'
+    },
+    patients: {
+      title: 'A patient experience that feels modern.',
+      desc: 'Book, message, attend visits and pay bills from one patient portal — no app downloads, no confusing portals, no phone tag.',
+      items: [
+        '<strong>Self-service booking</strong> with smart reminders by SMS and email.',
+        '<strong>One-click telehealth</strong> joins from any browser or device.',
+        '<strong>Transparent billing</strong> with payment plans and Apple Pay.'
+      ],
+      cta: 'Explore patient portal'
+    }
+  };
+
+  document.querySelectorAll('#roleTabs .tab-pill').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#roleTabs .tab-pill').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const role = btn.dataset.role;
+      const d = roleData[role];
+      document.getElementById('roleTitle').textContent = d.title;
+      document.getElementById('roleDesc').textContent = d.desc;
+      const ul = document.getElementById('roleList');
+      ul.innerHTML = d.items.map(i =>
+        `<li class="d-flex align-items-start gap-2 mb-3"><i class="bi bi-check-circle-fill text-brand mt-1"></i><span>${i}</span></li>`
+      ).join('');
+    });
+  });
+
+  // Smooth scroll for nav links
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', (e) => {
+      const id = a.getAttribute('href');
+      if (id.length > 1) {
+        const el = document.querySelector(id);
+        if (el) {
+          e.preventDefault();
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+    });
+  });
+</script>
+</body>
+</html>

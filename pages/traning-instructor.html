@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Marcus Reyes — Personal Training, Brooklyn</title>
+<meta name="description" content="Private personal training and structured challenge programs in Brooklyn. Strength, conditioning, and long-term coaching for people who'd rather not play the gym game." />
+<meta name="author" content="Marcus Reyes" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@200;300;400;500&display=swap" rel="stylesheet" />
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          bg: '#f2ede7',
+          ink: '#161616',
+          'ink-emp': '#333333',
+          'ink-mute': '#535353',
+          'ink-faint': '#b1b1b1',
+          line: '#e5e5e5',
+          inverse: '#ffffff',
+          paper: '#faf6f0',
+        },
+        fontFamily: {
+          serif: ['"Instrument Serif"', 'Georgia', 'serif'],
+          sans: ['Inter', 'system-ui', 'sans-serif'],
+        },
+        letterSpacing: {
+          'label': '0.18em',
+          'wide-2': '0.30em',
+        }
+      }
+    }
+  }
+</script>
+
+<style>
+  html { scroll-behavior: smooth; }
+  body {
+    background-color: #f2ede7;
+    color: #161616;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  .font-serif { font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; }
+
+  /* paper grain */
+  .noise-overlay {
+    position: fixed; inset: 0; pointer-events: none; z-index: 9999;
+    opacity: 0.04;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.6'/></svg>");
+    animation: noise 20s linear infinite;
+  }
+  @keyframes noise {
+    0%,100% { transform: translate(0,0); }
+    20%     { transform: translate(-10%, 5%); }
+    50%     { transform: translate(-10%, 5%); }
+    80%     { transform: translate(-15%, 0); }
+  }
+
+  /* cursor */
+  .cursor-dot, .cursor-ring {
+    position: fixed; top: 0; left: 0; pointer-events: none; z-index: 10000;
+    mix-blend-mode: difference; opacity: 0;
+    transition: opacity .2s ease-out;
+    will-change: transform;
+  }
+  .cursor-dot  { width: 6px;  height: 6px;  background: rgba(255,255,255,.85); border-radius: 50%; }
+  .cursor-ring { width: 32px; height: 32px; border: 1px solid rgba(255,255,255,.55); border-radius: 50%;
+    transition: opacity .2s ease-out, width .3s ease-out, height .3s ease-out; }
+  .cursor-dot.is-visible, .cursor-ring.is-visible { opacity: 1; }
+  @media (pointer: coarse) { .cursor-dot, .cursor-ring { display: none; } }
+
+  .fade-up { opacity: 0; transform: translateY(40px);
+    transition: opacity 1200ms cubic-bezier(.22,1,.36,1), transform 1200ms cubic-bezier(.22,1,.36,1);
+    will-change: transform, opacity; }
+  .fade-up.is-in { opacity: 1; transform: none; }
+  .fade-up.delay-1 { transition-delay: 120ms; }
+  .fade-up.delay-2 { transition-delay: 240ms; }
+  .fade-up.delay-3 { transition-delay: 360ms; }
+
+  .img-hover { overflow: hidden; }
+  .img-hover img {
+    transition: transform 1.4s cubic-bezier(.22,1,.36,1), filter 0.6s ease;
+    will-change: transform; display: block; width: 100%; height: 100%; object-fit: cover;
+  }
+  .img-hover:hover img { transform: scale(1.04); }
+
+  .underline-on-hover { background-image: linear-gradient(currentColor, currentColor);
+    background-position: 0 100%; background-repeat: no-repeat; background-size: 0% 1px;
+    transition: background-size 0.5s cubic-bezier(.22,1,.36,1); padding-bottom: 2px; }
+  .underline-on-hover:hover { background-size: 100% 1px; }
+
+  .label {
+    font-family: 'Inter', sans-serif; font-weight: 400; font-size: 11px;
+    letter-spacing: 0.18em; text-transform: uppercase; color: #535353;
+  }
+
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 0.625rem;
+    background: #161616; color: #f2ede7;
+    padding: 0.875rem 1.75rem; font-size: 11px;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    transition: background 0.4s ease, padding 0.4s ease;
+  }
+  .btn-primary:hover { background: #333; padding-right: 2.25rem; }
+
+  .marginalia { font-family: 'Instrument Serif', serif; font-style: italic; color: #535353; }
+
+  .polaroid {
+    background: #faf6f0;
+    padding: 1rem 1rem 2.5rem;
+    box-shadow: 0 8px 30px -10px rgba(22,22,22,0.18), 0 2px 4px rgba(22,22,22,0.04);
+    transition: transform 0.6s cubic-bezier(.22,1,.36,1);
+  }
+  .polaroid:hover { transform: translateY(-6px) rotate(-0.4deg); }
+
+  .hero-frame {
+    position: relative; overflow: hidden;
+    background: #e8e2da;
+  }
+  .hero-frame::after {
+    content: ''; position: absolute; inset: 0; pointer-events: none;
+    box-shadow: inset 0 0 60px rgba(22,22,22,0.05);
+  }
+
+  .field {
+    width: 100%; background: transparent; border: none;
+    border-bottom: 1px solid #e5e5e5; padding: 1rem 0;
+    font-family: 'Inter', sans-serif; font-weight: 300; font-size: 16px;
+    color: #161616; transition: border-color 0.4s ease;
+  }
+  .field:focus { outline: none; border-bottom-color: #161616; }
+  .field::placeholder { color: #b1b1b1; font-weight: 300; }
+
+  .program-row { transition: background 0.5s ease; }
+  .program-row:hover { background: rgba(22,22,22,0.02); }
+  .program-row:hover .program-arrow { transform: translateX(8px); }
+  .program-arrow { transition: transform 0.5s cubic-bezier(.22,1,.36,1); display: inline-block; }
+
+  .challenge-card { transition: transform 0.6s cubic-bezier(.22,1,.36,1); }
+  .challenge-card:hover { transform: translateY(-6px); }
+  .challenge-card:hover img { transform: scale(1.03); }
+
+  .nav-link { position: relative; }
+  .nav-link::after {
+    content: ''; position: absolute; left: 0; bottom: -4px;
+    width: 100%; height: 1px; background: #161616;
+    transform: scaleX(0); transform-origin: right;
+    transition: transform 0.5s cubic-bezier(.22,1,.36,1);
+  }
+  .nav-link:hover::after { transform: scaleX(1); transform-origin: left; }
+
+  /* mobile menu */
+  .mobile-menu { display: none; }
+  .mobile-menu.open { display: flex; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fade-up { opacity: 1 !important; transform: none !important; transition: none !important; }
+    .noise-overlay { animation: none; }
+    .img-hover img, .challenge-card img { transition: none !important; }
+    html { scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body>
+
+<!-- grain overlay -->
+<div class="noise-overlay"></div>
+
+<!-- custom cursor -->
+<div class="cursor-dot"></div>
+<div class="cursor-ring"></div>
+
+<!-- ============ HEADER ============ -->
+<header class="relative z-50 px-6 lg:px-12 py-6 flex items-center justify-between">
+  <a href="#home" class="flex items-baseline gap-3 cursor-hover">
+    <span class="font-serif text-2xl leading-none">M·R</span>
+    <span class="label hidden md:inline">Personal Training · Brooklyn</span>
+  </a>
+
+  <nav class="hidden md:flex items-center gap-8">
+    <a href="#programs"  class="nav-link label cursor-hover">Programs</a>
+    <a href="#challenges" class="nav-link label cursor-hover">Challenges</a>
+    <a href="#approach"  class="nav-link label cursor-hover">Approach</a>
+    <a href="#contact"   class="nav-link label cursor-hover">Contact</a>
+  </nav>
+
+  <a href="#contact" class="hidden md:inline-flex items-center gap-2 label cursor-hover underline-on-hover">
+    Begin training
+    <span class="text-base leading-none">→</span>
+  </a>
+
+  <button id="menu-toggle" class="md:hidden flex flex-col gap-1.5 p-2 cursor-hover" aria-label="Menu">
+    <span class="w-6 h-px bg-ink"></span>
+    <span class="w-6 h-px bg-ink"></span>
+  </button>
+</header>
+
+<!-- mobile menu -->
+<div id="mobile-menu" class="mobile-menu md:!hidden fixed inset-0 bg-bg z-40 flex-col items-center justify-center gap-8 px-6">
+  <a href="#programs"   class="font-serif text-3xl mobile-link">Programs</a>
+  <a href="#challenges" class="font-serif text-3xl mobile-link">Challenges</a>
+  <a href="#approach"   class="font-serif text-3xl mobile-link">Approach</a>
+  <a href="#contact"    class="font-serif text-3xl mobile-link">Contact</a>
+  <a href="#contact"    class="btn-primary mobile-link mt-4">Begin training →</a>
+</div>
+
+<main>
+
+<!-- ============ HERO ============ -->
+<section id="home" class="px-6 lg:px-12 pt-12 md:pt-16 pb-20 md:pb-28">
+  <div class="grid grid-cols-12 gap-6 lg:gap-12">
+
+    <div class="col-span-12 lg:col-span-5 flex flex-col justify-between order-2 lg:order-1">
+      <div>
+        <p class="label fade-up">Vol. 04 — Spring intake, now open</p>
+        <h1 class="font-serif text-5xl sm:text-6xl lg:text-7xl xl:text-8xl leading-[1.02] mt-8 fade-up delay-1">
+          Strength, kept<br>simple — for<br>people who'd<br>rather not play<br>the <em class="italic">gym game</em>.
+        </h1>
+      </div>
+
+      <div class="mt-12 lg:mt-16 fade-up delay-2">
+        <p class="text-ink-mute max-w-md leading-relaxed">
+          I'm Marcus. I train a small roster of clients in a private studio in Carroll Gardens — no crowds, no mirrors, no music you didn't pick. Just deliberate programming, honest feedback, and the boring fundamentals done well.
+        </p>
+
+        <div class="flex flex-col sm:flex-row items-start sm:items-center gap-5 mt-10">
+          <a href="#contact" class="btn-primary cursor-hover">
+            Begin training
+            <span class="text-base leading-none">→</span>
+          </a>
+          <a href="#programs" class="label cursor-hover underline-on-hover">Or, see the programs</a>
+        </div>
+
+        <div class="flex gap-12 mt-14 pt-8 border-t border-line">
+          <div>
+            <div class="font-serif text-4xl">9</div>
+            <div class="label mt-1">Years coaching</div>
+          </div>
+          <div>
+            <div class="font-serif text-4xl">220+</div>
+            <div class="label mt-1">Clients trained</div>
+          </div>
+          <div>
+            <div class="font-serif text-4xl">1:1</div>
+            <div class="label mt-1">Always private</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-span-12 lg:col-span-7 order-1 lg:order-2 fade-up delay-1">
+      <div class="hero-frame aspect-[4/5] md:aspect-[5/6]">
+        <img
+          src="https://picsum.photos/seed/trainer-marcus-portrait-quiet/1200/1440"
+          alt="Marcus Reyes standing in his private training studio in Brooklyn, afternoon light"
+          class="w-full h-full object-cover"
+        />
+        <div class="absolute bottom-0 left-0 right-0 p-6 md:p-10">
+          <div class="text-white">
+            <p class="font-serif italic text-2xl md:text-3xl leading-tight max-w-md">
+              "Be stronger than your last excuse."
+            </p>
+            <p class="label mt-3" style="color: rgba(255,255,255,0.75)">Plate 01 · Studio, 6:42 AM</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between mt-5 gap-3">
+        <p class="label">Marcus Reyes — Head Coach, Studio M·R</p>
+        <p class="label">Consultation · $0 · 30 min</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ INTRO STRIP ============ -->
+<section class="border-t border-line">
+  <div class="px-6 lg:px-12 py-16 md:py-20">
+    <div class="grid grid-cols-12 gap-6 lg:gap-12">
+      <div class="col-span-12 md:col-span-3">
+        <p class="label fade-up">§ A note</p>
+      </div>
+      <div class="col-span-12 md:col-span-9">
+        <p class="font-serif text-2xl md:text-3xl lg:text-4xl leading-snug text-ink-emp fade-up delay-1">
+          I don't sell transformations in six weeks. I sell the slower thing —
+          a body that does what you ask of it at forty, fifty, sixty. Most of my clients
+          came to me after burning out on something louder. They stayed because the
+          sessions are <em class="italic">boring</em>, in the best possible way.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROGRAMS ============ -->
+<section id="programs" class="border-t border-line">
+  <div class="px-6 lg:px-12 py-20 md:py-28">
+    <div class="grid grid-cols-12 gap-6 lg:gap-12 mb-16 md:mb-20">
+      <div class="col-span-12 md:col-span-5">
+        <p class="label fade-up">Section II · Programs</p>
+        <h2 class="font-serif text-4xl md:text-5xl lg:text-6xl mt-6 leading-[1.05] fade-up delay-1">
+          Four ways<br>we can work<br>together.
+        </h2>
+      </div>
+      <div class="col-span-12 md:col-span-6 md:col-start-7 flex items-end">
+        <p class="text-ink-mute max-w-md leading-relaxed fade-up delay-2">
+          Every program starts with a free 30-minute consultation — in studio or over video. We talk through your history, your time, and what you actually want. Then I tell you, plainly, whether I'm the right person for it.
+        </p>
+      </div>
+    </div>
+
+    <!-- program list -->
+    <div class="border-t border-line">
+      <a href="#contact" class="program-row block border-b border-line py-10 cursor-hover">
+        <div class="grid grid-cols-12 gap-6 items-baseline">
+          <div class="col-span-2 md:col-span-1">
+            <span class="label">01</span>
+          </div>
+          <div class="col-span-10 md:col-span-4">
+            <h3 class="font-serif text-3xl md:text-4xl">Private Training</h3>
+          </div>
+          <div class="col-span-12 md:col-span-4 md:col-start-6">
+            <p class="text-ink-mute text-sm leading-relaxed">
+              One-on-one sessions in the studio. Fully individualized programming, weekly check-ins, and direct line access between sessions.
+            </p>
+          </div>
+          <div class="col-span-6 md:col-span-2 md:col-start-11 text-right">
+            <p class="font-serif text-2xl">$140<span class="text-ink-faint text-base">/hr</span></p>
+          </div>
+          <div class="col-span-6 md:col-span-1 text-right">
+            <span class="program-arrow font-serif text-2xl">→</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="#contact" class="program-row block border-b border-line py-10 cursor-hover">
+        <div class="grid grid-cols-12 gap-6 items-baseline">
+          <div class="col-span-2 md:col-span-1"><span class="label">02</span></div>
+          <div class="col-span-10 md:col-span-4">
+            <h3 class="font-serif text-3xl md:text-4xl">Semi-Private</h3>
+          </div>
+          <div class="col-span-12 md:col-span-4 md:col-start-6">
+            <p class="text-ink-mute text-sm leading-relaxed">
+              You and one other person, matched by me. Same quality of coaching, slightly less attention, noticeably lower cost.
+            </p>
+          </div>
+          <div class="col-span-6 md:col-span-2 md:col-start-11 text-right">
+            <p class="font-serif text-2xl">$85<span class="text-ink-faint text-base">/hr</span></p>
+          </div>
+          <div class="col-span-6 md:col-span-1 text-right">
+            <span class="program-arrow font-serif text-2xl">→</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="#contact" class="program-row block border-b border-line py-10 cursor-hover">
+        <div class="grid grid-cols-12 gap-6 items-baseline">
+          <div class="col-span-2 md:col-span-1"><span class="label">03</span></div>
+          <div class="col-span-10 md:col-span-4">
+            <h3 class="font-serif text-3xl md:text-4xl">Remote Coaching</h3>
+          </div>
+          <div class="col-span-12 md:col-span-4 md:col-start-6">
+            <p class="text-ink-mute text-sm leading-relaxed">
+              For clients outside Brooklyn. Weekly programming via app, form review on video, one 20-minute call each month.
+            </p>
+          </div>
+          <div class="col-span-6 md:col-span-2 md:col-start-11 text-right">
+            <p class="font-serif text-2xl">$320<span class="text-ink-faint text-base">/mo</span></p>
+          </div>
+          <div class="col-span-6 md:col-span-1 text-right">
+            <span class="program-arrow font-serif text-2xl">→</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="#challenges" class="program-row block border-b border-line py-10 cursor-hover">
+        <div class="grid grid-cols-12 gap-6 items-baseline">
+          <div class="col-span-2 md:col-span-1"><span class="label">04</span></div>
+          <div class="col-span-10 md:col-span-4">
+            <h3 class="font-serif text-3xl md:text-4xl">Quarterly Challenge</h3>
+          </div>
+          <div class="col-span-12 md:col-span-4 md:col-start-6">
+            <p class="text-ink-mute text-sm leading-relaxed">
+              A six-week group program, four times a year. Limited to ten people. Detailed further down this page.
+            </p>
+          </div>
+          <div class="col-span-6 md:col-span-2 md:col-start-11 text-right">
+            <p class="font-serif text-2xl">$540</p>
+          </div>
+          <div class="col-span-6 md:col-span-1 text-right">
+            <span class="program-arrow font-serif text-2xl">→</span>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <p class="marginalia text-sm md:text-base mt-10 max-w-2xl">
+      Pricing is per session unless noted. Packages of 10 reduce the per-session cost by about 12%. I don't sell anything larger than that — commitment shouldn't be a financial decision.
+    </p>
+  </div>
+</section>
+
+<!-- ============ APPROACH ============ -->
+<section id="approach" class="border-t border-line">
+  <div class="px-6 lg:px-12 py-20 md:py-28">
+    <div class="grid grid-cols-12 gap-6 lg:gap-12">
+
+      <div class="col-span-12 lg:col-span-5">
+        <div class="lg:sticky lg:top-12">
+          <p class="label fade-up">Section III · Approach</p>
+          <h2 class="font-serif text-4xl md:text-5xl lg:text-6xl mt-6 leading-[1.05] fade-up delay-1">
+            The way<br>I work.
+          </h2>
+          <p class="text-ink-mute mt-8 max-w-sm leading-relaxed fade-up delay-2">
+            Three principles I keep returning to. They're unspectacular. That's the point.
+          </p>
+
+          <div class="mt-12 img-hover aspect-[4/5] fade-up delay-3">
+            <img src="https://picsum.photos/seed/barbell-detail-quiet-studio/800/1000"
+                 alt="Close detail of a loaded barbell on the platform, late afternoon light" />
+          </div>
+        </div>
+      </div>
+
+      <div class="col-span-12 lg:col-span-6 lg:col-start-7 mt-12 lg:mt-0">
+
+        <div class="fade-up">
+          <div class="flex items-baseline gap-4">
+            <span class="font-serif text-3xl text-ink-faint">i.</span>
+            <h3 class="font-serif text-2xl md:text-3xl">Train the movement, not the mirror.</h3>
+          </div>
+          <p class="text-ink-mute mt-4 leading-relaxed pl-10">
+            We start every program by making the basics look right — hinge, squat, push, pull, carry. Aesthetics follow mechanics. Trying to reverse the order is how people get hurt, or bored, or both.
+          </p>
+        </div>
+
+        <div class="mt-14 pt-14 border-t border-line fade-up delay-1">
+          <div class="flex items-baseline gap-4">
+            <span class="font-serif text-3xl text-ink-faint">ii.</span>
+            <h3 class="font-serif text-2xl md:text-3xl">Program for the next decade.</h3>
+          </div>
+          <p class="text-ink-mute mt-4 leading-relaxed pl-10">
+            I'd rather you add five pounds to your deadlift this year and still be training at seventy than add fifty and quit by forty-five. Every block is built with that horizon in mind. Some weeks we go backwards on purpose.
+          </p>
+        </div>
+
+        <div class="mt-14 pt-14 border-t border-line fade-up delay-2">
+          <div class="flex items-baseline gap-4">
+            <span class="font-serif text-3xl text-ink-faint">iii.</span>
+            <h3 class="font-serif text-2xl md:text-3xl">The boring fundamentals, done well.</h3>
+          </div>
+          <p class="text-ink-mute mt-4 leading-relaxed pl-10">
+            No surface-balancing, no slosh pipes, no "functional" circuits that look better on Instagram than they feel in your back. You'll do fewer exercises than you expect, with more attention than you've ever had on them.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CHALLENGES ============ -->
+<section id="challenges" class="border-t border-line bg-paper">
+  <div class="px-6 lg:px-12 py-20 md:py-28">
+    <div class="grid grid-cols-12 gap-6 lg:gap-12 mb-16 md:mb-20">
+      <div class="col-span-12 md:col-span-5">
+        <p class="label fade-up">Section IV · Challenges</p>
+        <h2 class="font-serif text-4xl md:text-5xl lg:text-6xl mt-6 leading-[1.05] fade-up delay-1">
+          Four times<br>a year, ten<br>people, six<br>weeks.
+        </h2>
+      </div>
+      <div class="col-span-12 md:col-span-6 md:col-start-7 flex items-end">
+        <p class="text-ink-mute max-w-md leading-relaxed fade-up delay-2">
+          The Challenge is a structured group program for people who want the energy of training alongside others without the noise of a commercial class. Each cohort is capped at ten. You keep the same coach, the same time slot, and the same training partners for the full six weeks.
+        </p>
+      </div>
+    </div>
+
+    <!-- upcoming cohort -->
+    <div class="grid grid-cols-12 gap-6 lg:gap-12 mb-20">
+      <div class="col-span-12 lg:col-span-7 fade-up">
+        <div class="img-hover aspect-[16/10]">
+          <img src="https://picsum.photos/seed/group-training-quiet-morning/1400/875"
+               alt="A small group training together in the studio at dawn" />
+        </div>
+      </div>
+      <div class="col-span-12 lg:col-span-5 lg:pl-6 fade-up delay-1">
+        <p class="label">Next cohort — Spring '25</p>
+        <h3 class="font-serif text-3xl md:text-4xl mt-4 leading-tight">
+          The Foundations Reset
+        </h3>
+        <p class="text-ink-mute mt-5 leading-relaxed">
+          A six-week re-introduction to the five movement patterns, with two coached sessions per week and a third optional open-gym slot. Built for people returning to training after a stretch away, or for those who've never had someone watch them closely.
+        </p>
+
+        <dl class="mt-8 space-y-3 text-sm">
+          <div class="flex justify-between border-b border-line pb-3">
+            <dt class="label">Starts</dt>
+            <dd class="text-ink-emp">Monday, 14 April 2025</dd>
+          </div>
+          <div class="flex justify-between border-b border-line pb-3">
+            <dt class="label">Sessions</dt>
+            <dd class="text-ink-emp">Tue & Thu · 6:30 AM or 6:30 PM</dd>
+          </div>
+          <div class="flex justify-between border-b border-line pb-3">
+            <dt class="label">Cohort size</dt>
+            <dd class="text-ink-emp">10 (3 spots remaining)</dd>
+          </div>
+          <div class="flex justify-between border-b border-line pb-3">
+            <dt class="label">Cost</dt>
+            <dd class="text-ink-emp">$540 for the full six weeks</dd>
+          </div>
+          <div class="flex justify-between border-b border-line pb-3">
+            <dt class="label">Includes</dt>
+            <dd class="text-ink-emp">Programming, video review, end-of-cohort 1:1</dd>
+          </div>
+        </dl>
+
+        <a href="#contact" class="btn-primary mt-10 cursor-hover">
+          Reserve a spot
+          <span class="text-base leading-none">→</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- past cohorts archive -->
+    <div class="border-t border-line pt-14">
+      <p class="label fade-up">Archive — previous cohorts</p>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mt-10">
+
+        <a href="#" class="challenge-card group cursor-hover fade-up">
+          <div class="img-hover aspect-[4/5]">
+            <img src="https://picsum.photos/seed/winter-cohort-archive/800/1000"
+                 alt="Winter 2024 Strength Foundations cohort" />
+          </div>
+          <div class="flex items-baseline justify-between mt-4">
+            <p class="font-serif text-xl">Winter '24 — Strength Foundations</p>
+            <span class="label">07</span>
+          </div>
+          <p class="text-sm text-ink-mute mt-2 leading-relaxed">
+            Eight clients, six weeks, average back-squat 1RM up 9%. Two PRs in deadlift, one minor low-back tweak (mine, not theirs).
+          </p>
+        </a>
+
+        <a href="#" class="challenge-card group cursor-hover fade-up delay-1">
+          <div class="img-hover aspect-[4/5]">
+            <img src="https://picsum.photos/seed/autumn-cohort-archive/800/1000"
+                 alt="Autumn 2024 Pulling Patterns cohort" />
+          </div>
+          <div class="flex items-baseline justify-between mt-4">
+            <p class="font-serif text-xl">Autumn '24 — Pulling Patterns</p>
+            <span class="label">10</span>
+          </div>
+          <p class="text-sm text-ink-mute mt-2 leading-relaxed">
+            Full cohort. Focused on pull-ups and hinge variations. Nine of ten achieved their first unassisted pull-up by week five.
+          </p>
+        </a>
+
+        <a href="#" class="challenge-card group cursor-hover fade-up delay-2">
+          <div class="img-hover aspect-[4/5]">
+            <img src="https://picsum.photos/seed/summer-cohort-archive/800/1000"
+                 alt="Summer 2024 Carry the Load cohort" />
+          </div>
+          <div class="flex items-baseline justify-between mt-4">
+            <p class="font-serif text-xl">Summer '24 — Carry the Load</p>
+            <span class="label">09</span>
+          </div>
+          <p class="text-sm text-ink-mute mt-2 leading-relaxed">
+            Loaded carries and conditioning. A hot July, two sessions moved indoors. Avg. resting heart rate down 6 bpm at cohort end.
+          </p>
+        </a>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TESTIMONIALS ============ -->
+<section class="border-t border-line">
+  <div class="px-6 lg:px-12 py-20 md:py-28">
+    <div class="grid grid-cols-12 gap-6 lg:gap-12 mb-16">
+      <div class="col-span-12 md:col-span-5">
+        <p class="label fade-up">Section V · In their words</p>
+        <h2 class="font-serif text-4xl md:text-5xl lg:text-6xl mt-6 leading-[1.05] fade-up delay-1">
+          Three clients,<br>three honest<br>accounts.
+        </h2>
+      </div>
+      <div class="col-span-12 md:col-span-6 md:col-start-7 flex items-end">
+        <p class="text-ink-mute max-w-md leading-relaxed fade-up delay-2">
+          I asked each of them to write something specific — not a marketing line. What follows is what they sent, edited only for length.
+        </p>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+
+      <div class="polaroid fade-up">
+        <div class="img-hover aspect-[4/5]">
+          <img src="https://picsum.photos/seed/client-portrait-mara-l/600/750"
+               alt="Portrait of Mara L., a long-term client" />
+        </div>
+        <p class="font-serif text-lg leading-snug mt-5 text-ink-emp">
+          "I came to Marcus after a back injury and two years of avoiding the gym entirely. He's the first coach who didn't try to push me back to where I'd been. We're building something new instead."
+        </p>
+        <p class="label mt-4">Mara L. · 38 · with M·R since 2022</p>
+      </div>
+
+      <div class="polaroid fade-up delay-1 mt-12 md:mt-8">
+        <div class="img-hover aspect-[4/5]">
+          <img src="https://picsum.photos/seed/client-portrait-david-k/600/750"
+               alt="Portrait of David K., a remote coaching client" />
+        </div>
+        <p class="font-serif text-lg leading-snug mt-5 text-ink-emp">
+          "I travel for work three weeks a month. Remote coaching sounded like a compromise — it isn't. The video reviews are sharper than most in-person sessions I've had. He sees things."
+        </p>
+        <p class="label mt-4">David K. · 44 · remote client since 2023</p>
+      </div>
+
+      <div class="polaroid fade-up delay-2 mt-12 md:mt-16">
+        <div class="img-hover aspect-[4/5]">
+          <img src="https://picsum.photos/seed/client-portrait-sarah-p/600/750"
+               alt="Portrait of Sarah P., a Foundations Reset participant" />
+        </div>
+        <p class="font-serif text-lg leading-snug mt-5 text-ink-emp">
+          "The Foundations Reset was the first time I'd done anything physical in fifteen years. Six weeks later I deadlifted my bodyweight and cried a little in the car. Worth the $540 ten times over."
+        </p>
+        <p class="label mt-4">Sarah P. · 51 · Spring '24 cohort</p>
+      </div>
+
+    </div>
+
+    <p class="marginalia text-sm md:text-base mt-16 max-w-2xl">
+      Longer case studies available on request. I can put you in direct touch with any of the three above — they've agreed to it.
+    </p>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section id="contact" class="border-t border-line bg-paper">
+  <div class="px-6 lg:px-12 py-20 md:py-28">
+    <div class="grid grid-cols-12 gap-6 lg:gap-12">
+
+      <div class="col-span-12 lg:col-span-5">
+        <p class="label fade-up">Section VI · Contact</p>
+        <h2 class="font-serif text-5xl md:text-6xl lg:text-7xl mt-6 leading-[1.02] fade-up delay-1">
+          Begin<br>training.
+        </h2>
+        <p class="text-ink-mute mt-8 max-w-sm leading-relaxed fade-up delay-2">
+          Tell me a little about where you're starting from and what you're hoping for. I read every message myself, usually within a day. The first consultation is free and comes with no expectation — if we're not a fit, I'll say so.
+        </p>
+
+        <div class="mt-12 space-y-6 text-sm fade-up delay-3">
+          <div>
+            <p class="label">Studio</p>
+            <p class="text-ink-emp mt-2 font-serif text-lg">237 Smith Street, Carroll Gardens, Brooklyn</p>
+          </div>
+          <div>
+            <p class="label">Direct</p>
+            <p class="text-ink-emp mt-2 font-serif text-lg">marcus@studiomr.co · (347) 555-0184</p>
+          </div>
+          <div>
+            <p class="label">Hours</p>
+            <p class="text-ink-emp mt-2 font-serif text-lg">Mon–Fri, 6 AM – 8 PM · Sat by appointment</p>
+          </div>
+          <div>
+            <p class="label">Response time</p>
+            <p class="text-ink-emp mt-2 font-serif text-lg">Within one business day, always.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-span-12 lg:col-span-6 lg:col-start-7 mt-12 lg:mt-0 fade-up delay-1">
+        <form id="contact-form" class="space-y-2" novalidate>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2">
+            <div>
+              <label for="name" class="label">Your name</label>
+              <input type="text" id="name" name="name" required class="field" placeholder="First and last" />
+            </div>
+            <div>
+              <label for="email" class="label">Email</label>
+              <input type="email" id="email" name="email" required class="field" placeholder="you@somewhere.com" />
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2 pt-2">
+            <div>
+              <label for="phone" class="label">Phone (optional)</label>
+              <input type="tel" id="phone" name="phone" class="field" placeholder="(347) …" />
+            </div>
+            <div>
+              <label for="program" class="label">Program of interest</label>
+              <select id="program" name="program" class="field bg-paper">
+                <option>Private Training</option>
+                <option>Semi-Private</option>
+                <option>Remote Coaching</option>
+                <option>Quarterly Challenge — Spring '25</option>
+                <option>Not sure yet</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="pt-2">
+            <label for="message" class="label">A few words about you</label>
+            <textarea id="message" name="message" rows="4" required class="field resize-none" placeholder="Training history, current goals, anything I should know — injuries, schedule constraints, etc."></textarea>
+          </div>
+
+          <div class="pt-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
+            <p class="text-xs text-ink-faint max-w-xs leading-relaxed">
+              Your message goes directly to my inbox. I don't share it with anyone, and I won't add you to a mailing list.
+            </p>
+            <button type="submit" class="btn-primary cursor-hover self-start sm:self-auto">
+              Send enquiry
+              <span class="text-base leading-none">→</span>
+            </button>
+          </div>
+        </form>
+
+        <!-- confirmation -->
+        <div id="form-confirm" class="hidden mt-8 p-6 border border-line bg-bg">
+          <p class="label">Received</p>
+          <p class="font-serif text-2xl mt-3 leading-snug">
+            Thank you — your message is on its way to my inbox. I'll be in touch within one business day.
+          </p>
+          <p class="text-sm text-ink-mute mt-3">A copy has been stored for my records; you'll receive one at <span id="confirm-email" class="text-ink-emp"></span> shortly.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="border-t border-line">
+  <div class="px-6 lg:px-12 py-12 md:py-16">
+    <div class="grid grid-cols-12 gap-6 lg:gap-12">
+
+      <div class="col-span-12 md:col-span-5">
+        <p class="font-serif text-3xl md:text-4xl leading-tight">
+          Studio M·R<br>
+          <span class="text-ink-mute">Personal training, kept simple.</span>
+        </p>
+      </div>
+
+      <div class="col-span-6 md:col-span-2">
+        <p class="label">Navigate</p>
+        <ul class="mt-4 space-y-2 text-sm">
+          <li><a href="#programs"   class="cursor-hover underline-on-hover">Programs</a></li>
+          <li><a href="#challenges" class="cursor-hover underline-on-hover">Challenges</a></li>
+          <li><a href="#approach"   class="cursor-hover underline-on-hover">Approach</a></li>
+          <li><a href="#contact"    class="cursor-hover underline-on-hover">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="col-span-6 md:col-span-2">
+        <p class="label">Elsewhere</p>
+        <ul class="mt-4 space-y-2 text-sm">
+          <li><a href="#" class="cursor-hover underline-on-hover">Instagram</a></li>
+          <li><a href="#" class="cursor-hover underline-on-hover">Substack</a></li>
+          <li><a href="#" class="cursor-hover underline-on-hover">Strava</a></li>
+        </ul>
+      </div>
+
+      <div class="col-span-12 md:col-span-3">
+        <p class="label">Studio</p>
+        <p class="mt-4 text-sm text-ink-mute leading-relaxed">
+          237 Smith Street<br>
+          Carroll Gardens, Brooklyn<br>
+          New York 11231
+        </p>
+      </div>
+    </div>
+
+    <div class="border-t border-line mt-12 pt-6 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+      <p class="text-xs text-ink-faint">© 2025 Marcus Reyes · Studio M·R · All rights reserved</p>
+      <p class="text-xs text-ink-faint">Site, vol. 04 — set in Instrument Serif &amp; Inter</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ SCRIPTS ============ -->
+<script>
+  // ---- cursor ----
+  (function() {
+    if (window.matchMedia('(pointer: coarse)').matches) return;
+    const dot = document.querySelector('.cursor-dot');
+    const ring = document.querySelector('.cursor-ring');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      dot.classList.add('is-visible');
+      ring.classList.add('is-visible');
+      dot.style.transform = `translate(${mx - 3}px, ${my - 3}px)`;
+    });
+
+    document.addEventListener('mouseleave', () => {
+      dot.classList.remove('is-visible');
+      ring.classList.remove('is-visible');
+    });
+
+    function tick() {
+      rx += (mx - rx) * 0.15;
+      ry += (my - ry) * 0.15;
+      ring.style.transform = `translate(${rx - 16}px, ${ry - 16}px)`;
+      requestAnimationFrame(tick);
+    }
+    tick();
+
+    document.querySelectorAll('a, button, .cursor-hover, input, textarea, select').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        ring.style.width = '60px';
+        ring.style.height = '60px';
+      });
+      el.addEventListener('mouseleave', () => {
+        ring.style.width = '32px';
+        ring.style.height = '32px';
+      });
+    });
+  })();
+
+  // ---- fade up on intersect ----
+  (function() {
+    const els = document.querySelectorAll('.fade-up');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('is-in');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    els.forEach(el => io.observe(el));
+  })();
+
+  // ---- mobile menu ----
+  (function() {
+    const toggle = document.getElementById('menu-toggle');
+    const menu = document.getElementById('mobile-menu');
+    const links = document.querySelectorAll('.mobile-link');
+    let open = false;
+
+    function setOpen(state) {
+      open = state;
+      menu.classList.toggle('open', open);
+      document.body.style.overflow = open ? 'hidden' : '';
+    }
+
+    toggle.addEventListener('click', () => setOpen(!open));
+    links.forEach(l => l.addEventListener('click', () => setOpen(false)));
+  })();
+
+  // ---- contact form (front-end demo only) ----
+  (function() {
+    const form = document.getElementById('contact-form');
+    const confirm = document.getElementById('form-confirm');
+    const confirmEmail = document.getElementById('confirm-email');
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const data = new FormData(form);
+      const email = data.get('email') || '';
+
+      // In production: POST to your CMS form endpoint / email service
+      // (WP REST API, Squarespace form handler, Formspree, etc.)
+      // For this mockup we simulate success and store locally.
+      const submission = {
+        name:    data.get('name'),
+        email:   email,
+        phone:   data.get('phone'),
+        program: data.get('program'),
+        message: data.get('message'),
+        at:      new Date().toISOString()
+      };
+      try {
+        const key = 'mR_submissions';
+        const prev = JSON.parse(localStorage.getItem(key) || '[]');
+        prev.push(submission);
+        localStorage.setItem(key, JSON.stringify(prev));
+      } catch (err) { /* storage may be unavailable */ }
+
+      form.style.display = 'none';
+      confirm.classList.remove('hidden');
+      confirmEmail.textContent = email;
+      confirm.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LAB → HEX Converter</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-light: #f4f7fb;
+            --card-bg: rgba(255, 255, 255, 0.7);
+            --border: rgba(0, 0, 0, 0.08);
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --accent: #4f46e5;
+            --input-bg: rgba(255, 255, 255, 0.9);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-light);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+            padding: 1rem;
+        }
+
+        /* Soft Pastel Background Orbs */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: 0;
+            opacity: 0.6;
+            animation: float 8s infinite ease-in-out;
+        }
+        .orb-1 { width: 300px; height: 300px; background: #c7d2fe; top: -50px; left: -50px; }
+        .orb-2 { width: 400px; height: 400px; background: #fbcfe8; bottom: -100px; right: -100px; animation-delay: -2s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(30px); }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 480px;
+            padding: 40px;
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            text-align: center;
+            background: linear-gradient(to right, #1e293b, #64748b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .input-group {
+            margin-bottom: 24px;
+        }
+
+        .label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            display: block;
+            font-weight: 600;
+        }
+
+        input {
+            width: 100%;
+            padding: 16px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            color: var(--text-main);
+            background: var(--input-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+        }
+
+        .swatch {
+            width: 100%;
+            height: 180px;
+            border-radius: 16px;
+            margin-bottom: 24px;
+            background-color: #FAFBFD;
+            border: 1px solid var(--border);
+            box-shadow: inset 0 1px 3px 0 rgba(0,0,0,0.05);
+            transition: background-color 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Checkerboard pattern for transparency testing */
+        .swatch::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: linear-gradient(45deg, #e2e8f0 25%, transparent 25%), 
+                              linear-gradient(-45deg, #e2e8f0 25%, transparent 25%), 
+                              linear-gradient(45deg, transparent 75%, #e2e8f0 75%), 
+                              linear-gradient(-45deg, transparent 75%, #e2e8f0 75%);
+            background-size: 20px 20px;
+            background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+            z-index: -1;
+        }
+
+        .result-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--input-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .result-text {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-main);
+            flex: 1;
+            letter-spacing: 1px;
+        }
+
+        .copy-btn {
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .copy-btn:hover {
+            background: #4338ca;
+            transform: translateY(-1px);
+        }
+
+        .copy-btn:active {
+            transform: translateY(0);
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+
+    <div class="container">
+        <h2>LAB to HEX Converter</h2>
+        
+        <div class="input-group">
+            <label class="label" for="labInput">Enter LAB Color</label>
+            <input type="text" id="labInput" value="lab(98.84% -.383586 -1.05327)" oninput="convertLabToHex()">
+        </div>
+
+        <div class="swatch" id="colorSwatch"></div>
+
+        <div class="input-group">
+            <label class="label">Generated HEX</label>
+            <div class="result-group">
+                <div class="result-text" id="hexResult">#FAFBFD</div>
+                <button class="copy-btn" onclick="copyHex()">Copy</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function labToHex(labString) {
+            const matches = labString.match(/-?\d*\.?\d+/g);
+            if (!matches || matches.length < 3) return "#000000";
+
+            let L = parseFloat(matches[0].replace('%', ''));
+            let a = parseFloat(matches[1]);
+            let b = parseFloat(matches[2]);
+
+            let y = (L + 16) / 116;
+            let x = a / 500 + y;
+            let z = y - b / 200;
+
+            const pow = (val) => Math.pow(val, 3) > 0.008856 ? Math.pow(val, 3) : (val - 16 / 116) / 7.787;
+            
+            x = 95.047 * pow(x);
+            y = 100.000 * pow(y);
+            z = 108.883 * pow(z);
+
+            x = x / 100;
+            y = y / 100;
+            z = z / 100;
+
+            let r = x * 3.2406 + y * -1.5372 + z * -0.4986;
+            let g = x * -0.9689 + y * 1.8758 + z * 0.0415;
+            let bVal = x * 0.0557 + y * -0.2040 + z * 1.0570;
+
+            const clamp = (val) => val > 0.0031308 ? 1.055 * Math.pow(val, 1 / 2.4) - 0.055 : 12.92 * val;
+            
+            r = Math.round(Math.max(0, Math.min(255, 255 * clamp(r))));
+            g = Math.round(Math.max(0, Math.min(255, 255 * clamp(g))));
+            bVal = Math.round(Math.max(0, Math.min(255, 255 * clamp(bVal))));
+
+            return "#" + [r, g, bVal].map(v => v.toString(16).padStart(2, '0')).join('').toUpperCase();
+        }
+
+        function convertLabToHex() {
+            const labValue = document.getElementById('labInput').value;
+            const hexCode = labToHex(labValue);
+            
+            document.getElementById('hexResult').innerText = hexCode;
+            document.getElementById('colorSwatch').style.backgroundColor = hexCode;
+        }
+
+        function copyHex() {
+            const hexText = document.getElementById('hexResult').innerText;
+            navigator.clipboard.writeText(hexText).then(() => {
+                const btn = document.querySelector('.copy-btn');
+                const originalText = btn.innerText;
+                
+                btn.innerText = 'Copied!';
+                btn.style.background = '#10b981'; // Turn green on success
+                
+                setTimeout(() => {
+                    btn.innerText = originalText;
+                    btn.style.background = ''; // Revert color
+                }, 1500);
+            });
+        }
+
+        // Run on load
+        window.onload = convertLabToHex;
+    </script>
+
+</body>
+</html>

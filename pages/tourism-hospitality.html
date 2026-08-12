@@ -1,0 +1,1864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SDR Awards — Excellence in Hospitality & Tourism</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&family=Inter:wght@400;500&family=IBM+Plex+Mono:wght@500&display=swap">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.13/dist/lenis.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+
+<style>
+:root {
+  --bg: #ffffff;
+  --bg-soft: #f4f4f3;
+  --bg-warm: #ebe9e6;
+  --text: #0a0a0a;
+  --text-soft: #6b6b6b;
+  --text-faint: #a8a8a8;
+  --line: rgba(0,0,0,0.1);
+  --line-strong: rgba(0,0,0,0.2);
+  --ease-quiet: cubic-bezier(.22, 1, .36, 1);
+  --ease-precise: cubic-bezier(.4, 0, .2, 1);
+  --ease-emphasis: cubic-bezier(.16, 1, .3, 1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+body {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+  overflow-x: hidden;
+}
+::selection { background: var(--text); color: var(--bg); }
+[x-cloak] { display: none !important; }
+img { display: block; max-width: 100%; }
+
+.label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-soft);
+}
+h1, h2, h3, h4 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900;
+  letter-spacing: -0.025em;
+  line-height: 0.9;
+}
+.italic-serif {
+  font-family: 'Inter', sans-serif;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.015em;
+}
+
+/* ============ NAV ============ */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 1.5rem 2rem;
+  display: flex; justify-content: space-between; align-items: center;
+  transition: all 400ms var(--ease-quiet);
+  background: transparent;
+}
+.nav.scrolled {
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--line);
+  padding: 1rem 2rem;
+}
+.nav-logo {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900;
+  font-size: 1.125rem;
+  letter-spacing: -0.02em;
+  color: var(--bg);
+  text-decoration: none;
+  transition: color 400ms var(--ease-quiet);
+}
+.nav.scrolled .nav-logo { color: var(--text); }
+.nav-logo span { opacity: 0.4; }
+.nav-links { display: flex; gap: 2.25rem; list-style: none; }
+.nav-links a {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--bg);
+  text-decoration: none;
+  position: relative;
+  transition: color 400ms var(--ease-quiet);
+}
+.nav.scrolled .nav-links a { color: var(--text); }
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -6px; left: 0;
+  width: 0; height: 1px;
+  background: currentColor;
+  transition: width 400ms var(--ease-quiet);
+}
+.nav-links a:hover::after { width: 100%; }
+.nav-right { display: flex; align-items: center; gap: 1.5rem; }
+.nav-cta {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 0.75rem 1.5rem;
+  border: 1px solid var(--bg);
+  background: var(--bg);
+  color: var(--text);
+  text-decoration: none;
+  transition: all 300ms var(--ease-quiet);
+}
+.nav.scrolled .nav-cta {
+  border: 1px solid var(--text);
+  background: var(--text);
+  color: var(--bg);
+}
+.nav.scrolled .nav-cta:hover { background: transparent; color: var(--text); }
+.nav-cta:hover { background: transparent; color: var(--bg); }
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+.nav-toggle span {
+  width: 22px; height: 1.5px;
+  background: var(--bg);
+  transition: all 300ms var(--ease-quiet);
+  transform-origin: center;
+}
+.nav.scrolled .nav-toggle span { background: var(--text); }
+.mobile-menu {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  background: var(--text);
+  color: var(--bg);
+  padding: 5rem 2rem 3rem;
+  flex-direction: column;
+  gap: 1.5rem;
+  z-index: 98;
+  min-height: 100vh;
+}
+.mobile-menu a {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900;
+  font-size: 2rem;
+  color: var(--bg);
+  text-decoration: none;
+  letter-spacing: -0.02em;
+}
+.mobile-menu a.sub { font-size: 1rem; color: rgba(255,255,255,0.5); }
+
+@media (max-width: 900px) {
+  .nav-links { display: none; }
+  .nav-cta { display: none; }
+  .nav-toggle { display: flex; }
+}
+
+/* ============ HERO ============ */
+.hero {
+  position: relative;
+  height: 100vh;
+  min-height: 700px;
+  overflow: hidden;
+  background: var(--text);
+}
+.hero-image-wrap {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+.hero-image {
+  position: absolute;
+  inset: -5%;
+  width: 110%;
+  height: 110%;
+  background-image: url('https://picsum.photos/seed/cth-hero-ballroom/1800/1200');
+  background-size: cover;
+  background-position: center;
+  filter: brightness(0.55) contrast(1.05);
+}
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, transparent 30%, transparent 60%, rgba(0,0,0,0.7) 100%);
+}
+.hero-content {
+  position: relative;
+  height: 100%;
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 7rem 2rem 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: var(--bg);
+  z-index: 2;
+}
+.hero-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2rem;
+}
+.hero-meta {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.7);
+  line-height: 1.6;
+}
+.hero-meta strong {
+  display: block;
+  color: var(--bg);
+  font-weight: 500;
+}
+.hero-bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.hero-headline {
+  font-size: clamp(2.75rem, 7.5vw, 7.5rem);
+  line-height: 0.88;
+  color: var(--bg);
+  max-width: 1200px;
+}
+.hero-sub-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 3rem;
+  flex-wrap: wrap;
+}
+.hero-sub {
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: rgba(255,255,255,0.75);
+  max-width: 460px;
+}
+.hero-cta {
+  display: flex;
+  gap: 1.25rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.btn-primary {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 1rem 1.75rem;
+  background: var(--bg);
+  color: var(--text);
+  text-decoration: none;
+  border: 1px solid var(--bg);
+  transition: all 300ms var(--ease-quiet);
+  display: inline-block;
+}
+.btn-primary:hover { background: transparent; color: var(--bg); }
+.btn-ghost {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--bg);
+  text-decoration: none;
+  position: relative;
+  padding-bottom: 4px;
+  display: inline-block;
+}
+.btn-ghost::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 100%; height: 1px;
+  background: currentColor;
+  transform-origin: right;
+  transition: transform 400ms var(--ease-quiet);
+}
+.btn-ghost:hover::after { transform: scaleX(0); transform-origin: left; }
+.btn-ghost-dark { color: var(--text); }
+.btn-ghost-dark::after { background: var(--text); }
+
+.hero-scroll-cue {
+  position: absolute;
+  bottom: 2rem; left: 50%;
+  transform: translateX(-50%);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+.hero-scroll-cue::after {
+  content: '';
+  width: 1px; height: 32px;
+  background: rgba(255,255,255,0.3);
+  animation: scroll-cue 2s var(--ease-quiet) infinite;
+}
+@keyframes scroll-cue {
+  0% { transform: scaleY(0); transform-origin: top; }
+  50% { transform: scaleY(1); transform-origin: top; }
+  51% { transform-origin: bottom; }
+  100% { transform: scaleY(0); transform-origin: bottom; }
+}
+
+/* ============ INTRO STRIP ============ */
+.intro-strip {
+  border-bottom: 1px solid var(--line);
+  padding: 2rem;
+  overflow: hidden;
+}
+.intro-marquee {
+  display: flex;
+  gap: 3rem;
+  white-space: nowrap;
+  animation: marquee 50s linear infinite;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900;
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  align-items: center;
+}
+.intro-marquee span { flex-shrink: 0; }
+.intro-marquee .dot {
+  width: 8px; height: 8px;
+  background: var(--text);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.intro-marquee .muted { color: var(--text-faint); }
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* ============ SECTION BASE ============ */
+section { padding: 8rem 2rem; position: relative; }
+.container { max-width: 1400px; margin: 0 auto; }
+.container-wide { max-width: 1600px; margin: 0 auto; }
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 5rem;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+.section-head h2 {
+  font-size: clamp(2.25rem, 5vw, 4.25rem);
+  max-width: 900px;
+}
+.section-head .label-row { display: flex; flex-direction: column; gap: 1rem; }
+.section-head .label-row .label { display: block; }
+
+.reveal-up {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 1200ms var(--ease-quiet), transform 1200ms var(--ease-quiet);
+}
+.reveal-up.is-in { opacity: 1; transform: translateY(0); }
+
+/* ============ ABOUT ============ */
+.about-section {
+  padding: 10rem 2rem;
+  background: var(--bg-soft);
+}
+.about-quote {
+  max-width: 1200px;
+  margin: 0 auto 6rem;
+  text-align: left;
+}
+.about-quote .label { margin-bottom: 2rem; display: block; }
+.about-quote h2 {
+  font-size: clamp(2rem, 4.5vw, 4rem);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  margin-bottom: 0;
+}
+.about-quote h2 .italic-serif {
+  color: var(--text-soft);
+}
+.about-stats {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  border-top: 1px solid var(--line-strong);
+}
+.about-stat {
+  padding: 2.5rem 1.5rem 0;
+  border-right: 1px solid var(--line-strong);
+}
+.about-stat:last-child { border-right: none; }
+.about-stat-num {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900;
+  font-size: clamp(2.5rem, 4vw, 3.75rem);
+  letter-spacing: -0.03em;
+  line-height: 1;
+  margin-bottom: 1rem;
+}
+.about-stat-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-soft);
+  line-height: 1.5;
+}
+
+/* ============ CATEGORIES HORIZONTAL ============ */
+.categories-section { padding: 8rem 0 8rem 2rem; overflow: hidden; }
+.categories-section .section-head { padding-right: 2rem; max-width: 1400px; margin-left: auto; margin-right: auto; }
+.categories-scroll {
+  display: flex;
+  gap: 1.5rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding: 1rem 2rem 3rem 0;
+  scrollbar-width: none;
+}
+.categories-scroll::-webkit-scrollbar { display: none; }
+.category-card {
+  flex: 0 0 380px;
+  scroll-snap-align: start;
+  border: 1px solid var(--line);
+  padding: 2.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  min-height: 480px;
+  position: relative;
+  background: var(--bg);
+  text-decoration: none;
+  color: inherit;
+  transition: background 400ms var(--ease-quiet), border-color 400ms var(--ease-quiet);
+}
+.category-card:hover {
+  background: var(--text);
+  color: var(--bg);
+  border-color: var(--text);
+}
+.category-card:hover .category-num { color: rgba(255,255,255,0.5); }
+.category-card:hover .category-desc { color: rgba(255,255,255,0.7); }
+.category-card:hover .category-image { opacity: 1; }
+.category-num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-soft);
+  margin-bottom: 3rem;
+  transition: color 400ms var(--ease-quiet);
+}
+.category-title {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900;
+  font-size: 1.625rem;
+  line-height: 1;
+  margin-bottom: 1.25rem;
+  letter-spacing: -0.02em;
+}
+.category-desc {
+  font-size: 0.9375rem;
+  color: var(--text-soft);
+  line-height: 1.55;
+  margin-bottom: 2rem;
+  transition: color 400ms var(--ease-quiet);
+}
+.category-meta {
+  margin-top: auto;
+  padding-top: 1.5rem;
+  border-top: 1px solid currentColor;
+  border-color: var(--line);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+.category-card:hover .category-meta { border-color: rgba(255,255,255,0.2); }
+.category-arrow {
+  font-size: 14px;
+  transition: transform 400ms var(--ease-quiet);
+}
+.category-card:hover .category-arrow { transform: translateX(6px); }
+
+.categories-hint {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-top: 1rem;
+  padding-left: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.categories-hint::before {
+  content: '';
+  width: 24px; height: 1px;
+  background: var(--text-faint);
+}
+
+/* ============ FEATURED WINNER ============ */
+.featured-section {
+  padding: 10rem 2rem;
+  background: var(--bg);
+}
+.featured-grid {
+  max-width: 1500px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 5rem;
+  align-items: center;
+}
+.featured-image-wrap {
+  position: relative;
+  aspect-ratio: 4/5;
+  overflow: hidden;
+  background: var(--bg-warm);
+}
+.featured-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  will-change: transform;
+}
+.featured-image-label {
+  position: absolute;
+  top: 1.5rem; left: 1.5rem;
+  background: var(--bg);
+  padding: 0.5rem 0.875rem;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text);
+  z-index: 2;
+}
+.featured-content .label { margin-bottom: 1.5rem; display: block; }
+.featured-content h2 {
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  margin-bottom: 2rem;
+  line-height: 0.95;
+}
+.featured-quote {
+  font-size: 1.25rem;
+  line-height: 1.5;
+  color: var(--text);
+  margin-bottom: 2rem;
+  font-style: italic;
+  font-family: 'Inter', sans-serif;
+  padding-left: 1.5rem;
+  border-left: 2px solid var(--text);
+}
+.featured-attr {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-bottom: 2.5rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--line);
+}
+.featured-attr-name {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900;
+  font-size: 1.25rem;
+  letter-spacing: -0.01em;
+}
+.featured-attr-role {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-soft);
+}
+
+/* ============ WINNERS MOSAIC ============ */
+.winners-section { background: var(--bg-soft); padding: 8rem 2rem; }
+.winners-mosaic {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: 240px;
+  gap: 0.75rem;
+  grid-auto-flow: dense;
+}
+.winner {
+  position: relative;
+  overflow: hidden;
+  background: var(--bg-warm);
+  border: 1px solid var(--line);
+}
+.winner-tall { grid-row: span 2; }
+.winner-wide { grid-column: span 2; }
+.winner-big { grid-row: span 2; grid-column: span 2; }
+.winner img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 1000ms var(--ease-quiet);
+}
+.winner:hover img { transform: scale(1.06); }
+.winner-info {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 1.5rem;
+  background: linear-gradient(to top, rgba(0,0,0,0.85), transparent);
+  color: var(--bg);
+}
+.winner-cat {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 0.5rem;
+}
+.winner-name {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900;
+  font-size: 1.125rem;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+}
+
+/* ============ JUDGES ============ */
+.judges-section { padding: 8rem 2rem; }
+.judges-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+}
+.judge-card {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+}
+.judge-portrait-wrap {
+  position: relative;
+  aspect-ratio: 3/4;
+  overflow: hidden;
+  padding: 12px;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  transition: border-color 500ms var(--ease-quiet);
+  margin-bottom: 1.25rem;
+}
+.judge-card:hover .judge-portrait-wrap {
+  border-color: var(--text);
+}
+.judge-portrait {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(100%) contrast(1.05);
+  transition: filter 600ms var(--ease-quiet), transform 800ms var(--ease-quiet);
+}
+.judge-card:hover .judge-portrait {
+  filter: grayscale(0%) contrast(1);
+  transform: scale(1.02);
+}
+.judge-num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  color: var(--text-faint);
+  margin-bottom: 0.5rem;
+}
+.judge-name {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900;
+  font-size: 1.125rem;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+  margin-bottom: 0.375rem;
+}
+.judge-role {
+  font-size: 0.8125rem;
+  color: var(--text-soft);
+  line-height: 1.4;
+}
+
+/* ============ PROCESS ============ */
+.process-section {
+  padding: 10rem 2rem;
+  background: var(--bg-soft);
+}
+.process-list {
+  max-width: 1100px;
+  margin: 0 auto;
+  border-top: 1px solid var(--line-strong);
+}
+.process-item {
+  display: grid;
+  grid-template-columns: 120px 1fr 1fr;
+  gap: 3rem;
+  padding: 3rem 0;
+  border-bottom: 1px solid var(--line-strong);
+  align-items: start;
+  position: relative;
+}
+.process-item::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0;
+  width: 2px; height: 0;
+  background: var(--text);
+  transition: height 700ms var(--ease-quiet);
+}
+.process-item:hover::before { height: 100%; }
+.process-num {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900;
+  font-size: 3rem;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--text-faint);
+  transition: color 500ms var(--ease-quiet);
+}
+.process-item:hover .process-num { color: var(--text); }
+.process-title {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900;
+  font-size: 1.5rem;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+.process-desc {
+  font-size: 0.9375rem;
+  color: var(--text-soft);
+  line-height: 1.6;
+}
+
+/* ============ TIMELINE ============ */
+.timeline-section { padding: 8rem 2rem; }
+.timeline-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0;
+  border-top: 1px solid var(--line-strong);
+  border-bottom: 1px solid var(--line-strong);
+}
+.timeline-cell {
+  padding: 2.5rem 1.5rem;
+  border-right: 1px solid var(--line-strong);
+  position: relative;
+}
+.timeline-cell:last-child { border-right: none; }
+.timeline-cell::before {
+  content: '';
+  position: absolute;
+  top: -5px; left: 1.5rem;
+  width: 9px; height: 9px;
+  background: var(--text);
+  border-radius: 50%;
+}
+.timeline-date {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-soft);
+  margin-bottom: 0.5rem;
+}
+.timeline-day {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900;
+  font-size: 2rem;
+  letter-spacing: -0.02em;
+  margin-bottom: 1rem;
+  line-height: 1;
+}
+.timeline-title {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900;
+  font-size: 0.9375rem;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+}
+.timeline-desc {
+  font-size: 0.8125rem;
+  color: var(--text-soft);
+  line-height: 1.5;
+}
+
+/* ============ FAQ ============ */
+.faq-section { padding: 8rem 2rem; background: var(--bg-soft); }
+.faq-grid {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 5rem;
+  align-items: start;
+}
+.faq-sidebar h2 {
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  margin-bottom: 1.5rem;
+  line-height: 0.95;
+}
+.faq-sidebar p {
+  font-size: 0.9375rem;
+  color: var(--text-soft);
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+.faq-list { border-top: 1px solid var(--line-strong); }
+.faq-item { border-bottom: 1px solid var(--line-strong); }
+.faq-q {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 1.75rem 0;
+  text-align: left;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900;
+  font-size: 1.125rem;
+  letter-spacing: -0.015em;
+  color: var(--text);
+  transition: color 300ms var(--ease-quiet);
+  line-height: 1.2;
+}
+.faq-q:hover { color: var(--text-soft); }
+.faq-icon {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--text-soft);
+  transition: transform 400ms var(--ease-quiet);
+  flex-shrink: 0;
+}
+.faq-item.is-open .faq-icon { transform: rotate(45deg); }
+.faq-a {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 500ms var(--ease-quiet);
+}
+.faq-item.is-open .faq-a { max-height: 400px; }
+.faq-a-inner { padding: 0 3rem 1.75rem 0; }
+.faq-a p {
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  color: var(--text-soft);
+}
+
+/* ============ CTA ============ */
+.cta-section {
+  padding: 12rem 2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  background: var(--text);
+  color: var(--bg);
+}
+.cta-section .label { color: rgba(255,255,255,0.5); margin-bottom: 2rem; display: block; }
+.cta-section h2 {
+  font-size: clamp(2.5rem, 6vw, 6rem);
+  margin-bottom: 2rem;
+  max-width: 1100px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 0.95;
+  color: var(--bg);
+}
+.cta-section h2 .italic-serif { color: rgba(255,255,255,0.4); }
+.cta-section p {
+  max-width: 540px;
+  margin: 0 auto 3rem;
+  color: rgba(255,255,255,0.6);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+}
+.cta-section .btn-primary {
+  background: var(--bg);
+  color: var(--text);
+  border-color: var(--bg);
+}
+.cta-section .btn-primary:hover {
+  background: transparent;
+  color: var(--bg);
+}
+
+/* ============ FOOTER ============ */
+.footer {
+  background: var(--bg);
+  color: var(--text);
+  padding: 5rem 2rem 2rem;
+  border-top: 1px solid var(--line);
+}
+.footer-top {
+  max-width: 1400px;
+  margin: 0 auto 4rem;
+  display: grid;
+  grid-template-columns: 1.5fr 2fr;
+  gap: 4rem;
+  padding-bottom: 4rem;
+  border-bottom: 1px solid var(--line);
+}
+.footer-brand-logo {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900;
+  font-size: clamp(2.5rem, 4vw, 3.5rem);
+  letter-spacing: -0.025em;
+  margin-bottom: 1.5rem;
+  line-height: 1;
+}
+.footer-brand-logo span { color: var(--text-faint); }
+.footer-brand p {
+  font-size: 0.9375rem;
+  color: var(--text-soft);
+  line-height: 1.6;
+  max-width: 360px;
+}
+.footer-cols {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+.footer-col h4 {
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-bottom: 1.5rem;
+}
+.footer-col ul { list-style: none; }
+.footer-col li { margin-bottom: 0.75rem; }
+.footer-col a {
+  color: var(--text);
+  text-decoration: none;
+  font-size: 0.9375rem;
+  transition: color 300ms var(--ease-quiet);
+}
+.footer-col a:hover { color: var(--text-soft); }
+.footer-bottom {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 1024px) {
+  .featured-grid { grid-template-columns: 1fr; gap: 3rem; }
+  .judges-grid { grid-template-columns: repeat(3, 1fr); }
+  .winners-mosaic { grid-template-columns: repeat(3, 1fr); }
+  .about-stats { grid-template-columns: repeat(2, 1fr); }
+  .about-stat:nth-child(2) { border-right: none; }
+  .about-stat:nth-child(1), .about-stat:nth-child(2) { border-bottom: 1px solid var(--line-strong); }
+  .timeline-grid { grid-template-columns: repeat(5, 1fr); }
+  .timeline-cell { padding: 2rem 1rem; }
+  .timeline-day { font-size: 1.5rem; }
+  .faq-grid { grid-template-columns: 1fr; gap: 3rem; }
+  .footer-top { grid-template-columns: 1fr; gap: 3rem; }
+  .process-item { grid-template-columns: 80px 1fr; }
+  .process-item .process-desc { grid-column: 2; }
+}
+@media (max-width: 768px) {
+  section { padding: 5rem 1.5rem; }
+  .hero-content { padding: 6rem 1.5rem 2rem; }
+  .nav { padding: 1rem 1.5rem; }
+  .nav.scrolled { padding: 0.75rem 1.5rem; }
+  .judges-grid { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+  .winners-mosaic { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 200px; }
+  .winner-big { grid-column: span 2; grid-row: span 2; }
+  .winner-wide { grid-column: span 2; grid-row: span 1; }
+  .winner-tall { grid-column: span 1; grid-row: span 2; }
+  .about-stats { grid-template-columns: 1fr; }
+  .about-stat { border-right: none; border-bottom: 1px solid var(--line-strong); }
+  .timeline-grid { grid-template-columns: 1fr; border-bottom: none; }
+  .timeline-cell { border-right: none; border-bottom: 1px solid var(--line-strong); }
+  .footer-cols { grid-template-columns: 1fr 1fr; }
+  .process-item { grid-template-columns: 60px 1fr; gap: 1.5rem; padding: 2rem 0; }
+  .process-num { font-size: 2rem; }
+  .process-title { font-size: 1.25rem; }
+  .category-card { flex: 0 0 300px; min-height: 420px; padding: 2rem 1.5rem; }
+  .categories-section { padding: 5rem 0 5rem 1.5rem; }
+  .featured-section, .about-section, .process-section, .faq-section, .cta-section { padding-left: 1.5rem; padding-right: 1.5rem; }
+  .footer { padding: 4rem 1.5rem 2rem; }
+}
+@media (max-width: 480px) {
+  .judges-grid { grid-template-columns: 1fr; }
+  .winners-mosaic { grid-template-columns: 1fr; grid-auto-rows: 280px; }
+  .winner-big, .winner-wide, .winner-tall { grid-column: span 1; grid-row: span 1; }
+  .footer-cols { grid-template-columns: 1fr; }
+  .footer-bottom { flex-direction: column; align-items: flex-start; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .reveal-up { opacity: 1; transform: none; }
+  .hero-image { transform: none !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<nav class="nav" x-data="{ open: false, scrolled: false }" @scroll.window="scrolled = window.scrollY > 80" :class="{ 'scrolled': scrolled }">
+  <a href="#" class="nav-logo">SDR<span>.</span>AWARDS</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#categories">Categories</a></li>
+    <li><a href="#winners">Winners</a></li>
+    <li><a href="#judges">Judges</a></li>
+    <li><a href="#process">Enter</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="#enter" class="nav-cta">Submit entry</a>
+    <button class="nav-toggle" @click="open = !open" aria-label="Menu">
+      <span :style="open ? 'transform: rotate(45deg) translate(5px, 5px);' : ''"></span>
+      <span :style="open ? 'transform: rotate(-45deg) translate(4px, -4px);' : ''"></span>
+    </button>
+  </div>
+  <div class="mobile-menu" x-show="open" x-transition.opacity.duration.300ms @click="open = false" style="display: none;" x-cloak>
+    <a href="#about">About</a>
+    <a href="#categories">Categories</a>
+    <a href="#winners">Winners</a>
+    <a href="#judges">Judges</a>
+    <a href="#process">Enter</a>
+    <a href="#faq" class="sub">FAQ</a>
+    <a href="#enter" class="sub">Submit entry →</a>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="hero-image-wrap">
+    <div class="hero-image" id="hero-image"></div>
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-top">
+      <div class="hero-meta">
+        <strong>2025 Edition</strong>
+        14th annual ceremony
+      </div>
+      <div class="hero-meta" style="text-align: right;">
+        <strong>27 November 2025</strong>
+        The Brewery, London
+      </div>
+    </div>
+    <div class="hero-bottom">
+      <h1 class="hero-headline">
+        Honouring the standard<br>set in <span class="italic-serif">human effort.</span>
+      </h1>
+      <div class="hero-sub-row">
+        <p class="hero-sub">For fourteen years the SDR Awards have recognised the students, educators, and institutions shaping hospitality, tourism, and culinary management — across 120 countries and 700 accredited centres.</p>
+        <div class="hero-cta">
+          <a href="#enter" class="btn-primary">Submit an entry</a>
+          <a href="#categories" class="btn-ghost">View categories →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll-cue">Scroll</div>
+</section>
+
+<!-- ============ INTRO MARQUEE ============ -->
+<div class="intro-strip">
+  <div class="intro-marquee">
+    <span>Hospitality</span><span class="dot"></span>
+    <span class="muted">Tourism</span><span class="dot"></span>
+    <span>Culinary Arts</span><span class="dot"></span>
+    <span class="muted">Excellence</span><span class="dot"></span>
+    <span>Hospitality</span><span class="dot"></span>
+    <span class="muted">Tourism</span><span class="dot"></span>
+    <span>Culinary Arts</span><span class="dot"></span>
+    <span class="muted">Excellence</span><span class="dot"></span>
+  </div>
+</div>
+
+<!-- ============ ABOUT ============ -->
+<section class="about-section" id="about">
+  <div class="about-quote">
+    <span class="label">About the awards</span>
+    <h2 class="reveal-up">
+      The SDR Awards exist to recognise what cannot be bought, manufactured, or shortcut into being — the slow, deliberate craft of people who take <span class="italic-serif">hospitality seriously.</span>
+    </h2>
+  </div>
+  <div class="about-stats">
+    <div class="about-stat">
+      <div class="about-stat-num">14</div>
+      <div class="about-stat-label">Annual editions<br>since 2011</div>
+    </div>
+    <div class="about-stat">
+      <div class="about-stat-num">120</div>
+      <div class="about-stat-label">Countries<br>represented</div>
+    </div>
+    <div class="about-stat">
+      <div class="about-stat-num">700+</div>
+      <div class="about-stat-label">Accredited<br>centres</div>
+    </div>
+    <div class="about-stat">
+      <div class="about-stat-num">38</div>
+      <div class="about-stat-label">Industry<br>judges</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CATEGORIES HORIZONTAL ============ -->
+<section class="categories-section" id="categories">
+  <div class="section-head">
+    <div>
+      <span class="label">Award categories</span>
+      <h2 class="reveal-up" style="margin-top: 1rem;">Twelve categories.<br>One standard.</h2>
+    </div>
+    <a href="#" class="btn-ghost btn-ghost-dark">Download criteria PDF →</a>
+  </div>
+  <div class="categories-scroll" id="categories-scroll">
+    <a href="#" class="category-card">
+      <div class="category-num">01 / Student</div>
+      <div class="category-title">Outstanding Student of the Year</div>
+      <div class="category-desc">For the candidate whose academic record, practical work, and professional promise most clearly signal a future leader in the field.</div>
+      <div class="category-meta">
+        <span>Final year</span>
+        <span class="category-arrow">→</span>
+      </div>
+    </a>
+    <a href="#" class="category-card">
+      <div class="category-num">02 / Educator</div>
+      <div class="category-title">Hospitality Educator of the Year</div>
+      <div class="category-desc">Recognising a teacher whose methods, mentorship, and rigour have demonstrably shaped the trajectory of their students.</div>
+      <div class="category-meta">
+        <span>Nominated</span>
+        <span class="category-arrow">→</span>
+      </div>
+    </a>
+    <a href="#" class="category-card">
+      <div class="category-num">03 / Institution</div>
+      <div class="category-title">Centre of the Year</div>
+      <div class="category-desc">Awarded to the accredited centre whose standards, facilities, and graduate outcomes have set the benchmark for the year.</div>
+      <div class="category-meta">
+        <span>Accredited</span>
+        <span class="category-arrow">→</span>
+      </div>
+    </a>
+    <a href="#" class="category-card">
+      <div class="category-num">04 / Culinary</div>
+      <div class="category-title">Culinary Excellence</div>
+      <div class="category-desc">For the student whose technical command of the kitchen — knife, heat, plate — exceeded every reasonable expectation of their cohort.</div>
+      <div class="category-meta">
+        <span>Portfolio</span>
+        <span class="category-arrow">→</span>
+      </div>
+    </a>
+    <a href="#" class="category-card">
+      <div class="category-num">05 / Tourism</div>
+      <div class="category-title">Tourism Management</div>
+      <div class="category-desc">Recognising exceptional work in destination management, sustainable tourism, and the operational study of travel.</div>
+      <div class="category-meta">
+        <span>Case study</span>
+        <span class="category-arrow">→</span>
+      </div>
+    </a>
+    <a href="#" class="category-card">
+      <div class="category-num">06 / Innovation</div>
+      <div class="category-title">Innovation in Practice</div>
+      <div class="category-desc">Awarded for a project, concept, or operational improvement that materially advanced the candidate's place of work or study.</div>
+      <div class="category-meta">
+        <span>Project</span>
+        <span class="category-arrow">→</span>
+      </div>
+    </a>
+    <a href="#" class="category-card">
+      <div class="category-num">07 / Service</div>
+      <div class="category-title">Front of House Excellence</div>
+      <div class="category-desc">For the student whose grasp of service — pacing, reading a room, the architecture of hospitality — marks them out as exceptional.</div>
+      <div class="category-meta">
+        <span>Practical</span>
+        <span class="category-arrow">→</span>
+      </div>
+    </a>
+    <a href="#" class="category-card">
+      <div class="category-num">08 / Sustainability</div>
+      <div class="category-title">Sustainable Hospitality</div>
+      <div class="category-desc">Recognising work — academic or practical — that addresses the environmental responsibilities of the modern hospitality industry.</div>
+      <div class="category-meta">
+        <span>Open</span>
+        <span class="category-arrow">→</span>
+      </div>
+    </a>
+    <a href="#" class="category-card">
+      <div class="category-num">09 / Leadership</div>
+      <div class="category-title">Future Leader</div>
+      <div class="category-desc">For a final-year student whose record, character, and ambition mark them as someone the industry will hear from again.</div>
+      <div class="category-meta">
+        <span>Final year</span>
+        <span class="category-arrow">→</span>
+      </div>
+    </a>
+  </div>
+  <div class="categories-hint">Drag or scroll to explore all nine categories</div>
+</section>
+
+<!-- ============ FEATURED WINNER ============ -->
+<section class="featured-section">
+  <div class="featured-grid">
+    <div class="featured-image-wrap">
+      <div class="featured-image-label">2024 · Culinary Excellence</div>
+      <img class="featured-image" id="featured-image" src="https://picsum.photos/seed/cth-featured-chef/900/1100" alt="Featured winner portrait">
+    </div>
+    <div class="featured-content">
+      <span class="label">Featured honouree</span>
+      <h2 class="reveal-up">The standard, in their hands.</h2>
+      <blockquote class="featured-quote">"The award didn't change what I do — it changed who's watching. Six months later I'm running a kitchen I wouldn't have been considered for."</blockquote>
+      <div class="featured-attr">
+        <div class="featured-attr-name">Amara Okonkwo</div>
+        <div class="featured-attr-role">Le Cordon Bleu London · 2024</div>
+      </div>
+      <a href="#" class="btn-ghost btn-ghost-dark">Read the full profile →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WINNERS MOSAIC ============ -->
+<section class="winners-section" id="winners">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="label">2024 Honourees</span>
+        <h2 class="reveal-up" style="margin-top: 1rem;">Nine categories.<br>Nine standards set.</h2>
+      </div>
+      <a href="#" class="btn-ghost btn-ghost-dark">All winners since 2011 →</a>
+    </div>
+    <div class="winners-mosaic">
+      <div class="winner winner-big">
+        <img src="https://picsum.photos/seed/cth-w-chef/800/800" alt="Culinary Excellence winner">
+        <div class="winner-info">
+          <div class="winner-cat">Culinary Excellence</div>
+          <div class="winner-name">Amara Okonkwo<br>Le Cordon Bleu London</div>
+        </div>
+      </div>
+      <div class="winner winner-tall">
+        <img src="https://picsum.photos/seed/cth-w-student/600/800" alt="Outstanding Student">
+        <div class="winner-info">
+          <div class="winner-cat">Outstanding Student</div>
+          <div class="winner-name">Daniel Park<br>Glion Institute</div>
+        </div>
+      </div>
+      <div class="winner">
+        <img src="https://picsum.photos/seed/cth-w-educator/600/600" alt="Educator winner">
+        <div class="winner-info">
+          <div class="winner-cat">Educator</div>
+          <div class="winner-name">Wei-Ling Tan</div>
+        </div>
+      </div>
+      <div class="winner winner-wide">
+        <img src="https://picsum.photos/seed/cth-w-centre/1000/600" alt="Centre of the Year">
+        <div class="winner-info">
+          <div class="winner-cat">Centre of the Year</div>
+          <div class="winner-name">Singapore Institute of Hospitality</div>
+        </div>
+      </div>
+      <div class="winner">
+        <img src="https://picsum.photos/seed/cth-w-leader/600/600" alt="Future Leader">
+        <div class="winner-info">
+          <div class="winner-cat">Future Leader</div>
+          <div class="winner-name">Mateo Rivera</div>
+        </div>
+      </div>
+      <div class="winner winner-tall">
+        <img src="https://picsum.photos/seed/cth-w-tourism/600/800" alt="Tourism winner">
+        <div class="winner-info">
+          <div class="winner-cat">Tourism Management</div>
+          <div class="winner-name">Aisha Mwangi<br>Les Roches</div>
+        </div>
+      </div>
+      <div class="winner">
+        <img src="https://picsum.photos/seed/cth-w-service/600/600" alt="Front of House">
+        <div class="winner-info">
+          <div class="winner-cat">Front of House</div>
+          <div class="winner-name">Liam O'Brien</div>
+        </div>
+      </div>
+      <div class="winner winner-wide">
+        <img src="https://picsum.photos/seed/cth-w-sustain/1000/600" alt="Sustainability">
+        <div class="winner-info">
+          <div class="winner-cat">Sustainable Hospitality</div>
+          <div class="winner-name">Nora Lindqvist<br>Ecole hôtelière de Lausanne</div>
+        </div>
+      </div>
+      <div class="winner">
+        <img src="https://picsum.photos/seed/cth-w-innov/600/600" alt="Innovation">
+        <div class="winner-info">
+          <div class="winner-cat">Innovation</div>
+          <div class="winner-name">Hiroshi Sato</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ JUDGES ============ -->
+<section class="judges-section" id="judges">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="label">The panel</span>
+        <h2 class="reveal-up" style="margin-top: 1rem;">Judged by practitioners,<br>not pundits.</h2>
+      </div>
+      <span class="label">38 judges · 2 rounds</span>
+    </div>
+    <div class="judges-grid">
+      <a href="#" class="judge-card">
+        <div class="judge-portrait-wrap">
+          <img class="judge-portrait" src="https://picsum.photos/seed/cth-judge-1/400/500" alt="Judge portrait">
+        </div>
+        <div class="judge-num">01 / Operations</div>
+        <div class="judge-name">Helena Marchetti</div>
+        <div class="judge-role">Director of Operations, The Savoy London</div>
+      </a>
+      <a href="#" class="judge-card">
+        <div class="judge-portrait-wrap">
+          <img class="judge-portrait" src="https://picsum.photos/seed/cth-judge-2/400/500" alt="Judge portrait">
+        </div>
+        <div class="judge-num">02 / Culinary</div>
+        <div class="judge-name">Kenji Watanabe</div>
+        <div class="judge-role">Executive Chef, Alinea Tokyo</div>
+      </a>
+      <a href="#" class="judge-card">
+        <div class="judge-portrait-wrap">
+          <img class="judge-portrait" src="https://picsum.photos/seed/cth-judge-3/400/500" alt="Judge portrait">
+        </div>
+        <div class="judge-num">03 / Academic</div>
+        <div class="judge-name">Dr. Sarah Aldworth</div>
+        <div class="judge-role">Professor of Hospitality, Oxford Brookes</div>
+      </a>
+      <a href="#" class="judge-card">
+        <div class="judge-portrait-wrap">
+          <img class="judge-portrait" src="https://picsum.photos/seed/cth-judge-4/400/500" alt="Judge portrait">
+        </div>
+        <div class="judge-num">04 / Hotel</div>
+        <div class="judge-name">Pierre Dubois</div>
+        <div class="judge-role">Regional VP, Four Seasons Hotels & Resorts</div>
+      </a>
+      <a href="#" class="judge-card">
+        <div class="judge-portrait-wrap">
+          <img class="judge-portrait" src="https://picsum.photos/seed/cth-judge-5/400/500" alt="Judge portrait">
+        </div>
+        <div class="judge-num">05 / Sustainability</div>
+        <div class="judge-name">Anika Reddy</div>
+        <div class="judge-role">Founder, Sustainable Hospitality Alliance</div>
+      </a>
+      <a href="#" class="judge-card">
+        <div class="judge-portrait-wrap">
+          <img class="judge-portrait" src="https://picsum.photos/seed/cth-judge-6/400/500" alt="Judge portrait">
+        </div>
+        <div class="judge-num">06 / Regional</div>
+        <div class="judge-name">Marcus Eklund</div>
+        <div class="judge-role">Managing Director, Nordic Hotels & Resorts</div>
+      </a>
+      <a href="#" class="judge-card">
+        <div class="judge-portrait-wrap">
+          <img class="judge-portrait" src="https://picsum.photos/seed/cth-judge-7/400/500" alt="Judge portrait">
+        </div>
+        <div class="judge-num">07 / Culinary</div>
+        <div class="judge-name">Yuki Tanaka</div>
+        <div class="judge-role">Director of Culinary, Mandarin Oriental</div>
+      </a>
+      <a href="#" class="judge-card">
+        <div class="judge-portrait-wrap">
+          <img class="judge-portrait" src="https://picsum.photos/seed/cth-judge-8/400/500" alt="Judge portrait">
+        </div>
+        <div class="judge-num">08 / Policy</div>
+        <div class="judge-name">Olivia Bennett</div>
+        <div class="judge-role">Head of Industry Development, Visit Britain</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROCESS ============ -->
+<section class="process-section" id="process">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="label">The process</span>
+        <h2 class="reveal-up" style="margin-top: 1rem;">Four steps.<br>No fee to enter.</h2>
+      </div>
+      <a href="#enter" class="btn-ghost btn-ghost-dark">Begin an entry →</a>
+    </div>
+    <div class="process-list">
+      <div class="process-item">
+        <div class="process-num">01</div>
+        <div class="process-title">Confirm eligibility</div>
+        <div class="process-desc">Verify your candidate status — student, educator, or accredited centre — through your CTH portal credentials. Eligibility is checked against enrolment records.</div>
+      </div>
+      <div class="process-item">
+        <div class="process-num">02</div>
+        <div class="process-title">Prepare submission</div>
+        <div class="process-desc">Each category requires a written case (max 1,200 words), two references, and a portfolio of supporting material. Templates are provided in the portal.</div>
+      </div>
+      <div class="process-item">
+        <div class="process-num">03</div>
+        <div class="process-title">Submit by 30 June</div>
+        <div class="process-desc">Upload through the portal. You'll receive confirmation and a panel reference number within 72 hours. Edits are permitted until the deadline.</div>
+      </div>
+      <div class="process-item">
+        <div class="process-num">04</div>
+        <div class="process-title">Attend ceremony</div>
+        <div class="process-desc">Shortlisted candidates are notified by 1 October. The ceremony takes place 27 November at The Brewery, London. Black tie, brief speeches.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TIMELINE ============ -->
+<section class="timeline-section">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="label">Key dates 2025</span>
+        <h2 class="reveal-up" style="margin-top: 1rem;">The schedule.</h2>
+      </div>
+      <span class="label">All times GMT</span>
+    </div>
+    <div class="timeline-grid">
+      <div class="timeline-cell">
+        <div class="timeline-date">March</div>
+        <div class="timeline-day">03</div>
+        <div class="timeline-title">Entries open</div>
+        <div class="timeline-desc">Portal goes live at 09:00 GMT. All categories open for submission.</div>
+      </div>
+      <div class="timeline-cell">
+        <div class="timeline-date">June</div>
+        <div class="timeline-day">30</div>
+        <div class="timeline-title">Entries close</div>
+        <div class="timeline-desc">Final deadline. Late entries cannot be accepted.</div>
+      </div>
+      <div class="timeline-cell">
+        <div class="timeline-date">July</div>
+        <div class="timeline-day">15</div>
+        <div class="timeline-title">Longlist</div>
+        <div class="timeline-desc">Longlist published. Feedback available on request.</div>
+      </div>
+      <div class="timeline-cell">
+        <div class="timeline-date">October</div>
+        <div class="timeline-day">01</div>
+        <div class="timeline-title">Shortlist</div>
+        <div class="timeline-desc">Three finalists per category notified and announced.</div>
+      </div>
+      <div class="timeline-cell">
+        <div class="timeline-date">November</div>
+        <div class="timeline-day">27</div>
+        <div class="timeline-title">Ceremony</div>
+        <div class="timeline-desc">The Brewery, London. 18:30 for 19:00. Black tie.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="faq-section" id="faq" x-data="{ open: 1 }">
+  <div class="faq-grid">
+    <div class="faq-sidebar">
+      <span class="label" style="margin-bottom: 1.5rem; display: block;">Frequently asked</span>
+      <h2 class="reveal-up">Before you begin.</h2>
+      <p>If your question isn't answered here, the awards team responds within two working days. Quote your centre reference if you have one.</p>
+      <a href="mailto:awards@cthawards.com" class="btn-ghost btn-ghost-dark">Ask a question →</a>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item" :class="{ 'is-open': open === 1 }">
+        <button class="faq-q" @click="open === 1 ? open = null : open = 1">
+          <span>Is there a fee to enter?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">
+          <div class="faq-a-inner">
+            <p>No. Entries are free for all accredited CTH centres, their enrolled students, and registered educators. The awards are funded by the Confederation and industry sponsors; we have never charged a submission fee and have no plans to.</p>
+          </div>
+        </div>
+      </div>
+      <div class="faq-item" :class="{ 'is-open': open === 2 }">
+        <button class="faq-q" @click="open === 2 ? open = null : open = 2">
+          <span>Who is eligible to enter?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">
+          <div class="faq-a-inner">
+            <p>Any student currently enrolled at a CTH-accredited centre, any educator employed by one, and the centres themselves. The Outstanding Student and Future Leader categories require the candidate to be in their final year of study.</p>
+          </div>
+        </div>
+      </div>
+      <div class="faq-item" :class="{ 'is-open': open === 3 }">
+        <button class="faq-q" @click="open === 3 ? open = null : open = 3">
+          <span>How are entries judged?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">
+          <div class="faq-a-inner">
+            <p>Two blind rounds. Round one is a longlist review by a panel of 12 practitioners, scoring against four published criteria. Round two is a shortlist review by the full panel of 38. No judge reviews an entry from their own institution.</p>
+          </div>
+        </div>
+      </div>
+      <div class="faq-item" :class="{ 'is-open': open === 4 }">
+        <button class="faq-q" @click="open === 4 ? open = null : open = 4">
+          <span>Can I enter more than one category?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">
+          <div class="faq-a-inner">
+            <p>Centres may submit entries across multiple categories, but no individual may be entered in more than two. We discourage scattergun submissions — the written case for each entry should be specific to its category, not adapted from another.</p>
+          </div>
+        </div>
+      </div>
+      <div class="faq-item" :class="{ 'is-open': open === 5 }">
+        <button class="faq-q" @click="open === 5 ? open = null : open = 5">
+          <span>When will I hear back?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">
+          <div class="faq-a-inner">
+            <p>Longlist notifications are sent by 15 July. Shortlisted candidates are contacted personally by 1 October. If you have not heard by these dates, your entry has not progressed — written feedback is available on request after the ceremony.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA ============ -->
+<section class="cta-section" id="enter">
+  <span class="label">Entries open 03 March 2025</span>
+  <h2>Put forward <span class="italic-serif">someone</span><br>who set the standard this year.</h2>
+  <p>Submissions are free. The portal opens 03 March and closes 30 June. Allow approximately 90 minutes per entry.</p>
+  <a href="#" class="btn-primary">Begin an entry →</a>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-brand-logo">CTH<span>.</span>AWARDS</div>
+      <p>The Confederation of Tourism & Hospitality Awards — recognising excellence in hospitality education since 2011. London, United Kingdom.</p>
+    </div>
+    <div class="footer-cols">
+      <div class="footer-col">
+        <h4>Awards</h4>
+        <ul>
+          <li><a href="#categories">Categories</a></li>
+          <li><a href="#winners">Past winners</a></li>
+          <li><a href="#judges">Judging panel</a></li>
+          <li><a href="#">Key dates</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Enter</h4>
+        <ul>
+          <li><a href="#">Submission portal</a></li>
+          <li><a href="#">Criteria PDF</a></li>
+          <li><a href="#">Eligibility</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:awards@cthawards.com">awards@cthawards.com</a></li>
+          <li><a href="#">Press enquiries</a></li>
+          <li><a href="#">Sponsorship</a></li>
+          <li><a href="#">+44 20 7856 7000</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div>© 2025 Confederation of Tourism & Hospitality</div>
+    <div>London · United Kingdom</div>
+  </div>
+</footer>
+
+<script>
+(function() {
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isTouch = window.matchMedia('(pointer: coarse)').matches;
+
+  // ============ LENIS ============
+  let lenis = null;
+  if (!prefersReducedMotion) {
+    lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    });
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+  }
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  // ============ HERO KEN-BURNS ============
+  if (!prefersReducedMotion) {
+    gsap.to('#hero-image', {
+      scale: 1.15,
+      duration: 20,
+      ease: 'none',
+      repeat: -1,
+      yoyo: true,
+    });
+
+    // Hero text stagger
+    gsap.from('.hero-headline', { y: 80, opacity: 0, duration: 1.4, ease: 'power3.out', delay: 0.4 });
+    gsap.from('.hero-sub', { y: 30, opacity: 0, duration: 1, ease: 'power3.out', delay: 0.9 });
+    gsap.from('.hero-cta a', { y: 20, opacity: 0, duration: 0.8, ease: 'power3.out', delay: 1.1, stagger: 0.1 });
+    gsap.from('.hero-meta', { y: 20, opacity: 0, duration: 0.8, ease: 'power3.out', delay: 0.3, stagger: 0.15 });
+    gsap.from('.hero-scroll-cue', { opacity: 0, duration: 1, ease: 'power2.out', delay: 1.5 });
+  }
+
+  // ============ REVEAL-UP ============
+  document.querySelectorAll('.reveal-up').forEach(el => {
+    ScrollTrigger.create({
+      trigger: el,
+      start: 'top 85%',
+      once: true,
+      onEnter: () => el.classList.add('is-in'),
+    });
+  });
+
+  // ============ ABOUT STATS STAGGER ============
+  if (!prefersReducedMotion) {
+    gsap.utils.toArray('.about-stat').forEach((stat, i) => {
+      gsap.from(stat, {
+        scrollTrigger: { trigger: stat, start: 'top 88%' },
+        y: 40,
+        opacity: 0,
+        duration: 0.9,
+        ease: 'power3.out',
+        delay: i * 0.1,
+      });
+    });
+  }
+
+  // ============ CATEGORY CARDS REVEAL ============
+  if (!prefersReducedMotion) {
+    const catDirs = [
+      'inset(0 100% 0 0)',
+      'inset(0 0 100% 0)',
+      'inset(0 0 0 100%)',
+      'inset(100% 0 0 0)',
+    ];
+    gsap.utils.toArray('.category-card').forEach((card, i) => {
+      gsap.fromTo(card,
+        { clipPath: catDirs[i % catDirs.length], opacity: 0 },
+        {
+          clipPath: 'inset(0% 0% 0% 0%)',
+          opacity: 1,
+          duration: 1,
+          ease: 'power4.inOut',
+          scrollTrigger: {
+            trigger: card,
+            start: 'left 90%',
+            containerAnimation: null,
+            horizontal: false,
+          },
+          delay: i * 0.05,
+        }
+      );
+    });
+  }
+
+  // ============ FEATURED IMAGE PARALLAX ============
+  if (!prefersReducedMotion && !isTouch) {
+    const featuredImg = document.getElementById('featured-image');
+    if (featuredImg) {
+      gsap.to(featuredImg, {
+        yPercent: -15,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '.featured-section',
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: 1,
+        }
+      });
+    }
+  }
+
+  // ============ WINNERS DIRECTIONAL CLIP ============
+  const winnerDirs = [
+    'inset(0 100% 0 0)',
+    'inset(0 0 100% 0)',
+    'inset(0 0 0 100%)',
+    'inset(100% 0 0 0)',
+  ];
+  if (!prefersReducedMotion) {
+    ScrollTrigger.create({
+      trigger: '.winners-mosaic',
+      start: 'top 80%',
+      once: true,
+      onEnter: () => {
+        document.querySelectorAll('.winner').forEach((cell, i) => {
+          gsap.fromTo(cell,
+            { clipPath: winnerDirs[i % winnerDirs.length] },
+            {
+              clipPath: 'inset(0% 0% 0% 0%)',
+              duration: 1.2,
+              ease: 'power4.inOut',
+              delay: i * 0.08
+            }
+          );
+          const img = cell.querySelector('img');
+          if (img) {
+            gsap.fromTo(img,
+              { scale: 1.3 },
+              { scale: 1.05, duration: 1.4, ease: 'power3.out', delay: i * 0.08 }
+            );
+          }
+        });
+      },
+    });
+  }
+
+  // ============ JUDGES STAGGER ============
+  if (!prefersReducedMotion) {
+    gsap.utils.toArray('.judge-card').forEach((card, i) => {
+      gsap.from(card, {
+        scrollTrigger: { trigger: card, start: 'top 88%' },
+        y: 40,
+        opacity: 0,
+        duration: 0.9,
+        ease: 'power3.out',
+        delay: (i % 4) * 0.08,
+      });
+    });
+  }
+
+  // ============ PROCESS ITEMS ============
+  if (!prefersReducedMotion) {
+    gsap.utils.toArray('.process-item').forEach((item, i) => {
+      gsap.from(item, {
+        scrollTrigger: { trigger: item, start: 'top 90%' },
+        y: 30,
+        opacity: 0,
+        duration: 0.9,
+        ease: 'power3.out',
+        delay: i * 0.08,
+      });
+    });
+  }
+
+  // ============ TIMELINE CELLS ============
+  if (!prefersReducedMotion) {
+    gsap.utils.toArray('.timeline-cell').forEach((cell, i) => {
+      gsap.from(cell, {
+        scrollTrigger: { trigger: cell, start: 'top 88%' },
+        y: 30,
+        opacity: 0,
+        duration: 0.8,
+        ease: 'power3.out',
+        delay: i * 0.1,
+      });
+    });
+  }
+
+  // ============ FAQ ITEMS ============
+  if (!prefersReducedMotion) {
+    gsap.utils.toArray('.faq-item').forEach((item, i) => {
+      gsap.from(item, {
+        scrollTrigger: { trigger: item, start: 'top 92%' },
+        y: 20,
+        opacity: 0,
+        duration: 0.7,
+        ease: 'power3.out',
+        delay: i * 0.05,
+      });
+    });
+  }
+
+  // ============ NAV SCROLL ============
+  const nav = document.querySelector('.nav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 80) nav.classList.add('scrolled');
+    else nav.classList.remove('scrolled');
+  });
+
+  // ============ SMOOTH SCROLL ANCHORS ============
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const id = a.getAttribute('href');
+      if (id === '#' || id.length < 2) return;
+      const target = document.querySelector(id);
+      if (target) {
+        e.preventDefault();
+        if (lenis) {
+          lenis.scrollTo(target, { offset: -80 });
+        } else {
+          const top = target.getBoundingClientRect().top + window.scrollY - 80;
+          window.scrollTo({ top, behavior: 'smooth' });
+        }
+      }
+    });
+  });
+
+  // ============ CATEGORIES HORIZONTAL SCROLL (wheel support) ============
+  const catScroll = document.getElementById('categories-scroll');
+  if (catScroll && !isTouch) {
+    catScroll.addEventListener('wheel', (e) => {
+      if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+        e.preventDefault();
+        catScroll.scrollLeft += e.deltaY;
+      }
+    }, { passive: false });
+  }
+})();
+</script>
+
+</body>
+</html>

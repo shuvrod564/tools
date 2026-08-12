@@ -1,0 +1,1386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NextAI - Decisions in minutes, not months</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563EB;
+            --primary-dark: #1D4ED8;
+            --accent: #0EA5E9;
+            --bg-light: #F8FAFC;
+            --bg-white: #FFFFFF;
+            --text-dark: #0F172A;
+            --text-body: #475569;
+            --text-muted: #64748B;
+            --border: #E2E8F0;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-white);
+            color: var(--text-body);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: var(--text-dark);
+        }
+
+        /* Navigation */
+        .navbar {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar-brand {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1.4rem;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .navbar-brand .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: white;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        }
+
+        .nav-link {
+            color: var(--text-body) !important;
+            font-weight: 500;
+            font-size: 0.95rem;
+            padding: 0.5rem 1rem !important;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--primary) !important;
+        }
+
+        .btn-primary-custom {
+            background: var(--primary);
+            border: none;
+            color: white;
+            padding: 0.6rem 1.4rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+        }
+
+        .btn-primary-custom:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(37, 99, 235, 0.35);
+            color: white;
+        }
+
+        .btn-outline-custom {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-dark);
+            padding: 0.6rem 1.4rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-custom:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: #EFF6FF;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            padding: 6rem 0 5rem;
+            background: linear-gradient(180deg, #F8FAFC 0%, #FFFFFF 100%);
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1200px;
+            height: 600px;
+            background: radial-gradient(ellipse at center, rgba(37, 99, 235, 0.08) 0%, transparent 70%);
+            z-index: 0;
+        }
+
+        .hero .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #EFF6FF;
+            border: 1px solid #DBEAFE;
+            color: var(--primary);
+            padding: 0.4rem 1rem;
+            border-radius: 100px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-badge .dot {
+            width: 8px;
+            height: 8px;
+            background: var(--primary);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.3); }
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            color: var(--text-dark);
+        }
+
+        .hero h1 .gradient-text {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p.lead {
+            font-size: 1.2rem;
+            color: var(--text-body);
+            max-width: 580px;
+            margin-bottom: 2.5rem;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 3rem;
+            margin-top: 4rem;
+            padding-top: 3rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .hero-stat .number {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+        }
+
+        .hero-stat .label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        /* Hero Visual */
+        .hero-visual {
+            position: relative;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-xl);
+        }
+
+        .hero-visual-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.25rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .hero-visual-header .dots {
+            display: flex;
+            gap: 0.4rem;
+        }
+
+        .hero-visual-header .dot-sm {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #CBD5E1;
+        }
+
+        .hero-visual-header span {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .search-bar {
+            background: #F8FAFC;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 0.85rem 1.15rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .search-bar i {
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+
+        .search-bar input {
+            background: transparent;
+            border: none;
+            color: var(--text-dark);
+            flex: 1;
+            font-size: 0.95rem;
+            outline: none;
+            font-weight: 500;
+        }
+
+        .search-bar input::placeholder {
+            color: #94a3b8;
+        }
+
+        .search-result {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.85rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-result:hover {
+            border-color: var(--primary);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+
+        .search-result .icon-box {
+            width: 36px;
+            height: 36px;
+            background: #EFF6FF;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            flex-shrink: 0;
+        }
+
+        .search-result .title {
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 0.25rem;
+            color: var(--text-dark);
+        }
+
+        .search-result .desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .search-result .badge-conf {
+            margin-left: auto;
+            background: #ECFDF5;
+            color: #059669;
+            padding: 0.3rem 0.6rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border: 1px solid #A7F3D0;
+        }
+
+        /* Section Styles */
+        .section {
+            padding: 6rem 0;
+            position: relative;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 4rem;
+        }
+
+        .section-tag {
+            display: inline-block;
+            color: var(--primary);
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1rem;
+        }
+
+        .section-header h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .section-header p {
+            color: var(--text-body);
+            font-size: 1.1rem;
+        }
+
+        /* Features Section */
+        .features {
+            background: var(--bg-light);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .feature-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            height: 100%;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: #BFDBFE;
+        }
+
+        .feature-icon {
+            width: 52px;
+            height: 52px;
+            background: linear-gradient(135deg, #EFF6FF, #DBEAFE);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .feature-card p {
+            color: var(--text-body);
+            font-size: 0.95rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .feature-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: gap 0.3s ease;
+        }
+
+        .feature-link:hover {
+            gap: 0.75rem;
+            color: var(--primary-dark);
+        }
+
+        /* Case Studies Section */
+        .case-study-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            height: 100%;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .case-study-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-xl);
+            border-color: #BFDBFE;
+        }
+
+        .case-study-image {
+            height: 160px;
+            background: linear-gradient(135deg, #F1F5F9, #E2E8F0);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .case-study-image i {
+            font-size: 3rem;
+            color: var(--primary);
+            opacity: 0.9;
+        }
+
+        .case-study-body {
+            padding: 1.5rem;
+        }
+
+        .case-study-tag {
+            display: inline-block;
+            background: #EFF6FF;
+            color: var(--primary);
+            padding: 0.25rem 0.75rem;
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .case-study-body h3 {
+            font-size: 1.15rem;
+            margin-bottom: 0.75rem;
+            line-height: 1.3;
+        }
+
+        .case-study-body p {
+            color: var(--text-body);
+            font-size: 0.9rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .case-study-metrics {
+            display: flex;
+            gap: 1.5rem;
+            padding-top: 1.25rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .case-study-metric .value {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            line-height: 1;
+        }
+
+        .case-study-metric .label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+        }
+
+        /* Hiring Section */
+        .hiring-section {
+            background: var(--bg-light);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .hiring-content h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 1.5rem;
+        }
+
+        .hiring-content h2 .accent-text {
+            color: var(--primary);
+        }
+
+        .hiring-content > p {
+            color: var(--text-body);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        .job-listing {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .job-listing:hover {
+            border-color: var(--primary);
+            box-shadow: var(--shadow-md);
+            transform: translateX(4px);
+        }
+
+        .job-listing .job-info h4 {
+            font-size: 1.05rem;
+            margin-bottom: 0.35rem;
+            color: var(--text-dark);
+        }
+
+        .job-listing .job-info .job-meta {
+            display: flex;
+            gap: 1rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .job-listing .job-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .job-listing .arrow {
+            color: var(--primary);
+            font-size: 1.25rem;
+            transition: transform 0.3s ease;
+        }
+
+        .job-listing:hover .arrow {
+            transform: translateX(4px);
+        }
+
+        .hiring-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: var(--shadow-md);
+        }
+
+        .hiring-card .perk-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1.25rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .hiring-card .perk-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+        
+        .hiring-card .perk-item:first-child {
+            padding-top: 0;
+        }
+
+        .hiring-card .perk-icon {
+            width: 44px;
+            height: 44px;
+            background: #EFF6FF;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            flex-shrink: 0;
+        }
+
+        .hiring-card .perk-text h5 {
+            font-size: 1rem;
+            margin-bottom: 0.35rem;
+            color: var(--text-dark);
+        }
+
+        .hiring-card .perk-text p {
+            color: var(--text-body);
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        /* Partners Section */
+        .partners-section {
+            padding: 4rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .partners-section h4 {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 2.5rem;
+        }
+
+        .partner-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 60px;
+            opacity: 0.6;
+            transition: opacity 0.3s ease;
+            filter: grayscale(1);
+        }
+
+        .partner-logo:hover {
+            opacity: 1;
+            filter: grayscale(0);
+        }
+
+        .partner-logo .logo-text {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1.3rem;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 6rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #EFF6FF 0%, #FFFFFF 100%);
+        }
+
+        .cta-section h2 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-section p {
+            color: var(--text-body);
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 2.5rem;
+        }
+
+        /* Footer */
+        footer {
+            background: white;
+            border-top: 1px solid var(--border);
+            padding: 4rem 0 2rem;
+        }
+
+        .footer-brand {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1.4rem;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-brand .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            color: white;
+        }
+
+        footer p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .footer-links h5 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 1.25rem;
+        }
+
+        .footer-links ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-links ul li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links ul li a {
+            color: var(--text-body);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links ul li a:hover {
+            color: var(--primary);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--border);
+            margin-top: 3rem;
+            padding-top: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .footer-social a {
+            width: 36px;
+            height: 36px;
+            background: #F8FAFC;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-body);
+            transition: all 0.3s ease;
+        }
+
+        .footer-social a:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero {
+                padding: 4rem 0 3rem;
+            }
+
+            .hero-stats {
+                gap: 1.5rem;
+                flex-wrap: wrap;
+            }
+
+            .hero-stat .number {
+                font-size: 1.75rem;
+            }
+
+            .section {
+                padding: 4rem 0;
+            }
+
+            .navbar-collapse {
+                background: white;
+                margin-top: 1rem;
+                padding: 1rem;
+                border-radius: 12px;
+                border: 1px solid var(--border);
+                box-shadow: var(--shadow-md);
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <span class="logo-icon">
+                    <i class="bi bi-broadcast"></i>
+                </span>
+                NextAI
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item"><a class="nav-link" href="#">Platform</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Solutions</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Case Studies</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Security</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Company</a></li>
+                </ul>
+                <div class="d-flex gap-2">
+                    <a href="#" class="btn btn-outline-custom">Sign In</a>
+                    <a href="#" class="btn btn-primary-custom">Book Demo</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-6">
+                    <div class="hero-badge">
+                        <span class="dot"></span>
+                        <span>Now with Agentic Search 2.0</span>
+                    </div>
+                    <h1>
+                        Decisions in <span class="gradient-text">minutes,</span><br>
+                        not months.
+                    </h1>
+                    <p class="lead">
+                        NextAI's agentic search platform transforms how enterprises 
+                        find, analyze, and act on critical information — secured, 
+                        scalable, and lightning fast.
+                    </p>
+                    <div class="d-flex flex-wrap gap-3">
+                        <a href="#" class="btn btn-primary-custom">
+                            Get Started Free
+                            <i class="bi bi-arrow-right ms-1"></i>
+                        </a>
+                        <a href="#" class="btn btn-outline-custom">
+                            <i class="bi bi-play-circle me-1"></i>
+                            Watch Demo
+                        </a>
+                    </div>
+                    <div class="hero-stats">
+                        <div class="hero-stat">
+                            <div class="number">10x</div>
+                            <div class="label">Faster Decisions</div>
+                        </div>
+                        <div class="hero-stat">
+                            <div class="number">99.9%</div>
+                            <div class="label">Uptime SLA</div>
+                        </div>
+                        <div class="hero-stat">
+                            <div class="number">SOC 2</div>
+                            <div class="label">Type II Certified</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="hero-visual">
+                        <div class="hero-visual-header">
+                            <div class="dots">
+                                <span class="dot-sm"></span>
+                                <span class="dot-sm"></span>
+                                <span class="dot-sm"></span>
+                            </div>
+                            <span>NextAI · Agentic Search</span>
+                        </div>
+                        <div class="search-bar">
+                            <i class="bi bi-search"></i>
+                            <input type="text" placeholder="Ask anything about your enterprise data..." value="Summarize partner compliance status">
+                            <i class="bi bi-mic" style="color: #94a3b8;"></i>
+                        </div>
+                        <div class="search-result">
+                            <div class="icon-box">
+                                <i class="bi bi-shield-check"></i>
+                            </div>
+                            <div class="flex-grow-1">
+                                <div class="title">Partner Compliance Overview</div>
+                                <div class="desc">12 of 14 partners fully compliant · 2 pending review</div>
+                            </div>
+                            <span class="badge-conf">Verified</span>
+                        </div>
+                        <div class="search-result">
+                            <div class="icon-box">
+                                <i class="bi bi-file-earmark-text"></i>
+                            </div>
+                            <div class="flex-grow-1">
+                                <div class="title">Contract Analysis: TechCorp Inc.</div>
+                                <div class="desc">Renewal due in 45 days · 3 clauses need attention</div>
+                            </div>
+                            <span class="badge-conf">Secure</span>
+                        </div>
+                        <div class="search-result">
+                            <div class="icon-box">
+                                <i class="bi bi-graph-up-arrow"></i>
+                            </div>
+                            <div class="flex-grow-1">
+                                <div class="title">Q3 Performance Insights</div>
+                                <div class="desc">Revenue up 23% · 4 key risk indicators detected</div>
+                            </div>
+                            <span class="badge-conf">Live</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="section features">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Platform Capabilities</span>
+                <h2>One platform. Infinite possibilities.</h2>
+                <p>Powered by advanced AI agents that understand context, ensure security, and deliver actionable insights across your enterprise.</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="bi bi-robot"></i>
+                        </div>
+                        <h3>Agentic Search</h3>
+                        <p>Autonomous AI agents that search, reason, and synthesize information across all your data sources in real-time.</p>
+                        <a href="#" class="feature-link">
+                            Learn more <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="bi bi-shield-lock"></i>
+                        </div>
+                        <h3>Enterprise Security</h3>
+                        <p>Zero-trust architecture with end-to-end encryption, role-based access, and full audit trails for every query.</p>
+                        <a href="#" class="feature-link">
+                            Learn more <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="bi bi-lightning-charge"></i>
+                        </div>
+                        <h3>Real-time Intelligence</h3>
+                        <p>Stream processing delivers insights the moment data changes — no more stale reports or delayed decisions.</p>
+                        <a href="#" class="feature-link">
+                            Learn more <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="bi bi-diagram-3"></i>
+                        </div>
+                        <h3>Unified Data Layer</h3>
+                        <p>Connect 200+ enterprise sources — from Slack to SharePoint to Salesforce — into one searchable knowledge graph.</p>
+                        <a href="#" class="feature-link">
+                            Learn more <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="bi bi-gear-wide-connected"></i>
+                        </div>
+                        <h3>Workflow Automation</h3>
+                        <p>Turn insights into action with no-code workflows that trigger approvals, notifications, and downstream processes.</p>
+                        <a href="#" class="feature-link">
+                            Learn more <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="bi bi-bar-chart-line"></i>
+                        </div>
+                        <h3>Decision Analytics</h3>
+                        <p>Track every decision path, measure outcomes, and continuously improve your organization's decision intelligence.</p>
+                        <a href="#" class="feature-link">
+                            Learn more <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Case Studies Section -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Case Studies</span>
+                <h2>Trusted by industry leaders</h2>
+                <p>See how organizations are using NextAI to make better decisions, faster.</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-3">
+                    <div class="case-study-card">
+                        <div class="case-study-image">
+                            <i class="bi bi-people"></i>
+                        </div>
+                        <div class="case-study-body">
+                            <span class="case-study-tag">Defense</span>
+                            <h3>Partner Information Sharing</h3>
+                            <p>Streamlined classified partner data exchange across 40+ agencies with full audit compliance.</p>
+                            <div class="case-study-metrics">
+                                <div class="case-study-metric">
+                                    <div class="value">85%</div>
+                                    <div class="label">Faster Sharing</div>
+                                </div>
+                                <div class="case-study-metric">
+                                    <div class="value">40+</div>
+                                    <div class="label">Agencies</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="case-study-card">
+                        <div class="case-study-image">
+                            <i class="bi bi-bank"></i>
+                        </div>
+                        <div class="case-study-body">
+                            <span class="case-study-tag">Finance</span>
+                            <h3>Risk Assessment Engine</h3>
+                            <p>Real-time risk scoring across $2B portfolio reduced manual review time by 10x.</p>
+                            <div class="case-study-metrics">
+                                <div class="case-study-metric">
+                                    <div class="value">10x</div>
+                                    <div class="label">Faster Reviews</div>
+                                </div>
+                                <div class="case-study-metric">
+                                    <div class="value">$2B</div>
+                                    <div class="label">Portfolio</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="case-study-card">
+                        <div class="case-study-image">
+                            <i class="bi bi-heart-pulse"></i>
+                        </div>
+                        <div class="case-study-body">
+                            <span class="case-study-tag">Healthcare</span>
+                            <h3>Clinical Decision Support</h3>
+                            <p>AI-powered insights for 12,000 physicians across 300 facilities improved patient outcomes.</p>
+                            <div class="case-study-metrics">
+                                <div class="case-study-metric">
+                                    <div class="value">12K</div>
+                                    <div class="label">Physicians</div>
+                                </div>
+                                <div class="case-study-metric">
+                                    <div class="value">300</div>
+                                    <div class="label">Facilities</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="case-study-card">
+                        <div class="case-study-image">
+                            <i class="bi bi-airplane"></i>
+                        </div>
+                        <div class="case-study-body">
+                            <span class="case-study-tag">Aerospace</span>
+                            <h3>Supply Chain Intelligence</h3>
+                            <p>Predictive analytics across 5,000 suppliers prevented $45M in potential disruptions.</p>
+                            <div class="case-study-metrics">
+                                <div class="case-study-metric">
+                                    <div class="value">$45M</div>
+                                    <div class="label">Saved</div>
+                                </div>
+                                <div class="case-study-metric">
+                                    <div class="value">5K</div>
+                                    <div class="label">Suppliers</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hiring Section -->
+    <section class="section hiring-section">
+        <div class="container">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-6">
+                    <div class="hiring-content">
+                        <span class="section-tag">Careers</span>
+                        <h2>We're <span class="accent-text">Hiring</span></h2>
+                        <p>Join our mission to revolutionize how enterprises make decisions. We're building the future of agentic AI — come build it with us.</p>
+                        <div class="job-listing">
+                            <div class="job-info">
+                                <h4>Senior AI Research Engineer</h4>
+                                <div class="job-meta">
+                                    <span><i class="bi bi-geo-alt"></i> San Francisco / Remote</span>
+                                    <span><i class="bi bi-briefcase"></i> Full-time</span>
+                                </div>
+                            </div>
+                            <i class="bi bi-arrow-right arrow"></i>
+                        </div>
+                        <div class="job-listing">
+                            <div class="job-info">
+                                <h4>Product Manager, Platform</h4>
+                                <div class="job-meta">
+                                    <span><i class="bi bi-geo-alt"></i> San Francisco</span>
+                                    <span><i class="bi bi-briefcase"></i> Full-time</span>
+                                </div>
+                            </div>
+                            <i class="bi bi-arrow-right arrow"></i>
+                        </div>
+                        <div class="job-listing">
+                            <div class="job-info">
+                                <h4>Security Engineer</h4>
+                                <div class="job-meta">
+                                    <span><i class="bi bi-geo-alt"></i> Remote</span>
+                                    <span><i class="bi bi-briefcase"></i> Full-time</span>
+                                </div>
+                            </div>
+                            <i class="bi bi-arrow-right arrow"></i>
+                        </div>
+                        <div class="job-listing">
+                            <div class="job-info">
+                                <h4>Enterprise Sales Lead</h4>
+                                <div class="job-meta">
+                                    <span><i class="bi bi-geo-alt"></i> New York</span>
+                                    <span><i class="bi bi-briefcase"></i> Full-time</span>
+                                </div>
+                            </div>
+                            <i class="bi bi-arrow-right arrow"></i>
+                        </div>
+                        <div class="mt-4">
+                            <a href="#" class="btn btn-primary-custom">View All Positions</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="hiring-card">
+                        <h4 class="mb-4" style="font-size: 1.25rem;">Why NextAI?</h4>
+                        <div class="perk-item">
+                            <div class="perk-icon">
+                                <i class="bi bi-cash-stack"></i>
+                            </div>
+                            <div class="perk-text">
+                                <h5>Competitive Compensation</h5>
+                                <p>Top-of-market salary plus meaningful equity grants for every team member.</p>
+                            </div>
+                        </div>
+                        <div class="perk-item">
+                            <div class="perk-icon">
+                                <i class="bi bi-house-heart"></i>
+                            </div>
+                            <div class="perk-text">
+                                <h5>Remote-First Culture</h5>
+                                <p>Work from anywhere with quarterly team gatherings in SF, NYC, and London.</p>
+                            </div>
+                        </div>
+                        <div class="perk-item">
+                            <div class="perk-icon">
+                                <i class="bi bi-mortarboard"></i>
+                            </div>
+                            <div class="perk-text">
+                                <h5>Learning & Growth</h5>
+                                <p>$5K annual learning budget, conference attendance, and internal AI/ML workshops.</p>
+                            </div>
+                        </div>
+                        <div class="perk-item">
+                            <div class="perk-icon">
+                                <i class="bi bi-heart"></i>
+                            </div>
+                            <div class="perk-text">
+                                <h5>Health & Wellness</h5>
+                                <p>Premium medical, dental, vision, and mental health support for you and your family.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partners Section -->
+    <section class="partners-section">
+        <div class="container">
+            <h4>Trusted by leading enterprises and partners</h4>
+            <div class="row align-items-center g-4">
+                <div class="col-6 col-md-3 col-lg-2">
+                    <div class="partner-logo">
+                        <span class="logo-text"><i class="bi bi-hexagon-fill"></i> Aether</span>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3 col-lg-2">
+                    <div class="partner-logo">
+                        <span class="logo-text"><i class="bi bi-triangle-fill"></i> Vertex</span>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3 col-lg-2">
+                    <div class="partner-logo">
+                        <span class="logo-text"><i class="bi bi-diamond-fill"></i> Quantum</span>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3 col-lg-2">
+                    <div class="partner-logo">
+                        <span class="logo-text"><i class="bi bi-circle-fill"></i> Nebula</span>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3 col-lg-2">
+                    <div class="partner-logo">
+                        <span class="logo-text"><i class="bi bi-star-fill"></i> Polaris</span>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3 col-lg-2">
+                    <div class="partner-logo">
+                        <span class="logo-text"><i class="bi bi-lightning-fill"></i> Helix</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Ready to make decisions<br>in <span class="gradient-text">minutes?</span></h2>
+            <p>Join hundreds of enterprises transforming their decision-making with NextAI's agentic search platform.</p>
+            <div class="cta-buttons d-flex justify-content-center gap-3 flex-wrap">
+                <a href="#" class="btn btn-primary-custom">
+                    Book a Demo
+                    <i class="bi bi-arrow-right ms-1"></i>
+                </a>
+                <a href="#" class="btn btn-outline-custom">Talk to Sales</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-4">
+                    <div class="footer-brand">
+                        <span class="logo-icon">
+                            <i class="bi bi-broadcast"></i>
+                        </span>
+                        NextAI
+                    </div>
+                    <p>The agentic search platform for enterprise decision intelligence. Built for speed, secured by design.</p>
+                    <div class="footer-social">
+                        <a href="#"><i class="bi bi-twitter-x"></i></a>
+                        <a href="#"><i class="bi bi-linkedin"></i></a>
+                        <a href="#"><i class="bi bi-github"></i></a>
+                        <a href="#"><i class="bi bi-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-2">
+                    <div class="footer-links">
+                        <h5>Platform</h5>
+                        <ul>
+                            <li><a href="#">Agentic Search</a></li>
+                            <li><a href="#">Security</a></li>
+                            <li><a href="#">Integrations</a></li>
+                            <li><a href="#">API</a></li>
+                            <li><a href="#">Pricing</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-2">
+                    <div class="footer-links">
+                        <h5>Solutions</h5>
+                        <ul>
+                            <li><a href="#">Defense</a></li>
+                            <li><a href="#">Finance</a></li>
+                            <li><a href="#">Healthcare</a></li>
+                            <li><a href="#">Aerospace</a></li>
+                            <li><a href="#">Enterprise</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-2">
+                    <div class="footer-links">
+                        <h5>Company</h5>
+                        <ul>
+                            <li><a href="#">About</a></li>
+                            <li><a href="#">Careers</a></li>
+                            <li><a href="#">Blog</a></li>
+                            <li><a href="#">Press</a></li>
+                            <li><a href="#">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-2">
+                    <div class="footer-links">
+                        <h5>Resources</h5>
+                        <ul>
+                            <li><a href="#">Documentation</a></li>
+                            <li><a href="#">Case Studies</a></li>
+                            <li><a href="#">Whitepapers</a></li>
+                            <li><a href="#">Trust Center</a></li>
+                            <li><a href="#">Status</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div>© 2026 NextAI, Inc. All rights reserved.</div>
+                <div class="d-flex gap-4">
+                    <a href="#" style="color: var(--text-muted); text-decoration: none;">Privacy Policy</a>
+                    <a href="#" style="color: var(--text-muted); text-decoration: none;">Terms of Service</a>
+                    <a href="#" style="color: var(--text-muted); text-decoration: none;">Cookies</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

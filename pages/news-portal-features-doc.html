@@ -1,0 +1,1241 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News Portal — Full Features List</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { font-family: 'Geist', sans-serif; }
+        code, .font-mono { font-family: 'Geist Mono', monospace; }
+
+        body { background: #050505; color: #ffffff; }
+
+        @keyframes animationIn {
+            0% { opacity: 0; transform: translateY(30px); filter: blur(8px); }
+            100% { opacity: 1; transform: translateY(0); filter: blur(0px); }
+        }
+        .anim-in { opacity: 0; }
+        .anim-in.animate {
+            animation: animationIn 0.8s ease-out both;
+        }
+        .delay-0 { animation-delay: 0s !important; }
+        .delay-1 { animation-delay: 0.1s !important; }
+        .delay-2 { animation-delay: 0.2s !important; }
+        .delay-3 { animation-delay: 0.3s !important; }
+        .delay-4 { animation-delay: 0.4s !important; }
+        .delay-5 { animation-delay: 0.5s !important; }
+        .delay-6 { animation-delay: 0.6s !important; }
+
+        .feature-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 1rem;
+            transition: all 0.3s ease;
+        }
+        .feature-card:hover {
+            background: rgba(255,255,255,0.04);
+            border-color: rgba(255,255,255,0.15);
+        }
+
+        .feature-detail {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.3s ease, opacity 0.3s ease;
+            opacity: 0;
+        }
+        .feature-detail.open {
+            max-height: 600px;
+            opacity: 1;
+        }
+
+        .chevron-icon {
+            transition: transform 0.3s ease;
+        }
+        .chevron-icon.rotated {
+            transform: rotate(180deg);
+        }
+
+        .filter-btn {
+            transition: all 0.2s ease;
+        }
+        .filter-btn.active {
+            background: rgba(255,255,255,0.12);
+            border-color: rgba(255,255,255,0.25);
+            color: #fff;
+        }
+
+        .priority-high { color: #f87171; }
+        .priority-medium { color: #fbbf24; }
+        .priority-low { color: #34d399; }
+
+        .priority-dot-high { background: #f87171; box-shadow: 0 0 8px rgba(248,113,113,0.5); }
+        .priority-dot-medium { background: #fbbf24; box-shadow: 0 0 8px rgba(251,191,36,0.5); }
+        .priority-dot-low { background: #34d399; box-shadow: 0 0 8px rgba(52,211,153,0.5); }
+
+        .side-tab {
+            transition: all 0.25s ease;
+            position: relative;
+        }
+        .side-tab::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            transform: translateX(-50%) scaleX(0);
+            width: 60%;
+            height: 2px;
+            background: #fff;
+            border-radius: 999px;
+            transition: transform 0.25s ease;
+        }
+        .side-tab.active::after {
+            transform: translateX(-50%) scaleX(1);
+        }
+        .side-tab.active {
+            color: #fff;
+        }
+
+        .stat-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .bg-grid {
+            background-image: linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 33.33% 100%;
+        }
+
+        .glow-line {
+            height: 1px;
+            background: linear-gradient(to right, rgba(59,130,246,0) 0%, rgba(59,130,246,0.4) 50%, rgba(59,130,246,0) 100%);
+        }
+
+        .search-input {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 0.75rem;
+            color: #fff;
+            outline: none;
+            transition: border-color 0.2s ease;
+        }
+        .search-input:focus {
+            border-color: rgba(255,255,255,0.3);
+        }
+        .search-input::placeholder {
+            color: rgba(255,255,255,0.35);
+        }
+
+        .category-badge {
+            font-size: 9px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            font-weight: 600;
+            padding: 3px 8px;
+            border-radius: 6px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.5);
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(24px);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 0.75rem;
+            padding: 0.75rem 1.5rem;
+            color: #fff;
+            font-size: 0.875rem;
+            z-index: 1000;
+            opacity: 0;
+            transition: all 0.4s ease;
+            pointer-events: none;
+        }
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
+
+        .count-badge {
+            background: rgba(255,255,255,0.08);
+            font-size: 11px;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 999px;
+            color: rgba(255,255,255,0.5);
+        }
+    </style>
+</head>
+<body class="bg-grid min-h-screen">
+
+    <!-- Toast -->
+    <div id="toast" class="toast">
+        <span id="toastMsg"></span>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-3xl">
+        <div class="h-12 bg-black/70 backdrop-blur-xl border border-white/10 rounded-full flex items-center justify-between pl-6 pr-2 shadow-lg">
+            <div class="flex items-center gap-2">
+                <iconify-icon icon="solar:document-text-bold" style="color:#fff;font-size:18px;"></iconify-icon>
+                <span class="font-semibold text-sm tracking-tight">NewsPortal</span>
+                <span class="text-[10px] font-mono text-white/30 ml-1">FEATURES</span>
+            </div>
+            <div class="flex items-center gap-1">
+                <button onclick="scrollToSection('stats')" class="h-8 px-3 text-xs font-medium text-white/60 hover:text-white hover:bg-white/10 rounded-full transition-all">Overview</button>
+                <button onclick="scrollToSection('frontend')" class="h-8 px-3 text-xs font-medium text-white/60 hover:text-white hover:bg-white/10 rounded-full transition-all">Frontend</button>
+                <button onclick="scrollToSection('admin')" class="h-8 px-3 text-xs font-medium text-white/60 hover:text-white hover:bg-white/10 rounded-full transition-all">Admin</button>
+                <button onclick="exportFeatures()" class="h-8 px-4 text-xs font-semibold bg-white text-black rounded-full hover:bg-neutral-200 transition-colors ml-1">Export</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="pt-32 pb-16 px-6 text-center relative">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-blue-500/[0.03] rounded-full blur-[100px] pointer-events-none"></div>
+        <div class="max-w-4xl mx-auto relative">
+            <div class="anim-in delay-0">
+                <span class="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-white/40 mb-6">
+                    <span class="w-1.5 h-1.5 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.5)]"></span>
+                    Complete Specification
+                </span>
+            </div>
+            <h1 class="text-4xl md:text-6xl font-medium tracking-tight leading-[1.1] mb-6 anim-in delay-1">
+                News Portal<br>
+                <span class="text-white/50">Full Features List</span>
+            </h1>
+            <p class="text-sm font-light text-white/50 max-w-xl mx-auto leading-relaxed mb-10 anim-in delay-2">
+                A comprehensive breakdown of every feature required to build a production-grade news portal — covering content management, user engagement, monetization, analytics, and more.
+            </p>
+            <div class="flex items-center justify-center gap-3 anim-in delay-3">
+                <div class="flex items-center gap-2 text-xs text-white/40">
+                    <iconify-icon icon="solar:layers-bold" style="font-size:14px;"></iconify-icon>
+                    <span id="totalCount">0</span> Features
+                </div>
+                <span class="text-white/10">|</span>
+                <div class="flex items-center gap-2 text-xs text-white/40">
+                    <iconify-icon icon="solar:widget-bold" style="font-size:14px;"></iconify-icon>
+                    <span id="catCount">0</span> Categories
+                </div>
+                <span class="text-white/10">|</span>
+                <div class="flex items-center gap-2 text-xs text-white/40">
+                    <iconify-icon icon="solar:shield-check-bold" style="font-size:14px;"></iconify-icon>
+                    2 Sides
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="glow-line max-w-2xl mx-auto mb-16"></div>
+
+    <!-- Stats -->
+    <section id="stats" class="px-6 pb-16">
+        <div class="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4 anim-in delay-3">
+            <div class="stat-card">
+                <div class="text-3xl font-medium mb-1" id="statFrontend">0</div>
+                <div class="text-[10px] font-bold uppercase tracking-[0.15em] text-white/40">Frontend Features</div>
+            </div>
+            <div class="stat-card">
+                <div class="text-3xl font-medium mb-1" id="statAdmin">0</div>
+                <div class="text-[10px] font-bold uppercase tracking-[0.15em] text-white/40">Admin Features</div>
+            </div>
+            <div class="stat-card">
+                <div class="text-3xl font-medium mb-1" id="statHigh">0</div>
+                <div class="text-[10px] font-bold uppercase tracking-[0.15em] text-white/40">High Priority</div>
+            </div>
+            <div class="stat-card">
+                <div class="text-3xl font-medium mb-1" id="statCategories">0</div>
+                <div class="text-[10px] font-bold uppercase tracking-[0.15em] text-white/40">Categories</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Search & Filters -->
+    <section class="px-6 pb-8 sticky top-20 z-40">
+        <div class="max-w-5xl mx-auto">
+            <div class="bg-black/60 backdrop-blur-xl border border-white/10 rounded-2xl p-4 flex flex-col md:flex-row gap-3">
+                <div class="relative flex-1">
+                    <iconify-icon icon="solar:magnifer-linear" style="font-size:16px;color:rgba(255,255,255,0.35);position:absolute;left:12px;top:50%;transform:translateY(-50%);"></iconify-icon>
+                    <input type="text" id="searchInput" placeholder="Search features..." class="search-input w-full h-10 pl-10 pr-4 text-sm" oninput="filterFeatures()">
+                </div>
+                <div class="flex items-center gap-2 flex-wrap">
+                    <button class="filter-btn active text-xs px-3 h-8 border border-white/10 rounded-full text-white/60" data-filter="all" onclick="setFilter(this,'all')">All</button>
+                    <button class="filter-btn text-xs px-3 h-8 border border-white/10 rounded-full text-white/60" data-filter="high" onclick="setFilter(this,'high')">
+                        <span class="inline-block w-1.5 h-1.5 rounded-full priority-dot-high mr-1"></span>High
+                    </button>
+                    <button class="filter-btn text-xs px-3 h-8 border border-white/10 rounded-full text-white/60" data-filter="medium" onclick="setFilter(this,'medium')">
+                        <span class="inline-block w-1.5 h-1.5 rounded-full priority-dot-medium mr-1"></span>Medium
+                    </button>
+                    <button class="filter-btn text-xs px-3 h-8 border border-white/10 rounded-full text-white/60" data-filter="low" onclick="setFilter(this,'low')">
+                        <span class="inline-block w-1.5 h-1.5 rounded-full priority-dot-low mr-1"></span>Low
+                    </button>
+                    <span class="text-white/10">|</span>
+                    <button class="filter-btn text-xs px-3 h-8 border border-white/10 rounded-full text-white/60" data-filter="frontend" onclick="setFilter(this,'frontend')">
+                        <iconify-icon icon="solar:monitor-bold" style="font-size:12px;vertical-align:-1px;margin-right:3px;"></iconify-icon>Frontend
+                    </button>
+                    <button class="filter-btn text-xs px-3 h-8 border border-white/10 rounded-full text-white/60" data-filter="admin" onclick="setFilter(this,'admin')">
+                        <iconify-icon icon="solar:settings-bold" style="font-size:12px;vertical-align:-1px;margin-right:3px;"></iconify-icon>Admin
+                    </button>
+                </div>
+            </div>
+            <div id="resultCount" class="text-center text-xs text-white/30 mt-3"></div>
+        </div>
+    </section>
+
+    <!-- ==================== FRONTEND ==================== -->
+    <section id="frontend" class="px-6 pb-20">
+        <div class="max-w-5xl mx-auto">
+            <div class="flex items-center gap-4 mb-10 anim-in">
+                <div class="w-10 h-10 rounded-xl bg-white/[0.05] border border-white/10 flex items-center justify-center">
+                    <iconify-icon icon="solar:monitor-bold" style="font-size:20px;color:rgba(255,255,255,0.7);"></iconify-icon>
+                </div>
+                <div>
+                    <h2 class="text-2xl font-medium tracking-tight">Frontend Side</h2>
+                    <p class="text-xs text-white/40 mt-0.5">What visitors and readers interact with</p>
+                </div>
+                <span class="count-badge ml-auto" id="feCount">0</span>
+            </div>
+
+            <!-- FE: Homepage -->
+            <div class="mb-10" data-side="frontend">
+                <div class="flex items-center gap-3 mb-4">
+                    <iconify-icon icon="solar:home-2-bold" style="font-size:16px;color:rgba(255,255,255,0.4);"></iconify-icon>
+                    <h3 class="text-sm font-semibold text-white/70 uppercase tracking-wider">Homepage</h3>
+                </div>
+                <div class="grid gap-3" id="fe-homepage"></div>
+            </div>
+
+            <!-- FE: Article & Content -->
+            <div class="mb-10" data-side="frontend">
+                <div class="flex items-center gap-3 mb-4">
+                    <iconify-icon icon="solar:document-text-bold" style="font-size:16px;color:rgba(255,255,255,0.4);"></iconify-icon>
+                    <h3 class="text-sm font-semibold text-white/70 uppercase tracking-wider">Article & Content Display</h3>
+                </div>
+                <div class="grid gap-3" id="fe-article"></div>
+            </div>
+
+            <!-- FE: Navigation & Discovery -->
+            <div class="mb-10" data-side="frontend">
+                <div class="flex items-center gap-3 mb-4">
+                    <iconify-icon icon="solar:compass-bold" style="font-size:16px;color:rgba(255,255,255,0.4);"></iconify-icon>
+                    <h3 class="text-sm font-semibold text-white/70 uppercase tracking-wider">Navigation & Discovery</h3>
+                </div>
+                <div class="grid gap-3" id="fe-navigation"></div>
+            </div>
+
+            <!-- FE: User Engagement -->
+            <div class="mb-10" data-side="frontend">
+                <div class="flex items-center gap-3 mb-4">
+                    <iconify-icon icon="solar:chat-round-dots-bold" style="font-size:16px;color:rgba(255,255,255,0.4);"></iconify-icon>
+                    <h3 class="text-sm font-semibold text-white/70 uppercase tracking-wider">User Engagement</h3>
+                </div>
+                <div class="grid gap-3" id="fe-engagement"></div>
+            </div>
+
+            <!-- FE: User Accounts -->
+            <div class="mb-10" data-side="frontend">
+                <div class="flex items-center gap-3 mb-4">
+                    <iconify-icon icon="solar:user-circle-bold" style="font-size:16px;color:rgba(255,255,255,0.4);"></iconify-icon>
+                    <h3 class="text-sm font-semibold text-white/70 uppercase tracking-wider">User Accounts & Profiles</h3>
+                </div>
+                <div class="grid gap-3" id="fe-accounts"></div>
+            </div>
+
+            <!-- FE: Multimedia -->
+            <div class="mb-10" data-side="frontend">
+                <div class="flex items-center gap-3 mb-4">
+                    <iconify-icon icon="solar:video-frame-play-horizontal-bold" style="font-size:16px;color:rgba(255,255,255,0.4);"></iconify-icon>
+                    <h3 class="text-sm font-semibold text-white/70 uppercase tracking-wider">Multimedia & Live</h3>
+                </div>
+                <div class="grid gap-3" id="fe-multimedia"></div>
+            </div>
+
+            <!-- FE: Social & Sharing -->
+            <div class="mb-10" data-side="frontend">
+                <div class="flex items-center gap-3 mb-4">
+                    <iconify-icon icon="solar:share-bold" style="font-size:16px;color:rgba(255,255,255,0.4);"></iconify-icon>
+                    <h3 class="text-sm font-semibold text-white/70 uppercase tracking-wider">Social & Sharing</h3>
+                </div>
+                <div class="grid gap-3" id="fe-social"></div>
+            </div>
+
+            <!-- FE: Notifications -->
+            <div class="mb-10" data-side="frontend">
+                <div class="flex items-center gap-3 mb-4">
+                    <iconify-icon icon="solar:bell-bold" style="font-size:16px;color:rgba(255,255,255,0.4);"></iconify-icon>
+                    <h3 class="text-sm font-semibold text-white/70 uppercase tracking-wider">Notifications & Alerts</h3>
+                </div>
+                <div class="grid gap-3" id="fe-notifications"></div>
+            </div>
+
+            <!-- FE: Monetization -->
+            <div class="mb-10" data-side="frontend">
+                <div class="flex items-center gap-3 mb-4">
+                    <iconify-icon icon="solar:wallet-bold" style="font-size:16px;color:rgba(255,255,255,0.4);"></iconify-icon>
+                    <h3 class="text-sm font-semibold text-white/70 uppercase tracking-wider">Monetization & Subscriptions</h3>
+                </div>
+                <div class="grid gap-3" id="fe-monetization"></div>
+            </div>
+
+            <!-- FE: SEO & Performance -->
+            <div class="mb-10" data-side="frontend">
+                <div class="flex items-center gap-3 mb-4">
+                    <iconify-icon icon="solar:rocket-bold" style="font-size:16px;color:rgba(255,255,255,0.4);"></iconify-icon>
+                    <h3 class="text-sm font-semibold text-white/70 uppercase tracking-wider">SEO, Performance & Accessibility</h3>
+                </div>
+                <div class="grid gap-3" id="fe-seo"></div>
+            </div>
+
+            <!-- FE: Design & UX -->
+            <div class="mb-10" data-side="frontend">
+                <div class="flex items-center gap-3 mb-4">
+                    <iconify-icon icon="solar:palette-bold" style="font-size:16px;color:rgba(255,255,255,0.4);"></iconify-icon>
+                    <h3 class="text-sm font-semibold text-white/70 uppercase tracking-wider">Design & UX</h3>
+                </div>
+                <div class="grid gap-3" id="fe-design"></div>
+            </div>
+        </div>
+    </section>
+
+    <div class="glow-line max-w-2xl mx-auto mb-20"></div>
+
+    <!-- ==================== ADMIN ==================== -->
+    <section id="admin" class="px-6 pb-20">
+        <div class="max-w-5xl mx-auto">
+            <div class="flex items-center gap-4 mb-10 anim-in">
+                <div class="w-10 h-10 rounded-xl bg-white/[0.05] border border-white/10 flex items-center justify-center">
+                    <iconify-icon icon="solar:settings-bold" style="font-size:20px;color:rgba(255,255,255,0.7);"></iconify-icon>
+                </div>
+                <div>
+                    <h2 class="text-2xl font-medium tracking-tight">Admin Side</h2>
+                    <p class="text-xs text-white/40 mt-0.5">What editors, admins, and staff interact with</p>
+                </div>
+                <span class="count-badge ml-auto" id="adminCount">0</span>
+            </div>
+
+            <!-- Admin: Dashboard -->
+            <div class="mb-10" data-side="admin">
+                <div class="flex items-center gap-3 mb-4">
+                    <iconify-icon icon="solar:chart-square-bold" style="font-size:16px;color:rgba(255,255,255,0.4);"></iconify-icon>
+                    <h3 class="text-sm font-semibold text-white/70 uppercase tracking-wider">Dashboard & Analytics</h3>
+                </div>
+                <div class="grid gap-3" id="ad-dashboard"></div>
+            </div>
+
+            <!-- Admin: Content Management -->
+            <div class="mb-10" data-side="admin">
+                <div class="flex items-center gap-3 mb-4">
+                    <iconify-icon icon="solar:pen-new-square-bold" style="font-size:16px;color:rgba(255,255,255,0.4);"></iconify-icon>
+                    <h3 class="text-sm font-semibold text-white/70 uppercase tracking-wider">Content Management</h3>
+                </div>
+                <div class="grid gap-3" id="ad-content"></div>
+            </div>
+
+            <!-- Admin: Editor -->
+            <div class="mb-10" data-side="admin">
+                <div class="flex items-center gap-3 mb-4">
+                    <iconify-icon icon="solar:text-bold-bold" style="font-size:16px;color:rgba(255,255,255,0.4);"></iconify-icon>
+                    <h3 class="text-sm font-semibold text-white/70 uppercase tracking-wider">Article Editor</h3>
+                </div>
+                <div class="grid gap-3" id="ad-editor"></div>
+            </div>
+
+            <!-- Admin: Media -->
+            <div class="mb-10" data-side="admin">
+                <div class="flex items-center gap-3 mb-4">
+                    <iconify-icon icon="solar:gallery-bold" style="font-size:16px;color:rgba(255,255,255,0.4);"></iconify-icon>
+                    <h3 class="text-sm font-semibold text-white/70 uppercase tracking-wider">Media Management</h3>
+                </div>
+                <div class="grid gap-3" id="ad-media"></div>
+            </div>
+
+            <!-- Admin: Taxonomy -->
+            <div class="mb-10" data-side="admin">
+                <div class="flex items-center gap-3 mb-4">
+                    <iconify-icon icon="solar:tag-bold" style="font-size:16px;color:rgba(255,255,255,0.4);"></iconify-icon>
+                    <h3 class="text-sm font-semibold text-white/70 uppercase tracking-wider">Taxonomy (Categories, Tags, Topics)</h3>
+                </div>
+                <div class="grid gap-3" id="ad-taxonomy"></div>
+            </div>
+
+            <!-- Admin: User Management -->
+            <div class="mb-10" data-side="admin">
+                <div class="flex items-center gap-3 mb-4">
+                    <iconify-icon icon="solar:users-group-two-rounded-bold" style="font-size:16px;color:rgba(255,255,255,0.4);"></iconify-icon>
+                    <h3 class="text-sm font-semibold text-white/70 uppercase tracking-wider">User & Team Management</h3>
+                </div>
+                <div class="grid gap-3" id="ad-users"></div>
+            </div>
+
+            <!-- Admin: Comment Moderation -->
+            <div class="mb-10" data-side="admin">
+                <div class="flex items-center gap-3 mb-4">
+                    <iconify-icon icon="solar:shield-check-bold" style="font-size:16px;color:rgba(255,255,255,0.4);"></iconify-icon>
+                    <h3 class="text-sm font-semibold text-white/70 uppercase tracking-wider">Comment Moderation</h3>
+                </div>
+                <div class="grid gap-3" id="ad-moderation"></div>
+            </div>
+
+            <!-- Admin: SEO -->
+            <div class="mb-10" data-side="admin">
+                <div class="flex items-center gap-3 mb-4">
+                    <iconify-icon icon="solar:magnifer-zoom-in-bold" style="font-size:16px;color:rgba(255,255,255,0.4);"></iconify-icon>
+                    <h3 class="text-sm font-semibold text-white/70 uppercase tracking-wider">SEO & Meta Management</h3>
+                </div>
+                <div class="grid gap-3" id="ad-seo"></div>
+            </div>
+
+            <!-- Admin: Ads -->
+            <div class="mb-10" data-side="admin">
+                <div class="flex items-center gap-3 mb-4">
+                    <iconify-icon icon="solar:advertisement-bold" style="font-size:16px;color:rgba(255,255,255,0.4);"></iconify-icon>
+                    <h3 class="text-sm font-semibold text-white/70 uppercase tracking-wider">Ad & Sponsorship Management</h3>
+                </div>
+                <div class="grid gap-3" id="ad-ads"></div>
+            </div>
+
+            <!-- Admin: Newsletter -->
+            <div class="mb-10" data-side="admin">
+                <div class="flex items-center gap-3 mb-4">
+                    <iconify-icon icon="solar:letter-bold" style="font-size:16px;color:rgba(255,255,255,0.4);"></iconify-icon>
+                    <h3 class="text-sm font-semibold text-white/70 uppercase tracking-wider">Newsletter & Email</h3>
+                </div>
+                <div class="grid gap-3" id="ad-newsletter"></div>
+            </div>
+
+            <!-- Admin: Layout -->
+            <div class="mb-10" data-side="admin">
+                <div class="flex items-center gap-3 mb-4">
+                    <iconify-icon icon="solar:widget-2-bold" style="font-size:16px;color:rgba(255,255,255,0.4);"></iconify-icon>
+                    <h3 class="text-sm font-semibold text-white/70 uppercase tracking-wider">Layout, Menus & Widgets</h3>
+                </div>
+                <div class="grid gap-3" id="ad-layout"></div>
+            </div>
+
+            <!-- Admin: Breaking News -->
+            <div class="mb-10" data-side="admin">
+                <div class="flex items-center gap-3 mb-4">
+                    <iconify-icon icon="solar:bolt-bold" style="font-size:16px;color:rgba(255,255,255,0.4);"></iconify-icon>
+                    <h3 class="text-sm font-semibold text-white/70 uppercase tracking-wider">Breaking News & Push</h3>
+                </div>
+                <div class="grid gap-3" id="ad-breaking"></div>
+            </div>
+
+            <!-- Admin: Settings -->
+            <div class="mb-10" data-side="admin">
+                <div class="flex items-center gap-3 mb-4">
+                    <iconify-icon icon="solar:tuning-2-bold" style="font-size:16px;color:rgba(255,255,255,0.4);"></iconify-icon>
+                    <h3 class="text-sm font-semibold text-white/70 uppercase tracking-wider">Site Settings & Configuration</h3>
+                </div>
+                <div class="grid gap-3" id="ad-settings"></div>
+            </div>
+
+            <!-- Admin: Security -->
+            <div class="mb-10" data-side="admin">
+                <div class="flex items-center gap-3 mb-4">
+                    <iconify-icon icon="solar:lock-password-bold" style="font-size:16px;color:rgba(255,255,255,0.4);"></iconify-icon>
+                    <h3 class="text-sm font-semibold text-white/70 uppercase tracking-wider">Security & Audit</h3>
+                </div>
+                <div class="grid gap-3" id="ad-security"></div>
+            </div>
+
+            <!-- Admin: Integrations -->
+            <div class="mb-10" data-side="admin">
+                <div class="flex items-center gap-3 mb-4">
+                    <iconify-icon icon="solar:plug-circle-bold" style="font-size:16px;color:rgba(255,255,255,0.4);"></iconify-icon>
+                    <h3 class="text-sm font-semibold text-white/70 uppercase tracking-wider">Integrations & API</h3>
+                </div>
+                <div class="grid gap-3" id="ad-integrations"></div>
+            </div>
+
+            <!-- Admin: Import/Export -->
+            <div class="mb-10" data-side="admin">
+                <div class="flex items-center gap-3 mb-4">
+                    <iconify-icon icon="solar:import-bold" style="font-size:16px;color:rgba(255,255,255,0.4);"></iconify-icon>
+                    <h3 class="text-sm font-semibold text-white/70 uppercase tracking-wider">Import, Export & Backup</h3>
+                </div>
+                <div class="grid gap-3" id="ad-import"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/5 py-12 px-6">
+        <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-2 text-sm text-white/30">
+                <iconify-icon icon="solar:document-text-bold" style="font-size:16px;"></iconify-icon>
+                NewsPortal Features Specification
+            </div>
+            <div class="text-xs text-white/20">
+                Click any feature to expand details · Use filters to narrow down · Export to copy full list
+            </div>
+        </div>
+    </footer>
+
+<script>
+// ===================== DATA =====================
+const features = [
+    // ===== FRONTEND: HOMEPAGE =====
+    { id:'fe1', side:'frontend', cat:'fe-homepage', name:'Hero / Featured Story Slider', priority:'high',
+      desc:'Auto-rotating carousel with the top 3-5 lead stories. Supports image/video backgrounds, headline overlay, category badge, and "Read More" CTA. Manual navigation via dots/arrows.',
+      sub:['Auto-play with pause on hover','Swipe gesture on mobile','Lazy-loaded media','Configurable transition effects'] },
+    { id:'fe2', side:'frontend', cat:'fe-homepage', name:'Latest News Ticker', priority:'high',
+      desc:'Horizontal scrolling ticker at the top showing the most recent headlines. Links directly to articles.',
+      sub:['Auto-scroll with manual pause','Configurable speed','Limit by category or time range'] },
+    { id:'fe3', side:'frontend', cat:'fe-homepage', name:'Section-Based Grid Layout', priority:'high',
+      desc:'Homepage divided into sections (Top Stories, Politics, Tech, Sports, etc.) each with its own grid of article cards. Layout configurable per section (3-col, 2-col, list, etc.).',
+      sub:['Mixed card sizes (large lead + smaller)','Section collapse/expand','Infinite scroll or pagination per section'] },
+    { id:'fe4', side:'frontend', cat:'fe-homepage', name:'Trending Now Sidebar/Bar', priority:'medium',
+      desc:'Real-time trending articles based on views, shares, or editorial picks. Displays as a numbered list with thumbnail.',
+      sub:['Time-filtered (last 1hr, 6hr, 24hr)','Animated number badges','Pulls from analytics engine'] },
+    { id:'fe5', side:'frontend', cat:'fe-homepage', name:'Breaking News Banner', priority:'high',
+      desc:'Persistent top banner for breaking news alerts. Red-accented, dismissible, links to the breaking story.',
+      sub:['Multiple simultaneous alerts','Auto-dismiss after timeout','Sound/visual pulse option'] },
+    { id:'fe6', side:'frontend', cat:'fe-homepage', name:'Weather & Market Widgets', priority:'low',
+      desc:'Small widget areas showing local weather and stock market indices. API-driven, cached.',
+      sub:['Geo-location based','Collapsible widget','Configurable indices'] },
+    { id:'fe7', side:'frontend', cat:'fe-homepage', name:'Personalized Content Feed', priority:'medium',
+      desc:'For logged-in users: a "For You" section based on reading history, saved categories, and behavioral signals.',
+      sub:['ML-based or rule-based recommendations','Opt-out toggle','Explain why this article'] },
+
+    // ===== FRONTEND: ARTICLE =====
+    { id:'fe8', side:'frontend', cat:'fe-article', name:'Full Article Page', priority:'high',
+      desc:'Complete article view with headline, sub-headline, byline, publish date, featured image, body content (rich text), and embedded media.',
+      sub:['Sticky header with progress bar','Estimated reading time','Font size adjuster (A-/A+)'] },
+    { id:'fe9', side:'frontend', cat:'fe-article', name:'Article Typography & Readability', priority:'high',
+      desc:'Optimized reading experience with proper line-height, paragraph spacing, drop caps, pull quotes, blockquotes, and responsive font scaling.',
+      sub:['Dark/light reading mode toggle','Serif/sans-serif font switch','Paragraph width optimized (65-75 chars)'] },
+    { id:'fe10', side:'frontend', cat:'fe-article', name:'In-Article Image Gallery', priority:'medium',
+      desc:'Embedded photo galleries within article body. Lightbox popup with navigation, captions, and EXIF data.',
+      sub:['Swipe on mobile','Keyboard navigation','Pinch-to-zoom'] },
+    { id:'fe11', side:'frontend', cat:'fe-article', name:'Embedded Video Player', priority:'medium',
+      desc:'Support for YouTube, Vimeo embeds and self-hosted video. Autoplay muted (with sound toggle), responsive 16:9 container.',
+      sub:['Picture-in-picture mode','Playback speed control','Subtitle/CC support'] },
+    { id:'fe12', side:'frontend', cat:'fe-article', name:'Interactive Elements (Polls, Quizzes)', priority:'low',
+      desc:'Embeddable polls and quizzes within articles. Results shown after voting with animated charts.',
+      sub:['One-vote-per-user enforcement','Share results','Integration with analytics'] },
+    { id:'fe13', side:'frontend', cat:'fe-article', name:'Table of Contents (Auto-Generated)', priority:'medium',
+      desc:'For long-form articles: a sticky sidebar/inline TOC auto-generated from H2/H3 headings. Highlights current section on scroll.',
+      sub:['Smooth scroll to section','Collapsible on mobile','Progress indicator per section'] },
+    { id:'fe14', side:'frontend', cat:'fe-article', name:'Related Articles', priority:'high',
+      desc:'Contextual related articles shown at the bottom/side of article. Based on tags, category, and co-read patterns.',
+      sub:['Minimum 3-6 recommendations','Include "More from this author"','Exclude already-read articles'] },
+    { id:'fe15', side:'frontend', cat:'fe-article', name:'Article Revisions / Updates Log', priority:'low',
+      desc:'For developing stories: show a changelog of updates with timestamps. "This article was updated at X time with Y info."',
+      sub:['Highlighted new text','Toggle to view original version','RSS for article updates'] },
+    { id:'fe16', side:'frontend', cat:'fe-article', name:'Audio Version / Text-to-Speech', priority:'low',
+      desc:'One-click audio playback of article using TTS. Floating mini-player with play/pause/speed controls.',
+      sub:['Natural voice (AI TTS API)','Resume from last position','Download as MP3'] },
+
+    // ===== FRONTEND: NAVIGATION =====
+    { id:'fe17', side:'frontend', cat:'fe-navigation', name:'Mega Menu Navigation', priority:'high',
+      desc:'Top navigation bar with mega menu dropdowns showing sub-categories, featured articles, and quick links per section.',
+      sub:['Keyboard accessible','Touch-friendly on mobile','Image thumbnails in dropdown'] },
+    { id:'fe18', side:'frontend', cat:'fe-navigation', name:'Full-Text Search with Autocomplete', priority:'high',
+      desc:'Global search bar with real-time suggestions as you type. Shows articles, authors, tags, and categories.',
+      sub:['Typo tolerance / fuzzy matching','Search result filters (date, category)','Recent searches','Trending searches'] },
+    { id:'fe19', side:'frontend', cat:'fe-navigation', name:'Category / Section Pages', priority:'high',
+      desc:'Dedicated pages per category with sub-category filters, sorting (newest, oldest, most popular), and list/grid toggle.',
+      sub:['Infinite scroll or pagination','RSS feed per category','Featured story hero per section'] },
+    { id:'fe20', side:'frontend', cat:'fe-navigation', name:'Tag Pages', priority:'medium',
+      desc:'Pages aggregating all articles with a specific tag. Shows tag description, related tags, and article list.',
+      sub:['Tag cloud visualization','Follow a tag (for personalized feed)','Tag RSS feed'] },
+    { id:'fe21', side:'frontend', cat:'fe-navigation', name:'Author Pages', priority:'medium',
+      desc:'Public profile pages for each journalist/author. Shows bio, photo, social links, and all their articles with filters.',
+      sub:['Follow author','Author RSS feed','Contact form (if enabled)'] },
+    { id:'fe22', side:'frontend', cat:'fe-navigation', name:'Breadcrumb Navigation', priority:'medium',
+      desc:'Breadcrumb trail on all inner pages (Home > Category > Sub-category > Article) for SEO and wayfinding.',
+      sub:['Schema.org breadcrumb markup','Clickable each level','Mobile: horizontal scroll'] },
+    { id:'fe23', side:'frontend', cat:'fe-navigation', name:'Sitemap Page', priority:'low',
+      desc:'HTML sitemap page listing all categories, sub-categories, tags, and important static pages.',
+      sub:['Alphabetical and categorical views','Auto-generated from CMS','Links to XML sitemap'] },
+
+    // ===== FRONTEND: ENGAGEMENT =====
+    { id:'fe24', side:'frontend', cat:'fe-engagement', name:'Commenting System', priority:'high',
+      desc:'Threaded comment system under articles. Supports replies, upvotes/downvotes, and sorting (newest, oldest, most liked).',
+      sub:['Nested replies (up to N levels)','Comment editing/deletion (own comments)','Character limit','Preview before post'] },
+    { id:'fe25', side:'frontend', cat:'fe-engagement', name:'Reaction System', priority:'medium',
+      desc:'Quick reaction buttons on articles (Like, Love, Angry, Sad, Thoughtful). Shows counts per reaction.',
+      sub:['One reaction per user','Animated feedback on click','Aggregate sentiment display'] },
+    { id:'fe26', side:'frontend', cat:'fe-engagement', name:'Save / Bookmark Articles', priority:'medium',
+      desc:'Logged-in users can save articles to a personal reading list. Accessible from profile or floating button.',
+      sub:['Organize into collections/folders','Offline reading (PWA)','Share a collection'] },
+    { id:'fe27', side:'frontend', cat:'fe-engagement', name:'Reading History', priority:'low',
+      desc:'Automatic tracking of articles read. Users can view their history and clear it. Powers "Already Read" indicators.',
+      sub:['Scroll-depth tracking to mark as "read"','Clear individual or all history','Privacy: opt-out option'] },
+    { id:'fe28', side:'frontend', cat:'fe-engagement', name:'User-Submitted Tips / Leads', priority:'low',
+      desc:'A "Send a Tip" form where readers can submit news tips with optional file attachments. Secure and anonymous option.',
+      sub:['File upload (images, documents)','Anonymous submission mode','Auto-routing to editorial inbox'] },
+
+    // ===== FRONTEND: ACCOUNTS =====
+    { id:'fe29', side:'frontend', cat:'fe-accounts', name:'User Registration & Login', priority:'high',
+      desc:'Full auth flow: email/password registration, login, forgot password, email verification. Social login (Google, Facebook, X/Twitter, Apple).',
+      sub:['OAuth 2.0 social login','Two-factor authentication (TOTP/SMS)','Magic link login option','Session management'] },
+    { id:'fe30', side:'frontend', cat:'fe-accounts', name:'User Profile Dashboard', priority:'medium',
+      desc:'Personal dashboard showing: saved articles, reading history, comment history, notification preferences, and account settings.',
+      sub:['Edit profile (name, avatar, bio)','Change password','Connected accounts management','Data export (GDPR)'] },
+    { id:'fe31', side:'frontend', cat:'fe-accounts', name:'Newsletter Subscription Management', priority:'medium',
+      desc:'Users can subscribe to daily/weekly newsletters, manage preferences (which categories), and view past newsletters.',
+      sub:['Multiple newsletter types','Preference center','One-click unsubscribe in emails'] },
+    { id:'fe32', side:'frontend', cat:'fe-accounts', name:'Subscription / Paywall Management', priority:'high',
+      desc:'If paywall: user can view current plan, upgrade/downgrade, manage payment methods, view billing history, and cancel.',
+      sub:['Plan comparison page','Free trial flow','Gift subscription','Invoice downloads'] },
+
+    // ===== FRONTEND: MULTIMEDIA =====
+    { id:'fe33', side:'frontend', cat:'fe-multimedia', name:'Photo Gallery Pages', priority:'medium',
+      desc:'Dedicated gallery pages for photo essays. Full-width immersive layout with lightbox, captions, and EXIF.',
+      sub:['Keyboard navigation','Download option (if permitted)','Share individual images'] },
+    { id:'fe34', side:'frontend', cat:'fe-multimedia', name:'Video Hub', priority:'medium',
+      desc:'Central video section with categories, playlists, and a custom video player. Supports live streams.',
+      sub:['Custom branded player','HLS/DASH streaming','Live stream with chat','Video series/playlists'] },
+    { id:'fe35', side:'frontend', cat:'fe-multimedia', name:'Live Blog / Live Coverage', priority:'high',
+      desc:'Real-time updating page for live events (elections, sports, breaking news). Auto-refreshing timeline of updates.',
+      sub:['Auto-scroll with "pause" button','Embed media per update','Pin important updates','Viewer count'] },
+    { id:'fe36', side:'frontend', cat:'fe-multimedia', name:'Podcast Player & Page', priority:'low',
+      desc:'Podcast section with episode list, embedded player, show notes, and subscribe links (Apple, Spotify, RSS).',
+      sub:['Custom audio player','Playback speed','Resume from last position','Episode search'] },
+    { id:'fe37', side:'frontend', cat:'fe-multimedia', name:'Infographic / Data Visualization', priority:'low',
+      desc:'Support for interactive charts, maps, and data visualizations embedded in articles. Uses D3.js, Chart.js, or similar.',
+      sub:['Responsive charts','Download as image','Accessible data tables as fallback'] },
+
+    // ===== FRONTEND: SOCIAL =====
+    { id:'fe38', side:'frontend', cat:'fe-social', name:'Social Share Buttons', priority:'high',
+      desc:'Share buttons for major platforms (X/Twitter, Facebook, LinkedIn, WhatsApp, Telegram, Copy Link). Positioned at top and bottom of articles.',
+      sub:['Share count display','WhatsApp native share on mobile','Custom share text per platform'] },
+    { id:'fe39', side:'frontend', cat:'fe-social', name:'Open Graph & Twitter Cards', priority:'high',
+      desc:'Proper OG and Twitter Card meta tags so shared links show rich previews with image, title, and description.',
+      sub:['Dynamic OG image per article','Twitter:summary_large_image','Article-specific share text'] },
+    { id:'fe40', side:'frontend', cat:'fe-social', name:'Embedded Social Feeds', priority:'low',
+      desc:'Optional widgets showing the portal\'s official social media feeds (X/Twitter timeline, Instagram grid) in sidebar or footer.',
+      sub:['Cached to avoid rate limits','Moderated display','Link to full profile'] },
+    { id:'fe41', side:'frontend', cat:'fe-social', name:'Web Share API (Native)', priority:'low',
+      desc:'Use the browser\'s native Web Share API where supported, falling back to custom share buttons.',
+      sub:['Detects support','Shares title, text, URL','Includes files if needed'] },
+
+    // ===== FRONTEND: NOTIFICATIONS =====
+    { id:'fe42', side:'frontend', cat:'fe-notifications', name:'Web Push Notifications', priority:'medium',
+      desc:'Browser push notifications for breaking news, followed topics, and personalized alerts. Opt-in prompt with clear value proposition.',
+      sub:['Granular preference controls','Quiet hours setting','One-click disable','Segmentation (by category)'] },
+    { id:'fe43', side:'frontend', cat:'fe-notifications', name:'In-App Notification Center', priority:'medium',
+      desc:'Bell icon dropdown showing notifications: replies to comments, followed author published, breaking news, etc.',
+      sub:['Mark as read (individual/bulk)','Unread count badge','Link to relevant content','Notification settings link'] },
+    { id:'fe44', side:'frontend', cat:'fe-notifications', name:'Email Notifications', priority:'medium',
+      desc:'Automated emails for: new articles in followed categories, comment replies, newsletter, account activity.',
+      sub:['Digest vs. immediate options','Email preference center','Unsubscribe in every email'] },
+
+    // ===== FRONTEND: MONETIZATION =====
+    { id:'fe45', side:'frontend', cat:'fe-monetization', name:'Ad Placements', priority:'high',
+      desc:'Strategic ad positions: header banner, in-article (between paragraphs), sidebar, footer, and interstitial. Non-intrusive UX.',
+      sub:['Lazy-loaded ads','Sticky sidebar ad','Viewability tracking','Ad refresh on scroll'] },
+    { id:'fe46', side:'frontend', cat:'fe-monetization', name:'Paywall / Metered Access', priority:'high',
+      desc:'Metered paywall (X free articles/month) or hard paywall. Clean messaging about why and what\'s behind the wall.',
+      sub:['Article count tracker','Transparent meter display','Sample preview (first 2 paragraphs)','Bypass for social referrals'] },
+    { id:'fe47', side:'frontend', cat:'fe-monetization', name:'Subscription Plans Page', priority:'high',
+      desc:'Dedicated pricing page showing free, basic, premium tiers with feature comparison table and CTA buttons.',
+      sub:['Annual vs. monthly toggle with savings highlight','FAQ accordion','Money-back guarantee badge','Trust signals'] },
+    { id:'fe48', side:'frontend', cat:'fe-monetization', name:'Sponsored / Branded Content Labels', priority:'medium',
+      desc:'Clear "Sponsored", "Paid Partnership", or "Branded Content" labels on relevant articles per FTC/local regulations.',
+      sub:['Distinct visual treatment','Disclosure in article body','Different from editorial content in feeds'] },
+    { id:'fe49', side:'frontend', cat:'fe-monetization', name:'Donation / Tip Jar', priority:'low',
+      desc:'Optional "Support Our Journalism" section allowing readers to make one-time or recurring donations.',
+      sub:['Multiple payment methods','Donation tiers with benefits','Transparent use-of-funds message'] },
+
+    // ===== FRONTEND: SEO =====
+    { id:'fe50', side:'frontend', cat:'fe-seo', name:'Semantic HTML & Schema.org', priority:'high',
+      desc:'Proper use of article, breadcrumb, author, organization, and FAQPage schema markup. Semantic HTML5 elements throughout.',
+      sub:['JSON-LD structured data','NewsArticle schema','Organization schema with logo','FAQ schema for explainer articles'] },
+    { id:'fe51', side:'frontend', cat:'fe-seo', name:'XML Sitemap & Robots.txt', priority:'high',
+      desc:'Auto-generated XML sitemap with proper priority/frequency. Robots.txt controlling crawl access.',
+      sub:['Sitemap index for large sites','News sitemap for Google News','Image sitemap','Lastmod timestamps'] },
+    { id:'fe52', side:'frontend', cat:'fe-seo', name:'Canonical URLs & Pagination', priority:'high',
+      desc:'Canonical tags on all pages. Proper rel="prev"/"next" for paginated lists. No duplicate content issues.',
+      sub:['Self-referencing canonical','Cross-domain canonical (if syndicated)','Pagination handling'] },
+    { id:'fe53', side:'frontend', cat:'fe-seo', name:'Core Web Vitals Optimization', priority:'high',
+      desc:'LCP < 2.5s, FID < 100ms, CLS < 0.1. Image optimization, font loading strategy, critical CSS inlining.',
+      sub:['Image lazy loading with aspect ratios','Preload critical resources','Service worker caching','CDN for static assets'] },
+    { id:'fe54', side:'frontend', cat:'fe-seo', name:'AMP Pages (Optional)', priority:'low',
+      desc:'AMP versions of articles for Google News and mobile search performance. Or use Core Web Vitals as alternative.',
+      sub:['Paired AMP URLs','AMP analytics','Validated AMP components','Link rel="amphtml"'] },
+    { id:'fe55', side:'frontend', cat:'fe-seo', name:'Accessibility (WCAG 2.1 AA)', priority:'high',
+      desc:'Full keyboard navigation, screen reader support, sufficient color contrast, alt text on all images, focus indicators.',
+      sub:['Skip-to-content link','ARIA labels on interactive elements','Reduced motion preference','High contrast mode'] },
+    { id:'fe56', side:'frontend', cat:'fe-seo', name:'Multi-Language / i18n', priority:'low',
+      desc:'Support for multiple languages with hreflang tags, language switcher, and translated URL structure.',
+      sub:['hreflang sitemap','Language-specific meta','Automatic detection (with override)','RTL support for Arabic/Hebrew'] },
+
+    // ===== FRONTEND: DESIGN =====
+    { id:'fe57', side:'frontend', cat:'fe-design', name:'Fully Responsive Design', priority:'high',
+      desc:'Optimized layouts for mobile (320px+), tablet (768px+), desktop (1024px+), and large screens (1440px+).',
+      sub:['Mobile-first approach','Touch-optimized tap targets','Responsive typography scale','Adaptive navigation (hamburger on mobile)'] },
+    { id:'fe58', side:'frontend', cat:'fe-design', name:'Dark / Light Mode Toggle', priority:'medium',
+      desc:'System-preference detection with manual override toggle. Persists across sessions. All components support both modes.',
+      sub:['CSS custom properties for theming','Smooth transition between modes','Per-component overrides if needed'] },
+    { id:'fe59', side:'frontend', cat:'fe-design', name:'Loading States & Skeleton Screens', priority:'medium',
+      desc:'Skeleton placeholder screens while content loads. No blank/flash states. Progressive content loading.',
+      sub:['Article card skeletons','Full-page skeleton','Shimmer animation','Error states with retry'] },
+    { id:'fe60', side:'frontend', cat:'fe-design', name:'PWA (Progressive Web App)', priority:'low',
+      desc:'Installable as a native-like app. Offline support for cached content. Push notification capability.',
+      sub:['Web App Manifest','Service Worker for offline','App-like navigation','Add-to-homescreen prompt'] },
+    { id:'fe61', side:'frontend', cat:'fe-design', name:'Print Stylesheet', priority:'low',
+      desc:'Clean print-optimized CSS hiding navigation, ads, and comments. Shows article title, body, author, date, and URL.',
+      sub:['Page break controls','QR code linking to article','Print-friendly typography'] },
+
+    // ===== ADMIN: DASHBOARD =====
+    { id:'ad1', side:'admin', cat:'ad-dashboard', name:'Real-Time Dashboard Overview', priority:'high',
+      desc:'Main admin screen showing: total articles published today, active users, page views (real-time), comments pending, and revenue.',
+      sub:['Auto-refreshing metrics','Date range selector','Compare to previous period','Sparkline mini-charts'] },
+    { id:'ad2', side:'admin', cat:'ad-dashboard', name:'Traffic Analytics', priority:'high',
+      desc:'Integrated or linked analytics showing: pageviews, unique visitors, bounce rate, average session duration, top pages, traffic sources.',
+      sub:['Google Analytics integration','Real-time active users map','Device/browser breakdown','Referral source tracking'] },
+    { id:'ad3', side:'admin', cat:'ad-dashboard', name:'Content Performance', priority:'high',
+      desc:'Table/chart of articles ranked by: views, engagement time, shares, comments, conversion rate. Filterable by date, category, author.',
+      sub:['Sortable columns','Export to CSV/Excel','Individual article drill-down','Comparison view'] },
+    { id:'ad4', side:'admin', cat:'ad-dashboard', name:'Reader Demographics', priority:'medium',
+      desc:'Audience insights: geography, age, gender, interests, device, browser, OS. From analytics + registration data.',
+      sub:['Interactive map','Trend over time','Segment comparison','Anonymous aggregation (GDPR)'] },
+    { id:'ad5', side:'admin', cat:'ad-dashboard', name:'Subscription / Revenue Dashboard', priority:'high',
+      desc:'If paywall: MRR, churn rate, new subscriptions, plan distribution, revenue per article, LTV.',
+      sub:['Revenue trend chart','Cohort analysis','Payment failure rates','Upgrade/downgrade funnel'] },
+    { id:'ad6', side:'admin', cat:'ad-dashboard', name:'Quick Actions Widget', priority:'medium',
+      desc:'One-click actions from dashboard: "New Article", "View Pending Comments", "Publish Scheduled", "Send Newsletter".',
+      sub:['Role-based quick actions','Customizable widget layout','Keyboard shortcuts'] },
+
+    // ===== ADMIN: CONTENT MANAGEMENT =====
+    { id:'ad7', side:'admin', cat:'ad-content', name:'Article List / Table', priority:'high',
+      desc:'Full CRUD list of all articles with columns: title, status, category, author, published date, views. Bulk actions, filters, search.',
+      sub:['Column sorting','Bulk status change (publish/unpublish/delete)','Quick edit inline','Per-page count selector'] },
+    { id:'ad8', side:'admin', cat:'ad-content', name:'Article Status Workflow', priority:'high',
+      desc:'Articles move through states: Draft → In Review → Scheduled → Published → Archived. Each state has permissions.',
+      sub:['Visual status badges','Status change notifications','Revision history per state change','Custom workflow stages'] },
+    { id:'ad9', side:'admin', cat:'ad-content', name:'Scheduled Publishing', priority:'high',
+      desc:'Set future publish date/time with timezone. Queue of scheduled articles visible in calendar/list view.',
+      sub:['Calendar view of scheduled content','Drag-to-reschedule','Conflict warnings (too many at same time)','Auto-publish with fallback alerts'] },
+    { id:'ad10', side:'admin', cat:'ad-content', name:'Article Versioning / Revisions', priority:'high',
+      desc:'Full revision history for every article. Compare any two versions side-by-side. Restore previous version.',
+      sub:['Diff view (added/removed text)','Author attribution per revision','Revision notes','Auto-save drafts every 30s'] },
+    { id:'ad11', side:'admin', cat:'ad-content', name:'Content Expiry / Unpublishing', priority:'medium',
+      desc:'Set an expiry date after which article is automatically unpublished or moved to archive.',
+      sub:['Expiry notification before removal','Manual override','Archive vs. delete choice','Batch expiry by category'] },
+    { id:'ad12', side:'admin', cat:'ad-content', name:'Content Syndication Management', priority:'low',
+      desc:'Mark articles for syndication to partner sites. Track where content is syndicated. Canonical URL management.',
+      sub:['Syndication partner list','Per-article syndication toggle','Syndication analytics','Auto-XML feed for partners'] },
+
+    // ===== ADMIN: EDITOR =====
+    { id:'ad13', side:'admin', cat:'ad-editor', name:'Rich Text Editor (WYSIWYG)', priority:'high',
+      desc:'Full-featured editor with: headings, bold/italic/underline, lists, links, blockquotes, code blocks, tables, horizontal rules.',
+      sub:['Toolbar with grouping','Keyboard shortcuts','Clean HTML output','Paste from Word (clean formatting)'] },
+    { id:'ad14', side:'admin', cat:'ad-editor', name:'Block-Based Editor (Optional)', priority:'medium',
+      desc:'Gutenberg-style block editor: paragraph, image, video, embed, pullquote, CTA, divider — draggable and reorderable.',
+      sub:['Block library / inserter','Drag-and-drop reorder','Block-level settings panel','Reusable block templates'] },
+    { id:'ad15', side:'admin', cat:'ad-editor', name:'Image Upload & Management in Editor', priority:'high',
+      desc:'Drag-and-drop image upload directly into editor. Inline cropping, alt text, caption, credit, and size options.',
+      sub:['Multi-image upload','Image optimization on upload','Alt text requirement (configurable)','Image alignment options'] },
+    { id:'ad16', side:'admin', cat:'ad-editor', name:'Embed Support', priority:'medium',
+      desc:'Paste URLs to auto-embed: YouTube, Vimeo, Twitter/X, Instagram, Facebook, TikTok, SoundCloud, Google Maps, etc.',
+      sub:['oEmbed API integration','Custom embed blocks','Responsive embed containers','Preview before insert'] },
+    { id:'ad17', side:'admin', cat:'ad-editor', name:'SEO Panel in Editor', priority:'high',
+      desc:'Inline SEO controls: meta title, meta description, focus keyword, URL slug, OG image override, noindex/nofollow toggles.',
+      sub:['Real-time SEO score','Readability analysis','Keyword density check','Preview of SERP appearance'] },
+    { id:'ad18', side:'admin', cat:'ad-editor', name:'Collaborative Editing', priority:'low',
+      desc:'Multiple editors can work on the same article simultaneously. See cursors and changes of other users in real-time.',
+      sub:['Presence indicators (avatars)','Conflict resolution','Lock sections','Comment/annotation on specific text'] },
+    { id:'ad19', side:'admin', cat:'ad-editor', name:'AI Writing Assistant', priority:'low',
+      desc:'Optional AI integration for: headline suggestions, summary generation, grammar check, translation, and SEO optimization tips.',
+      sub:['One-click generate summary','Tone adjustment','Plagiarism check','Auto-tagging suggestions'] },
+    { id:'ad20', side:'admin', cat:'ad-editor', name:'Preview Before Publish', priority:'high',
+      desc:'Full article preview in a new tab or split view. Shows exactly how it will appear on the frontend.',
+      sub:['Desktop/tablet/mobile preview toggle','Preview with/without paywall','Share preview link with team','Preview at scheduled URL'] },
+
+    // ===== ADMIN: MEDIA =====
+    { id:'ad21', side:'admin', cat:'ad-media', name:'Media Library', priority:'high',
+      desc:'Central media library with grid/list view. Upload, search, filter by type/date, bulk select, delete. Shows file details.',
+      sub:['Grid and list views','File type icons','File size and dimensions','Upload date sorting'] },
+    { id:'ad22', side:'admin', cat:'ad-media', name:'Image Processing Pipeline', priority:'high',
+      desc:'Automatic processing on upload: resize to presets (thumbnail, medium, large, hero), WebP/AVIF conversion, compression.',
+      sub:['Configurable preset sizes','Quality settings per preset','Original file retained','EXIF stripping option'] },
+    { id:'ad23', side:'admin', cat:'ad-media', name:'CDN Integration', priority:'high',
+      desc:'All media served via CDN (CloudFront, Cloudflare, etc.) with automatic cache invalidation on update/delete.',
+      sub:['Auto-cache invalidation','Fallback origin','Multi-CDN support','Bandwidth analytics'] },
+    { id:'ad24', side:'admin', cat:'ad-media', name:'Video Upload & Transcoding', priority:'medium',
+      desc:'Upload video files, auto-transcode to multiple resolutions (360p, 480p, 720p, 1080p) and formats (HLS, DASH).',
+      sub:['Progress bar during upload','Thumbnail selection','Video chapters','Closed caption upload'] },
+    { id:'ad25', side:'admin', cat:'ad-media', name:'Document & File Management', priority:'low',
+      desc:'Upload and manage PDFs, DOCX files for downloadable content (reports, whitepapers). Virus scanning on upload.',
+      sub:['Virus scan integration','Download tracking','Version management','Embeddable PDF viewer'] },
+
+    // ===== ADMIN: TAXONOMY =====
+    { id:'ad26', side:'admin', cat:'ad-taxonomy', name:'Category Management (CRUD)', priority:'high',
+      desc:'Create, edit, delete, reorder categories. Support for hierarchical categories (parent/child). Slug, description, featured image.',
+      sub:['Drag-and-drop reorder','Unlimited depth hierarchy','Category color/icon','Show/hide in navigation'] },
+    { id:'ad27', side:'admin', cat:'ad-taxonomy', name:'Tag Management', priority:'medium',
+      desc:'Create, merge, delete tags. See tag usage count. Bulk rename. Auto-suggest existing tags in editor.',
+      sub:['Merge duplicate tags','Tag description field','Tag slug editing','Unused tag cleanup tool'] },
+    { id:'ad28', side:'admin', cat:'ad-taxonomy', name:'Topic / Series Management', priority:'medium',
+      desc:'Create editorial "Series" or "Topics" that group related articles over time (e.g., "2024 Election Coverage").',
+      sub:['Series description & hero image','Article ordering within series','Series page on frontend','Subscribe to series updates'] },
+    { id:'ad29', side:'admin', cat:'ad-taxonomy', name:'Location / Region Tagging', priority:'low',
+      desc:'Tag articles by geographic location (country, state, city). Powers location-based content discovery.',
+      sub:['Hierarchical locations','Map-based tag selector','Location-specific pages','Geo-targeted content rules'] },
+
+    // ===== ADMIN: USERS =====
+    { id:'ad30', side:'admin', cat:'ad-users', name:'User List & Management', priority:'high',
+      desc:'Full user table: name, email, role, status, registration date, last login. Search, filter, sort, bulk actions.',
+      sub:['Advanced search (by name, email, role)','Bulk role change','Export user list','Account status (active/suspended/banned)'] },
+    { id:'ad31', side:'admin', cat:'ad-users', name:'Role & Permission System', priority:'high',
+      desc:'Granular RBAC: Admin, Editor, Author, Contributor, Subscriber. Custom roles. Per-capability permissions.',
+      sub:['Custom role creation','Capability matrix UI','Permission inheritance','Role assignment by admin only'] },
+    { id:'ad32', side:'admin', cat:'ad-users', name:'Author Profiles Management', priority:'medium',
+      desc:'Edit author bio, photo, title, social links, expertise areas. Assign articles to authors. Multi-author support.',
+      sub:['Rich text bio','Avatar upload with crop','Social profile URLs','Guest author support'] },
+    { id:'ad33', side:'admin', cat:'ad-users', name:'Subscription Management', priority:'high',
+      desc:'View, edit, cancel user subscriptions. Manually grant/revoke access. Handle payment issues. Refund processing.',
+      sub:['Subscription detail view','Manual plan override','Grace period management','Bulk subscription export'] },
+    { id:'ad34', side:'admin', cat:'ad-users', name:'User Activity Log', priority:'medium',
+      desc:'Track user actions: logins, comments, saves, shares, purchases. For support and abuse detection.',
+      sub:['Filterable by user and action type','IP address logging','Suspicious activity flags','Data retention policy'] },
+
+    // ===== ADMIN: MODERATION =====
+    { id:'ad35', side:'admin', cat:'ad-moderation', name:'Comment Moderation Queue', priority:'high',
+      desc:'Central queue of pending comments. Approve, reject, or edit. Bulk actions. Filter by article, user, date, flagged status.',
+      sub:['Inline preview of article context','Quick approve/reject keyboard shortcuts','Auto-moderation rules','Moderator assignment'] },
+    { id:'ad36', side:'admin', cat:'ad-moderation', name:'Auto-Moderation Rules', priority:'medium',
+      desc:'Configure rules: block profanity, spam keywords, excessive links, duplicate comments. Bayesian spam filtering.',
+      sub:['Keyword blocklist (regex support)','Spam score threshold','Whitelist trusted users','Auto-publish for verified users'] },
+    { id:'ad37', side:'admin', cat:'ad-moderation', name:'User Reporting & Blocking', priority:'medium',
+      desc:'Users can report comments or other users. Admin reviews reports and can warn, suspend, or ban users.',
+      sub:['Report reason categories','Report queue with priority','Strike/warning system','Appeal process'] },
+
+    // ===== ADMIN: SEO =====
+    { id:'ad38', side:'admin', cat:'ad-seo', name:'Bulk SEO Editor', priority:'medium',
+      desc:'Table view of all articles with editable meta title, meta description, slug, and focus keyword. Identify missing SEO data.',
+      sub:['Filter by "missing meta description"','Bulk edit with save','SEO completeness score per article','Export SEO data'] },
+    { id:'ad39', side:'admin', cat:'ad-seo', name:'Redirect Manager', priority:'medium',
+      desc:'Manage 301/302 redirects when URLs change. Import/export redirect rules. Detect broken links.',
+      sub:['Regex pattern redirects','Redirect chain detection','404 log with redirect suggestions','Test redirect before save'] },
+    { id:'ad40', side:'admin', cat:'ad-seo', name:'Google Search Console Integration', priority:'medium',
+      desc:'Pull GSC data into admin: indexing status, search queries, click-through rates, coverage errors.',
+      sub:['Index coverage dashboard','Top queries table','Request indexing','Sitemap submission status'] },
+    { id:'ad41', side:'admin', cat:'ad-seo', name:'Robots.txt & Sitemap Manager', priority:'medium',
+      desc:'Visual editor for robots.txt. Sitemap configuration: include/exclude post types, set priorities and frequencies.',
+      sub:['Visual robots.txt builder','Sitemap preview','Ping search engines on update','Multiple sitemap support'] },
+
+    // ===== ADMIN: ADS =====
+    { id:'ad42', side:'admin', cat:'ad-ads', name:'Ad Slot Management', priority:'high',
+      desc:'Define ad positions (slots) across the site: header, sidebar, in-article, footer, interstitial. Each slot has size, type, and fallback.',
+      sub:['Responsive slot sizing','A/B test multiple ads per slot','Empty slot fallback (house ad)','Viewability reporting per slot'] },
+    { id:'ad43', side:'admin', cat:'ad-ads', name:'Campaign & Advertiser Management', priority:'medium',
+      desc:'Manage direct-sold ad campaigns: advertiser profiles, flight dates, impressions/clicks targets, creatives.',
+      sub:['Campaign calendar view','Impression/click tracking','Invoice generation','Contract attachment'] },
+    { id:'ad44', side:'admin', cat:'ad-ads', name:'Google Ad Manager / AdSense Integration', priority:'high',
+      desc:'Integrate with GAM or AdSense for programmatic ads. Pass key-values for targeting. Prebid header bidding support.',
+      sub:['GPT tag management','Key-value targeting UI','Yield reporting','Ad blocker detection and messaging'] },
+    { id:'ad45', side:'admin', cat:'ad-ads', name:'House Ads & Promotions', priority:'low',
+      desc:'Create internal promotional banners: subscription offers, app download, events, special content.',
+      sub:['Rich media support','Targeting by user segment','Scheduling','Click-through tracking'] },
+
+    // ===== ADMIN: NEWSLETTER =====
+    { id:'ad46', side:'admin', cat:'ad-newsletter', name:'Newsletter Campaign Builder', priority:'medium',
+      desc:'Visual email builder: drag-and-drop blocks (header, article teaser, image, CTA, footer). Preview in desktop/mobile.',
+      sub:['Template library','Custom HTML mode','Dynamic content blocks','A/B subject line testing'] },
+    { id:'ad47', side:'admin', cat:'ad-newsletter', name:'Subscriber List Management', priority:'medium',
+      desc:'View, search, filter, export subscribers. Manage segments, handle bounces and unsubscribes automatically.',
+      sub:['Segment by behavior/interest','Bounce handling','Compliance (double opt-in record)','List hygiene tools'] },
+    { id:'ad48', side:'admin', cat:'ad-newsletter', name:'Automated Newsletters', priority:'medium',
+      desc:'Auto-generate newsletters from published content: "Daily Top 5", "Weekly Roundup". Scheduled send.',
+      sub:['Configurable selection rules','Manual override before send','Preview auto-generated content','Send time optimization'] },
+    { id:'ad49', side:'admin', cat:'ad-newsletter', name:'Email Analytics', priority:'medium',
+      desc:'Per-campaign metrics: open rate, click rate, unsubscribe rate, bounce rate, delivery rate. Compare over time.',
+      sub:['Click heat map','Subscriber growth trend','Best send time analysis','Revenue attribution (if paywall)'] },
+
+    // ===== ADMIN: LAYOUT =====
+    { id:'ad50', side:'admin', cat:'ad-layout', name:'Menu Builder', priority:'high',
+      desc:'Visual drag-and-drop menu builder for header, footer, and sidebar menus. Support nested items, links, categories, and custom URLs.',
+      sub:['Unlimited menu levels','Menu location assignment','Conditional menu items (logged-in only)','Mobile menu configuration'] },
+    { id:'ad51', side:'admin', cat:'ad-layout', name:'Widget System', priority:'medium',
+      desc:'Sidebar and footer widget areas. Drag-and-drop widgets: recent posts, categories, tags, social links, custom HTML, ad slots.',
+      sub:['Multiple widget areas','Widget visibility rules (by page type/category)','Duplicate widgets','Widget preview'] },
+    { id:'ad52', side:'admin', cat:'ad-layout', name:'Homepage Builder', priority:'high',
+      desc:'Visual builder to compose homepage sections: choose section type, assign content source, set layout, reorder.',
+      sub:['Pre-built section templates','Content source per section (category, tag, manual)','Preview changes before publish','Save multiple homepage versions'] },
+    { id:'ad53', side:'admin', cat:'ad-layout', name:'Theme / Template Manager', priority:'medium',
+      desc:'Switch between templates for different page types (article, category, author). Customize without code.',
+      sub:['Template preview','Custom CSS per template','Template variables/fields','Version control for templates'] },
+
+    // ===== ADMIN: BREAKING NEWS =====
+    { id:'ad54', side:'admin', cat:'ad-breaking', name:'Breaking News Creator', priority:'high',
+      desc:'One-click to activate a breaking news alert. Set headline, link, priority level, duration, and target audience.',
+      sub:['Quick-create from existing article','Priority levels (critical, standard)','Auto-expiry','Push notification simultaneously'] },
+    { id:'ad55', side:'admin', cat:'ad-breaking', name:'Push Notification Manager', priority:'medium',
+      desc:'Send manual push notifications: type title, body, URL, target segment, and schedule. View delivery stats.',
+      sub:['Segment targeting','Scheduled sends','A/B test notifications','Delivery and click analytics'] },
+    { id:'ad56', side:'admin', cat:'ad-breaking', name:'Live Blog Admin Panel', priority:'high',
+      desc:'Admin interface for live blogs: add updates with text, images, video. Pin updates. Set status (live/upcoming/ended).',
+      sub:['Rich text per update','Drag-to-reorder updates','Co-authoring (multiple journalists)','Viewer count display'] },
+
+    // ===== ADMIN: SETTINGS =====
+    { id:'ad57', side:'admin', cat:'ad-settings', name:'General Site Settings', priority:'high',
+      desc:'Site name, tagline, logo, favicon, timezone, date/time format, contact info. All configurable from one page.',
+      sub:['Logo upload (SVG, PNG)','Favicon generator','Multiple logo variants (dark/light)','Site URL settings'] },
+    { id:'ad58', side:'admin', cat:'ad-settings', name:'Reading Settings', priority:'medium',
+      desc:'Configure: posts per page, default sort order, show/hide elements (author, date, reading time, share buttons).',
+      sub:['Per-content-type settings','Mobile-specific overrides','Default image for no-image articles','Excerpt length'] },
+    { id:'ad59', side:'admin', cat:'ad-settings', name:'Paywall Configuration', priority:'high',
+      desc:'Set metered limit, paywall message, exempt categories, trial length, pricing integration (Stripe/Paddle).',
+      sub:['Metered count configuration','Exemption rules','Custom paywall CTA text','Geo-specific paywall rules'] },
+    { id:'ad60', side:'admin', cat:'ad-settings', name:'Email / SMTP Settings', priority:'high',
+      desc:'Configure outgoing email: SMTP credentials, from name/address, templates for transactional emails.',
+      sub:['Multiple SMTP providers','Email template editor','Test email send','Bounce handling config'] },
+    { id:'ad61', side:'admin', cat:'ad-settings', name:'Cache & Performance Settings', priority:'medium',
+      desc:'Configure caching: page cache, object cache, CDN purge rules, cache TTL per content type.',
+      sub:['Manual cache purge','Per-URL cache invalidation','Cache hit/miss metrics','Debug mode for cache'] },
+
+    // ===== ADMIN: SECURITY =====
+    { id:'ad62', side:'admin', cat:'ad-security', name:'Admin Authentication Security', priority:'high',
+      desc:'Enforce strong passwords, 2FA for admin roles, session timeout, IP allowlisting, login attempt limiting.',
+      sub:['Brute force protection','IP whitelist for admin','Session timeout config','Concurrent session limits'] },
+    { id:'ad63', side:'admin', cat:'ad-security', name:'Audit Log', priority:'high',
+      desc:'Complete log of all admin actions: who did what, when, from where. Non-deletable, filterable, exportable.',
+      sub:['Filter by user, action, resource, date','IP address and user agent','Export to CSV/SIEM','Retention policy'] },
+    { id:'ad64', side:'admin', cat:'ad-security', name:'GDPR / Privacy Compliance Tools', priority:'high',
+      desc:'Data export for users, right-to-deletion, cookie consent management, privacy policy page, data processing records.',
+      sub:['One-click user data export','Account deletion with data wipe','Cookie consent banner config','DP record maintenance'] },
+    { id:'ad65', side:'admin', cat:'ad-security', name:'Content Security & Rate Limiting', priority:'medium',
+      desc:'Rate limiting on API endpoints, forms, and login. XSS/CSRF protection. Content Security Policy headers.',
+      sub:['Configurable rate limits per endpoint','CORS configuration','CSP header builder','SQL injection prevention'] },
+
+    // ===== ADMIN: INTEGRATIONS =====
+    { id:'ad66', side:'admin', cat:'ad-integrations', name:'REST API', priority:'high',
+      desc:'Full REST API for all content types. Authentication via API keys or OAuth. Rate limiting. Documentation.',
+      sub:['CRUD for articles, categories, users','Webhooks for events','API key management','Swagger/OpenAPI docs'] },
+    { id:'ad67', side:'admin', cat:'ad-integrations', name:'CMS Import Tools', priority:'medium',
+      desc:'Import from WordPress, Ghost, Medium, or CSV/XML. Map fields, handle images, preserve URLs.',
+      sub:['WordPress WXR import','CSV with field mapping','Image download and re-host','Import preview before execution'] },
+    { id:'ad68', side:'admin', cat:'ad-integrations', name:'Social Media Auto-Post', priority:'medium',
+      desc:'Auto-publish to social media when article is published. Custom message per platform. Schedule social posts.',
+      sub:['Per-platform message templates','Image attachment','Scheduling delay after publish','Link shortener integration'] },
+    { id:'ad69', side:'admin', cat:'ad-integrations', name:'Webhook System', priority:'low',
+      desc:'Configure webhooks to fire on events: article published, user registered, comment posted, subscription created.',
+      sub:['Event selection UI','Retry logic','Payload preview','Webhook logs'] },
+    { id:'ad70', side:'admin', cat:'ad-integrations', name:'AI / ML Integration Points', priority:'low',
+      desc:'Hooks for AI services: auto-tagging, headline scoring, content recommendation, image alt-text generation, translation.',
+      sub:['Pluggable AI providers','Human-in-the-loop for suggestions','Confidence scores','Cost tracking per AI call'] },
+
+    // ===== ADMIN: IMPORT/EXPORT =====
+    { id:'ad71', side:'admin', cat:'ad-import', name:'Full Site Export', priority:'medium',
+      desc:'Export entire site data: articles, media, users, settings, taxonomy — as JSON/XML/ZIP for backup or migration.',
+      sub:['Selective export (by type, date range)','Include media files','Incremental export (since last export)','Scheduled auto-exports'] },
+    { id:'ad72', side:'admin', cat:'ad-import', name:'Database Backup System', priority:'high',
+      desc:'Automated database backups: daily/weekly, retained for X days. One-click restore. Off-site storage (S3).',
+      sub:['Automated schedule','Encrypted backups','Point-in-time recovery','Backup integrity verification','Notification on failure'] },
+    { id:'ad73', side:'admin', cat:'ad-import', name:'Analytics Data Export', priority:'low',
+      desc:'Export analytics data (pageviews, sessions, events) to CSV/JSON for custom reporting or data warehouse ingestion.',
+      sub:['Date range selection','Granularity (hourly/daily)','Multiple format options','Scheduled export to S3/GCS'] },
+];
+
+// ===================== RENDER =====================
+let currentFilter = 'all';
+let currentSearch = '';
+
+function renderFeatures() {
+    const containers = {};
+    features.forEach(f => {
+        if (!containers[f.cat]) containers[f.cat] = [];
+        containers[f.cat].push(f);
+    });
+
+    Object.entries(containers).forEach(([catId, items]) => {
+        const container = document.getElementById(catId);
+        if (!container) return;
+        container.innerHTML = '';
+        items.forEach((f, i) => {
+            container.innerHTML += createCard(f, i);
+        });
+    });
+
+    updateCounts();
+    attachListeners();
+}
+
+function createCard(f, index) {
+    const priorityClass = `priority-${f.priority}`;
+    const dotClass = `priority-dot-${f.priority}`;
+    const subItems = f.sub.map(s => `<li class="flex items-start gap-2 text-xs text-white/40 leading-relaxed"><iconify-icon icon="solar:check-circle-linear" style="font-size:14px;margin-top:2px;color:rgba(255,255,255,0.2);flex-shrink:0;"></iconify-icon><span>${s}</span></li>`).join('');
+
+    return `
+    <div class="feature-card p-5 feature-item" data-side="${f.side}" data-priority="${f.priority}" data-name="${f.name.toLowerCase()}" data-id="${f.id}" style="animation-delay:${index * 30}ms">
+        <div class="flex items-start gap-4 cursor-pointer feature-header" onclick="toggleFeature('${f.id}')">
+            <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-2 mb-1.5 flex-wrap">
+                    <span class="w-1.5 h-1.5 rounded-full ${dotClass} flex-shrink-0"></span>
+                    <h4 class="text-sm font-semibold text-white/90">${f.name}</h4>
+                </div>
+                <div class="flex items-center gap-3 flex-wrap">
+                    <span class="${priorityClass} text-[10px] font-bold uppercase tracking-wider">${f.priority}</span>
+                    <span class="category-badge">${f.side === 'frontend' ? 'Frontend' : 'Admin'}</span>
+                </div>
+            </div>
+            <iconify-icon icon="solar:alt-arrow-down-linear" style="font-size:18px;color:rgba(255,255,255,0.3);flex-shrink:0;margin-top:4px;" class="chevron-icon" id="chevron-${f.id}"></iconify-icon>
+        </div>
+        <div class="feature-detail" id="detail-${f.id}">
+            <div class="pt-4 mt-4 border-t border-white/[0.06]">
+                <p class="text-sm font-light text-white/60 leading-relaxed mb-4">${f.desc}</p>
+                <div class="text-[10px] font-bold uppercase tracking-[0.15em] text-white/30 mb-3">Sub-Features</div>
+                <ul class="grid gap-2">
+                    ${subItems}
+                </ul>
+            </div>
+        </div>
+    </div>`;
+}
+
+function toggleFeature(id) {
+    const detail = document.getElementById(`detail-${id}`);
+    const chevron = document.getElementById(`chevron-${id}`);
+    detail.classList.toggle('open');
+    chevron.classList.toggle('rotated');
+}
+
+function setFilter(btn, filter) {
+    currentFilter = filter;
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    filterFeatures();
+}
+
+function filterFeatures() {
+    currentSearch = document.getElementById('searchInput').value.toLowerCase().trim();
+    const items = document.querySelectorAll('.feature-item');
+    let visible = 0;
+
+    items.forEach(item => {
+        const side = item.dataset.side;
+        const priority = item.dataset.priority;
+        const name = item.dataset.name;
+
+        let show = true;
+
+        if (currentFilter === 'frontend' && side !== 'frontend') show = false;
+        if (currentFilter === 'admin' && side !== 'admin') show = false;
+        if (currentFilter === 'high' && priority !== 'high') show = false;
+        if (currentFilter === 'medium' && priority !== 'medium') show = false;
+        if (currentFilter === 'low' && priority !== 'low') show = false;
+
+        if (currentSearch && !name.includes(currentSearch)) show = false;
+
+        item.style.display = show ? '' : 'none';
+        if (show) visible++;
+    });
+
+    // Hide empty categories
+    document.querySelectorAll('[data-side]').forEach(section => {
+        const visibleItems = section.querySelectorAll('.feature-item[style=""], .feature-item:not([style])');
+        let hasVisible = false;
+        section.querySelectorAll('.feature-item').forEach(item => {
+            if (item.style.display !== 'none') hasVisible = true;
+        });
+        section.style.display = hasVisible ? '' : 'none';
+    });
+
+    document.getElementById('resultCount').textContent = currentSearch || currentFilter !== 'all' ? `Showing ${visible} of ${features.length} features` : '';
+}
+
+function updateCounts() {
+    const fe = features.filter(f => f.side === 'frontend').length;
+    const ad = features.filter(f => f.side === 'admin').length;
+    const high = features.filter(f => f.priority === 'high').length;
+    const cats = new Set(features.map(f => f.cat)).size;
+
+    animateCount('statFrontend', fe);
+    animateCount('statAdmin', ad);
+    animateCount('statHigh', high);
+    animateCount('statCategories', cats);
+    animateCount('totalCount', features.length);
+    animateCount('catCount', cats);
+    document.getElementById('feCount').textContent = fe;
+    document.getElementById('adminCount').textContent = ad;
+}
+
+function animateCount(id, target) {
+    const el = document.getElementById(id);
+    let current = 0;
+    const step = Math.ceil(target / 30);
+    const interval = setInterval(() => {
+        current += step;
+        if (current >= target) { current = target; clearInterval(interval); }
+        el.textContent = current;
+    }, 30);
+}
+
+function attachListeners() {
+    // Animation observer
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate');
+            }
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -5% 0px' });
+
+    document.querySelectorAll('.anim-in').forEach(el => observer.observe(el));
+}
+
+function scrollToSection(id) {
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function exportFeatures() {
+    let text = '# NEWS PORTAL — FULL FEATURES LIST\n\n';
+    text += `Total: ${features.length} features | Frontend: ${features.filter(f=>f.side==='frontend').length} | Admin: ${features.filter(f=>f.side==='admin').length}\n\n`;
+
+    const sides = ['frontend', 'admin'];
+    sides.forEach(side => {
+        text += `## ${side === 'frontend' ? 'FRONTEND SIDE' : 'ADMIN SIDE'}\n\n`;
+        const cats = [...new Set(features.filter(f=>f.side===side).map(f=>f.cat))];
+        cats.forEach(cat => {
+            const catName = document.querySelector(`[id="${cat}"]`)?.previousElementSibling?.textContent?.trim() || cat;
+            text += `### ${catName}\n\n`;
+            features.filter(f=>f.cat===cat).forEach(f => {
+                text += `- [${f.priority.toUpperCase()}] **${f.name}**: ${f.desc}\n`;
+                f.sub.forEach(s => { text += `  - ${s}\n`; });
+                text += '\n';
+            });
+        });
+    });
+
+    navigator.clipboard.writeText(text).then(() => {
+        showToast('Full features list copied to clipboard!');
+    }).catch(() => {
+        showToast('Could not copy — check clipboard permissions');
+    });
+}
+
+function showToast(msg) {
+    const toast = document.getElementById('toast');
+    document.getElementById('toastMsg').textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3000);
+}
+
+// Init
+document.addEventListener('DOMContentLoaded', () => {
+    renderFeatures();
+});
+</script>
+
+</body>
+</html>

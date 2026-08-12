@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alex Chen — Software Engineer</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+            mono: ['JetBrains Mono', 'Consolas', 'monospace'],
+          },
+          colors: {
+            border: 'rgba(255,255,255,0.08)',
+            'border-hover': 'rgba(255,255,255,0.16)',
+            muted: 'rgba(255,255,255,0.55)',
+            'muted-fg': 'rgba(255,255,255,0.45)',
+            'muted-dim': 'rgba(255,255,255,0.28)',
+            accent: '#0070f3',
+            'accent-soft': 'rgba(0,112,243,0.12)',
+            'accent-border': 'rgba(0,112,243,0.28)',
+            success: '#00c853',
+            'success-soft': 'rgba(0,200,83,0.12)',
+            'success-border': 'rgba(0,200,83,0.28)',
+            warning: '#ff9500',
+            'warning-soft': 'rgba(255,149,0,0.12)',
+          },
+          keyframes: {
+            'fade-up': {
+              from: { opacity: '0', transform: 'translateY(20px)' },
+              to: { opacity: '1', transform: 'translateY(0)' }
+            },
+            'bar-grow': {
+              from: { transform: 'scaleX(0)' },
+              to: { transform: 'scaleX(1)' }
+            },
+            'pulse-dot': {
+              '0%,100%': { opacity: '1' },
+              '50%': { opacity: '0.4' }
+            },
+            'eq-bounce': {
+              from: { height: '3px' },
+              to: { height: '14px' }
+            },
+            'marquee': {
+              from: { transform: 'translateX(0)' },
+              to: { transform: 'translateX(-50%)' }
+            },
+            'glow': {
+              '0%,100%': { opacity: '0.4' },
+              '50%': { opacity: '0.7' }
+            },
+            'scroll-hint': {
+              '0%,100%': { transform: 'translateY(0)', opacity: '0.4' },
+              '50%': { transform: 'translateY(6px)', opacity: '1' }
+            },
+            'blink': {
+              '0%,100%': { opacity: '1' },
+              '50%': { opacity: '0' }
+            },
+          },
+          animation: {
+            'fade-up': 'fade-up 0.7s cubic-bezier(0.16,1,0.3,1) both',
+            'bar-grow': 'bar-grow 1s cubic-bezier(0.16,1,0.3,1) both',
+            'pulse-dot': 'pulse-dot 3s ease-in-out infinite',
+            'eq-bounce': 'eq-bounce 0.8s ease-in-out infinite alternate',
+            'marquee': 'marquee 30s linear infinite',
+            'glow': 'glow 6s ease-in-out infinite',
+            'scroll-hint': 'scroll-hint 2s ease-in-out infinite',
+            'blink': 'blink 1s step-end infinite',
+          },
+        }
+      }
+    }
+  </script>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: #000;
+      color: #e8e8e8;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+    ::selection { background: rgba(0,112,243,0.3); color: #fff; }
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.15); }
+
+    /* Stagger delays */
+    .d1 { animation-delay: .1s; }
+    .d2 { animation-delay: .2s; }
+    .d3 { animation-delay: .3s; }
+    .d4 { animation-delay: .4s; }
+    .d5 { animation-delay: .5s; }
+    .d6 { animation-delay: .6s; }
+    .d7 { animation-delay: .7s; }
+
+    /* Reveal on scroll */
+    .rv { opacity: 0; transform: translateY(20px); transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1); }
+    .rv.show { opacity: 1; transform: translateY(0); }
+
+    /* Gradient text */
+    .gt { background: linear-gradient(180deg, #fff 0%, rgba(255,255,255,0.55) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+    /* Hero glow */
+    .hero-glow { background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(0,112,243,0.1), transparent 70%); }
+
+    /* Grid bg */
+    .grid-bg {
+      background-image: linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
+      background-size: 64px 64px;
+    }
+
+    /* Vercel triangle */
+    .vt { width: 0; height: 0; border-left: 8px solid transparent; border-right: 8px solid transparent; border-bottom: 14px solid #fff; }
+    .vt-sm { border-left-width: 6px; border-right-width: 6px; border-bottom-width: 10px; }
+
+    /* Nav */
+    .nav-blur { backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
+
+    /* Separator */
+    .sep { height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.07), transparent); }
+
+    /* Status dot */
+    .sdot { width: 8px; height: 8px; border-radius: 50%; background: #0070f3; }
+
+    /* Project image overlay */
+    .pimg { position: relative; overflow: hidden; }
+    .pimg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.65)); pointer-events: none; }
+    .pimg img { transition: transform 0.6s cubic-bezier(0.16,1,0.3,1); }
+    .group:hover .pimg img { transform: scale(1.04); }
+
+    /* Equalizer bars */
+    .eqbar { width: 3px; border-radius: 2px; background: #0070f3; }
+
+    /* Code syntax */
+    .ck { color: #c678dd; }
+    .cs { color: #98c379; }
+    .cf { color: #61afef; }
+    .ct { color: #e5c07b; }
+    .cc { color: rgba(255,255,255,0.28); font-style: italic; }
+    .cn { color: #d19a66; }
+    .cp { color: #e06c75; }
+    .cb { color: rgba(255,255,255,0.45); }
+
+    /* Skill bar */
+    .sbar { transform-origin: left; transform: scaleX(0); transition: transform 1s cubic-bezier(0.16,1,0.3,1); }
+    .sbar.go { transform: scaleX(1); }
+
+    /* Contrib cell */
+    .ccell { width: 11px; height: 11px; border-radius: 2px; transition: transform 0.15s ease; cursor: pointer; }
+    .ccell:hover { transform: scale(1.7); z-index: 5; position: relative; }
+
+    /* Testimonial quote */
+    .tq::before { content: '"'; position: absolute; top: -8px; left: 14px; font-size: 72px; font-weight: 800; color: rgba(255,255,255,0.03); line-height: 1; pointer-events: none; font-family: Georgia, serif; }
+
+    /* Tab active underline */
+    .tabon { color: #fff !important; }
+    .tabon::after { content: ''; position: absolute; bottom: -1px; left: 0; right: 0; height: 1px; background: #fff; }
+
+    /* Toast */
+    .toast-wrap { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 300; display: flex; flex-direction: column; gap: 8px; align-items: center; pointer-events: none; }
+    .toast-item { background: rgba(20,20,20,0.92); border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(16px); border-radius: 10px; padding: 10px 18px; font-size: 13px; color: rgba(255,255,255,0.85); pointer-events: auto; display: flex; align-items: center; gap: 8px; transform: translateY(16px); opacity: 0; transition: all 0.35s cubic-bezier(0.16,1,0.3,1); }
+    .toast-item.in { transform: translateY(0); opacity: 1; }
+
+    /* Cmd palette */
+    .cmd-bg { position: fixed; inset: 0; z-index: 200; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); display: flex; align-items: flex-start; justify-content: center; padding-top: min(18vh, 150px); opacity: 0; pointer-events: none; transition: opacity 0.2s ease; }
+    .cmd-bg.on { opacity: 1; pointer-events: auto; }
+    .cmd-box { width: 100%; max-width: 540px; background: #111; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; overflow: hidden; transform: scale(0.96) translateY(-8px); transition: transform 0.25s cubic-bezier(0.16,1,0.3,1); box-shadow: 0 25px 60px -12px rgba(0,0,0,0.6); }
+    .cmd-bg.on .cmd-box { transform: scale(1) translateY(0); }
+    .cmd-in { width: 100%; padding: 14px 18px; background: transparent; border: none; border-bottom: 1px solid rgba(255,255,255,0.06); color: #fff; font-size: 15px; font-family: inherit; outline: none; }
+    .cmd-in::placeholder { color: rgba(255,255,255,0.25); }
+    .cmd-it { display: flex; align-items: center; gap: 12px; padding: 9px 12px; border-radius: 8px; cursor: pointer; transition: background 0.12s ease; color: rgba(255,255,255,0.65); font-size: 14px; text-decoration: none; }
+    .cmd-it:hover, .cmd-it.act { background: rgba(255,255,255,0.06); color: #fff; }
+    .cmd-ic { width: 30px; height: 30px; border-radius: 6px; background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+
+    /* Fallback: ensure everything visible */
+    .no-js .rv { opacity: 1 !important; transform: none !important; }
+
+    /* Project fallback bg */
+    .pfbg-1 { background: linear-gradient(135deg, #0a1628 0%, #0d0d1a 50%, #1a0a2e 100%); }
+    .pfbg-2 { background: linear-gradient(135deg, #0a1a12 0%, #0d0d1a 50%, #0a1a28 100%); }
+    .pfbg-3 { background: linear-gradient(135deg, #1a1408 0%, #0d0d1a 50%, #1a0a0a 100%); }
+    .pfbg-4 { background: linear-gradient(135deg, #140a28 0%, #0d0d1a 50%, #0a1428 100%); }
+  </style>
+</head>
+<body class="min-h-screen grid-bg no-js">
+
+  <!-- Failsafe: remove no-js and reveal everything if JS is working -->
+  <script>document.body.classList.remove('no-js');</script>
+
+  <!-- Toast Container -->
+  <div id="toasts" class="toast-wrap"></div>
+
+  <!-- Command Palette -->
+  <div id="cmdBg" class="cmd-bg" onclick="if(event.target===this)cmdClose()">
+    <div class="cmd-box">
+      <div class="flex items-center gap-3 px-4 py-3 border-b border-white/5">
+        <iconify-icon icon="lucide:search" width="17" style="color:rgba(255,255,255,0.3);flex-shrink:0"></iconify-icon>
+        <input id="cmdIn" type="text" class="cmd-in !border-0 !p-0" placeholder="Type a command or search..." oninput="cmdFilter(this.value)" />
+        <kbd class="hidden sm:inline-flex items-center px-2 py-0.5 text-[10px] bg-white/5 rounded border border-white/10 shrink-0" style="color:rgba(255,255,255,0.25)">ESC</kbd>
+      </div>
+      <div id="cmdRes" class="max-h-[320px] overflow-y-auto p-2">
+        <div class="px-3 py-1.5 text-[10px] font-semibold uppercase tracking-widest" style="color:rgba(255,255,255,0.25)">Navigation</div>
+        <a href="#projects" onclick="cmdClose()" class="cmd-it" data-kw="projects work portfolio"><div class="cmd-ic"><iconify-icon icon="lucide:layers" width="15" style="color:#0070f3"></iconify-icon></div>Go to Projects<span class="ml-auto text-[11px]" style="color:rgba(255,255,255,0.2)">⌘P</span></a>
+        <a href="#experience" onclick="cmdClose()" class="cmd-it" data-kw="experience career jobs"><div class="cmd-ic"><iconify-icon icon="lucide:briefcase" width="15" style="color:#0070f3"></iconify-icon></div>Go to Experience<span class="ml-auto text-[11px]" style="color:rgba(255,255,255,0.2)">⌘E</span></a>
+        <a href="#writing" onclick="cmdClose()" class="cmd-it" data-kw="writing blog posts"><div class="cmd-ic"><iconify-icon icon="lucide:pen-line" width="15" style="color:#0070f3"></iconify-icon></div>Go to Writing<span class="ml-auto text-[11px]" style="color:rgba(255,255,255,0.2)">⌘W</span></a>
+        <a href="#stack" onclick="cmdClose()" class="cmd-it" data-kw="stack technologies tools skills"><div class="cmd-ic"><iconify-icon icon="lucide:code-2" width="15" style="color:#0070f3"></iconify-icon></div>Go to Stack<span class="ml-auto text-[11px]" style="color:rgba(255,255,255,0.2)">⌘S</span></a>
+        <div class="sep my-2 !bg-white/5"></div>
+        <div class="px-3 py-1.5 text-[10px] font-semibold uppercase tracking-widest" style="color:rgba(255,255,255,0.25)">Actions</div>
+        <div class="cmd-it" onclick="doCopyEmail();cmdClose()" data-kw="email contact copy"><div class="cmd-ic"><iconify-icon icon="lucide:copy" width="15" style="color:rgba(255,255,255,0.4)"></iconify-icon></div>Copy Email Address<span class="ml-auto text-[11px]" style="color:rgba(255,255,255,0.2)">⌘C</span></div>
+        <a href="https://github.com" target="_blank" class="cmd-it" data-kw="github code source"><div class="cmd-ic"><iconify-icon icon="lucide:github" width="15" style="color:rgba(255,255,255,0.4)"></iconify-icon></div>Open GitHub</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Background Orbs -->
+  <div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
+    <div class="absolute w-[600px] h-[600px] -top-[200px] -left-[200px] rounded-full animate-glow" style="background:rgba(0,112,243,0.035);filter:blur(80px)"></div>
+    <div class="absolute w-[500px] h-[500px] top-[40%] -right-[150px] rounded-full animate-glow" style="background:rgba(120,0,255,0.025);filter:blur(80px);animation-delay:2s"></div>
+    <div class="absolute w-[400px] h-[400px] -bottom-[100px] left-[30%] rounded-full animate-glow" style="background:rgba(0,200,83,0.02);filter:blur(80px);animation-delay:4s"></div>
+  </div>
+
+  <!-- Navigation -->
+  <nav id="mainNav" class="fixed top-0 left-0 right-0 z-50 nav-blur border-b transition-all duration-300" style="background:rgba(0,0,0,0.72);border-color:rgba(255,255,255,0.04)">
+    <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="#" class="flex items-center gap-2.5 group">
+        <div class="vt transition-transform duration-500 group-hover:rotate-[360deg]"></div>
+        <span class="text-sm font-semibold tracking-tight text-white">Alex Chen</span>
+      </a>
+      <div class="hidden md:flex items-center gap-1">
+        <a href="#projects" class="nl relative px-3 py-1.5 text-xs text-muted hover:text-white transition-colors rounded-md hover:bg-white/5">Projects</a>
+        <a href="#experience" class="nl relative px-3 py-1.5 text-xs text-muted hover:text-white transition-colors rounded-md hover:bg-white/5">Experience</a>
+        <a href="#open-source" class="nl relative px-3 py-1.5 text-xs text-muted hover:text-white transition-colors rounded-md hover:bg-white/5">Open Source</a>
+        <a href="#writing" class="nl relative px-3 py-1.5 text-xs text-muted hover:text-white transition-colors rounded-md hover:bg-white/5">Writing</a>
+        <a href="#stack" class="nl relative px-3 py-1.5 text-xs text-muted hover:text-white transition-colors rounded-md hover:bg-white/5">Stack</a>
+        <div class="w-px h-4 mx-2" style="background:rgba(255,255,255,0.08)"></div>
+        <button onclick="cmdOpen()" class="px-3 py-1.5 text-xs hover:text-white transition-colors rounded-md hover:bg-white/5 flex items-center gap-1.5" style="color:rgba(255,255,255,0.35)">
+          <iconify-icon icon="lucide:search" width="13"></iconify-icon>
+          <span class="hidden lg:inline">Search</span>
+          <kbd class="hidden lg:inline-flex items-center px-1.5 py-0.5 text-[10px] bg-white/5 rounded border border-white/10 ml-1" style="color:rgba(255,255,255,0.2)">⌘K</kbd>
+        </button>
+        <button onclick="doCopyEmail()" class="ml-1 px-4 py-1.5 text-xs font-medium bg-white text-black rounded-md hover:bg-white/90 transition-all duration-200 active:scale-95">Contact</button>
+      </div>
+      <button class="md:hidden p-2 text-muted hover:text-white transition-colors" onclick="mobToggle()">
+        <iconify-icon icon="lucide:menu" width="20" id="mobIcon"></iconify-icon>
+      </button>
+    </div>
+    <div id="mobMenu" class="md:hidden hidden border-t bg-black/95 nav-blur" style="border-color:rgba(255,255,255,0.06)">
+      <div class="px-6 py-4 space-y-1">
+        <a href="#projects" onclick="mobClose()" class="block px-3 py-2.5 text-sm text-muted hover:text-white transition-colors rounded-md hover:bg-white/5">Projects</a>
+        <a href="#experience" onclick="mobClose()" class="block px-3 py-2.5 text-sm text-muted hover:text-white transition-colors rounded-md hover:bg-white/5">Experience</a>
+        <a href="#open-source" onclick="mobClose()" class="block px-3 py-2.5 text-sm text-muted hover:text-white transition-colors rounded-md hover:bg-white/5">Open Source</a>
+        <a href="#writing" onclick="mobClose()" class="block px-3 py-2.5 text-sm text-muted hover:text-white transition-colors rounded-md hover:bg-white/5">Writing</a>
+        <a href="#stack" onclick="mobClose()" class="block px-3 py-2.5 text-sm text-muted hover:text-white transition-colors rounded-md hover:bg-white/5">Stack</a>
+        <div class="sep my-3"></div>
+        <button onclick="cmdOpen();mobClose()" class="w-full text-left px-3 py-2.5 text-sm text-muted hover:text-white transition-colors rounded-md hover:bg-white/5 flex items-center gap-2"><iconify-icon icon="lucide:search" width="15"></iconify-icon>Search</button>
+        <button onclick="doCopyEmail();mobClose()" class="w-full px-4 py-2.5 text-sm font-medium bg-white text-black rounded-md hover:bg-white/90 transition-all">Contact</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero-glow relative pt-32 pb-20 md:pt-44 md:pb-28 overflow-hidden">
+    <div class="max-w-6xl mx-auto px-6 relative z-10">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-start">
+        <div class="lg:col-span-7">
+          <div class="animate-fade-up flex items-center gap-2.5 mb-6">
+            <div class="sdot animate-pulse-dot"></div>
+            <span class="text-xs font-medium text-muted tracking-wide uppercase">Available for work</span>
+          </div>
+          <h1 class="animate-fade-up d1 text-4xl sm:text-5xl md:text-6xl lg:text-[68px] font-bold leading-[1.06]" style="letter-spacing:-0.03em">
+            <span class="gt">Building digital</span><br>
+            <span class="gt">experiences that</span><br>
+            <span class="text-white">scale.</span>
+          </h1>
+          <p class="animate-fade-up d2 mt-6 md:mt-8 text-base md:text-lg text-muted leading-relaxed max-w-xl">
+            Full-stack engineer specializing in performant web applications, developer tools, and infrastructure. Currently crafting the future at the intersection of design and engineering.
+          </p>
+          <div class="animate-fade-up d3 mt-8 flex flex-wrap items-center gap-3">
+            <a href="#projects" class="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium bg-white text-black rounded-lg hover:bg-white/90 transition-all active:scale-[0.97]" style="box-shadow:0 0 20px rgba(255,255,255,0.06)">
+              View Projects
+              <iconify-icon icon="lucide:arrow-down" width="14"></iconify-icon>
+            </a>
+            <a href="https://github.com" target="_blank" class="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium text-white rounded-lg border border-border hover:bg-white/5 hover:border-border-hover transition-all active:scale-[0.97]" style="background:rgba(255,255,255,0.04)">
+              <iconify-icon icon="lucide:github" width="15"></iconify-icon>
+              GitHub
+            </a>
+            <button onclick="cmdOpen()" class="inline-flex items-center gap-2 px-4 py-2.5 text-sm font-medium rounded-lg border border-border hover:bg-white/5 transition-all" style="color:rgba(255,255,255,0.4);background:rgba(255,255,255,0.02)">
+              <iconify-icon icon="lucide:search" width="14"></iconify-icon>
+              <span class="hidden sm:inline">Search</span>
+              <kbd class="hidden sm:inline-flex items-center px-1.5 py-0.5 text-[10px] bg-white/5 rounded border border-white/10" style="color:rgba(255,255,255,0.2)">⌘K</kbd>
+            </button>
+          </div>
+        </div>
+
+        <!-- Right Column -->
+        <div class="lg:col-span-5 space-y-4">
+          <!-- Terminal -->
+          <div class="animate-fade-up d4 rounded-xl border border-border overflow-hidden" style="background:rgba(255,255,255,0.02)">
+            <div class="flex items-center gap-2 px-4 py-3 border-b" style="border-color:rgba(255,255,255,0.05)">
+              <div class="flex gap-1.5">
+                <div class="w-2.5 h-2.5 rounded-full" style="background:rgba(255,255,255,0.08)"></div>
+                <div class="w-2.5 h-2.5 rounded-full" style="background:rgba(255,255,255,0.08)"></div>
+                <div class="w-2.5 h-2.5 rounded-full" style="background:rgba(255,255,255,0.08)"></div>
+              </div>
+              <span class="text-[11px] ml-2 font-mono" style="color:rgba(255,255,255,0.22)">~/alex-chen</span>
+            </div>
+            <div class="p-4 font-mono text-xs leading-6">
+              <div class="flex items-start gap-2"><span style="color:#00c853">➜</span><span style="color:#0070f3">~/portfolio</span><span style="color:rgba(255,255,255,0.35)">git:(main)</span></div>
+              <div class="mt-1 pl-5" style="color:rgba(255,255,255,0.45)">$ whoami</div>
+              <div class="pl-5" style="color:rgba(255,255,255,0.75)">alex chen — full-stack engineer</div>
+              <div class="mt-1 pl-5" style="color:rgba(255,255,255,0.45)">$ cat skills.txt</div>
+              <div class="pl-5" style="color:rgba(255,255,255,0.75)">typescript, react, next.js, rust, go</div>
+              <div class="mt-1 pl-5" style="color:rgba(255,255,255,0.45)">$ echo $STATUS</div>
+              <div class="pl-5" style="color:#00c853">✓ open to opportunities</div>
+              <div class="mt-2 flex items-center gap-2">
+                <span style="color:#00c853">➜</span><span style="color:#0070f3">~/portfolio</span><span style="color:rgba(255,255,255,0.35)">git:(main)</span>
+                <span class="inline-block w-2 h-4 ml-0.5 animate-blink" style="background:#0070f3"></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Now Playing -->
+          <div class="animate-fade-up d5 rounded-xl border border-border p-4 flex items-center gap-3" style="background:rgba(255,255,255,0.02)">
+            <div class="w-10 h-10 rounded-lg flex items-center justify-center shrink-0 border border-white/10" style="background:linear-gradient(135deg,rgba(0,112,243,0.2),rgba(120,0,255,0.15))">
+              <div class="flex items-end gap-[2px] h-4">
+                <div class="eqbar animate-eq-bounce"></div>
+                <div class="eqbar animate-eq-bounce" style="animation-delay:.2s"></div>
+                <div class="eqbar animate-eq-bounce" style="animation-delay:.4s"></div>
+                <div class="eqbar animate-eq-bounce" style="animation-delay:.1s"></div>
+              </div>
+            </div>
+            <div class="min-w-0 flex-1">
+              <div class="text-xs font-medium text-white truncate">Now Playing</div>
+              <div class="text-[11px] text-muted-fg truncate">Boards of Canada — Dayvan Cowboy</div>
+            </div>
+            <iconify-icon icon="lucide:music" width="14" style="color:rgba(255,255,255,0.2);flex-shrink:0"></iconify-icon>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="animate-fade-up d6 mt-16 md:mt-24 grid grid-cols-2 md:grid-cols-4 gap-px rounded-xl overflow-hidden" style="background:rgba(255,255,255,0.07)">
+        <div class="bg-black p-5 md:p-6 hover:bg-white/[0.02] transition-colors">
+          <div class="text-2xl md:text-3xl font-bold tracking-tight text-white tabular-nums" data-count="5">0</div>
+          <div class="mt-1 text-xs text-muted">Years Experience</div>
+        </div>
+        <div class="bg-black p-5 md:p-6 hover:bg-white/[0.02] transition-colors">
+          <div class="text-2xl md:text-3xl font-bold tracking-tight text-white tabular-nums" data-count="30">0</div>
+          <div class="mt-1 text-xs text-muted">Projects Shipped</div>
+        </div>
+        <div class="bg-black p-5 md:p-6 hover:bg-white/[0.02] transition-colors">
+          <div class="text-2xl md:text-3xl font-bold tracking-tight text-white tabular-nums" data-count="12">0</div>
+          <div class="mt-1 text-xs text-muted">GitHub Stars (k)</div>
+        </div>
+        <div class="bg-black p-5 md:p-6 hover:bg-white/[0.02] transition-colors">
+          <div class="text-2xl md:text-3xl font-bold tracking-tight text-white tabular-nums" data-count="99">0</div>
+          <div class="mt-1 text-xs text-muted">Uptime Record (%)</div>
+        </div>
+      </div>
+
+      <!-- Scroll hint -->
+      <div class="animate-fade-up d7 hidden md:flex justify-center mt-14">
+        <div class="animate-scroll-hint flex flex-col items-center gap-2" style="color:rgba(255,255,255,0.2)">
+          <span class="text-[10px] uppercase tracking-widest">Scroll</span>
+          <iconify-icon icon="lucide:chevron-down" width="14"></iconify-icon>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="sep"></div>
+
+  <!-- Marquee -->
+  <section class="py-10 md:py-14 overflow-hidden">
+    <div class="max-w-6xl mx-auto px-6 mb-6">
+      <p class="rv text-[10px] text-center uppercase tracking-widest font-medium" style="color:rgba(255,255,255,0.2)">Trusted by teams at</p>
+    </div>
+    <div class="relative">
+      <div class="absolute left-0 top-0 bottom-0 w-32 z-10" style="background:linear-gradient(to right,#000,transparent)"></div>
+      <div class="absolute right-0 top-0 bottom-0 w-32 z-10" style="background:linear-gradient(to left,#000,transparent)"></div>
+      <div class="flex animate-marquee hover:[animation-play-state:paused]" style="width:max-content">
+        <div class="flex items-center gap-16 px-8">
+          <span class="text-xl font-bold whitespace-nowrap tracking-tight" style="color:rgba(255,255,255,0.1)">Vercel</span>
+          <span class="text-xl font-bold whitespace-nowrap tracking-tight" style="color:rgba(255,255,255,0.1)">Stripe</span>
+          <span class="text-xl font-bold whitespace-nowrap tracking-tight" style="color:rgba(255,255,255,0.1)">Linear</span>
+          <span class="text-xl font-bold whitespace-nowrap tracking-tight" style="color:rgba(255,255,255,0.1)">GitHub</span>
+          <span class="text-xl font-bold whitespace-nowrap tracking-tight" style="color:rgba(255,255,255,0.1)">Notion</span>
+          <span class="text-xl font-bold whitespace-nowrap tracking-tight" style="color:rgba(255,255,255,0.1)">Figma</span>
+          <span class="text-xl font-bold whitespace-nowrap tracking-tight" style="color:rgba(255,255,255,0.1)">Supabase</span>
+          <span class="text-xl font-bold whitespace-nowrap tracking-tight" style="color:rgba(255,255,255,0.1)">PlanetScale</span>
+        </div>
+        <div class="flex items-center gap-16 px-8">
+          <span class="text-xl font-bold whitespace-nowrap tracking-tight" style="color:rgba(255,255,255,0.1)">Vercel</span>
+          <span class="text-xl font-bold whitespace-nowrap tracking-tight" style="color:rgba(255,255,255,0.1)">Stripe</span>
+          <span class="text-xl font-bold whitespace-nowrap tracking-tight" style="color:rgba(255,255,255,0.1)">Linear</span>
+          <span class="text-xl font-bold whitespace-nowrap tracking-tight" style="color:rgba(255,255,255,0.1)">GitHub</span>
+          <span class="text-xl font-bold whitespace-nowrap tracking-tight" style="color:rgba(255,255,255,0.1)">Notion</span>
+          <span class="text-xl font-bold whitespace-nowrap tracking-tight" style="color:rgba(255,255,255,0.1)">Figma</span>
+          <span class="text-xl font-bold whitespace-nowrap tracking-tight" style="color:rgba(255,255,255,0.1)">Supabase</span>
+          <span class="text-xl font-bold whitespace-nowrap tracking-tight" style="color:rgba(255,255,255,0.1)">PlanetScale</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="sep"></div>
+
+  <!-- Projects -->
+  <section id="projects" class="py-20 md:py-28 relative">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="rv mb-12 md:mb-14 flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+        <div>
+          <div class="flex items-center gap-2 mb-3">
+            <iconify-icon icon="lucide:layers" width="14" style="color:#0070f3"></iconify-icon>
+            <span class="text-xs font-medium tracking-wide uppercase" style="color:#0070f3">Selected Work</span>
+          </div>
+          <h2 class="text-2xl md:text-3xl font-bold tracking-tight text-white">Projects</h2>
+          <p class="mt-2 text-sm text-muted max-w-lg">Curated projects showcasing my approach — minimal, fast, and purposeful.</p>
+        </div>
+        <div class="flex items-center gap-1 rounded-lg p-1 border border-border" style="background:rgba(255,255,255,0.02)">
+          <button class="ptab px-3 py-1.5 text-xs font-medium rounded-md transition-all" style="background:rgba(255,255,255,0.1);color:#fff" onclick="projFilter('all',this)">All</button>
+          <button class="ptab px-3 py-1.5 text-xs font-medium rounded-md transition-all text-muted hover:text-white" onclick="projFilter('fullstack',this)">Full-Stack</button>
+          <button class="ptab px-3 py-1.5 text-xs font-medium rounded-md transition-all text-muted hover:text-white" onclick="projFilter('oss',this)">OSS</button>
+          <button class="ptab px-3 py-1.5 text-xs font-medium rounded-md transition-all text-muted hover:text-white" onclick="projFilter('infra',this)">Infra</button>
+        </div>
+      </div>
+
+      <div id="projGrid" class="grid grid-cols-1 md:grid-cols-2 gap-px rounded-xl overflow-hidden" style="background:rgba(255,255,255,0.07)">
+        <!-- P1 -->
+        <a href="#" class="pcard group bg-black hover:bg-white/[0.03] transition-all duration-300" data-cat="fullstack" style="display:''">
+          <div class="pimg aspect-video pfbg-1 rounded-t-lg">
+            <img src="https://picsum.photos/seed/nx-dash-77/800/450.jpg" alt="Nexus Dashboard" class="w-full h-full object-cover opacity-50 group-hover:opacity-70" loading="lazy" onerror="this.style.display='none'" />
+          </div>
+          <div class="p-5 md:p-6">
+            <div class="flex items-center justify-between mb-3">
+              <div class="flex items-center gap-2">
+                <h3 class="text-base font-semibold text-white tracking-tight">Nexus Dashboard</h3>
+                <span class="px-1.5 py-0.5 text-[10px] font-semibold rounded border" style="background:rgba(0,200,83,0.1);color:#00c853;border-color:rgba(0,200,83,0.25)">Live</span>
+              </div>
+              <iconify-icon icon="lucide:arrow-up-right" width="14" style="color:rgba(255,255,255,0.35)" class="transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:!text-white"></iconify-icon>
+            </div>
+            <p class="text-sm text-muted leading-relaxed">Real-time analytics dashboard with sub-100ms updates. Next.js, WebSocket streams, custom charting engine.</p>
+            <div class="mt-4 flex flex-wrap gap-1.5">
+              <span class="px-2 py-0.5 text-[11px] font-medium rounded-md border border-border text-muted-fg" style="background:rgba(255,255,255,0.04)">Next.js</span>
+              <span class="px-2 py-0.5 text-[11px] font-medium rounded-md border border-border text-muted-fg" style="background:rgba(255,255,255,0.04)">TypeScript</span>
+              <span class="px-2 py-0.5 text-[11px] font-medium rounded-md border border-border text-muted-fg" style="background:rgba(255,255,255,0.04)">WebSocket</span>
+              <span class="px-2 py-0.5 text-[11px] font-medium rounded-md border border-border text-muted-fg" style="background:rgba(255,255,255,0.04)">D3</span>
+            </div>
+            <div class="mt-4 flex items-center gap-4 text-xs" style="color:rgba(255,255,255,0.25)">
+              <span class="flex items-center gap-1"><iconify-icon icon="lucide:star" width="12"></iconify-icon>2.4k</span>
+              <span class="flex items-center gap-1"><iconify-icon icon="lucide:git-fork" width="12"></iconify-icon>180</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- P2 -->
+        <a href="#" class="pcard group bg-black hover:bg-white/[0.03] transition-all duration-300" data-cat="oss">
+          <div class="pimg aspect-video pfbg-2 rounded-t-lg">
+            <img src="https://picsum.photos/seed/forge-cli-88/800/450.jpg" alt="Forge CLI" class="w-full h-full object-cover opacity-50 group-hover:opacity-70" loading="lazy" onerror="this.style.display='none'" />
+          </div>
+          <div class="p-5 md:p-6">
+            <div class="flex items-center justify-between mb-3">
+              <div class="flex items-center gap-2">
+                <h3 class="text-base font-semibold text-white tracking-tight">Forge CLI</h3>
+                <span class="px-1.5 py-0.5 text-[10px] font-semibold rounded border" style="background:rgba(0,112,243,0.1);color:#0070f3;border-color:rgba(0,112,243,0.25)">OSS</span>
+              </div>
+              <iconify-icon icon="lucide:arrow-up-right" width="14" style="color:rgba(255,255,255,0.35)" class="transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:!text-white"></iconify-icon>
+            </div>
+            <p class="text-sm text-muted leading-relaxed">Zero-config scaffolding tool for full-stack apps. Generates TypeScript projects with best practices.</p>
+            <div class="mt-4 flex flex-wrap gap-1.5">
+              <span class="px-2 py-0.5 text-[11px] font-medium rounded-md border border-border text-muted-fg" style="background:rgba(255,255,255,0.04)">Rust</span>
+              <span class="px-2 py-0.5 text-[11px] font-medium rounded-md border border-border text-muted-fg" style="background:rgba(255,255,255,0.04)">CLI</span>
+              <span class="px-2 py-0.5 text-[11px] font-medium rounded-md border border-border text-muted-fg" style="background:rgba(255,255,255,0.04)">npm</span>
+            </div>
+            <div class="mt-4 flex items-center gap-4 text-xs" style="color:rgba(255,255,255,0.25)">
+              <span class="flex items-center gap-1"><iconify-icon icon="lucide:star" width="12"></iconify-icon>3.2k</span>
+              <span class="flex items-center gap-1"><iconify-icon icon="lucide:download" width="12"></iconify-icon>45k/mo</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- P3 -->
+        <a href="#" class="pcard group bg-black hover:bg-white/[0.03] transition-all duration-300" data-cat="infra">
+          <div class="pimg aspect-video pfbg-3 rounded-t-lg">
+            <img src="https://picsum.photos/seed/edge-store-99/800/450.jpg" alt="EdgeStore" class="w-full h-full object-cover opacity-50 group-hover:opacity-70" loading="lazy" onerror="this.style.display='none'" />
+          </div>
+          <div class="p-5 md:p-6">
+            <div class="flex items-center justify-between mb-3">
+              <div class="flex items-center gap-2">
+                <h3 class="text-base font-semibold text-white tracking-tight">EdgeStore</h3>
+                <span class="px-1.5 py-0.5 text-[10px] font-semibold rounded border" style="background:rgba(255,149,0,0.1);color:#ff9500;border-color:rgba(255,149,0,0.25)">Beta</span>
+              </div>
+              <iconify-icon icon="lucide:arrow-up-right" width="14" style="color:rgba(255,255,255,0.35)" class="transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:!text-white"></iconify-icon>
+            </div>
+            <p class="text-sm text-muted leading-relaxed">Edge-native key-value store with global replication. 10ms p99 reads across 30+ regions.</p>
+            <div class="mt-4 flex flex-wrap gap-1.5">
+              <span class="px-2 py-0.5 text-[11px] font-medium rounded-md border border-border text-muted-fg" style="background:rgba(255,255,255,0.04)">Go</span>
+              <span class="px-2 py-0.5 text-[11px] font-medium rounded-md border border-border text-muted-fg" style="background:rgba(255,255,255,0.04)">Edge Runtime</span>
+              <span class="px-2 py-0.5 text-[11px] font-medium rounded-md border border-border text-muted-fg" style="background:rgba(255,255,255,0.04)">Redis</span>
+            </div>
+            <div class="mt-4 flex items-center gap-4 text-xs" style="color:rgba(255,255,255,0.25)">
+              <span class="flex items-center gap-1"><iconify-icon icon="lucide:star" width="12"></iconify-icon>5.1k</span>
+              <span class="flex items-center gap-1"><iconify-icon icon="lucide:globe" width="12"></iconify-icon>30+ regions</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- P4 -->
+        <a href="#" class="pcard group bg-black hover:bg-white/[0.03] transition-all duration-300" data-cat="oss">
+          <div class="pimg aspect-video pfbg-4 rounded-t-lg">
+            <img src="https://picsum.photos/seed/prism-ui-44/800/450.jpg" alt="Prism UI" class="w-full h-full object-cover opacity-50 group-hover:opacity-70" loading="lazy" onerror="this.style.display='none'" />
+          </div>
+          <div class="p-5 md:p-6">
+            <div class="flex items-center justify-between mb-3">
+              <div class="flex items-center gap-2">
+                <h3 class="text-base font-semibold text-white tracking-tight">Prism UI</h3>
+                <span class="px-1.5 py-0.5 text-[10px] font-semibold rounded border" style="background:rgba(0,112,243,0.1);color:#0070f3;border-color:rgba(0,112,243,0.25)">OSS</span>
+              </div>
+              <iconify-icon icon="lucide:arrow-up-right" width="14" style="color:rgba(255,255,255,0.35)" class="transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:!text-white"></iconify-icon>
+            </div>
+            <p class="text-sm text-muted leading-relaxed">Headless component library with accessible primitives. Tree-shakeable to under 4KB.</p>
+            <div class="mt-4 flex flex-wrap gap-1.5">
+              <span class="px-2 py-0.5 text-[11px] font-medium rounded-md border border-border text-muted-fg" style="background:rgba(255,255,255,0.04)">React</span>
+              <span class="px-2 py-0.5 text-[11px] font-medium rounded-md border border-border text-muted-fg" style="background:rgba(255,255,255,0.04)">Aria</span>
+              <span class="px-2 py-0.5 text-[11px] font-medium rounded-md border border-border text-muted-fg" style="background:rgba(255,255,255,0.04)">CSS vars</span>
+            </div>
+            <div class="mt-4 flex items-center gap-4 text-xs" style="color:rgba(255,255,255,0.25)">
+              <span class="flex items-center gap-1"><iconify-icon icon="lucide:star" width="12"></iconify-icon>3.8k</span>
+              <span class="flex items-center gap-1"><iconify-icon icon="lucide:package" width="12"></iconify-icon>120k/wk</span>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <div class="rv mt-8 text-center">
+        <a href="https://github.com" target="_blank" class="inline-flex items-center gap-2 text-sm text-muted hover:text-white transition-colors group">
+          View all projects on GitHub
+          <iconify-icon icon="lucide:arrow-right" width="14" class="group-hover:translate-x-1 transition-transform"></iconify-icon>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <div class="sep"></div>
+
+  <!-- Experience -->
+  <section id="experience" class="py-20 md:py-28">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="rv mb-12 md:mb-14">
+        <div class="flex items-center gap-2 mb-3">
+          <iconify-icon icon="lucide:briefcase" width="14" style="color:#0070f3"></iconify-icon>
+          <span class="text-xs font-medium tracking-wide uppercase" style="color:#0070f3">Career</span>
+        </div>
+        <h2 class="text-2xl md:text-3xl font-bold tracking-tight text-white">Experience</h2>
+      </div>
+
+      <div class="max-w-3xl relative">
+        <div class="absolute left-[15px] top-2 bottom-2 w-px hidden md:block" style="background:rgba(255,255,255,0.07)"></div>
+        <div class="space-y-0">
+          <!-- Role 1 -->
+          <div class="rv group border-b py-6 md:py-8 first:pt-0 relative md:pl-12" style="border-color:rgba(255,255,255,0.07)">
+            <div class="hidden md:flex absolute left-0 top-8 w-[31px] h-[31px] rounded-full border bg-black items-center justify-center z-10 transition-colors" style="border-color:rgba(255,255,255,0.1)">
+              <div class="w-2 h-2 rounded-full" style="background:#0070f3"></div>
+            </div>
+            <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-1 md:gap-4">
+              <div class="flex-1">
+                <div class="flex items-center gap-2.5 flex-wrap">
+                  <h3 class="text-base font-semibold text-white tracking-tight">Senior Software Engineer</h3>
+                  <span class="inline-flex px-2 py-0.5 text-[10px] font-semibold rounded-full border" style="background:rgba(0,112,243,0.1);color:#0070f3;border-color:rgba(0,112,243,0.25)">Current</span>
+                </div>
+                <p class="mt-1 text-sm text-muted">Vercel — San Francisco, CA</p>
+                <p class="mt-3 text-sm text-muted-fg leading-relaxed">Leading the Edge Functions runtime team. Optimized cold start times by 60%, built the new ISR v2 pipeline, contributed to Next.js core.</p>
+                <div class="mt-3 flex flex-wrap gap-1.5">
+                  <span class="px-2 py-0.5 text-[11px] rounded-md border border-border text-muted-fg" style="background:rgba(255,255,255,0.04)">Next.js</span>
+                  <span class="px-2 py-0.5 text-[11px] rounded-md border border-border text-muted-fg" style="background:rgba(255,255,255,0.04)">Edge Runtime</span>
+                  <span class="px-2 py-0.5 text-[11px] rounded-md border border-border text-muted-fg" style="background:rgba(255,255,255,0.04)">Rust</span>
+                </div>
+              </div>
+              <span class="text-xs text-muted-dim whitespace-nowrap pt-0.5 font-mono">2022 — Now</span>
+            </div>
+          </div>
+
+          <!-- Role 2 -->
+          <div class="rv group border-b py-6 md:py-8 relative md:pl-12" style="border-color:rgba(255,255,255,0.07)">
+            <div class="hidden md:flex absolute left-0 top-8 w-[31px] h-[31px] rounded-full border bg-black items-center justify-center z-10 transition-colors" style="border-color:rgba(255,255,255,0.1)">
+              <div class="w-2 h-2 rounded-full" style="background:rgba(255,255,255,0.25)"></div>
+            </div>
+            <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-1 md:gap-4">
+              <div class="flex-1">
+                <h3 class="text-base font-semibold text-white tracking-tight">Software Engineer</h3>
+                <p class="mt-1 text-sm text-muted">Stripe — San Francisco, CA</p>
+                <p class="mt-3 text-sm text-muted-fg leading-relaxed">Built payment infrastructure serving 100M+ requests/day. Designed Checkout v3, improved API latency by 40%.</p>
+                <div class="mt-3 flex flex-wrap gap-1.5">
+                  <span class="px-2 py-0.5 text-[11px] rounded-md border border-border text-muted-fg" style="background:rgba(255,255,255,0.04)">Ruby</span>
+                  <span class="px-2 py-0.5 text-[11px] rounded-md border border-border text-muted-fg" style="background:rgba(255,255,255,0.04)">React</span>
+                  <span class="px-2 py-0.5 text-[11px] rounded-md border border-border text-muted-fg" style="background:rgba(255,255,255,0.04)">GraphQL</span>
+                </div>
+              </div>
+              <span class="text-xs text-muted-dim whitespace-nowrap pt-0.5 font-mono">2020 — 2022</span>
+            </div>
+          </div>
+
+          <!-- Role 3 -->
+          <div class="rv group border-b py-6 md:py-8 relative md:pl-12" style="border-color:rgba(255,255,255,0.07)">
+            <div class="hidden md:flex absolute left-0 top-8 w-[31px] h-[31px] rounded-full border bg-black items-center justify-center z-10 transition-colors" style="border-color:rgba(255,255,255,0.1)">
+              <div class="w-2 h-2 rounded-full" style="background:rgba(255,255,255,0.25)"></div>
+            </div>
+            <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-1 md:gap-4">
+              <div class="flex-1">
+                <h3 class="text-base font-semibold text-white tracking-tight">Frontend Engineer</h3>
+                <p class="mt-1 text-sm text-muted">Linear — Remote</p>
+                <p class="mt-3 text-sm text-muted-fg leading-relaxed">Core contributor to Linear. Implemented real-time collaboration, keyboard-first navigation, and the issue timeline view.</p>
+                <div class="mt-3 flex flex-wrap gap-1.5">
+                  <span class="px-2 py-0.5 text-[11px] rounded-md border border-border text-muted-fg" style="background:rgba(255,255,255,0.04)">TypeScript</span>
+                  <span class="px-2 py-0.5 text-[11px] rounded-md border border-border text-muted-fg" style="background:rgba(255,255,255,0.04)">React</span>
+                  <span class="px-2 py-0.5 text-[11px] rounded-md border border-border text-muted-fg" style="background:rgba(255,255,255,0.04)">WebSocket</span>
+                </div>
+              </div>
+              <span class="text-xs text-muted-dim whitespace-nowrap pt-0.5 font-mono">2019 — 2020</span>
+            </div>
+          </div>
+
+          <!-- Role 4 -->
+          <div class="rv group py-6 md:py-8 relative md:pl-12">
+            <div class="hidden md:flex absolute left-0 top-8 w-[31px] h-[31px] rounded-full border bg-black items-center justify-center z-10 transition-colors" style="border-color:rgba(255,255,255,0.1)">
+              <div class="w-2 h-2 rounded-full" style="background:rgba(255,255,255,0.25)"></div>
+            </div>
+            <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-1 md:gap-4">
+              <div class="flex-1">
+                <h3 class="text-base font-semibold text-white tracking-tight">Software Engineer Intern</h3>
+                <p class="mt-1 text-sm text-muted">GitHub — San Francisco, CA</p>
+                <p class="mt-3 text-sm text-muted-fg leading-relaxed">Contributed to GitHub Actions — built workflow syntax features and improved the Actions log viewer.</p>
+                <div class="mt-3 flex flex-wrap gap-1.5">
+                  <span class="px-2 py-0.5 text-[11px] rounded-md border border-border text-muted-fg" style="background:rgba(255,255,255,0.04)">Go</span>
+                  <span class="px-2 py-0.5 text-[11px] rounded-md border border-border text-muted-fg" style="background:rgba(255,255,255,0.04)">React</span>
+                </div>
+              </div>
+              <span class="text-xs text-muted-dim whitespace-nowrap pt-0.5 font-mono">Summer 2019</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="sep"></div>
+
+  <!-- Open Source -->
+  <section id="open-source" class="py-20 md:py-28">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="rv mb-12 md:mb-14">
+        <div class="flex items-center gap-2 mb-3">
+          <iconify-icon icon="lucide:git-branch" width="14" style="color:#0070f3"></iconify-icon>
+          <span class="text-xs font-medium tracking-wide uppercase" style="color:#0070f3">Open Source</span>
+        </div>
+        <h2 class="text-2xl md:text-3xl font-bold tracking-tight text-white">Contributions</h2>
+        <p class="mt-2 text-sm text-muted max-w-lg">Active contributor to the open-source ecosystem.</p>
+      </div>
+
+      <!-- Contribution Graph -->
+      <div class="rv mb-10 rounded-xl border border-border p-5 md:p-6 overflow-x-auto" style="background:rgba(255,255,255,0.02)">
+        <div class="flex items-center justify-between mb-4">
+          <span class="text-xs text-muted font-medium">1,247 contributions in the last year</span>
+          <span class="text-xs text-muted-dim">2024</span>
+        </div>
+        <div id="cgraph" class="flex gap-[3px]" style="min-width:700px"></div>
+        <div class="flex items-center justify-end gap-2 mt-3">
+          <span class="text-[10px] text-muted-dim">Less</span>
+          <div class="w-[10px] h-[10px] rounded-sm" style="background:rgba(255,255,255,0.04)"></div>
+          <div class="w-[10px] h-[10px] rounded-sm" style="background:rgba(0,112,243,0.2)"></div>
+          <div class="w-[10px] h-[10px] rounded-sm" style="background:rgba(0,112,243,0.4)"></div>
+          <div class="w-[10px] h-[10px] rounded-sm" style="background:rgba(0,112,243,0.65)"></div>
+          <div class="w-[10px] h-[10px] rounded-sm" style="background:#0070f3"></div>
+          <span class="text-[10px] text-muted-dim">More</span>
+        </div>
+      </div>
+
+      <!-- Repos -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-px rounded-xl overflow-hidden" style="background:rgba(255,255,255,0.07)">
+        <div class="rv bg-black p-5 md:p-6 group hover:bg-white/[0.02] transition-colors">
+          <div class="flex items-start justify-between mb-3">
+            <div class="w-8 h-8 rounded-lg border border-border flex items-center justify-center" style="background:rgba(255,255,255,0.04)">
+              <iconify-icon icon="lucide:terminal" width="15" style="color:rgba(255,255,255,0.4)"></iconify-icon>
+            </div>
+            <span class="flex items-center gap-1 text-xs text-muted-dim"><iconify-icon icon="lucide:star" width="12"></iconify-icon>3.2k</span>
+          </div>
+          <h3 class="text-sm font-semibold text-white">forge-cli</h3>
+          <p class="mt-1 text-xs text-muted-fg">Zero-config full-stack scaffolding</p>
+          <div class="mt-3 flex items-center gap-2"><span class="w-2 h-2 rounded-full" style="background:#dea584"></span><span class="text-[11px] text-muted-dim">Rust</span></div>
+        </div>
+        <div class="rv bg-black p-5 md:p-6 group hover:bg-white/[0.02] transition-colors">
+          <div class="flex items-start justify-between mb-3">
+            <div class="w-8 h-8 rounded-lg border border-border flex items-center justify-center" style="background:rgba(255,255,255,0.04)">
+              <iconify-icon icon="lucide:box" width="15" style="color:rgba(255,255,255,0.4)"></iconify-icon>
+            </div>
+            <span class="flex items-center gap-1 text-xs text-muted-dim"><iconify-icon icon="lucide:star" width="12"></iconify-icon>3.8k</span>
+          </div>
+          <h3 class="text-sm font-semibold text-white">prism-ui</h3>
+          <p class="mt-1 text-xs text-muted-fg">Headless accessible component library</p>
+          <div class="mt-3 flex items-center gap-2"><span class="w-2 h-2 rounded-full" style="background:#61dafb"></span><span class="text-[11px] text-muted-dim">TypeScript</span></div>
+        </div>
+        <div class="rv bg-black p-5 md:p-6 group hover:bg-white/[0.02] transition-colors">
+          <div class="flex items-start justify-between mb-3">
+            <div class="w-8 h-8 rounded-lg border border-border flex items-center justify-center" style="background:rgba(255,255,255,0.04)">
+              <iconify-icon icon="lucide:database" width="15" style="color:rgba(255,255,255,0.4)"></iconify-icon>
+            </div>
+            <span class="flex items-center gap-1 text-xs text-muted-dim"><iconify-icon icon="lucide:star" width="12"></iconify-icon>5.1k</span>
+          </div>
+          <h3 class="text-sm font-semibold text-white">edgestore</h3>
+          <p class="mt-1 text-xs text-muted-fg">Edge-native key-value store</p>
+          <div class="mt-3 flex items-center gap-2"><span class="w-2 h-2 rounded-full" style="background:#00ADD8"></span><span class="text-[11px] text-muted-dim">Go</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="sep"></div>
+
+  <!-- Tech Stack -->
+  <section id="stack" class="py-20 md:py-28">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="rv mb-12 md:mb-14">
+        <div class="flex items-center gap-2 mb-3">
+          <iconify-icon icon="lucide:code-2" width="14" style="color:#0070f3"></iconify-icon>
+          <span class="text-xs font-medium tracking-wide uppercase" style="color:#0070f3">Technologies</span>
+        </div>
+        <h2 class="text-2xl md:text-3xl font-bold tracking-tight text-white">Stack</h2>
+        <p class="mt-2 text-sm text-muted max-w-lg">Tools I use daily to ship high-quality software.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-px rounded-xl overflow-hidden" style="background:rgba(255,255,255,0.07)">
+        <!-- Languages -->
+        <div class="rv bg-black p-6 md:p-8" id="skillsSection">
+          <div class="flex items-center gap-2.5 mb-6">
+            <div class="w-8 h-8 rounded-lg flex items-center justify-center border" style="background:rgba(0,112,243,0.1);border-color:rgba(0,112,243,0.25)">
+              <iconify-icon icon="lucide:file-code-2" width="16" style="color:#0070f3"></iconify-icon>
+            </div>
+            <h3 class="text-sm font-semibold text-white">Languages</h3>
+          </div>
+          <div class="space-y-4">
+            <div><div class="flex items-center justify-between mb-1.5"><span class="text-sm text-muted">TypeScript</span><span class="text-xs text-muted-dim font-mono">95%</span></div><div class="w-full h-1.5 rounded-full overflow-hidden" style="background:rgba(255,255,255,0.05)"><div class="sbar h-full rounded-full" style="width:95%;background:rgba(255,255,255,0.4)"></div></div></div>
+            <div><div class="flex items-center justify-between mb-1.5"><span class="text-sm text-muted">Rust</span><span class="text-xs text-muted-dim font-mono">80%</span></div><div class="w-full h-1.5 rounded-full overflow-hidden" style="background:rgba(255,255,255,0.05)"><div class="sbar h-full rounded-full" style="width:80%;background:rgba(255,255,255,0.3)"></div></div></div>
+            <div><div class="flex items-center justify-between mb-1.5"><span class="text-sm text-muted">Go</span><span class="text-xs text-muted-dim font-mono">75%</span></div><div class="w-full h-1.5 rounded-full overflow-hidden" style="background:rgba(255,255,255,0.05)"><div class="sbar h-full rounded-full" style="width:75%;background:rgba(255,255,255,0.25)"></div></div></div>
+            <div><div class="flex items-center justify-between mb-1.5"><span class="text-sm text-muted">Python</span><span class="text-xs text-muted-dim font-mono">65%</span></div><div class="w-full h-1.5 rounded-full overflow-hidden" style="background:rgba(255,255,255,0.05)"><div class="sbar h-full rounded-full" style="width:65%;background:rgba(255,255,255,0.2)"></div></div></div>
+            <div><div class="flex items-center justify-between mb-1.5"><span class="text-sm text-muted">SQL</span><span class="text-xs text-muted-dim font-mono">70%</span></div><div class="w-full h-1.5 rounded-full overflow-hidden" style="background:rgba(255,255,255,0.05)"><div class="sbar h-full rounded-full" style="width:70%;background:rgba(255,255,255,0.25)"></div></div></div>
+          </div>
+        </div>
+
+        <!-- Frameworks -->
+        <div class="rv bg-black p-6 md:p-8">
+          <div class="flex items-center gap-2.5 mb-6">
+            <div class="w-8 h-8 rounded-lg flex items-center justify-center border" style="background:rgba(0,112,243,0.1);border-color:rgba(0,112,243,0.25)">
+              <iconify-icon icon="lucide:layout" width="16" style="color:#0070f3"></iconify-icon>
+            </div>
+            <h3 class="text-sm font-semibold text-white">Frameworks</h3>
+          </div>
+          <div class="flex flex-wrap gap-1.5">
+            <span class="px-2.5 py-1 text-xs text-muted rounded-md border border-border hover:bg-white/[0.06] hover:border-border-hover transition-all cursor-default" style="background:rgba(255,255,255,0.03)">Next.js</span>
+            <span class="px-2.5 py-1 text-xs text-muted rounded-md border border-border hover:bg-white/[0.06] hover:border-border-hover transition-all cursor-default" style="background:rgba(255,255,255,0.03)">React</span>
+            <span class="px-2.5 py-1 text-xs text-muted rounded-md border border-border hover:bg-white/[0.06] hover:border-border-hover transition-all cursor-default" style="background:rgba(255,255,255,0.03)">Node.js</span>
+            <span class="px-2.5 py-1 text-xs text-muted rounded-md border border-border hover:bg-white/[0.06] hover:border-border-hover transition-all cursor-default" style="background:rgba(255,255,255,0.03)">Hono</span>
+            <span class="px-2.5 py-1 text-xs text-muted rounded-md border border-border hover:bg-white/[0.06] hover:border-border-hover transition-all cursor-default" style="background:rgba(255,255,255,0.03)">Astro</span>
+            <span class="px-2.5 py-1 text-xs text-muted rounded-md border border-border hover:bg-white/[0.06] hover:border-border-hover transition-all cursor-default" style="background:rgba(255,255,255,0.03)">tRPC</span>
+            <span class="px-2.5 py-1 text-xs text-muted rounded-md border border-border hover:bg-white/[0.06] hover:border-border-hover transition-all cursor-default" style="background:rgba(255,255,255,0.03)">Prisma</span>
+            <span class="px-2.5 py-1 text-xs text-muted rounded-md border border-border hover:bg-white/[0.06] hover:border-border-hover transition-all cursor-default" style="background:rgba(255,255,255,0.03)">Drizzle</span>
+            <span class="px-2.5 py-1 text-xs text-muted rounded-md border border-border hover:bg-white/[0.06] hover:border-border-hover transition-all cursor-default" style="background:rgba(255,255,255,0.03)">Tailwind</span>
+            <span class="px-2.5 py-1 text-xs text-muted rounded-md border border-border hover:bg-white/[0.06] hover:border-border-hover transition-all cursor-default" style="background:rgba(255,255,255,0.03)">Framer Motion</span>
+            <span class="px-2.5 py-1 text-xs text-muted rounded-md border border-border hover:bg-white/[0.06] hover:border-border-hover transition-all cursor-default" style="background:rgba(255,255,255,0.03)">Zod</span>
+            <span class="px-2.5 py-1 text-xs text-muted rounded-md border border-border hover:bg-white/[0.06] hover:border-border-hover transition-all cursor-default" style="background:rgba(255,255,255,0.03)">Vitest</span>
+          </div>
+        </div>
+
+        <!-- Infra -->
+        <div class="rv bg-black p-6 md:p-8">
+          <div class="flex items-center gap-2.5 mb-6">
+            <div class="w-8 h-8 rounded-lg flex items-center justify-center border" style="background:rgba(0,112,243,0.1);border-color:rgba(0,112,243,0.25)">
+              <iconify-icon icon="lucide:server" width="16" style="color:#0070f3"></iconify-icon>
+            </div>
+            <h3 class="text-sm font-semibold text-white">Infrastructure</h3>
+          </div>
+          <div class="flex flex-wrap gap-1.5">
+            <span class="px-2.5 py-1 text-xs text-muted rounded-md border border-border hover:bg-white/[0.06] hover:border-border-hover transition-all cursor-default" style="background:rgba(255,255,255,0.03)">AWS</span>
+            <span class="px-2.5 py-1 text-xs text-muted rounded-md border border-border hover:bg-white/[0.06] hover:border-border-hover transition-all cursor-default" style="background:rgba(255,255,255,0.03)">Vercel</span>
+            <span class="px-2.5 py-1 text-xs text-muted rounded-md border border-border hover:bg-white/[0.06] hover:border-border-hover transition-all cursor-default" style="background:rgba(255,255,255,0.03)">Cloudflare</span>
+            <span class="px-2.5 py-1 text-xs text-muted rounded-md border border-border hover:bg-white/[0.06] hover:border-border-hover transition-all cursor-default" style="background:rgba(255,255,255,0.03)">Docker</span>
+            <span class="px-2.5 py-1 text-xs text-muted rounded-md border border-border hover:bg-white/[0.06] hover:border-border-hover transition-all cursor-default" style="background:rgba(255,255,255,0.03)">Kubernetes</span>
+            <span class="px-2.5 py-1 text-xs text-muted rounded-md border border-border hover:bg-white/[0.06] hover:border-border-hover transition-all cursor-default" style="background:rgba(255,255,255,0.03)">Terraform</span>
+            <span class="px-2.5 py-1 text-xs text-muted rounded-md border border-border hover:bg-white/[0.06] hover:border-border-hover transition-all cursor-default" style="background:rgba(255,255,255,0.03)">PostgreSQL</span>
+            <span class="px-2.5 py-1 text-xs text-muted rounded-md border border-border hover:bg-white/[0.06] hover:border-border-hover transition-all cursor-default" style="background:rgba(255,255,255,0.03)">Redis</span>
+            <span class="px-2.5 py-1 text-xs text-muted rounded-md border border-border hover:bg-white/[0.06] hover:border-border-hover transition-all cursor-default" style="background:rgba(255,255,255,0.03)">Upstash</span>
+            <span class="px-2.5 py-1 text-xs text-muted rounded-md border border-border hover:bg-white/[0.06] hover:border-border-hover transition-all cursor-default" style="background:rgba(255,255,255,0.03)">PlanetScale</span>
+            <span class="px-2.5 py-1 text-xs text-muted rounded-md border border-border hover:bg-white/[0.06] hover:border-border-hover transition-all cursor-default" style="background:rgba(255,255,255,0.03)">Turso</span>
+            <span class="px-2.5 py-1 text-xs text-muted rounded-md border border-border hover:bg-white/[0.06] hover:border-border-hover transition-all cursor-default" style="background:rgba(255,255,255,0.03)">Neon</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="sep"></div>
+
+  <!-- Testimonials -->
+  <section class="py-20 md:py-28">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="rv mb-12 md:mb-14">
+        <div class="flex items-center gap-2 mb-3">
+          <iconify-icon icon="lucide:message-square" width="14" style="color:#0070f3"></iconify-icon>
+          <span class="text-xs font-medium tracking-wide uppercase" style="color:#0070f3">Testimonials</span>
+        </div>
+        <h2 class="text-2xl md:text-3xl font-bold tracking-tight text-white">Kind Words</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-px rounded-xl overflow-hidden" style="background:rgba(255,255,255,0.07)">
+        <div class="rv tq relative bg-black p-6 md:p-8">
+          <p class="text-sm text-muted leading-relaxed relative z-10">"Alex has an extraordinary ability to simplify complex problems. His work on our edge runtime was transformative — 60% faster cold starts changed the game."</p>
+          <div class="mt-6 flex items-center gap-3">
+            <div class="w-9 h-9 rounded-full flex items-center justify-center text-xs font-semibold border border-white/10" style="background:linear-gradient(135deg,rgba(0,112,243,0.2),rgba(120,0,255,0.15))">LC</div>
+            <div><div class="text-sm font-medium text-white">Lee Chen</div><div class="text-xs text-muted-fg">VP Engineering, Vercel</div></div>
+          </div>
+        </div>
+        <div class="rv tq relative bg-black p-6 md:p-8">
+          <p class="text-sm text-muted leading-relaxed relative z-10">"One of the most talented engineers I've worked with. Alex doesn't just write code — he thinks deeply about architecture and developer experience."</p>
+          <div class="mt-6 flex items-center gap-3">
+            <div class="w-9 h-9 rounded-full flex items-center justify-center text-xs font-semibold border border-white/10" style="background:linear-gradient(135deg,rgba(0,200,83,0.2),rgba(0,150,200,0.15))">SK</div>
+            <div><div class="text-sm font-medium text-white">Sarah Kim</div><div class="text-xs text-muted-fg">Eng Manager, Stripe</div></div>
+          </div>
+        </div>
+        <div class="rv tq relative bg-black p-6 md:p-8">
+          <p class="text-sm text-muted leading-relaxed relative z-10">"Alex shipped the timeline feature in half the estimated time. His attention to detail made it feel like a native experience from day one."</p>
+          <div class="mt-6 flex items-center gap-3">
+            <div class="w-9 h-9 rounded-full flex items-center justify-center text-xs font-semibold border border-white/10" style="background:linear-gradient(135deg,rgba(255,149,0,0.2),rgba(255,60,60,0.15))">JT</div>
+            <div><div class="text-sm font-medium text-white">Jared Turner</div><div class="text-xs text-muted-fg">Co-founder, Linear</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="sep"></div>
+
+  <!-- Writing -->
+  <section id="writing" class="py-20 md:py-28">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="rv mb-12 md:mb-14 flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+        <div>
+          <div class="flex items-center gap-2 mb-3">
+            <iconify-icon icon="lucide:pen-line" width="14" style="color:#0070f3"></iconify-icon>
+            <span class="text-xs font-medium tracking-wide uppercase" style="color:#0070f3">Blog</span>
+          </div>
+          <h2 class="text-2xl md:text-3xl font-bold tracking-tight text-white">Writing</h2>
+          <p class="mt-2 text-sm text-muted max-w-lg">Thoughts on engineering, architecture, and building for the web.</p>
+        </div>
+        <a href="#" class="inline-flex items-center gap-2 text-sm text-muted hover:text-white transition-colors group shrink-0">All posts <iconify-icon icon="lucide:arrow-right" width="14" class="group-hover:translate-x-1 transition-transform"></iconify-icon></a>
+      </div>
+
+      <div class="max-w-3xl divide-y" style="border-color:rgba(255,255,255,0.07)">
+        <a href="#" class="rv group flex items-start justify-between gap-4 py-6 first:pt-0">
+          <div>
+            <h3 class="text-[15px] font-medium text-white tracking-tight">The Case for Server Components in 2025</h3>
+            <p class="mt-1 text-xs text-muted-fg leading-relaxed">Why RSC isn't just a React feature — it's a paradigm shift in how we think about data fetching and rendering.</p>
+            <div class="mt-2.5 flex items-center gap-3 text-[11px] text-muted-dim"><span>Jan 15, 2025</span><span>·</span><span>8 min read</span></div>
+          </div>
+          <iconify-icon icon="lucide:arrow-up-right" width="16" style="color:rgba(255,255,255,0.3)" class="transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:!text-white shrink-0 mt-1"></iconify-icon>
+        </a>
+        <a href="#" class="rv group flex items-start justify-between gap-4 py-6">
+          <div>
+            <h3 class="text-[15px] font-medium text-white tracking-tight">Building a 10ms Global Key-Value Store</h3>
+            <p class="mt-1 text-xs text-muted-fg leading-relaxed">Deep dive into EdgeStore architecture — quorum replication to connection pooling at the edge.</p>
+            <div class="mt-2.5 flex items-center gap-3 text-[11px] text-muted-dim"><span>Nov 3, 2024</span><span>·</span><span>12 min read</span></div>
+          </div>
+          <iconify-icon icon="lucide:arrow-up-right" width="16" style="color:rgba(255,255,255,0.3)" class="transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:!text-white shrink-0 mt-1"></iconify-icon>
+        </a>
+        <a href="#" class="rv group flex items-start justify-between gap-4 py-6">
+          <div>
+            <h3 class="text-[15px] font-medium text-white tracking-tight">Zero-Config Isn't Zero-Complexity</h3>
+            <p class="mt-1 text-xs text-muted-fg leading-relaxed">The hidden tradeoffs of abstraction layers, and when you should care about what's under the hood.</p>
+            <div class="mt-2.5 flex items-center gap-3 text-[11px] text-muted-dim"><span>Sep 18, 2024</span><span>·</span><span>6 min read</span></div>
+          </div>
+          <iconify-icon icon="lucide:arrow-up-right" width="16" style="color:rgba(255,255,255,0.3)" class="transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:!text-white shrink-0 mt-1"></iconify-icon>
+        </a>
+        <a href="#" class="rv group flex items-start justify-between gap-4 py-6">
+          <div>
+            <h3 class="text-[15px] font-medium text-white tracking-tight">TypeScript Rigor: Patterns from Production</h3>
+            <p class="mt-1 text-xs text-muted-fg leading-relaxed">Branded types, exhaustive checks, and patterns invaluable in large-scale TypeScript codebases.</p>
+            <div class="mt-2.5 flex items-center gap-3 text-[11px] text-muted-dim"><span>Jul 7, 2024</span><span>·</span><span>10 min read</span></div>
+          </div>
+          <iconify-icon icon="lucide:arrow-up-right" width="16" style="color:rgba(255,255,255,0.3)" class="transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:!text-white shrink-0 mt-1"></iconify-icon>
+        </a>
+        <a href="#" class="rv group flex items-start justify-between gap-4 py-6 last:pb-0">
+          <div>
+            <h3 class="text-[15px] font-medium text-white tracking-tight">Designing Developer Tools That Don't Suck</h3>
+            <p class="mt-1 text-xs text-muted-fg leading-relaxed">Why speed, feedback, and discoverability matter more than features when building for developers.</p>
+            <div class="mt-2.5 flex items-center gap-3 text-[11px] text-muted-dim"><span>May 22, 2024</span><span>·</span><span>7 min read</span></div>
+          </div>
+          <iconify-icon icon="lucide:arrow-up-right" width="16" style="color:rgba(255,255,255,0.3)" class="transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:!text-white shrink-0 mt-1"></iconify-icon>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <div class="sep"></div>
+
+  <!-- CTA -->
+  <section class="py-20 md:py-28 relative overflow-hidden">
+    <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+      <div class="w-[500px] h-[500px] rounded-full" style="background:rgba(0,112,243,0.04);filter:blur(100px)"></div>
+    </div>
+    <div class="max-w-6xl mx-auto px-6 relative z-10">
+      <div class="rv max-w-2xl mx-auto text-center">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border mb-6" style="background:rgba(0,112,243,0.1);border-color:rgba(0,112,243,0.25)">
+          <div class="sdot animate-pulse-dot" style="width:6px;height:6px"></div>
+          <span class="text-[11px] font-medium" style="color:#0070f3">Open to opportunities</span>
+        </div>
+        <h2 class="text-3xl md:text-5xl font-bold leading-[1.1] gt" style="letter-spacing:-0.03em">Let's build something<br>together.</h2>
+        <p class="mt-5 text-sm md:text-base text-muted leading-relaxed max-w-md mx-auto">I'm always interested in new projects, opportunities, and collaborations. Whether you have a question or just want to connect.</p>
+        <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
+          <button onclick="doCopyEmail()" class="inline-flex items-center gap-2 px-6 py-2.5 text-sm font-medium bg-white text-black rounded-lg hover:bg-white/90 transition-all active:scale-[0.97]" style="box-shadow:0 0 24px rgba(255,255,255,0.08)">
+            <iconify-icon icon="lucide:copy" width="14"></iconify-icon>Copy Email
+          </button>
+          <a href="https://twitter.com" target="_blank" class="inline-flex items-center gap-2 px-6 py-2.5 text-sm font-medium text-white rounded-lg border border-border hover:bg-white/5 transition-all active:scale-[0.97]" style="background:rgba(255,255,255,0.04)">
+            <iconify-icon icon="lucide:twitter" width="15"></iconify-icon>Twitter
+          </a>
+          <a href="https://linkedin.com" target="_blank" class="inline-flex items-center gap-2 px-6 py-2.5 text-sm font-medium text-white rounded-lg border border-border hover:bg-white/5 transition-all active:scale-[0.97]" style="background:rgba(255,255,255,0.04)">
+            <iconify-icon icon="lucide:linkedin" width="15"></iconify-icon>LinkedIn
+          </a>
+        </div>
+        <p class="mt-5 text-xs text-muted-dim font-mono">alex@alexchen.dev</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="sep"></div>
+
+  <!-- Footer -->
+  <footer class="py-10 md:py-14">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-4 mb-10">
+        <div class="md:col-span-2">
+          <div class="flex items-center gap-2.5 mb-3"><div class="vt vt-sm"></div><span class="text-sm font-semibold text-white tracking-tight">Alex Chen</span></div>
+          <p class="text-xs text-muted-fg leading-relaxed max-w-xs">Full-stack engineer building performant, beautiful software. Based in San Francisco.</p>
+          <div class="flex items-center gap-3 mt-4">
+            <a href="https://github.com" target="_blank" class="w-8 h-8 rounded-lg border border-border flex items-center justify-center text-muted-fg hover:text-white hover:border-border-hover transition-all" style="background:rgba(255,255,255,0.03)"><iconify-icon icon="lucide:github" width="15"></iconify-icon></a>
+            <a href="https://twitter.com" target="_blank" class="w-8 h-8 rounded-lg border border-border flex items-center justify-center text-muted-fg hover:text-white hover:border-border-hover transition-all" style="background:rgba(255,255,255,0.03)"><iconify-icon icon="lucide:twitter" width="15"></iconify-icon></a>
+            <a href="https://linkedin.com" target="_blank" class="w-8 h-8 rounded-lg border border-border flex items-center justify-center text-muted-fg hover:text-white hover:border-border-hover transition-all" style="background:rgba(255,255,255,0.03)"><iconify-icon icon="lucide:linkedin" width="15"></iconify-icon></a>
+            <a href="#" class="w-8 h-8 rounded-lg border border-border flex items-center justify-center text-muted-fg hover:text-white hover:border-border-hover transition-all" style="background:rgba(255,255,255,0.03)"><iconify-icon icon="lucide:rss" width="15"></iconify-icon></a>
+          </div>
+        </div>
+        <div>
+          <h4 class="text-xs font-semibold uppercase tracking-wider text-muted mb-3">Navigation</h4>
+          <div class="space-y-2">
+            <a href="#projects" class="block text-sm text-muted-fg hover:text-white transition-colors">Projects</a>
+            <a href="#experience" class="block text-sm text-muted-fg hover:text-white transition-colors">Experience</a>
+            <a href="#open-source" class="block text-sm text-muted-fg hover:text-white transition-colors">Open Source</a>
+            <a href="#writing" class="block text-sm text-muted-fg hover:text-white transition-colors">Writing</a>
+            <a href="#stack" class="block text-sm text-muted-fg hover:text-white transition-colors">Stack</a>
+          </div>
+        </div>
+        <div>
+          <h4 class="text-xs font-semibold uppercase tracking-wider text-muted mb-3">More</h4>
+          <div class="space-y-2">
+            <a href="https://github.com" target="_blank" class="block text-sm text-muted-fg hover:text-white transition-colors">GitHub</a>
+            <a href="#" class="block text-sm text-muted-fg hover:text-white transition-colors">RSS Feed</a>
+            <a href="#" class="block text-sm text-muted-fg hover:text-white transition-colors">Uses</a>
+            <button onclick="cmdOpen()" class="block text-sm text-muted-fg hover:text-white transition-colors text-left">Command Menu <kbd class="text-[10px] text-muted-dim bg-white/5 px-1 py-0.5 rounded border border-white/10 ml-1">⌘K</kbd></button>
+          </div>
+        </div>
+      </div>
+      <div class="sep mb-6"></div>
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-3">
+        <span class="text-xs text-muted-dim">© 2025 Alex Chen. All rights reserved.</span>
+        <div class="flex items-center gap-4 text-xs text-muted-dim">
+          <span>Built with Next.js</span><span>·</span><span>Deployed on Vercel</span><span>·</span><span class="flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full" style="background:#00c853"></span>All systems normal</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ── Toast ──
+    function toast(msg) {
+      var c = document.getElementById('toasts');
+      var t = document.createElement('div');
+      t.className = 'toast-item';
+      t.innerHTML = '<iconify-icon icon="lucide:check" width="14" style="color:#00c853;flex-shrink:0"></iconify-icon><span>' + msg + '</span>';
+      c.appendChild(t);
+      requestAnimationFrame(function() { requestAnimationFrame(function() { t.classList.add('in'); }); });
+      setTimeout(function() { t.classList.remove('in'); setTimeout(function() { t.remove(); }, 350); }, 2500);
+    }
+
+    // ── Copy Email ──
+    function doCopyEmail() {
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText('alex@alexchen.dev').then(function() { toast('Email copied to clipboard'); });
+      } else {
+        toast('alex@alexchen.dev');
+      }
+    }
+
+    // ── Mobile Menu ──
+    function mobToggle() {
+      var m = document.getElementById('mobMenu');
+      var i = document.getElementById('mobIcon');
+      var open = m.classList.toggle('hidden');
+      i.setAttribute('icon', open ? 'lucide:menu' : 'lucide:x');
+    }
+    function mobClose() {
+      document.getElementById('mobMenu').classList.add('hidden');
+      document.getElementById('mobIcon').setAttribute('icon', 'lucide:menu');
+    }
+
+    // ── Command Palette ──
+    function cmdOpen() {
+      document.getElementById('cmdBg').classList.add('on');
+      document.body.style.overflow = 'hidden';
+      setTimeout(function() { document.getElementById('cmdIn').focus(); }, 100);
+    }
+    function cmdClose() {
+      document.getElementById('cmdBg').classList.remove('on');
+      document.getElementById('cmdIn').value = '';
+      cmdFilter('');
+      document.body.style.overflow = '';
+    }
+    function cmdFilter(q) {
+      q = q.toLowerCase().trim();
+      var items = document.querySelectorAll('#cmdRes .cmd-it');
+      for (var i = 0; i < items.length; i++) {
+        var kw = (items[i].getAttribute('data-kw') || '') + ' ' + items[i].textContent.toLowerCase();
+        items[i].style.display = (!q || kw.indexOf(q) !== -1) ? '' : 'none';
+      }
+    }
+    document.addEventListener('keydown', function(e) {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') { e.preventDefault(); cmdOpen(); }
+      if (e.key === 'Escape') cmdClose();
+    });
+
+    // ── Project Filter ──
+    function projFilter(cat, btn) {
+      var tabs = document.querySelectorAll('.ptab');
+      for (var i = 0; i < tabs.length; i++) {
+        tabs[i].style.background = 'transparent';
+        tabs[i].style.color = '';
+        tabs[i].className = tabs[i].className.replace('text-white', 'text-muted');
+      }
+      btn.style.background = 'rgba(255,255,255,0.1)';
+      btn.style.color = '#fff';
+      btn.className = btn.className.replace('text-muted', 'text-white');
+
+      var cards = document.querySelectorAll('.pcard');
+      for (var j = 0; j < cards.length; j++) {
+        var show = cat === 'all' || cards[j].getAttribute('data-cat') === cat;
+        cards[j].style.display = show ? '' : 'none';
+        if (show) {
+          cards[j].style.opacity = '0';
+          cards[j].style.transform = 'translateY(8px)';
+          (function(el) {
+            requestAnimationFrame(function() {
+              el.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+              el.style.opacity = '1';
+              el.style.transform = 'translateY(0)';
+            });
+          })(cards[j]);
+        }
+      }
+    }
+
+    // ── Contribution Graph ──
+    (function() {
+      var g = document.getElementById('cgraph');
+      if (!g) return;
+      var levels = ['rgba(255,255,255,0.04)', 'rgba(0,112,243,0.2)', 'rgba(0,112,243,0.4)', 'rgba(0,112,243,0.65)', '#0070f3'];
+      for (var w = 0; w < 52; w++) {
+        var col = document.createElement('div');
+        col.style.display = 'flex';
+        col.style.flexDirection = 'column';
+        col.style.gap = '3px';
+        for (var d = 0; d < 7; d++) {
+          var cell = document.createElement('div');
+          cell.className = 'ccell';
+          var r = Math.random();
+          var lv = 0;
+          if (r > 0.7) lv = 1;
+          if (r > 0.82) lv = 2;
+          if (r > 0.9) lv = 3;
+          if (r > 0.96) lv = 4;
+          cell.style.background = levels[lv];
+          col.appendChild(cell);
+        }
+        g.appendChild(col);
+      }
+    })();
+
+    // ── Counter Animation ──
+    function animCounters() {
+      var els = document.querySelectorAll('[data-count]');
+      for (var i = 0; i < els.length; i++) {
+        (function(el) {
+          var target = parseInt(el.getAttribute('data-count'));
+          var start = performance.now();
+          var dur = 1500;
+          function tick(now) {
+            var p = Math.min((now - start) / dur, 1);
+            var e = 1 - Math.pow(1 - p, 4);
+            el.textContent = Math.floor(e * target);
+            if (p < 1) requestAnimationFrame(tick);
+            else el.textContent = target;
+          }
+          requestAnimationFrame(tick);
+        })(els[i]);
+      }
+    }
+
+    // ── Skill Bars ──
+    function animBars() {
+      var bars = document.querySelectorAll('.sbar');
+      for (var i = 0; i < bars.length; i++) {
+        (function(bar, delay) {
+          setTimeout(function() { bar.classList.add('go'); }, delay);
+        })(bars[i], i * 120);
+      }
+    }
+
+    // ── Scroll Reveal (CSS transition-based, not animation-based) ──
+    var rvObserver = new IntersectionObserver(function(entries) {
+      for (var i = 0; i < entries.length; i++) {
+        if (entries[i].isIntersecting) {
+          entries[i].target.classList.add('show');
+          rvObserver.unobserve(entries[i].target);
+          // Trigger child animations
+          if (entries[i].target.querySelector('[data-count]')) animCounters();
+          if (entries[i].target.querySelector('.sbar')) animBars();
+        }
+      }
+    }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+
+    var rvEls = document.querySelectorAll('.rv');
+    for (var i = 0; i < rvEls.length; i++) {
+      rvObserver.observe(rvEls[i]);
+    }
+
+    // ── FAILSAFE: show everything after 3s if observer failed ──
+    setTimeout(function() {
+      var hidden = document.querySelectorAll('.rv:not(.show)');
+      for (var i = 0; i < hidden.length; i++) {
+        hidden[i].classList.add('show');
+      }
+      // Also ensure counters and bars are triggered
+      var counts = document.querySelectorAll('[data-count]');
+      if (counts.length && counts[0].textContent === '0') animCounters();
+      var bars = document.querySelectorAll('.sbar:not(.go)');
+      if (bars.length) animBars();
+    }, 3000);
+
+    // ── Nav scroll behavior ──
+    var nav = document.getElementById('mainNav');
+    var lastY = 0;
+    window.addEventListener('scroll', function() {
+      var y = window.scrollY;
+      nav.style.borderColor = y > 20 ? 'rgba(255,255,255,0.08)' : 'rgba(255,255,255,0.04)';
+      if (y > lastY && y > 200) { nav.style.transform = 'translateY(-100%)'; }
+      else { nav.style.transform = 'translateY(0)'; }
+      nav.style.transition = 'transform 0.3s ease, border-color 0.3s ease';
+      lastY = y;
+    }, { passive: true });
+
+    // ── Active nav link ──
+    var secs = document.querySelectorAll('section[id]');
+    window.addEventListener('scroll', function() {
+      var cur = '';
+      for (var i = 0; i < secs.length; i++) {
+        if (window.scrollY >= secs[i].offsetTop - 120) cur = secs[i].id;
+      }
+      var links = document.querySelectorAll('.nl');
+      for (var j = 0; j < links.length; j++) {
+        if (links[j].getAttribute('href') === '#' + cur) {
+          links[j].style.color = '#fff';
+        } else {
+          links[j].style.color = '';
+        }
+      }
+    }, { passive: true });
+  </script>
+</body>
+</html>
