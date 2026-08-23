@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rupeeflo | 50+ Countries Section</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts: Bricolage Grotesque (display) + Inter (body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind config (only the parts this section needs) -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: {
+              900: '#011128', // page background (deep navy)
+              800: '#050f24',
+              700: '#09172e',
+              600: '#0b1628',
+            },
+            brand: {
+              50:  '#eef4ff',
+              100: '#c5eafc',
+              400: '#3b82f6',
+              500: '#2563eb', // primary blue
+              600: '#1d4ed8',
+              700: '#1e40af',
+            },
+            flame: {
+              400: '#fb923c',
+              500: '#f97316', // accent orange
+              600: '#ea580c',
+            },
+          },
+          fontFamily: {
+            display: ['"Bricolage Grotesque"', 'Inter', 'sans-serif'],
+            sans:    ['Inter', '"Bricolage Grotesque"', 'sans-serif'],
+          },
+          borderRadius: {
+            'pill': '9999px',
+          },
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom styles used by this section -->
+  <style>
+    html, body { background: #011128; color: #fff; font-family: 'Inter', sans-serif; }
+    body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+    /* Display font for big headings */
+    .font-display { font-family: 'Bricolage Grotesque', 'Inter', sans-serif; font-weight: 700; letter-spacing: -0.02em; }
+
+    /* Radial spotlight background */
+    .hero-spotlight {
+      background:
+        radial-gradient(ellipse 60% 50% at 50% 0%, rgba(37,99,235,0.25), transparent 60%),
+        radial-gradient(ellipse 80% 60% at 50% 30%, rgba(96,165,250,0.10), transparent 70%),
+        #011128;
+    }
+
+    /* Vertical letter-spaced eyebrow text */
+    .eyebrow-letters {
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-size: 0.7rem;
+      font-weight: 600;
+    }
+
+    /* Stretched letter headline effect */
+    .headline-stretch { letter-spacing: -0.01em; line-height: 1.02; }
+
+    /* Card hover lift */
+    .lift { transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease; }
+    .lift:hover { transform: translateY(-4px); }
+  </style>
+</head>
+
+<body class="bg-ink-900 text-white antialiased">
+
+  <!-- =================== 50+ COUNTRIES — 3D DOTTED GLOBE =================== -->
+  <section class="relative py-24 md:py-32 overflow-hidden">
+    <div class="absolute inset-0 hero-spotlight opacity-60 pointer-events-none"></div>
+    <!-- soft radial glow behind globe -->
+    <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[640px] h-[640px] rounded-full bg-brand-500/15 blur-[120px] pointer-events-none"></div>
+
+    <div class="relative max-w-7xl mx-auto px-4 text-center">
+      <p class="eyebrow-letters text-brand-100 mb-4">Built for NRIs across the world</p>
+      <h2 class="font-display text-4xl sm:text-5xl md:text-6xl text-white headline-stretch max-w-4xl mx-auto">
+        50+ countries. <span class="text-brand-400">One platform.</span>
+      </h2>
+      <p class="mt-6 text-white/65 text-lg max-w-2xl mx-auto leading-relaxed">
+        From London to New York to Dubai — a simpler way to manage your Indian finances from wherever you live. No unnecessary travel, paperwork runs, or branch visits.
+      </p>
+
+      <!-- Globe + flanking flags -->
+      <div class="mt-16 grid grid-cols-[auto_1fr_auto] items-center gap-4 sm:gap-8">
+
+        <!-- Left flag column -->
+        <ul class="hidden md:flex flex-col gap-2.5 w-[150px] lg:w-[180px]">
+          <!-- Each flag is a CSS-drawn rectangle (no external assets) -->
+          <li class="flex items-center gap-2.5 px-3 py-2 rounded-xl bg-white/[0.03] border border-white/10 lift hover:border-brand-500/40">
+            <span class="inline-block w-7 h-5 rounded-sm overflow-hidden flex-shrink-0 ring-1 ring-white/10" style="background:linear-gradient(135deg,#012169 0 33%,#fff 33% 66%,#c8102e 66%)"></span>
+            <span class="text-xs text-white/70">United Kingdom</span>
+          </li>
+          <li class="flex items-center gap-2.5 px-3 py-2 rounded-xl bg-white/[0.03] border border-white/10 lift hover:border-brand-500/40">
+            <span class="inline-block w-7 h-5 rounded-sm overflow-hidden flex-shrink-0 ring-1 ring-white/10" style="background:linear-gradient(to bottom,#b22234 0 25%,#fff 25% 50%,#b22234 50% 75%,#fff 75%)"><span class="block w-1/2 h-1/2 bg-#002868" style="background:#002868"></span></span>
+            <span class="text-xs text-white/70">United States</span>
+          </li>
+          <li class="flex items-center gap-2.5 px-3 py-2 rounded-xl bg-white/[0.03] border border-white/10 lift hover:border-brand-500/40">
+            <span class="inline-block w-7 h-5 rounded-sm overflow-hidden flex-shrink-0 ring-1 ring-white/10" style="background:linear-gradient(to bottom,#ff9933 0 33%,#fff 33% 66%,#138808 66%)"></span>
+            <span class="text-xs text-white/70">India</span>
+          </li>
+          <li class="flex items-center gap-2.5 px-3 py-2 rounded-xl bg-white/[0.03] border border-white/10 lift hover:border-brand-500/40">
+            <span class="inline-block w-7 h-5 rounded-sm overflow-hidden flex-shrink-0 ring-1 ring-white/10" style="background:linear-gradient(to bottom,#000 0 33%,#fff 33% 66%,#dd0000 66%)"></span>
+            <span class="text-xs text-white/70">Germany</span>
+          </li>
+          <li class="flex items-center gap-2.5 px-3 py-2 rounded-xl bg-white/[0.03] border border-white/10 lift hover:border-brand-500/40">
+            <span class="inline-block w-7 h-5 rounded-sm overflow-hidden flex-shrink-0 ring-1 ring-white/10" style="background:linear-gradient(to right,#0055a4 0 33%,#fff 33% 66%,#ef4135 66%)"></span>
+            <span class="text-xs text-white/70">France</span>
+          </li>
+          <li class="flex items-center gap-2.5 px-3 py-2 rounded-xl bg-white/[0.03] border border-white/10 lift hover:border-brand-500/40">
+            <span class="inline-block w-7 h-5 rounded-sm overflow-hidden flex-shrink-0 ring-1 ring-white/10" style="background:linear-gradient(to right,#006847 0 33%,#fff 33% 66%,#ce1126 66%)"></span>
+            <span class="text-xs text-white/70">Mexico</span>
+          </li>
+        </ul>
+
+        <!-- Globe canvas -->
+        <div class="relative aspect-square w-full max-w-[560px] mx-auto">
+          <canvas id="globe-canvas" class="w-full h-full"></canvas>
+          <!-- subtle outer atmospheric ring -->
+          <div class="absolute inset-0 rounded-full pointer-events-none" style="box-shadow: 0 0 80px 4px rgba(37,99,235,0.18) inset, 0 0 120px 8px rgba(96,165,250,0.10);"></div>
+        </div>
+
+        <!-- Right flag column -->
+        <ul class="hidden md:flex flex-col gap-2.5 w-[150px] lg:w-[180px]">
+          <li class="flex items-center gap-2.5 px-3 py-2 rounded-xl bg-white/[0.03] border border-white/10 lift hover:border-flame-500/40">
+            <span class="inline-block w-7 h-5 rounded-sm overflow-hidden flex-shrink-0 ring-1 ring-white/10" style="background:linear-gradient(to bottom,#ce1126 0 33%,#fff 33% 66%,#000 66%)"></span>
+            <span class="text-xs text-white/70">UAE</span>
+          </li>
+          <li class="flex items-center gap-2.5 px-3 py-2 rounded-xl bg-white/[0.03] border border-white/10 lift hover:border-flame-500/40">
+            <span class="inline-block w-7 h-5 rounded-sm overflow-hidden flex-shrink-0 ring-1 ring-white/10" style="background:linear-gradient(to bottom,#fff 0 33%,#0033a0 33% 66%,#d52b1e 66%)"></span>
+            <span class="text-xs text-white/70">Russia</span>
+          </li>
+          <li class="flex items-center gap-2.5 px-3 py-2 rounded-xl bg-white/[0.03] border border-white/10 lift hover:border-flame-500/40">
+            <span class="inline-block w-7 h-5 rounded-sm overflow-hidden flex-shrink-0 ring-1 ring-white/10" style="background:linear-gradient(to bottom,#fff 0 33%,#0033a0 33% 66%,#d52b1e 66%);"></span>
+            <span class="text-xs text-white/70">Netherlands</span>
+          </li>
+          <li class="flex items-center gap-2.5 px-3 py-2 rounded-xl bg-white/[0.03] border border-white/10 lift hover:border-flame-500/40">
+            <span class="inline-block w-7 h-5 rounded-sm overflow-hidden flex-shrink-0 ring-1 ring-white/10" style="background:linear-gradient(to right,#006847 0 50%,#ff1616 50%)"></span>
+            <span class="text-xs text-white/70">Portugal</span>
+          </li>
+          <li class="flex items-center gap-2.5 px-3 py-2 rounded-xl bg-white/[0.03] border border-white/10 lift hover:border-flame-500/40">
+            <span class="inline-block w-7 h-5 rounded-sm overflow-hidden flex-shrink-0 ring-1 ring-white/10" style="background:linear-gradient(to right,#009e49 0 50%,#ef7d00 50%)"></span>
+            <span class="text-xs text-white/70">Ireland</span>
+          </li>
+          <li class="flex items-center gap-2.5 px-3 py-2 rounded-xl bg-white/[0.03] border border-white/10 lift hover:border-flame-500/40">
+            <span class="inline-block w-7 h-5 rounded-sm overflow-hidden flex-shrink-0 ring-1 ring-white/10" style="background:linear-gradient(to bottom,#ff0000 0 50%,#fff 50%)"></span>
+            <span class="text-xs text-white/70">Indonesia</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- mobile: visible simple list of regions -->
+      <div class="md:hidden mt-10 flex flex-wrap justify-center gap-2 text-xs text-white/60">
+        <span class="px-3 py-1.5 rounded-pill bg-white/5 border border-white/10">🇬🇧 UK</span>
+        <span class="px-3 py-1.5 rounded-pill bg-white/5 border border-white/10">🇺🇸 USA</span>
+        <span class="px-3 py-1.5 rounded-pill bg-white/5 border border-white/10">🇦🇪 UAE</span>
+        <span class="px-3 py-1.5 rounded-pill bg-white/5 border border-white/10">🇮🇳 India</span>
+        <span class="px-3 py-1.5 rounded-pill bg-white/5 border border-white/10">🇸🇬 Singapore</span>
+        <span class="px-3 py-1.5 rounded-pill bg-white/5 border border-white/10">🇦🇺 Australia</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== 3D DOTTED GLOBE (canvas) =================== -->
+  <script>
+  (function () {
+    const canvas = document.getElementById('globe-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+
+    // ---------- Landmask (base64 PNG, 180×90, white = land) ----------
+    const LANDMASK_B64 =
+      "iVBORw0KGgoAAAANSUhEUgAAALQAAABaCAAAAAA06CMcAAACO0lEQVR42u2a0XbDIAxDIw7//8va49YupGBLkGzw1p4ELkJ2DMlx7LZbsyF6I6W9TYGmXAQ3NOd2ifwIVCvB8SlWc/+W/qpxBF5oTrWnqYkTNgaiNhCpDG6e/CsaoOrN2rAEddmwuJIoT1yn0qYenkZb8oE2Pi4MrV3H+vOnbSix9yBeQ6vQaIY6BfmCVmbJw2UOM65THpLM9nIU6dIA/sLqfZCSVW9F1Z8rw/LrFBqlKjubtbkqcSIsm1ex6ixh5gA0FDycrTTuynxpDySYAWMgIqQUghqDktgpnkCidQEQAUDYypGiHYNKa2WWpcESmCly88EM6FFb+g/PyqCpPkcS/VJXddh+nBNON5IYWaDay8pO5LA5BnI4chaL7Itxcikub4U25clPbM2laYN6JFLfzgTgCcROAWles/QTkaepHENSw+4r5ne3SF4uqD04LEdgdeQFk+q53cA2VXlUvXPulDtQMOXFRrKmVNXTZ2LHHh74rIduEyArHTAlENXPaSyFHorbJjVvAZ3eHRXrokOyFnyC0r/sQxs0jI5nHhrzZ8aZ9rjbofrCOVQzzsseGyLsIiHsK85wK3v0VW2dzKcCIA/NgMzK96nIQve+FMh9F/nyLQ2qPx/Erfx+UkbfuYf6CAXqlAc/tih7cB6zIeVhulvuvAkwiMW15kgpvYw5Vk9jsT1KWGQcu/39Rj6P+bsmWerRsS8dwJGrpVjxvApG7voubeWUkZL1Ee2RtceG3tAbekP/I+hHti+ACXXgrtvrewAAAABJRU5ErkJggg==";
+
+    // ---------- Configuration ----------
+    const DOT_COLOR       = '#3b82f6'; // light blue dots (matches brand-400)
+    const DOT_COLOR_BACK  = '#1e3a5f'; // darker dots on far side of globe
+    const PIN_LOCATIONS = [
+      // [name, lat, lon, color]
+      ['London',     51.5,  -0.1, '#60a5fa'],
+      ['New York',   40.7, -74.0, '#f97316'],
+      ['Dubai',      25.2,  55.3, '#34d399'],
+      ['Singapore',   1.3, 103.8, '#a78bfa'],
+      ['Sydney',    -33.9, 151.2, '#fbbf24'],
+      ['San Francisco', 37.8, -122.4, '#f472b6'],
+      ['Frankfurt',  50.1,   8.7, '#22d3ee'],
+      ['Mumbai',     19.1,  72.9, '#facc15'],
+    ];
+
+    // ---------- State ----------
+    let landData = null;       // Uint8Array, 1 = land
+    let landW = 0, landH = 0;
+    let dots = [];             // precomputed sphere dot positions (lat, lon)
+    let rotation = 0;          // current rotation around Y axis (radians)
+    let tilt = -0.35;          // slight downward tilt
+    let dragging = false;
+    let lastX = 0, lastY = 0;
+    let dragVelX = 0;
+    let autoSpin = 0.0018;     // radians per frame
+    let dpr = Math.min(window.devicePixelRatio || 1, 2);
+    let W = 0, H = 0, R = 0;   // canvas size + globe radius
+    let reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // ---------- Load landmask ----------
+    const lmImg = new Image();
+    lmImg.onload = () => {
+      landW = lmImg.width;
+      landH = lmImg.height;
+      const tmp = document.createElement('canvas');
+      tmp.width = landW; tmp.height = landH;
+      const tctx = tmp.getContext('2d');
+      tctx.drawImage(lmImg, 0, 0);
+      const data = tctx.getImageData(0, 0, landW, landH).data;
+      landData = new Uint8Array(landW * landH);
+      for (let i = 0; i < landW * landH; i++) {
+        // White pixel = land (R+G+B > 360)
+        landData[i] = (data[i*4] + data[i*4+1] + data[i*4+2]) > 360 ? 1 : 0;
+      }
+      buildDots();
+      startLoop();
+    };
+    lmImg.src = 'data:image/png;base64,' + LANDMASK_B64;
+
+    // ---------- Build dot grid on sphere ----------
+    function buildDots() {
+      dots = [];
+      // Use a fibonacci sphere for even dot distribution
+      const STEP_LAT = 2; // degrees
+      for (let lat = -90; lat <= 90; lat += STEP_LAT) {
+        const latRad = lat * Math.PI / 180;
+        // circumference at this latitude shrinks toward the poles
+        const circumference = 360 * Math.cos(latRad);
+        const stepLon = Math.max(STEP_LAT, 360 / Math.max(1, Math.round(circumference / STEP_LAT)));
+        for (let lon = -180; lon < 180; lon += stepLon) {
+          // sample landmask at (lon, lat)
+          const u = ((lon + 180) / 360) * landW | 0;
+          const v = ((90 - lat) / 180) * landH | 0;
+          const idx = v * landW + u;
+          if (landData && landData[idx]) {
+            dots.push({ lat: lat * Math.PI / 180, lon: lon * Math.PI / 180 });
+          }
+        }
+      }
+    }
+
+    // ---------- Resize handling ----------
+    function resize() {
+      const rect = canvas.getBoundingClientRect();
+      W = Math.max(1, rect.width);
+      H = Math.max(1, rect.height);
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = W * dpr;
+      canvas.height = H * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      R = Math.min(W, H) * 0.42;
+    }
+    window.addEventListener('resize', resize);
+
+    // ---------- Project a 3D point on sphere to 2D canvas ----------
+    // lat: -PI/2..PI/2, lon: -PI..PI
+    // Apply tilt around X axis, then rotation around Y axis.
+    function project(lat, lon, rot, tiltAngle) {
+      // sphere coords (radius 1)
+      const cl = Math.cos(lat);
+      let x = cl * Math.cos(lon + rot);
+      let y = Math.sin(lat);
+      let z = cl * Math.sin(lon + rot);
+      // tilt around X axis (so we see northern hemisphere)
+      const ct = Math.cos(tiltAngle), st = Math.sin(tiltAngle);
+      const y2 = y * ct - z * st;
+      const z2 = y * st + z * ct;
+      return { x: x, y: y2, z: z2 };
+    }
+
+    // ---------- Render loop ----------
+    function render() {
+      ctx.clearRect(0, 0, W, H);
+      const cx = W / 2, cy = H / 2;
+
+      // 1. Soft inner atmospheric glow (radial gradient behind globe)
+      const grad = ctx.createRadialGradient(cx, cy, R * 0.6, cx, cy, R * 1.25);
+      grad.addColorStop(0, 'rgba(37,99,235,0.18)');
+      grad.addColorStop(1, 'rgba(37,99,235,0)');
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.arc(cx, cy, R * 1.25, 0, Math.PI * 2);
+      ctx.fill();
+
+      // 2. Dots — sort back-to-front for proper depth
+      const projected = dots.map(d => {
+        const p = project(d.lat, d.lon, rotation, tilt);
+        return { ...d, px: cx + p.x * R, py: cy + p.y * R, pz: p.z };
+      });
+      projected.sort((a, b) => a.pz - b.pz);
+
+      // 3. Draw dots
+      for (const d of projected) {
+        // visibility: front of sphere (z > -0.05) is visible
+        if (d.pz < -0.15) continue;
+        const depth = (d.pz + 1) / 2; // 0 (back) .. 1 (front)
+        // dot radius & opacity scale with depth
+        const size = 0.9 + depth * 1.6;
+        const alpha = 0.25 + depth * 0.75;
+        // color: lighter on front, darker on back
+        const color = d.pz > 0 ? DOT_COLOR : DOT_COLOR_BACK;
+        ctx.beginPath();
+        ctx.fillStyle = color;
+        ctx.globalAlpha = alpha;
+        ctx.arc(d.px, d.py, size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+
+      // 4. Draw location pins
+      for (const [name, lat, lon, color] of PIN_LOCATIONS) {
+        const p = project(lat * Math.PI / 180, lon * Math.PI / 180, rotation, tilt);
+        if (p.z < -0.05) continue; // hidden on back of globe
+        const px = cx + p.x * R;
+        const py = cy + p.y * R;
+        const depth = (p.z + 1) / 2;
+        const r = 3 + depth * 2;
+
+        // outer glow
+        const g2 = ctx.createRadialGradient(px, py, 0, px, py, r * 5);
+        g2.addColorStop(0, color);
+        g2.addColorStop(0.3, color.replace(')', ',0.6)').replace('rgb', 'rgba'));
+        // fallback if hex color
+        g2.addColorStop(0, hexToRgba(color, 0.9));
+        g2.addColorStop(0.4, hexToRgba(color, 0.4));
+        g2.addColorStop(1, hexToRgba(color, 0));
+        ctx.fillStyle = g2;
+        ctx.beginPath();
+        ctx.arc(px, py, r * 5, 0, Math.PI * 2);
+        ctx.fill();
+
+        // inner solid pin
+        ctx.fillStyle = color;
+        ctx.beginPath();
+        ctx.arc(px, py, r, 0, Math.PI * 2);
+        ctx.fill();
+
+        // white core
+        ctx.fillStyle = '#fff';
+        ctx.beginPath();
+        ctx.arc(px, py, Math.max(0.8, r * 0.4), 0, Math.PI * 2);
+        ctx.fill();
+
+        // label (small text to the upper-right of pin)
+        if (depth > 0.4) {
+          ctx.font = '10px Inter, sans-serif';
+          ctx.fillStyle = 'rgba(255,255,255,0.85)';
+          ctx.textAlign = 'left';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(name, px + r + 4, py - r - 2);
+        }
+      }
+
+      // 5. Subtle rim light on globe edge
+      ctx.strokeStyle = 'rgba(96,165,250,0.25)';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.arc(cx, cy, R, 0, Math.PI * 2);
+      ctx.stroke();
+    }
+
+    // ---------- helpers ----------
+    function hexToRgba(hex, a) {
+      // Support both #rrggbb and already rgba()
+      if (hex.startsWith('rgba')) return hex;
+      if (hex.startsWith('rgb(')) return hex.replace('rgb(', 'rgba(').replace(')', ',' + a + ')');
+      let h = hex.replace('#', '');
+      if (h.length === 3) h = h.split('').map(c => c + c).join('');
+      const r = parseInt(h.substr(0, 2), 16);
+      const g = parseInt(h.substr(2, 2), 16);
+      const b = parseInt(h.substr(4, 2), 16);
+      return 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')';
+    }
+
+    // ---------- Animation loop ----------
+    function loop() {
+      if (!dragging) {
+        rotation += autoSpin;
+      } else {
+        rotation += dragVelX;
+        dragVelX *= 0.92;
+      }
+      render();
+      requestAnimationFrame(loop);
+    }
+    function startLoop() {
+      resize();
+      requestAnimationFrame(loop);
+    }
+
+    // ---------- Drag interaction ----------
+    canvas.addEventListener('pointerdown', (e) => {
+      dragging = true;
+      lastX = e.clientX;
+      lastY = e.clientY;
+      canvas.setPointerCapture(e.pointerId);
+      canvas.style.cursor = 'grabbing';
+    });
+    canvas.addEventListener('pointermove', (e) => {
+      if (!dragging) return;
+      const dx = e.clientX - lastX;
+      const dy = e.clientY - lastY;
+      lastX = e.clientX;
+      lastY = e.clientY;
+      rotation += dx * 0.005;
+      tilt = Math.max(-1.2, Math.min(1.2, tilt + dy * 0.005));
+      dragVelX = dx * 0.005;
+    });
+    const endDrag = (e) => {
+      if (!dragging) return;
+      dragging = false;
+      canvas.style.cursor = 'grab';
+      try { canvas.releasePointerCapture(e.pointerId); } catch (_) {}
+    };
+    canvas.addEventListener('pointerup', endDrag);
+    canvas.addEventListener('pointercancel', endDrag);
+    canvas.addEventListener('pointerleave', endDrag);
+    canvas.style.cursor = 'grab';
+
+    // Pause spin when offscreen (perf)
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        const visible = entries[0] && entries[0].isIntersecting;
+        autoSpin = visible && !reducedMotion ? 0.0018 : 0;
+      }, { threshold: 0.05 });
+      io.observe(canvas);
+    }
+  })();
+  </script>
+</body>
+</html>

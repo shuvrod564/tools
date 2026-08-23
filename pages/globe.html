@@ -1,0 +1,1419 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rupeeflo | Everything NRIs Need to Bank &amp; Invest in India, Remotely</title>
+  <meta name="description" content="Rupeeflo is a one-stop platform for NRIs to open Bank & DEMAT accounts, invest in India, and manage taxes—all without visiting India. Fast, digital & compliant." />
+
+  <!-- Favicon (inline SVG: ₹ on blue rounded square) -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232563EB'/%3E%3Ctext x='32' y='44' font-family='Inter,sans-serif' font-size='40' font-weight='700' fill='white' text-anchor='middle'%3E%E2%82%B9%3C/text%3E%3C/svg%3E" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts: Bricolage Grotesque (display) + Inter (body) + Manrope (alt) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Inter:wght@300;400;500;600;700;800&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind config -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            // Brand palette mirroring rupeeflo.com
+            ink: {
+              900: '#011128', // page background (deep navy)
+              800: '#050f24',
+              700: '#09172e',
+              600: '#0b1628',
+              500: '#131415',
+              400: '#1c1e20',
+            },
+            brand: {
+              50:  '#eef4ff',
+              100: '#c5eafc',
+              400: '#3b82f6',
+              500: '#2563eb', // primary blue
+              600: '#1d4ed8',
+              700: '#1e40af',
+            },
+            flame: {
+              400: '#fb923c',
+              500: '#f97316', // news / accent orange
+              600: '#ea580c',
+            },
+            cream: '#fafaf7',
+            chalk: '#f3f3f1',
+            mist: '#94a3b8',
+            slatey: '#475569',
+          },
+          fontFamily: {
+            display: ['"Bricolage Grotesque"', 'Inter', 'sans-serif'],
+            sans:    ['Inter', '"Bricolage Grotesque"', 'sans-serif'],
+            alt:     ['Manrope', 'Inter', 'sans-serif'],
+          },
+          borderRadius: {
+            '4xl': '2rem',
+            '5xl': '2.5rem',
+            'pill': '9999px',
+          },
+          boxShadow: {
+            'nav': '0 10px 40px -10px rgba(0,0,0,0.45)',
+            'cta': '0 8px 24px -6px rgba(37,99,235,0.45)',
+            'glow': '0 0 80px -10px rgba(37,99,235,0.35)',
+          },
+          animation: {
+            'marquee': 'marquee 28s linear infinite',
+            'marquee-slow': 'marquee 60s linear infinite',
+            'float': 'float 6s ease-in-out infinite',
+            'pulse-slow': 'pulseSlow 4s ease-in-out infinite',
+          },
+          keyframes: {
+            marquee: {
+              '0%': { transform: 'translateX(0)' },
+              '100%': { transform: 'translateX(-50%)' },
+            },
+            float: {
+              '0%,100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-12px)' },
+            },
+            pulseSlow: {
+              '0%,100%': { opacity: '0.6' },
+              '50%': { opacity: '1' },
+            },
+          },
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom styles: scrollbar, grid background, gradient helpers, etc. -->
+  <style>
+    html, body { background: #011128; color: #fff; font-family: 'Inter', sans-serif; }
+    body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+    ::selection { background: #2563eb; color: #fff; }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar { width: 10px; height: 10px; }
+    ::-webkit-scrollbar-track { background: #011128; }
+    ::-webkit-scrollbar-thumb { background: #1c2a44; border-radius: 6px; }
+    ::-webkit-scrollbar-thumb:hover { background: #2b3d5e; }
+
+    /* Display font for big headings */
+    .font-display { font-family: 'Bricolage Grotesque', 'Inter', sans-serif; font-weight: 700; letter-spacing: -0.02em; }
+
+    /* Radial spotlight background used in hero */
+    .hero-spotlight {
+      background:
+        radial-gradient(ellipse 60% 50% at 50% 0%, rgba(37,99,235,0.25), transparent 60%),
+        radial-gradient(ellipse 80% 60% at 50% 30%, rgba(96,165,250,0.10), transparent 70%),
+        #011128;
+    }
+
+    /* Subtle dotted grid background */
+    .bg-grid {
+      background-image: radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1px);
+      background-size: 28px 28px;
+    }
+
+    /* Vertical letter-spaced eyebrow text */
+    .eyebrow-letters {
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-size: 0.7rem;
+      font-weight: 600;
+    }
+
+    /* Stretched letter headline effect (mimics framer's wide-spaced hero) */
+    .headline-stretch { letter-spacing: -0.01em; line-height: 1.02; }
+
+    /* Pill button base */
+    .btn-pill {
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+      padding: 0.7rem 1.6rem; border-radius: 9999px; font-weight: 600;
+      transition: all .25s ease; cursor: pointer; white-space: nowrap;
+    }
+    .btn-pill:hover { transform: translateY(-1px); }
+
+    /* Card hover lift */
+    .lift { transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease; }
+    .lift:hover { transform: translateY(-4px); }
+
+    /* Hide scrollbar for marquee track */
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+    /* Animated gradient border for hero CTA */
+    .cta-glow {
+      position: relative; isolation: isolate;
+    }
+    .cta-glow::before {
+      content: ''; position: absolute; inset: -2px; z-index: -1;
+      border-radius: inherit;
+      background: conic-gradient(from 0deg, #2563eb, #60a5fa, #f97316, #2563eb);
+      filter: blur(8px); opacity: .55;
+      animation: spin 8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* FAQ accordion transitions */
+    .faq-answer { max-height: 0; overflow: hidden; transition: max-height .35s ease, padding .35s ease; }
+    .faq-answer.open { max-height: 600px; padding-top: 0.75rem; }
+    .faq-icon { transition: transform .3s ease; }
+    .faq-icon.open { transform: rotate(45deg); }
+
+    /* Section divider dot */
+    .dot-sep::before {
+      content: ''; display: inline-block; width: 6px; height: 6px; border-radius: 9999px;
+      background: #f97316; margin: 0 0.75rem; vertical-align: middle;
+    }
+  </style>
+</head>
+
+<body class="bg-ink-900 text-white antialiased">
+
+  <!-- =================== ANNOUNCEMENT BAR =================== -->
+  <div class="w-full bg-ink-700/80 border-b border-white/5 text-center text-sm py-2.5 text-white/80">
+    <div class="max-w-7xl mx-auto px-4 flex items-center justify-center gap-3 flex-wrap">
+      <span class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-pill bg-flame-500 text-white text-xs font-semibold">
+        <span class="w-1.5 h-1.5 bg-white rounded-full animate-pulse"></span> News
+      </span>
+      <span class="text-white/85">
+        Business Today: How Rupeeflo is cutting NRI onboarding from 60 days to 24 hours
+      </span>
+      <a href="#" class="inline-flex items-center gap-1 text-brand-100 hover:text-white transition-colors">
+        <span class="underline-offset-2 hover:underline">Read article</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <!-- =================== FLOATING NAVBAR =================== -->
+  <header class="sticky top-3 z-50 px-4">
+    <nav class="max-w-7xl mx-auto bg-ink-800/90 backdrop-blur-xl border border-white/10 rounded-pill shadow-nav">
+      <div class="flex items-center justify-between px-5 py-3">
+        <!-- Logo -->
+        <a href="#" class="flex items-center gap-2.5 group">
+          <span class="w-9 h-9 rounded-xl bg-brand-500 grid place-items-center text-white text-xl font-bold shadow-cta group-hover:scale-105 transition-transform">₹</span>
+          <span class="text-xl font-bold tracking-tight text-white">Rupeeflo</span>
+        </a>
+
+        <!-- Desktop nav links -->
+        <ul class="hidden lg:flex items-center gap-1 text-sm">
+          <li><a href="#products" class="px-3.5 py-2 rounded-pill hover:bg-white/5 text-white/80 hover:text-white transition-colors flex items-center gap-1">Products
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+          </a></li>
+          <li><a href="#about" class="px-3.5 py-2 rounded-pill hover:bg-white/5 text-white/80 hover:text-white transition-colors">About us</a></li>
+          <li><a href="#institutions" class="px-3.5 py-2 rounded-pill hover:bg-white/5 text-white/80 hover:text-white transition-colors">For Institutions</a></li>
+          <li><a href="#collaboration" class="px-3.5 py-2 rounded-pill hover:bg-white/5 text-white/80 hover:text-white transition-colors">For Collaboration</a></li>
+          <li><a href="#resources" class="px-3.5 py-2 rounded-pill hover:bg-white/5 text-white/80 hover:text-white transition-colors flex items-center gap-1">Resources
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+          </a></li>
+        </ul>
+
+        <!-- Right actions -->
+        <div class="flex items-center gap-2">
+          <a href="#" class="hidden sm:inline-flex btn-pill border border-white/15 text-white/90 hover:bg-white/5 text-sm">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.09 1.85-2.38 5.98.47 7.13-.57 1.5-1.31 2.99-2.54 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
+            Download App
+          </a>
+          <a href="#get-started" class="btn-pill bg-brand-500 hover:bg-brand-600 text-white text-sm shadow-cta">Get Started</a>
+
+          <!-- Mobile menu toggle -->
+          <button id="menu-toggle" class="lg:hidden p-2 rounded-pill hover:bg-white/5" aria-label="Menu">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile dropdown -->
+      <div id="mobile-menu" class="lg:hidden hidden border-t border-white/10 px-5 py-4">
+        <ul class="flex flex-col gap-1 text-sm">
+          <li><a href="#products" class="block px-3 py-2.5 rounded-xl hover:bg-white/5">Products</a></li>
+          <li><a href="#about" class="block px-3 py-2.5 rounded-xl hover:bg-white/5">About us</a></li>
+          <li><a href="#institutions" class="block px-3 py-2.5 rounded-xl hover:bg-white/5">For Institutions</a></li>
+          <li><a href="#collaboration" class="block px-3 py-2.5 rounded-xl hover:bg-white/5">For Collaboration</a></li>
+          <li><a href="#resources" class="block px-3 py-2.5 rounded-xl hover:bg-white/5">Resources</a></li>
+          <li><a href="#" class="mt-2 btn-pill border border-white/15 text-white/90 justify-center w-full">Download App</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <!-- =================== HERO =================== -->
+  <section class="hero-spotlight relative overflow-hidden">
+    <!-- decorative grid backdrop -->
+    <div class="absolute inset-0 bg-grid opacity-50 pointer-events-none"></div>
+
+    <div class="relative max-w-7xl mx-auto px-4 pt-20 pb-28 md:pt-28 md:pb-36 text-center">
+      <div class="inline-flex items-center gap-2 px-3 py-1.5 mb-7 rounded-pill bg-white/5 border border-white/10 text-white/70 text-xs">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse-slow"></span>
+        Trusted by 14,800+ NRIs across 50+ countries
+      </div>
+
+      <h1 class="font-display headline-stretch text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-white max-w-5xl mx-auto">
+        Everything NRIs need to bank, invest, and stay compliant In India — <span class="text-brand-400">remotely.</span>
+      </h1>
+
+      <p class="mt-7 text-lg md:text-xl text-white/65 max-w-2xl mx-auto leading-relaxed">
+        Demat. Digital notarization. Money transfers. All handled from one platform, from anywhere.
+      </p>
+
+      <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3">
+        <a href="#get-started" class="btn-pill bg-brand-500 hover:bg-brand-600 text-white px-7 py-3.5 text-base shadow-cta cta-glow">
+          Get Started
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+        <a href="#products" class="btn-pill border border-white/15 hover:bg-white/5 text-white px-7 py-3.5 text-base">
+          Explore Products
+        </a>
+      </div>
+
+      <!-- Hero illustration placeholder (stylized skyline + people) -->
+      <div class="mt-16 relative">
+        <div class="mx-auto max-w-5xl aspect-[16/7] rounded-3xl bg-gradient-to-b from-brand-500/20 via-ink-700/40 to-ink-900 border border-white/10 overflow-hidden relative">
+          <!-- skyline silhouette via SVG -->
+          <svg class="absolute bottom-0 left-0 w-full h-2/3 opacity-80" viewBox="0 0 1200 300" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#1e3a8a" stop-opacity="0.1"/>
+                <stop offset="100%" stop-color="#011128" stop-opacity="1"/>
+              </linearGradient>
+            </defs>
+            <rect width="1200" height="300" fill="url(#sky)"/>
+            <!-- skyline shapes -->
+            <g fill="#0b1c3a">
+              <rect x="60"  y="120" width="60"  height="180"/>
+              <rect x="140" y="80"  width="50"  height="220"/>
+              <rect x="210" y="160" width="40"  height="140"/>
+              <rect x="270" y="60"  width="55"  height="240"/>
+              <rect x="345" y="100" width="45"  height="200"/>
+              <rect x="410" y="140" width="70"  height="160"/>
+              <rect x="500" y="50"  width="60"  height="250"/>
+              <rect x="580" y="110" width="50"  height="190"/>
+              <rect x="650" y="170" width="40"  height="130"/>
+              <rect x="710" y="80"  width="55"  height="220"/>
+              <rect x="785" y="130" width="45"  height="170"/>
+              <rect x="850" y="60"  width="65"  height="240"/>
+              <rect x="935" y="120" width="50"  height="180"/>
+              <rect x="1000" y="90" width="55"  height="210"/>
+              <rect x="1075" y="150" width="50"  height="150"/>
+            </g>
+            <!-- lit windows -->
+            <g fill="#fbbf24" opacity="0.6">
+              <rect x="150" y="100" width="6" height="6"/><rect x="165" y="120" width="6" height="6"/>
+              <rect x="285" y="80"  width="6" height="6"/><rect x="295" y="110" width="6" height="6"/>
+              <rect x="510" y="70"  width="6" height="6"/><rect x="525" y="100" width="6" height="6"/>
+              <rect x="720" y="100" width="6" height="6"/><rect x="735" y="130" width="6" height="6"/>
+              <rect x="865" y="80"  width="6" height="6"/><rect x="880" y="110" width="6" height="6"/>
+              <rect x="1015" y="110" width="6" height="6"/><rect x="1030" y="140" width="6" height="6"/>
+            </g>
+          </svg>
+
+          <!-- floating rupee chip -->
+          <div class="absolute top-6 left-6 sm:left-10 animate-float">
+            <div class="px-4 py-2 rounded-pill bg-white/10 backdrop-blur-md border border-white/20 text-sm font-semibold flex items-center gap-2">
+              <span class="w-7 h-7 grid place-items-center rounded-full bg-brand-500 text-white">₹</span>
+              DEMAT opened in 24h
+            </div>
+          </div>
+          <div class="absolute top-20 right-6 sm:right-12 animate-float" style="animation-delay: -3s">
+            <div class="px-4 py-2 rounded-pill bg-white/10 backdrop-blur-md border border-white/20 text-sm font-semibold flex items-center gap-2">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+              Notarized &amp; sealed
+            </div>
+          </div>
+
+          <!-- people avatars (simple) -->
+          <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex -space-x-3">
+            <div class="w-12 h-12 rounded-full bg-gradient-to-br from-amber-300 to-rose-400 border-2 border-ink-900 grid place-items-center text-xl">👩🏽</div>
+            <div class="w-12 h-12 rounded-full bg-gradient-to-br from-violet-400 to-indigo-500 border-2 border-ink-900 grid place-items-center text-xl">🧑🏻</div>
+            <div class="w-12 h-12 rounded-full bg-gradient-to-br from-pink-400 to-sky-400 border-2 border-ink-900 grid place-items-center text-xl">👩🏻</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Trust badges row -->
+      <div class="mt-14 flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-10 text-white/70">
+        <div class="flex items-center gap-2 text-xs uppercase tracking-wider">
+          <span class="text-white/40">Funded by</span>
+          <span class="font-semibold text-white/90">Industry Leaders</span>
+        </div>
+        <div class="hidden sm:block w-px h-6 bg-white/15"></div>
+        <div class="flex items-center gap-2 text-sm font-semibold">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="#fbbf24"><path d="M12 2l2.4 4.86 5.36.78-3.88 3.78.92 5.34L12 14.4l-4.8 2.52.92-5.34L4.24 7.64l5.36-.78z"/></svg>
+          Rainmatter by ZERODHA
+        </div>
+        <div class="hidden sm:block w-px h-6 bg-white/15"></div>
+        <div class="flex items-center gap-2 text-sm font-semibold">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="#fbbf24"><path d="M12 2l2.4 4.86 5.36.78-3.88 3.78.92 5.34L12 14.4l-4.8 2.52.92-5.34L4.24 7.64l5.36-.78z"/></svg>
+          Piper Serica
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== ABOUT + STATS =================== -->
+  <section id="about" class="relative py-24 md:py-32 bg-ink-900">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="grid lg:grid-cols-2 gap-16 items-center">
+        <div>
+          <p class="eyebrow-letters text-brand-100 mb-5">About Us</p>
+          <h2 class="font-display text-3xl sm:text-4xl md:text-5xl text-white headline-stretch max-w-xl">
+            Making India easier for NRIs.
+          </h2>
+          <p class="mt-6 text-white/65 text-lg leading-relaxed max-w-xl">
+            Local notary visits, the endless paperwork, the emails that land while you're asleep. You shouldn't have to figure all of this out alone just because you moved abroad.
+          </p>
+          <p class="mt-4 text-white/55 leading-relaxed max-w-xl">
+            Rupeeflo brings every NRI financial &amp; compliance task under one roof — built by people who've lived this frustration, for people who refuse to fly across the world just to sign a form.
+          </p>
+          <a href="#" class="mt-8 inline-flex items-center gap-2 text-brand-100 hover:text-white font-semibold group">
+            Read our story
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="group-hover:translate-x-1 transition-transform"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+
+        <div class="grid sm:grid-cols-3 gap-4">
+          <div class="bg-white/[0.03] border border-white/10 rounded-3xl p-6 lift hover:border-brand-500/40">
+            <div class="font-display text-4xl md:text-5xl text-white">14,800<span class="text-brand-400">+</span></div>
+            <p class="mt-2 text-white/60 text-sm">NRIs helped</p>
+          </div>
+          <div class="bg-white/[0.03] border border-white/10 rounded-3xl p-6 lift hover:border-brand-500/40 sm:mt-8">
+            <div class="font-display text-4xl md:text-5xl text-white">25<span class="text-brand-400">+</span></div>
+            <p class="mt-2 text-white/60 text-sm">Financial institutions</p>
+          </div>
+          <div class="bg-white/[0.03] border border-white/10 rounded-3xl p-6 lift hover:border-brand-500/40">
+            <div class="font-display text-4xl md:text-5xl text-white">50<span class="text-brand-400">+</span></div>
+            <p class="mt-2 text-white/60 text-sm">Geographies active</p>
+          </div>
+          <div class="sm:col-span-3 bg-gradient-to-br from-brand-500/10 to-flame-500/10 border border-brand-500/20 rounded-3xl p-6 lift hover:border-brand-500/50">
+            <div class="flex items-center gap-3">
+              <span class="w-10 h-10 rounded-xl bg-brand-500 grid place-items-center text-white">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+              </span>
+              <div>
+                <div class="font-semibold text-white">60 days → 24 hours</div>
+                <p class="text-white/55 text-sm">Average NRI onboarding time, reduced.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== FEATURED IN =================== -->
+  <section class="border-y border-white/10 bg-ink-800/50">
+    <div class="max-w-7xl mx-auto px-4 py-7 flex flex-wrap items-center justify-center gap-x-10 gap-y-4 text-center">
+      <span class="eyebrow-letters text-mist">Featured In</span>
+      <span class="text-white/70 font-semibold tracking-wide text-lg">ENTRACKR</span>
+      <span class="dot-sep text-flame-500"></span>
+      <span class="text-white/70 font-serif text-lg italic" style="font-family: 'Times New Roman', serif;">THE ECONOMIC TIMES</span>
+      <span class="dot-sep text-flame-500"></span>
+      <span class="text-white/70 font-semibold tracking-wider text-lg">VCCIRCLE</span>
+    </div>
+  </section>
+
+  <!-- =================== PROBLEMS WE SOLVE =================== -->
+  <section class="relative py-24 md:py-32 overflow-hidden">
+    <div class="absolute inset-0 bg-grid opacity-30 pointer-events-none"></div>
+    <div class="relative max-w-6xl mx-auto px-4">
+      <div class="text-center max-w-3xl mx-auto mb-14">
+        <p class="eyebrow-letters text-brand-100 mb-4">Problems We Solve</p>
+        <h2 class="font-display text-3xl sm:text-4xl md:text-5xl text-white headline-stretch">
+          Banks say visit the branch. You're in London.
+        </h2>
+        <p class="mt-5 text-white/65 text-lg leading-relaxed">
+          Resident-to-NRI bank account conversions shouldn't require a flight to India. We handle the paperwork so you don't have to show up in person.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-5">
+        <div class="bg-white/[0.03] border border-white/10 rounded-4xl p-7 lift hover:border-flame-500/40">
+          <div class="w-12 h-12 rounded-2xl bg-flame-500/15 text-flame-400 grid place-items-center mb-5">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-3"/></svg>
+          </div>
+          <h3 class="font-semibold text-lg text-white mb-2">Branch visits, eliminated</h3>
+          <p class="text-white/55 text-sm leading-relaxed">Open &amp; convert accounts entirely online. No more flying back just to sign on a dotted line.</p>
+        </div>
+        <div class="bg-white/[0.03] border border-white/10 rounded-4xl p-7 lift hover:border-brand-500/40">
+          <div class="w-12 h-12 rounded-2xl bg-brand-500/15 text-brand-400 grid place-items-center mb-5">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>
+          </div>
+          <h3 class="font-semibold text-lg text-white mb-2">Paperwork, digitised</h3>
+          <p class="text-white/55 text-sm leading-relaxed">From KYC to FEMA declarations — every form filled, reviewed, and submitted in one guided flow.</p>
+        </div>
+        <div class="bg-white/[0.03] border border-white/10 rounded-4xl p-7 lift hover:border-emerald-500/40">
+          <div class="w-12 h-12 rounded-2xl bg-emerald-500/15 text-emerald-400 grid place-items-center mb-5">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-12V5l-8-3-8 3v5c0 8 8 12 8 12z"/></svg>
+          </div>
+          <h3 class="font-semibold text-lg text-white mb-2">Compliance, handled</h3>
+          <p class="text-white/55 text-sm leading-relaxed">PAN, NRO/NRE repatriation, tax residency certificates — sorted by experts who actually know the rules.</p>
+        </div>
+      </div>
+
+      <div class="mt-10 text-center">
+        <a href="#get-started" class="inline-flex btn-pill bg-white text-ink-900 hover:bg-white/90 text-sm">
+          Download Rupeeflo
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== REVIEWS / TESTIMONIALS =================== -->
+  <section class="py-24 md:py-32 bg-ink-800/40 border-y border-white/5">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
+        <div>
+          <p class="eyebrow-letters text-brand-100 mb-4">What other NRIs are saying</p>
+          <h2 class="font-display text-3xl sm:text-4xl md:text-5xl text-white headline-stretch max-w-2xl">
+            Real stories from NRIs who stopped queueing at embassies.
+          </h2>
+        </div>
+        <div class="flex items-center gap-3 text-white/60">
+          <div class="flex -space-x-2">
+            <div class="w-9 h-9 rounded-full bg-gradient-to-br from-amber-300 to-rose-400 border-2 border-ink-800"></div>
+            <div class="w-9 h-9 rounded-full bg-gradient-to-br from-violet-400 to-indigo-500 border-2 border-ink-800"></div>
+            <div class="w-9 h-9 rounded-full bg-gradient-to-br from-pink-400 to-sky-400 border-2 border-ink-800"></div>
+            <div class="w-9 h-9 rounded-full bg-gradient-to-br from-emerald-400 to-teal-500 border-2 border-ink-800"></div>
+          </div>
+          <div>
+            <div class="text-white font-semibold text-sm">4.8 / 5</div>
+            <div class="text-xs">Trustpilot · 1,200+ reviews</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- marquee row -->
+      <div class="relative overflow-hidden no-scrollbar">
+        <div class="flex gap-5 w-max animate-marquee-slow hover:[animation-play-state:paused]">
+          <!-- card 1 -->
+          <article class="w-[360px] shrink-0 bg-white/[0.04] border border-white/10 rounded-3xl p-6">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-11 h-11 rounded-full bg-gradient-to-br from-amber-300 to-rose-400 grid place-items-center font-bold text-ink-900">S</div>
+              <div>
+                <div class="font-semibold text-white">Sanhita Dandekar</div>
+                <div class="text-xs text-white/50">United Kingdom</div>
+              </div>
+            </div>
+            <p class="text-white/75 text-sm leading-relaxed">"Extremely smooth process, competitive prices. 5 stars for the customer care team. After initial glitch, they resolve the issue with great efficiency. Keep it up guys."</p>
+            <div class="mt-4 text-xs text-white/40">Posted on Oct 30, 2025</div>
+          </article>
+          <!-- card 2 -->
+          <article class="w-[360px] shrink-0 bg-white/[0.04] border border-white/10 rounded-3xl p-6">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-11 h-11 rounded-full bg-gradient-to-br from-violet-400 to-indigo-500 grid place-items-center font-bold text-white">K</div>
+              <div>
+                <div class="font-semibold text-white">Kiran Kadekoppa</div>
+                <div class="text-xs text-white/50">UAE</div>
+              </div>
+            </div>
+            <p class="text-white/75 text-sm leading-relaxed">"Very seamless process. Worked like a magic end-to-end. Thanks!"</p>
+            <div class="mt-4 text-xs text-white/40">Posted on Feb 25, 2026</div>
+          </article>
+          <!-- card 3 -->
+          <article class="w-[360px] shrink-0 bg-white/[0.04] border border-white/10 rounded-3xl p-6">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-11 h-11 rounded-full bg-gradient-to-br from-pink-400 to-sky-400 grid place-items-center font-bold text-white">J</div>
+              <div>
+                <div class="font-semibold text-white">JLN</div>
+                <div class="text-xs text-white/50">USA</div>
+              </div>
+            </div>
+            <p class="text-white/75 text-sm leading-relaxed">"Rupeeflo is a very good platform for NRIs to notarize their documents without visiting the Indian embassy. The staff are very supportive throughout the process."</p>
+            <div class="mt-4 text-xs text-white/40">Posted on Aug 19, 2025</div>
+          </article>
+          <!-- card 4 -->
+          <article class="w-[360px] shrink-0 bg-white/[0.04] border border-white/10 rounded-3xl p-6">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-11 h-11 rounded-full bg-gradient-to-br from-emerald-400 to-teal-500 grid place-items-center font-bold text-white">T</div>
+              <div>
+                <div class="font-semibold text-white">Thirupathi Vediyappan</div>
+                <div class="text-xs text-white/50">HR Director, Global Enterprises</div>
+              </div>
+            </div>
+            <p class="text-white/75 text-sm leading-relaxed">"I had to notarize my documents and Rupeeflo made it easy for me. The process is very clear and best. The support team is also good in addressing the queries if anything pops up."</p>
+            <div class="mt-4 text-xs text-white/40">Posted on Oct 9, 2025</div>
+          </article>
+          <!-- duplicate row for seamless loop -->
+          <article class="w-[360px] shrink-0 bg-white/[0.04] border border-white/10 rounded-3xl p-6">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-11 h-11 rounded-full bg-gradient-to-br from-amber-300 to-rose-400 grid place-items-center font-bold text-ink-900">S</div>
+              <div>
+                <div class="font-semibold text-white">Sanhita Dandekar</div>
+                <div class="text-xs text-white/50">United Kingdom</div>
+              </div>
+            </div>
+            <p class="text-white/75 text-sm leading-relaxed">"Extremely smooth process, competitive prices. 5 stars for the customer care team."</p>
+            <div class="mt-4 text-xs text-white/40">Posted on Oct 30, 2025</div>
+          </article>
+          <article class="w-[360px] shrink-0 bg-white/[0.04] border border-white/10 rounded-3xl p-6">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-11 h-11 rounded-full bg-gradient-to-br from-violet-400 to-indigo-500 grid place-items-center font-bold text-white">K</div>
+              <div>
+                <div class="font-semibold text-white">Kiran Kadekoppa</div>
+                <div class="text-xs text-white/50">UAE</div>
+              </div>
+            </div>
+            <p class="text-white/75 text-sm leading-relaxed">"Very seamless process. Worked like a magic end-to-end."</p>
+            <div class="mt-4 text-xs text-white/40">Posted on Feb 25, 2026</div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== 50+ COUNTRIES — 3D DOTTED GLOBE =================== -->
+  <section class="relative py-24 md:py-32 overflow-hidden">
+    <div class="absolute inset-0 hero-spotlight opacity-60 pointer-events-none"></div>
+    <!-- soft radial glow behind globe -->
+    <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[640px] h-[640px] rounded-full bg-brand-500/15 blur-[120px] pointer-events-none"></div>
+
+    <div class="relative max-w-7xl mx-auto px-4 text-center">
+      <p class="eyebrow-letters text-brand-100 mb-4">Built for NRIs across the world</p>
+      <h2 class="font-display text-4xl sm:text-5xl md:text-6xl text-white headline-stretch max-w-4xl mx-auto">
+        50+ countries. <span class="text-brand-400">One platform.</span>
+      </h2>
+      <p class="mt-6 text-white/65 text-lg max-w-2xl mx-auto leading-relaxed">
+        From London to New York to Dubai — a simpler way to manage your Indian finances from wherever you live. No unnecessary travel, paperwork runs, or branch visits.
+      </p>
+
+      <!-- Globe + flanking flags -->
+      <div class="mt-16 grid grid-cols-[auto_1fr_auto] items-center gap-4 sm:gap-8">
+
+        <!-- Left flag column -->
+        <ul class="hidden md:flex flex-col gap-2.5 w-[150px] lg:w-[180px]">
+          <!-- Each flag is a CSS-drawn rectangle (no external assets) -->
+          <li class="flex items-center gap-2.5 px-3 py-2 rounded-xl bg-white/[0.03] border border-white/10 lift hover:border-brand-500/40">
+            <span class="inline-block w-7 h-5 rounded-sm overflow-hidden flex-shrink-0 ring-1 ring-white/10" style="background:linear-gradient(135deg,#012169 0 33%,#fff 33% 66%,#c8102e 66%)"></span>
+            <span class="text-xs text-white/70">United Kingdom</span>
+          </li>
+          <li class="flex items-center gap-2.5 px-3 py-2 rounded-xl bg-white/[0.03] border border-white/10 lift hover:border-brand-500/40">
+            <span class="inline-block w-7 h-5 rounded-sm overflow-hidden flex-shrink-0 ring-1 ring-white/10" style="background:linear-gradient(to bottom,#b22234 0 25%,#fff 25% 50%,#b22234 50% 75%,#fff 75%)"><span class="block w-1/2 h-1/2 bg-#002868" style="background:#002868"></span></span>
+            <span class="text-xs text-white/70">United States</span>
+          </li>
+          <li class="flex items-center gap-2.5 px-3 py-2 rounded-xl bg-white/[0.03] border border-white/10 lift hover:border-brand-500/40">
+            <span class="inline-block w-7 h-5 rounded-sm overflow-hidden flex-shrink-0 ring-1 ring-white/10" style="background:linear-gradient(to bottom,#ff9933 0 33%,#fff 33% 66%,#138808 66%)"></span>
+            <span class="text-xs text-white/70">India</span>
+          </li>
+          <li class="flex items-center gap-2.5 px-3 py-2 rounded-xl bg-white/[0.03] border border-white/10 lift hover:border-brand-500/40">
+            <span class="inline-block w-7 h-5 rounded-sm overflow-hidden flex-shrink-0 ring-1 ring-white/10" style="background:linear-gradient(to bottom,#000 0 33%,#fff 33% 66%,#dd0000 66%)"></span>
+            <span class="text-xs text-white/70">Germany</span>
+          </li>
+          <li class="flex items-center gap-2.5 px-3 py-2 rounded-xl bg-white/[0.03] border border-white/10 lift hover:border-brand-500/40">
+            <span class="inline-block w-7 h-5 rounded-sm overflow-hidden flex-shrink-0 ring-1 ring-white/10" style="background:linear-gradient(to right,#0055a4 0 33%,#fff 33% 66%,#ef4135 66%)"></span>
+            <span class="text-xs text-white/70">France</span>
+          </li>
+          <li class="flex items-center gap-2.5 px-3 py-2 rounded-xl bg-white/[0.03] border border-white/10 lift hover:border-brand-500/40">
+            <span class="inline-block w-7 h-5 rounded-sm overflow-hidden flex-shrink-0 ring-1 ring-white/10" style="background:linear-gradient(to right,#006847 0 33%,#fff 33% 66%,#ce1126 66%)"></span>
+            <span class="text-xs text-white/70">Mexico</span>
+          </li>
+        </ul>
+
+        <!-- Globe canvas -->
+        <div class="relative aspect-square w-full max-w-[560px] mx-auto">
+          <canvas id="globe-canvas" class="w-full h-full"></canvas>
+          <!-- subtle outer atmospheric ring -->
+          <div class="absolute inset-0 rounded-full pointer-events-none" style="box-shadow: 0 0 80px 4px rgba(37,99,235,0.18) inset, 0 0 120px 8px rgba(96,165,250,0.10);"></div>
+        </div>
+
+        <!-- Right flag column -->
+        <ul class="hidden md:flex flex-col gap-2.5 w-[150px] lg:w-[180px]">
+          <li class="flex items-center gap-2.5 px-3 py-2 rounded-xl bg-white/[0.03] border border-white/10 lift hover:border-flame-500/40">
+            <span class="inline-block w-7 h-5 rounded-sm overflow-hidden flex-shrink-0 ring-1 ring-white/10" style="background:linear-gradient(to bottom,#ce1126 0 33%,#fff 33% 66%,#000 66%)"></span>
+            <span class="text-xs text-white/70">UAE</span>
+          </li>
+          <li class="flex items-center gap-2.5 px-3 py-2 rounded-xl bg-white/[0.03] border border-white/10 lift hover:border-flame-500/40">
+            <span class="inline-block w-7 h-5 rounded-sm overflow-hidden flex-shrink-0 ring-1 ring-white/10" style="background:linear-gradient(to bottom,#fff 0 33%,#0033a0 33% 66%,#d52b1e 66%)"></span>
+            <span class="text-xs text-white/70">Russia</span>
+          </li>
+          <li class="flex items-center gap-2.5 px-3 py-2 rounded-xl bg-white/[0.03] border border-white/10 lift hover:border-flame-500/40">
+            <span class="inline-block w-7 h-5 rounded-sm overflow-hidden flex-shrink-0 ring-1 ring-white/10" style="background:linear-gradient(to bottom,#fff 0 33%,#0033a0 33% 66%,#d52b1e 66%);"></span>
+            <span class="text-xs text-white/70">Netherlands</span>
+          </li>
+          <li class="flex items-center gap-2.5 px-3 py-2 rounded-xl bg-white/[0.03] border border-white/10 lift hover:border-flame-500/40">
+            <span class="inline-block w-7 h-5 rounded-sm overflow-hidden flex-shrink-0 ring-1 ring-white/10" style="background:linear-gradient(to right,#006847 0 50%,#ff1616 50%)"></span>
+            <span class="text-xs text-white/70">Portugal</span>
+          </li>
+          <li class="flex items-center gap-2.5 px-3 py-2 rounded-xl bg-white/[0.03] border border-white/10 lift hover:border-flame-500/40">
+            <span class="inline-block w-7 h-5 rounded-sm overflow-hidden flex-shrink-0 ring-1 ring-white/10" style="background:linear-gradient(to right,#009e49 0 50%,#ef7d00 50%)"></span>
+            <span class="text-xs text-white/70">Ireland</span>
+          </li>
+          <li class="flex items-center gap-2.5 px-3 py-2 rounded-xl bg-white/[0.03] border border-white/10 lift hover:border-flame-500/40">
+            <span class="inline-block w-7 h-5 rounded-sm overflow-hidden flex-shrink-0 ring-1 ring-white/10" style="background:linear-gradient(to bottom,#ff0000 0 50%,#fff 50%)"></span>
+            <span class="text-xs text-white/70">Indonesia</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- mobile: visible simple list of regions -->
+      <div class="md:hidden mt-10 flex flex-wrap justify-center gap-2 text-xs text-white/60">
+        <span class="px-3 py-1.5 rounded-pill bg-white/5 border border-white/10">🇬🇧 UK</span>
+        <span class="px-3 py-1.5 rounded-pill bg-white/5 border border-white/10">🇺🇸 USA</span>
+        <span class="px-3 py-1.5 rounded-pill bg-white/5 border border-white/10">🇦🇪 UAE</span>
+        <span class="px-3 py-1.5 rounded-pill bg-white/5 border border-white/10">🇮🇳 India</span>
+        <span class="px-3 py-1.5 rounded-pill bg-white/5 border border-white/10">🇸🇬 Singapore</span>
+        <span class="px-3 py-1.5 rounded-pill bg-white/5 border border-white/10">🇦🇺 Australia</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== PRODUCTS / WHAT RUPEEFLO OFFERS =================== -->
+  <section id="products" class="py-24 md:py-32 bg-ink-800/40 border-y border-white/5">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="text-center max-w-3xl mx-auto mb-14">
+        <p class="eyebrow-letters text-brand-100 mb-4">What Rupeeflo Offers Today</p>
+        <h2 class="font-display text-3xl sm:text-4xl md:text-5xl text-white headline-stretch">
+          NRI tasks, handled seamlessly without stepping out of home.
+        </h2>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <!-- Active: NRI DEMAT -->
+        <article class="group bg-white/[0.04] border border-white/10 rounded-4xl p-7 lift hover:border-brand-500/50 relative overflow-hidden">
+          <div class="absolute -top-12 -right-12 w-40 h-40 rounded-full bg-brand-500/20 blur-3xl group-hover:bg-brand-500/30 transition-colors"></div>
+          <div class="relative">
+            <span class="inline-block px-2.5 py-1 text-[10px] uppercase tracking-wider rounded-pill bg-emerald-500/15 text-emerald-300 mb-4">Live</span>
+            <div class="w-12 h-12 rounded-2xl bg-brand-500 grid place-items-center text-white mb-5">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18M7 14l4-4 4 4 6-6"/></svg>
+            </div>
+            <h3 class="font-semibold text-xl text-white mb-2">NRI DEMAT</h3>
+            <p class="text-white/55 text-sm leading-relaxed mb-5">100% guided process — from document selection to account opening. Trade Indian equities from abroad.</p>
+            <a href="#" class="inline-flex items-center gap-1 text-brand-100 hover:text-white text-sm font-semibold">
+              Explore Now
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+        </article>
+
+        <!-- Active: Digital Notarization -->
+        <article class="group bg-white/[0.04] border border-white/10 rounded-4xl p-7 lift hover:border-flame-500/50 relative overflow-hidden">
+          <div class="absolute -top-12 -right-12 w-40 h-40 rounded-full bg-flame-500/20 blur-3xl"></div>
+          <div class="relative">
+            <span class="inline-block px-2.5 py-1 text-[10px] uppercase tracking-wider rounded-pill bg-emerald-500/15 text-emerald-300 mb-4">Live</span>
+            <div class="w-12 h-12 rounded-2xl bg-flame-500 grid place-items-center text-white mb-5">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 10l-2 2-2-2M12 4v6M5 8h14M5 8a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2"/></svg>
+            </div>
+            <h3 class="font-semibold text-xl text-white mb-2">Digitally Notarize Your Documents</h3>
+            <p class="text-white/55 text-sm leading-relaxed mb-5">Notarize/attest your documents over a live video call. Final documents accepted at major leading institutions.</p>
+            <a href="#" class="inline-flex items-center gap-1 text-flame-400 hover:text-white text-sm font-semibold">
+              Book a Video Notary
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+        </article>
+
+        <!-- Active: Document Courier -->
+        <article class="group bg-white/[0.04] border border-white/10 rounded-4xl p-7 lift hover:border-emerald-500/50 relative overflow-hidden">
+          <div class="absolute -top-12 -right-12 w-40 h-40 rounded-full bg-emerald-500/20 blur-3xl"></div>
+          <div class="relative">
+            <span class="inline-block px-2.5 py-1 text-[10px] uppercase tracking-wider rounded-pill bg-emerald-500/15 text-emerald-300 mb-4">Live</span>
+            <div class="w-12 h-12 rounded-2xl bg-emerald-500 grid place-items-center text-white mb-5">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3h5v5M21 3l-7 7M3 21l9-9M9 3H4v5"/></svg>
+            </div>
+            <h3 class="font-semibold text-xl text-white mb-2">Send Documents to India Securely</h3>
+            <p class="text-white/55 text-sm leading-relaxed mb-5">We pick up, we deliver. Documents reach India within 5 days at 60% lesser costs.</p>
+            <a href="#" class="inline-flex items-center gap-1 text-emerald-400 hover:text-white text-sm font-semibold">
+              Book Pickup
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+        </article>
+
+        <!-- Active: Money Transfer -->
+        <article class="group bg-white/[0.04] border border-white/10 rounded-4xl p-7 lift hover:border-violet-500/50 relative overflow-hidden">
+          <div class="absolute -top-12 -right-12 w-40 h-40 rounded-full bg-violet-500/20 blur-3xl"></div>
+          <div class="relative">
+            <span class="inline-block px-2.5 py-1 text-[10px] uppercase tracking-wider rounded-pill bg-emerald-500/15 text-emerald-300 mb-4">Live</span>
+            <div class="w-12 h-12 rounded-2xl bg-violet-500 grid place-items-center text-white mb-5">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h20M12 2v20M5 5l14 14M19 5L5 19"/></svg>
+            </div>
+            <h3 class="font-semibold text-xl text-white mb-2">Money Transfer</h3>
+            <p class="text-white/55 text-sm leading-relaxed mb-5">Move money to India. First transfer at Google rates.</p>
+            <a href="#" class="inline-flex items-center gap-1 text-violet-300 hover:text-white text-sm font-semibold">
+              Send Money Home
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+        </article>
+
+        <!-- Coming Soon: Tax Filing -->
+        <article class="group bg-white/[0.02] border border-dashed border-white/15 rounded-4xl p-7 lift hover:border-brand-500/40 relative overflow-hidden">
+          <div class="relative">
+            <span class="inline-block px-2.5 py-1 text-[10px] uppercase tracking-wider rounded-pill bg-white/5 text-white/50 mb-4">Coming Soon</span>
+            <div class="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 grid place-items-center text-white/70 mb-5">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h6"/></svg>
+            </div>
+            <h3 class="font-semibold text-xl text-white mb-2">Tax Filing for NRIs</h3>
+            <p class="text-white/45 text-sm leading-relaxed">End-to-end support for filing Indian taxes and staying compliant as an NRI.</p>
+          </div>
+        </article>
+
+        <!-- Coming Soon: GIFT City -->
+        <article class="group bg-white/[0.02] border border-dashed border-white/15 rounded-4xl p-7 lift hover:border-flame-500/40 relative overflow-hidden">
+          <div class="relative">
+            <span class="inline-block px-2.5 py-1 text-[10px] uppercase tracking-wider rounded-pill bg-white/5 text-white/50 mb-4">Coming Soon</span>
+            <div class="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 grid place-items-center text-white/70 mb-5">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6"/></svg>
+            </div>
+            <h3 class="font-semibold text-xl text-white mb-2">Invest in India via GIFT City</h3>
+            <p class="text-white/45 text-sm leading-relaxed">No capital gains tax. No INR conversion. Open your account entirely online.</p>
+          </div>
+        </article>
+
+        <!-- Coming Soon: Global Wealth -->
+        <article class="group bg-white/[0.02] border border-dashed border-white/15 rounded-4xl p-7 lift hover:border-emerald-500/40 relative overflow-hidden">
+          <div class="relative">
+            <span class="inline-block px-2.5 py-1 text-[10px] uppercase tracking-wider rounded-pill bg-white/5 text-white/50 mb-4">Coming Soon</span>
+            <div class="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 grid place-items-center text-white/70 mb-5">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>
+            </div>
+            <h3 class="font-semibold text-xl text-white mb-2">Track Your Global Wealth</h3>
+            <p class="text-white/45 text-sm leading-relaxed">Monitor your investments, bank accounts, and assets across countries all in one place.</p>
+          </div>
+        </article>
+
+        <!-- Request new -->
+        <article class="group bg-gradient-to-br from-brand-500/10 to-flame-500/10 border border-brand-500/20 rounded-4xl p-7 lift hover:border-brand-500/50 relative overflow-hidden">
+          <div class="relative">
+            <span class="inline-block px-2.5 py-1 text-[10px] uppercase tracking-wider rounded-pill bg-brand-500/20 text-brand-100 mb-4">Tell us</span>
+            <div class="w-12 h-12 rounded-2xl bg-white/5 grid place-items-center text-white mb-5">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+            </div>
+            <h3 class="font-semibold text-xl text-white mb-2">Have an NRI problem we should solve?</h3>
+            <p class="text-white/60 text-sm leading-relaxed mb-5">We're building products that make India easier to manage remotely. Tell us what's missing.</p>
+            <a href="#" class="inline-flex items-center gap-1 text-brand-100 hover:text-white text-sm font-semibold">
+              Submit a request
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== PRIVACY & SECURITY =================== -->
+  <section class="relative py-24 md:py-32 overflow-hidden">
+    <div class="absolute inset-0 bg-grid opacity-30 pointer-events-none"></div>
+    <div class="relative max-w-7xl mx-auto px-4">
+      <div class="grid lg:grid-cols-2 gap-16 items-center">
+        <div>
+          <p class="eyebrow-letters text-brand-100 mb-4">Privacy &amp; Security</p>
+          <h2 class="font-display text-3xl sm:text-4xl md:text-5xl text-white headline-stretch max-w-xl">
+            Built with security at its core.
+          </h2>
+          <p class="mt-6 text-white/65 text-lg leading-relaxed max-w-xl">
+            Our promise. At Rupeeflo, we prioritize security and simplicity. We work with security and privacy as our foundations. Your documents and data are handled with the highest standards — always.
+          </p>
+
+          <div class="mt-8 p-5 rounded-3xl bg-white/[0.03] border border-white/10 flex items-start gap-4">
+            <div class="w-12 h-12 rounded-full bg-gradient-to-br from-brand-500 to-violet-500 grid place-items-center text-white font-bold text-lg flex-shrink-0">D</div>
+            <div>
+              <p class="text-white/85 italic leading-relaxed">"We work with security and privacy as our foundations. Your documents and data are handled with the highest standards — always."</p>
+              <p class="mt-3 text-sm text-white/60">— <span class="font-semibold text-white">Dharmendra Maurya</span>, CEO, Rupeeflo</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div class="bg-white/[0.03] border border-white/10 rounded-3xl p-6 lift hover:border-emerald-500/40">
+            <div class="w-10 h-10 rounded-xl bg-emerald-500/15 text-emerald-400 grid place-items-center mb-4">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4M12 2l8 4v6c0 5-3.5 9-8 10-4.5-1-8-5-8-10V6l8-4z"/></svg>
+            </div>
+            <h3 class="font-semibold text-white mb-1">ISO 27001 Certified</h3>
+            <p class="text-white/55 text-sm">Protected through ISO 27001 certified security practices.</p>
+          </div>
+          <div class="bg-white/[0.03] border border-white/10 rounded-3xl p-6 lift hover:border-brand-500/40 sm:mt-8">
+            <div class="w-10 h-10 rounded-xl bg-brand-500/15 text-brand-400 grid place-items-center mb-4">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </div>
+            <h3 class="font-semibold text-white mb-1">Fully Encrypted</h3>
+            <p class="text-white/55 text-sm">From upload to notarization, your information stays secure.</p>
+          </div>
+          <div class="bg-white/[0.03] border border-white/10 rounded-3xl p-6 lift hover:border-flame-500/40">
+            <div class="w-10 h-10 rounded-xl bg-flame-500/15 text-flame-400 grid place-items-center mb-4">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
+            </div>
+            <h3 class="font-semibold text-white mb-1">Minimal Data</h3>
+            <p class="text-white/55 text-sm">Only the required documents are collected — nothing more.</p>
+          </div>
+          <div class="bg-white/[0.03] border border-white/10 rounded-3xl p-6 lift hover:border-violet-500/40 sm:mt-8">
+            <div class="w-10 h-10 rounded-xl bg-violet-500/15 text-violet-300 grid place-items-center mb-4">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-12V5l-8-3-8 3v5c0 8 8 12 8 12z"/></svg>
+            </div>
+            <h3 class="font-semibold text-white mb-1">Privacy You Can Trust</h3>
+            <p class="text-white/55 text-sm">Built to align with DPDP, GDPR and global privacy standards.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== FINANCIAL LEADERS =================== -->
+  <section id="institutions" class="py-16 border-y border-white/5 bg-ink-800/40">
+    <div class="max-w-7xl mx-auto px-4">
+      <p class="eyebrow-letters text-center text-brand-100 mb-8">Financial Leaders We Are Building With</p>
+      <div class="flex flex-wrap items-center justify-center gap-x-12 gap-y-6 opacity-70">
+        <span class="text-xl font-bold tracking-tight text-white/80">ZERODHA</span>
+        <span class="text-xl font-bold tracking-tight text-white/80">NSE</span>
+        <span class="text-xl font-bold tracking-tight text-white/80">BSE</span>
+        <span class="text-xl font-bold tracking-tight text-white/80">CDSL</span>
+        <span class="text-xl font-bold tracking-tight text-white/80">HDFC Bank</span>
+        <span class="text-xl font-bold tracking-tight text-white/80">ICICI</span>
+        <span class="text-xl font-bold tracking-tight text-white/80">SEBI</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== PARTNER TESTIMONIALS =================== -->
+  <section id="collaboration" class="py-24 md:py-32">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="text-center max-w-3xl mx-auto mb-14">
+        <p class="eyebrow-letters text-brand-100 mb-4">What Our Partners Say</p>
+        <h2 class="font-display text-3xl sm:text-4xl md:text-5xl text-white headline-stretch">
+          Built with the people who onboard NRIs every day.
+        </h2>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-5">
+        <blockquote class="bg-white/[0.04] border border-white/10 rounded-4xl p-8 lift hover:border-brand-500/40">
+          <p class="text-white/85 text-lg leading-relaxed">"Rupeeflo's digital, video-based notarisation with licensed notaries and a full audit trail removes this friction and makes the process seamless."</p>
+          <footer class="mt-6 flex items-center gap-4">
+            <div class="w-12 h-12 rounded-full bg-gradient-to-br from-brand-500 to-violet-500 grid place-items-center text-white font-bold">S</div>
+            <div>
+              <div class="font-semibold text-white">Somnath</div>
+              <div class="text-sm text-white/55">VP — Corporate Development</div>
+            </div>
+          </footer>
+        </blockquote>
+
+        <blockquote class="bg-white/[0.04] border border-white/10 rounded-4xl p-8 lift hover:border-flame-500/40">
+          <p class="text-white/85 text-lg leading-relaxed">"Opening a demat account as an NRI still involves considerable friction... we've simplified this journey by accepting digitally notarised documents, removing key friction points and enabling NRIs to onboard faster and more securely."</p>
+          <footer class="mt-6 flex items-center gap-4">
+            <div class="w-12 h-12 rounded-full bg-gradient-to-br from-flame-500 to-pink-500 grid place-items-center text-white font-bold">N</div>
+            <div>
+              <div class="font-semibold text-white">Nishant Jain</div>
+              <div class="text-sm text-white/55">Chief Business Officer</div>
+            </div>
+          </footer>
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== GET STARTED CTA =================== -->
+  <section id="get-started" class="relative py-24 md:py-32 overflow-hidden">
+    <div class="absolute inset-0 hero-spotlight pointer-events-none"></div>
+    <div class="relative max-w-5xl mx-auto px-4 text-center">
+      <p class="eyebrow-letters text-brand-100 mb-4">Get Started</p>
+      <h2 class="font-display text-4xl sm:text-5xl md:text-6xl text-white headline-stretch max-w-3xl mx-auto">
+        Your India finances, <span class="text-brand-400">handled remotely.</span>
+      </h2>
+      <p class="mt-6 text-white/65 text-lg max-w-xl mx-auto leading-relaxed">
+        Open your first account, notarize your first document, or just ask us a question — we'll guide you through every step.
+      </p>
+
+      <form class="mt-10 flex flex-col sm:flex-row gap-3 max-w-xl mx-auto" onsubmit="event.preventDefault(); alert('Thanks! Our team will reach out shortly.'); this.reset();">
+        <input type="email" required placeholder="Your email address"
+               class="flex-1 px-5 py-3.5 rounded-pill bg-white/[0.04] border border-white/15 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition" />
+        <button type="submit" class="btn-pill bg-brand-500 hover:bg-brand-600 text-white px-7 py-3.5 shadow-cta">
+          Get Started
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </button>
+      </form>
+      <p class="mt-4 text-xs text-white/40">No spam. We'll only reach out about your NRI journey.</p>
+    </div>
+  </section>
+
+  <!-- =================== FAQ =================== -->
+  <section id="resources" class="py-24 md:py-32 bg-ink-800/40 border-y border-white/5">
+    <div class="max-w-3xl mx-auto px-4">
+      <div class="text-center mb-12">
+        <p class="eyebrow-letters text-brand-100 mb-4">Common Questions</p>
+        <h2 class="font-display text-3xl sm:text-4xl md:text-5xl text-white headline-stretch">
+          Things people search for.
+        </h2>
+        <p class="mt-5 text-white/60">
+          Got more questions? Reach out at <a href="mailto:support@rupeeflo.com" class="text-brand-100 hover:text-white underline underline-offset-4">support@rupeeflo.com</a> or fill the form below.
+        </p>
+      </div>
+
+      <div class="space-y-3" id="faq-list">
+        <!-- FAQ 1 -->
+        <div class="bg-white/[0.03] border border-white/10 rounded-3xl overflow-hidden">
+          <button class="faq-trigger w-full flex items-center justify-between gap-4 p-5 text-left hover:bg-white/[0.02] transition-colors">
+            <span class="font-semibold text-white">Are digitally notarized documents legally valid?</span>
+            <span class="faq-icon w-6 h-6 grid place-items-center rounded-full bg-white/5 text-white flex-shrink-0">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+            </span>
+          </button>
+          <div class="faq-answer px-5 text-white/65 leading-relaxed">
+            Yes. The notarization process facilitated through Rupeeflo follows applicable compliance and identity verification standards for account opening. Documents notarised via our video-based process are accepted by leading banks, brokers, and registrars across India.
+          </div>
+        </div>
+        <!-- FAQ 2 -->
+        <div class="bg-white/[0.03] border border-white/10 rounded-3xl overflow-hidden">
+          <button class="faq-trigger w-full flex items-center justify-between gap-4 p-5 text-left hover:bg-white/[0.02] transition-colors">
+            <span class="font-semibold text-white">Will my bank or broker accept these notarized documents?</span>
+            <span class="faq-icon w-6 h-6 grid place-items-center rounded-full bg-white/5 text-white flex-shrink-0">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+            </span>
+          </button>
+          <div class="faq-answer px-5 text-white/65 leading-relaxed">
+            Yes. Rupeeflo partners with licensed notaries and provides a complete audit trail for every notarisation. Our partner institutions — including Zerodha-backed brokers and major Indian banks — have already accepted thousands of documents processed through the platform.
+          </div>
+        </div>
+        <!-- FAQ 3 -->
+        <div class="bg-white/[0.03] border border-white/10 rounded-3xl overflow-hidden">
+          <button class="faq-trigger w-full flex items-center justify-between gap-4 p-5 text-left hover:bg-white/[0.02] transition-colors">
+            <span class="font-semibold text-white">How does the online notarization process work?</span>
+            <span class="faq-icon w-6 h-6 grid place-items-center rounded-full bg-white/5 text-white flex-shrink-0">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+            </span>
+          </button>
+          <div class="faq-answer px-5 text-white/65 leading-relaxed">
+            Upload your document, schedule a video call with a licensed Indian notary, verify your identity on the call, sign live, and receive your notarised document delivered to your inbox — typically within 24 hours of the call.
+          </div>
+        </div>
+        <!-- FAQ 4 -->
+        <div class="bg-white/[0.03] border border-white/10 rounded-3xl overflow-hidden">
+          <button class="faq-trigger w-full flex items-center justify-between gap-4 p-5 text-left hover:bg-white/[0.02] transition-colors">
+            <span class="font-semibold text-white">Can Rupeeflo help me open a Demat account to invest in India?</span>
+            <span class="faq-icon w-6 h-6 grid place-items-center rounded-full bg-white/5 text-white flex-shrink-0">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+            </span>
+          </button>
+          <div class="faq-answer px-5 text-white/65 leading-relaxed">
+            Absolutely. Our NRI DEMAT product is a 100% guided flow covering document selection, KYC, FEMA declarations, PIS permission (where needed), and final account activation with a SEBI-registered stockbroker — entirely online.
+          </div>
+        </div>
+        <!-- FAQ 5 -->
+        <div class="bg-white/[0.03] border border-white/10 rounded-3xl overflow-hidden">
+          <button class="faq-trigger w-full flex items-center justify-between gap-4 p-5 text-left hover:bg-white/[0.02] transition-colors">
+            <span class="font-semibold text-white">Is my personal information and document data secure?</span>
+            <span class="faq-icon w-6 h-6 grid place-items-center rounded-full bg-white/5 text-white flex-shrink-0">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+            </span>
+          </button>
+          <div class="faq-answer px-5 text-white/65 leading-relaxed">
+            Yes. We are ISO 27001 certified, all workflows are fully encrypted end-to-end, we collect only the minimum data required, and we align with DPDP, GDPR and global privacy standards. Your data is never sold or shared with third parties for marketing.
+          </div>
+        </div>
+      </div>
+
+      <!-- contact form -->
+      <form class="mt-10 bg-white/[0.03] border border-white/10 rounded-4xl p-6" onsubmit="event.preventDefault(); alert('Thanks for reaching out! We will get back to you within 24 hours.'); this.reset();">
+        <p class="text-white/70 text-sm mb-4">Have a specific question? Drop us a line.</p>
+        <div class="grid sm:grid-cols-2 gap-3">
+          <input type="text" required placeholder="Name" class="px-4 py-3 rounded-xl bg-white/[0.04] border border-white/15 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent" />
+          <input type="email" required placeholder="Email" class="px-4 py-3 rounded-xl bg-white/[0.04] border border-white/15 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent" />
+        </div>
+        <textarea rows="3" required placeholder="Your question" class="mt-3 w-full px-4 py-3 rounded-xl bg-white/[0.04] border border-white/15 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent"></textarea>
+        <button type="submit" class="mt-4 btn-pill bg-brand-500 hover:bg-brand-600 text-white px-6 py-3 text-sm">Submit</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- =================== FOOTER =================== -->
+  <footer class="bg-ink-900 border-t border-white/10 pt-16 pb-10">
+    <div class="max-w-7xl mx-auto px-4">
+      <!-- big wordmark -->
+      <div class="font-display text-5xl sm:text-7xl md:text-8xl text-white/95 leading-none tracking-tight mb-12">
+        Rupee<span class="text-brand-400">flo</span>
+      </div>
+
+      <div class="grid md:grid-cols-12 gap-10 mb-12">
+        <div class="md:col-span-5">
+          <p class="text-white/70 leading-relaxed max-w-md">
+            Demat. Digital notarization. Document courier. Money transfers. All done from the comfort of your couch.
+          </p>
+          <div class="mt-6 flex items-center gap-3">
+            <a href="#" aria-label="Twitter" class="w-10 h-10 rounded-full bg-white/5 hover:bg-brand-500 grid place-items-center text-white/70 hover:text-white transition-colors">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </a>
+            <a href="#" aria-label="LinkedIn" class="w-10 h-10 rounded-full bg-white/5 hover:bg-brand-500 grid place-items-center text-white/70 hover:text-white transition-colors">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.063 2.063 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </a>
+            <a href="#" aria-label="Instagram" class="w-10 h-10 rounded-full bg-white/5 hover:bg-brand-500 grid place-items-center text-white/70 hover:text-white transition-colors">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+            </a>
+            <a href="#" aria-label="YouTube" class="w-10 h-10 rounded-full bg-white/5 hover:bg-brand-500 grid place-items-center text-white/70 hover:text-white transition-colors">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="md:col-span-2">
+          <h4 class="font-semibold text-white mb-4 text-sm">Products</h4>
+          <ul class="space-y-2.5 text-sm text-white/55">
+            <li><a href="#" class="hover:text-white transition-colors">NRI DEMAT Account</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">Digital Notarization</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">Document Courier</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">Money Transfer</a></li>
+          </ul>
+        </div>
+
+        <div class="md:col-span-2">
+          <h4 class="font-semibold text-white mb-4 text-sm">Company</h4>
+          <ul class="space-y-2.5 text-sm text-white/55">
+            <li><a href="#" class="hover:text-white transition-colors">About Us</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">Support</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">Resources</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">Privacy Policy</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">Terms of Service</a></li>
+          </ul>
+        </div>
+
+        <div class="md:col-span-3">
+          <h4 class="font-semibold text-white mb-4 text-sm">For all NRI related news and updates.</h4>
+          <p class="text-white/55 text-sm mb-4">Stay ahead with Rupeeflo</p>
+          <form class="flex gap-2" onsubmit="event.preventDefault(); alert('Subscribed! Welcome to the Rupeeflo community.'); this.reset();">
+            <input type="email" required placeholder="Your email" class="flex-1 min-w-0 px-4 py-2.5 rounded-pill bg-white/[0.04] border border-white/15 text-white text-sm placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent" />
+            <button type="submit" class="btn-pill bg-brand-500 hover:bg-brand-600 text-white px-4 py-2.5 text-sm flex-shrink-0">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </button>
+          </form>
+          <p class="mt-4 text-xs text-white/40">Subscribe to our newsletter</p>
+        </div>
+      </div>
+
+      <!-- legal disclaimer -->
+      <div class="border-t border-white/10 pt-8 text-xs text-white/40 leading-relaxed space-y-3">
+        <p>© 2024-2026 Rupeeflo. All rights reserved.</p>
+        <p>
+          Rupeeflo platform is owned and operated by DMA Rupeeflo Technologies Private Limited, which facilitates digitised and seamless process for opening of DEMAT &amp; Trading accounts with various SEBI registered stockbrokers in India. The ultimate approval and activation of DEMAT &amp; Trading accounts are at stockbroker's sole discretion; and upon opening of account, your relationship is exclusively governed by the respective stockbroker's terms and conditions.
+        </p>
+        <p>
+          Globalnest Securities Private Limited, a subsidiary of DMA Rupeeflo Technologies Private Limited is a NSE registered Authorised Person (AP) — AP2516005033 of Zerodha Broking Limited, a SEBI registered Stockbroker.
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- =================== INTERACTIVE JS =================== -->
+  <script>
+    // Mobile menu toggle
+    (function() {
+      const btn = document.getElementById('menu-toggle');
+      const menu = document.getElementById('mobile-menu');
+      if (!btn || !menu) return;
+      btn.addEventListener('click', () => menu.classList.toggle('hidden'));
+      // Close on link click
+      menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => menu.classList.add('hidden')));
+    })();
+
+    // FAQ accordion
+    (function() {
+      const triggers = document.querySelectorAll('.faq-trigger');
+      triggers.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const answer = btn.nextElementSibling;
+          const icon = btn.querySelector('.faq-icon');
+          const isOpen = answer.classList.contains('open');
+          // Close all
+          document.querySelectorAll('.faq-answer').forEach(a => a.classList.remove('open'));
+          document.querySelectorAll('.faq-icon').forEach(i => i.classList.remove('open'));
+          // Open clicked (if it was closed)
+          if (!isOpen) {
+            answer.classList.add('open');
+            icon.classList.add('open');
+          }
+        });
+      });
+    })();
+
+    // Subtle nav shadow on scroll
+    (function() {
+      const header = document.querySelector('header.sticky');
+      if (!header) return;
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 10) {
+          header.style.transform = 'translateY(0)';
+        }
+      }, { passive: true });
+    })();
+
+    // Open first FAQ by default for visibility
+    document.addEventListener('DOMContentLoaded', () => {
+      const first = document.querySelector('.faq-trigger');
+      if (first) first.click();
+    });
+  </script>
+
+  <!-- =================== 3D DOTTED GLOBE (canvas) =================== -->
+  <script>
+  (function () {
+    const canvas = document.getElementById('globe-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+
+    // ---------- Landmask (base64 PNG, 180×90, white = land) ----------
+    const LANDMASK_B64 =
+      "iVBORw0KGgoAAAANSUhEUgAAALQAAABaCAAAAAA06CMcAAACO0lEQVR42u2a0XbDIAxDIw7//8va49YupGBLkGzw1p4ELkJ2DMlx7LZbsyF6I6W9TYGmXAQ3NOd2ifwIVCvB8SlWc/+W/qpxBF5oTrWnqYkTNgaiNhCpDG6e/CsaoOrN2rAEddmwuJIoT1yn0qYenkZb8oE2Pi4MrV3H+vOnbSix9yBeQ6vQaIY6BfmCVmbJw2UOM65THpLM9nIU6dIA/sLqfZCSVW9F1Z8rw/LrFBqlKjubtbkqcSIsm1ex6ixh5gA0FDycrTTuynxpDySYAWMgIqQUghqDktgpnkCidQEQAUDYypGiHYNKa2WWpcESmCly88EM6FFb+g/PyqCpPkcS/VJXddh+nBNON5IYWaDay8pO5LA5BnI4chaL7Itxcikub4U25clPbM2laYN6JFLfzgTgCcROAWles/QTkaepHENSw+4r5ne3SF4uqD04LEdgdeQFk+q53cA2VXlUvXPulDtQMOXFRrKmVNXTZ2LHHh74rIduEyArHTAlENXPaSyFHorbJjVvAZ3eHRXrokOyFnyC0r/sQxs0jI5nHhrzZ8aZ9rjbofrCOVQzzsseGyLsIiHsK85wK3v0VW2dzKcCIA/NgMzK96nIQve+FMh9F/nyLQ2qPx/Erfx+UkbfuYf6CAXqlAc/tih7cB6zIeVhulvuvAkwiMW15kgpvYw5Vk9jsT1KWGQcu/39Rj6P+bsmWerRsS8dwJGrpVjxvApG7voubeWUkZL1Ee2RtceG3tAbekP/I+hHti+ACXXgrtvrewAAAABJRU5ErkJggg==";
+
+    // ---------- Configuration ----------
+    const DOT_COLOR       = '#3b82f6'; // light blue dots (matches brand-400)
+    const DOT_COLOR_BACK  = '#1e3a5f'; // darker dots on far side of globe
+    const PIN_LOCATIONS = [
+      // [name, lat, lon, color]
+      ['London',     51.5,  -0.1, '#60a5fa'],
+      ['New York',   40.7, -74.0, '#f97316'],
+      ['Dubai',      25.2,  55.3, '#34d399'],
+      ['Singapore',   1.3, 103.8, '#a78bfa'],
+      ['Sydney',    -33.9, 151.2, '#fbbf24'],
+      ['San Francisco', 37.8, -122.4, '#f472b6'],
+      ['Frankfurt',  50.1,   8.7, '#22d3ee'],
+      ['Mumbai',     19.1,  72.9, '#facc15'],
+    ];
+
+    // ---------- State ----------
+    let landData = null;       // Uint8Array, 1 = land
+    let landW = 0, landH = 0;
+    let dots = [];             // precomputed sphere dot positions (lat, lon)
+    let rotation = 0;          // current rotation around Y axis (radians)
+    let tilt = -0.35;          // slight downward tilt
+    let dragging = false;
+    let lastX = 0, lastY = 0;
+    let dragVelX = 0;
+    let autoSpin = 0.0018;     // radians per frame
+    let dpr = Math.min(window.devicePixelRatio || 1, 2);
+    let W = 0, H = 0, R = 0;   // canvas size + globe radius
+    let reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // ---------- Load landmask ----------
+    const lmImg = new Image();
+    lmImg.onload = () => {
+      landW = lmImg.width;
+      landH = lmImg.height;
+      const tmp = document.createElement('canvas');
+      tmp.width = landW; tmp.height = landH;
+      const tctx = tmp.getContext('2d');
+      tctx.drawImage(lmImg, 0, 0);
+      const data = tctx.getImageData(0, 0, landW, landH).data;
+      landData = new Uint8Array(landW * landH);
+      for (let i = 0; i < landW * landH; i++) {
+        // White pixel = land (R+G+B > 360)
+        landData[i] = (data[i*4] + data[i*4+1] + data[i*4+2]) > 360 ? 1 : 0;
+      }
+      buildDots();
+      startLoop();
+    };
+    lmImg.src = 'data:image/png;base64,' + LANDMASK_B64;
+
+    // ---------- Build dot grid on sphere ----------
+    function buildDots() {
+      dots = [];
+      // Use a fibonacci sphere for even dot distribution
+      const STEP_LAT = 2; // degrees
+      for (let lat = -90; lat <= 90; lat += STEP_LAT) {
+        const latRad = lat * Math.PI / 180;
+        // circumference at this latitude shrinks toward the poles
+        const circumference = 360 * Math.cos(latRad);
+        const stepLon = Math.max(STEP_LAT, 360 / Math.max(1, Math.round(circumference / STEP_LAT)));
+        for (let lon = -180; lon < 180; lon += stepLon) {
+          // sample landmask at (lon, lat)
+          const u = ((lon + 180) / 360) * landW | 0;
+          const v = ((90 - lat) / 180) * landH | 0;
+          const idx = v * landW + u;
+          if (landData && landData[idx]) {
+            dots.push({ lat: lat * Math.PI / 180, lon: lon * Math.PI / 180 });
+          }
+        }
+      }
+    }
+
+    // ---------- Resize handling ----------
+    function resize() {
+      const rect = canvas.getBoundingClientRect();
+      W = Math.max(1, rect.width);
+      H = Math.max(1, rect.height);
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = W * dpr;
+      canvas.height = H * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      R = Math.min(W, H) * 0.42;
+    }
+    window.addEventListener('resize', resize);
+
+    // ---------- Project a 3D point on sphere to 2D canvas ----------
+    // lat: -PI/2..PI/2, lon: -PI..PI
+    // Apply tilt around X axis, then rotation around Y axis.
+    function project(lat, lon, rot, tiltAngle) {
+      // sphere coords (radius 1)
+      const cl = Math.cos(lat);
+      let x = cl * Math.cos(lon + rot);
+      let y = Math.sin(lat);
+      let z = cl * Math.sin(lon + rot);
+      // tilt around X axis (so we see northern hemisphere)
+      const ct = Math.cos(tiltAngle), st = Math.sin(tiltAngle);
+      const y2 = y * ct - z * st;
+      const z2 = y * st + z * ct;
+      return { x: x, y: y2, z: z2 };
+    }
+
+    // ---------- Render loop ----------
+    function render() {
+      ctx.clearRect(0, 0, W, H);
+      const cx = W / 2, cy = H / 2;
+
+      // 1. Soft inner atmospheric glow (radial gradient behind globe)
+      const grad = ctx.createRadialGradient(cx, cy, R * 0.6, cx, cy, R * 1.25);
+      grad.addColorStop(0, 'rgba(37,99,235,0.18)');
+      grad.addColorStop(1, 'rgba(37,99,235,0)');
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.arc(cx, cy, R * 1.25, 0, Math.PI * 2);
+      ctx.fill();
+
+      // 2. Dots — sort back-to-front for proper depth
+      const projected = dots.map(d => {
+        const p = project(d.lat, d.lon, rotation, tilt);
+        return { ...d, px: cx + p.x * R, py: cy + p.y * R, pz: p.z };
+      });
+      projected.sort((a, b) => a.pz - b.pz);
+
+      // 3. Draw dots
+      for (const d of projected) {
+        // visibility: front of sphere (z > -0.05) is visible
+        if (d.pz < -0.15) continue;
+        const depth = (d.pz + 1) / 2; // 0 (back) .. 1 (front)
+        // dot radius & opacity scale with depth
+        const size = 0.9 + depth * 1.6;
+        const alpha = 0.25 + depth * 0.75;
+        // color: lighter on front, darker on back
+        const color = d.pz > 0 ? DOT_COLOR : DOT_COLOR_BACK;
+        ctx.beginPath();
+        ctx.fillStyle = color;
+        ctx.globalAlpha = alpha;
+        ctx.arc(d.px, d.py, size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+
+      // 4. Draw location pins
+      for (const [name, lat, lon, color] of PIN_LOCATIONS) {
+        const p = project(lat * Math.PI / 180, lon * Math.PI / 180, rotation, tilt);
+        if (p.z < -0.05) continue; // hidden on back of globe
+        const px = cx + p.x * R;
+        const py = cy + p.y * R;
+        const depth = (p.z + 1) / 2;
+        const r = 3 + depth * 2;
+
+        // outer glow
+        const g2 = ctx.createRadialGradient(px, py, 0, px, py, r * 5);
+        g2.addColorStop(0, color);
+        g2.addColorStop(0.3, color.replace(')', ',0.6)').replace('rgb', 'rgba'));
+        // fallback if hex color
+        g2.addColorStop(0, hexToRgba(color, 0.9));
+        g2.addColorStop(0.4, hexToRgba(color, 0.4));
+        g2.addColorStop(1, hexToRgba(color, 0));
+        ctx.fillStyle = g2;
+        ctx.beginPath();
+        ctx.arc(px, py, r * 5, 0, Math.PI * 2);
+        ctx.fill();
+
+        // inner solid pin
+        ctx.fillStyle = color;
+        ctx.beginPath();
+        ctx.arc(px, py, r, 0, Math.PI * 2);
+        ctx.fill();
+
+        // white core
+        ctx.fillStyle = '#fff';
+        ctx.beginPath();
+        ctx.arc(px, py, Math.max(0.8, r * 0.4), 0, Math.PI * 2);
+        ctx.fill();
+
+        // label (small text to the upper-right of pin)
+        if (depth > 0.4) {
+          ctx.font = '10px Inter, sans-serif';
+          ctx.fillStyle = 'rgba(255,255,255,0.85)';
+          ctx.textAlign = 'left';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(name, px + r + 4, py - r - 2);
+        }
+      }
+
+      // 5. Subtle rim light on globe edge
+      ctx.strokeStyle = 'rgba(96,165,250,0.25)';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.arc(cx, cy, R, 0, Math.PI * 2);
+      ctx.stroke();
+    }
+
+    // ---------- helpers ----------
+    function hexToRgba(hex, a) {
+      // Support both #rrggbb and already rgba()
+      if (hex.startsWith('rgba')) return hex;
+      if (hex.startsWith('rgb(')) return hex.replace('rgb(', 'rgba(').replace(')', ',' + a + ')');
+      let h = hex.replace('#', '');
+      if (h.length === 3) h = h.split('').map(c => c + c).join('');
+      const r = parseInt(h.substr(0, 2), 16);
+      const g = parseInt(h.substr(2, 2), 16);
+      const b = parseInt(h.substr(4, 2), 16);
+      return 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')';
+    }
+
+    // ---------- Animation loop ----------
+    function loop() {
+      if (!dragging) {
+        rotation += autoSpin;
+      } else {
+        rotation += dragVelX;
+        dragVelX *= 0.92;
+      }
+      render();
+      requestAnimationFrame(loop);
+    }
+    function startLoop() {
+      resize();
+      requestAnimationFrame(loop);
+    }
+
+    // ---------- Drag interaction ----------
+    canvas.addEventListener('pointerdown', (e) => {
+      dragging = true;
+      lastX = e.clientX;
+      lastY = e.clientY;
+      canvas.setPointerCapture(e.pointerId);
+      canvas.style.cursor = 'grabbing';
+    });
+    canvas.addEventListener('pointermove', (e) => {
+      if (!dragging) return;
+      const dx = e.clientX - lastX;
+      const dy = e.clientY - lastY;
+      lastX = e.clientX;
+      lastY = e.clientY;
+      rotation += dx * 0.005;
+      tilt = Math.max(-1.2, Math.min(1.2, tilt + dy * 0.005));
+      dragVelX = dx * 0.005;
+    });
+    const endDrag = (e) => {
+      if (!dragging) return;
+      dragging = false;
+      canvas.style.cursor = 'grab';
+      try { canvas.releasePointerCapture(e.pointerId); } catch (_) {}
+    };
+    canvas.addEventListener('pointerup', endDrag);
+    canvas.addEventListener('pointercancel', endDrag);
+    canvas.addEventListener('pointerleave', endDrag);
+    canvas.style.cursor = 'grab';
+
+    // Pause spin when offscreen (perf)
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        const visible = entries[0] && entries[0].isIntersecting;
+        autoSpin = visible && !reducedMotion ? 0.0018 : 0;
+      }, { threshold: 0.05 });
+      io.observe(canvas);
+    }
+  })();
+  </script>
+</body>
+</html>
