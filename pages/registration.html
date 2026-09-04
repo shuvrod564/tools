@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auth - Create your account</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Valley+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+        :root {
+            --primary-blue: #3259ff;
+            --text-dark: #1e1e1e;
+            --text-muted: #6c757d;
+            --bg-light: #f9f9f9;
+        }
+
+        body {
+            font-family: "Valley Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            color: var(--text-dark);
+            background-color: var(--bg-light);
+            min-height: 100vh;
+        }
+
+        /* Left Column Styling */
+        .form-section {
+            background-color: var(--bg-light);
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 100vh;
+        }
+
+        .logo-text {
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: #0b132b;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            width: 20px;
+            height: 20px;
+            border: 3px solid var(--primary-blue);
+            border-bottom: transparent;
+            border-left: transparent;
+            transform: rotate(-45deg);
+        }
+
+        .nav-link-top {
+            font-size: 0.75rem;
+            letter-spacing: 0.1rem;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            text-decoration: none;
+        }
+
+        .form-container {
+            max-width: 420px;
+            width: 100%;
+            margin: auto;
+            padding: 2rem 0;
+        }
+
+        .subtitle-badge {
+            font-size: 0.7rem;
+            letter-spacing: 0.15rem;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-title {
+            font-weight: 700;
+            font-size: 2rem;
+            letter-spacing: -0.03rem;
+        }
+
+        .form-desc {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-label {
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 0.4rem;
+        }
+
+        .form-control {
+            padding: 0.6rem 0.75rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.375rem;
+            font-size: 0.9rem;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 2px rgba(50, 89, 255, 0.15);
+        }
+
+        .password-hint {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 0.3rem;
+        }
+
+        .btn-primary-custom {
+            background-color: var(--primary-blue);
+            border: none;
+            padding: 0.7rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            border-radius: 0.375rem;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn-primary-custom:hover {
+            background-color: #2446d6;
+        }
+
+        .divider-text {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            font-size: 0.7rem;
+            letter-spacing: 0.1rem;
+            color: var(--text-muted);
+            margin: 1.5rem 0;
+            text-transform: uppercase;
+        }
+
+        .divider-text::before,
+        .divider-text::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .divider-text:not(:empty)::before { margin-right: .5em; }
+        .divider-text:not(:empty)::after { margin-left: .5em; }
+
+        .btn-oauth {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            font-size: 0.85rem;
+            font-weight: 500;
+            padding: 0.6rem;
+            border-radius: 0.375rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            color: var(--text-dark);
+            width: 100%;
+        }
+
+        .btn-oauth:hover {
+            background-color: #f8fafc;
+            border-color: #cbd5e1;
+        }
+
+        .footer-link {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .footer-link a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* Right Column Styling (Hero Section) */
+        .hero-section {
+            background-color: #0044ff;
+            /* Using a structural fallback linear-gradient with noise emulation via pure CSS generator style */
+            background-image: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.15) 0%, transparent 80%), 
+                              linear-gradient(135deg, #0026e6 0%, #0055ff 100%);
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 3rem;
+            color: #ffffff;
+            overflow: hidden;
+        }
+
+        /* Pseudo-element for fine grain textured look similar to screenshot */
+        .hero-section::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            opacity: 0.04;
+            pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3联%3Cfilter id='noise'%3联%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3联%3C/filter%3联%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3联%3C/svg%3联");
+        }
+
+        .hero-top-tag {
+            font-size: 0.65rem;
+            letter-spacing: 0.2rem;
+            text-transform: uppercase;
+            opacity: 0.8;
+            font-weight: 600;
+        }
+
+        .hero-center-content {
+            max-width: 520px;
+            margin: auto;
+            text-align: center;
+            z-index: 1;
+        }
+
+        .hero-title {
+            font-weight: 700;
+            font-size: 2.5rem;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.04rem;
+        }
+
+        .hero-desc {
+            font-size: 0.95rem;
+            opacity: 0.85;
+            margin-bottom: 2.5rem;
+            line-height: 1.6;
+        }
+
+        .feature-list {
+            text-align: left;
+            display: inline-block;
+            margin: 0 auto;
+        }
+
+        .feature-item {
+            font-size: 0.9rem;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            opacity: 0.9;
+        }
+
+        .feature-item i {
+            font-size: 1rem;
+            color: #ffffff;
+        }
+
+        .hero-footer-tag {
+            font-size: 0.65rem;
+            letter-spacing: 0.15rem;
+            text-transform: uppercase;
+            opacity: 0.5;
+            text-align: center;
+        }
+
+        /* Floating Badge bottom right */
+        .floating-stats-badge {
+            position: absolute;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(4px);
+            color: #1e1e1e;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            z-index: 2;
+        }
+
+        .badge-icon-sparkle {
+            color: #0055ff;
+            background: #e6eeff;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.65rem;
+        }
+
+        .badge-muted-text {
+            color: #747d8c;
+            font-size: 0.7rem;
+        }
+
+        @media (max-width: 991.98spx) {
+            .hero-section {
+                min-height: auto;
+                padding: 4rem 2rem;
+            }
+            .form-section {
+                min-height: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container-fluid p-0">
+    <div class="row g-0">
+        
+        <div class="col-lg-6 form-section">
+            <div class="d-flex justify-content-between align-items-center w-100">
+                <div class="logo-text">
+                    <div class="logo-icon"></div>
+                    Auth
+                </div>
+                <a href="#" class="nav-link-top">Back to home</a>
+            </div>
+
+            <div class="form-container">
+                <span class="subtitle-badge">➔ Get Started</span>
+                <h1 class="form-title">Create your account</h1>
+                <p class="form-desc">Start building conversational forms in minutes</p>
+
+                <form onsubmit="return false;">
+                    <div class="mb-3">
+                        <label for="inputName" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="inputName" value="Arindam Majumder">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="inputEmail" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="inputEmail" placeholder="name@example.com">
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="inputPassword" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="inputPassword" value="••••••••">
+                        <div class="password-hint">Must be at least 8 characters</div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100 btn-primary-custom mb-2">Create account</button>
+                </form>
+
+                <div class="divider-text">Or continue with</div>
+
+                <div class="row g-2">
+                    <div class="col-6">
+                        <button class="btn btn-oauth">
+                            <svg width="16" height="16" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                                <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" fill="#FBBC05"/>
+                                <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" fill="#EA4335"/>
+                            </svg>
+                            Google
+                        </button>
+                    </div>
+                    <div class="col-6">
+                        <button class="btn btn-oauth">
+                            <i class="bi bi-github"></i>
+                            GitHub
+                        </button>
+                    </div>
+                </div>
+
+                <div class="text-center mt-4 footer-link">
+                    Already have an account? <a href="#">Sign in</a>
+                </div>
+            </div>
+
+            <div></div>
+        </div>
+
+        <div class="col-lg-6 hero-section">
+            <div class="text-center w-100">
+                <span class="hero-top-tag">✦ Auth</span>
+            </div>
+
+            <div class="hero-center-content">
+                <h2 class="hero-title">Conversations that turn into clean data.</h2>
+                <p class="hero-desc">
+                    Create AI-powered surveys, collect responses through chat, and turn them into summaries and analytics — in minutes.
+                </p>
+
+                <div class="w-100 d-flex justify-content-center">
+                    <div class="feature-list">
+                        <div class="feature-item">
+                            <i class="bi bi-check-circle-fill"></i>
+                            <span>AI-generated conversational forms</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="bi bi-check-circle-fill"></i>
+                            <span>Real-time analytics & sentiment</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="bi bi-check-circle-fill"></i>
+                            <span>Embed anywhere or share a link</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hero-footer-tag w-100">
+                Built for Product, Research & Growth Teams.
+            </div>
+
+            <div class="floating-stats-badge">
+                <div class="badge-icon-sparkle">
+                    <i class="bi bi-lightning-fill"></i>
+                </div>
+                <span>2.3K</span>
+                <span class="badge-muted-text">views</span>
+                <span class="badge-muted-text border-start ps-1">30d</span>
+                <span class="badge-muted-text ps-1">by Rash</span>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

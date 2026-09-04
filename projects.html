@@ -1,0 +1,1237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alex Moss — Project Archive | All Sheets</title>
+
+<!-- ================= SEO (EDIT: canonical + description) ================= -->
+<meta name="description" content="The complete project register — every shipped build, API, open-source library and tool. Filter by discipline, open a sheet for the full spec.">
+<link rel="canonical" href="https://alexmoss.dev/projects/">
+<meta name="theme-color" content="#F2EFE7">
+
+<!-- ================= SOCIAL / META (EDIT: real 1200x630 banner) ================= -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Alex Moss — The Drawing Register">
+<meta property="og:description" content="Every sheet in the set — filter by discipline, search the stack, open a drawing for the full spec.">
+<meta property="og:url" content="https://alexmoss.dev/projects/">
+<meta property="og:image" content="https://picsum.photos/seed/register-og/1200/630.jpg">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='3' fill='%231B1D21'/%3E%3Cpath d='M16 8 L22 19 H10 Z' fill='%23F2B60C'/%3E%3Crect x='7' y='20' width='18' height='2.5' fill='%23F2B60C'/%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,500&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   SHEET INDEX — same tokens as the portfolio system
+   ============================================================ */
+:root{
+  --ink:#1B1D21; --ink-2:#4A4E56;
+  --paper:#F2EFE7; --paper-2:#E9E4D6;
+  --accent:#F2B60C; --stamp:#B5442A;
+  --line:rgba(27,29,33,.16); --line-soft:rgba(27,29,33,.09);
+  --sans:"Archivo",sans-serif; --mono:"IBM Plex Mono",monospace;
+  --header-h:64px; --tape-h:14px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--paper);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+button{font:inherit;cursor:pointer;background:none;border:0;color:inherit}
+::selection{background:var(--accent);color:var(--ink)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+section{scroll-margin-top:calc(var(--header-h) + var(--tape-h) + 70px)}
+.wrap{width:min(1160px,92vw);margin-inline:auto}
+
+.sec-label{font-family:var(--mono);font-size:.68rem;font-weight:600;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--ink-2);display:flex;align-items:center;gap:14px;margin-bottom:18px}
+.sec-label::before{content:"";width:34px;height:1px;background:var(--ink);flex:none}
+.sec-label .rev{margin-left:auto;border:1px solid var(--stamp);color:var(--stamp);padding:2px 7px;font-size:.6rem;letter-spacing:.12em}
+h1,h2,h3{letter-spacing:-.02em;line-height:1.05}
+.h2{font-size:clamp(1.9rem,4vw,3rem);font-weight:800;margin-bottom:.5em}
+.lead{font-size:clamp(1rem,1.5vw,1.15rem);color:var(--ink-2);max-width:56ch}
+.mono{font-family:var(--mono)}
+
+.btn{display:inline-flex;align-items:center;gap:10px;font-weight:700;font-size:.95rem;
+  padding:15px 26px;text-decoration:none;white-space:nowrap;
+  clip-path:polygon(0 0,calc(100% - 13px) 0,100% 13px,100% 100%,0 100%);
+  transition:transform .18s ease,background .18s ease,color .18s ease}
+.btn svg{width:17px;height:17px;flex:none}
+.btn:active{transform:translateY(1px)}
+.btn-ink{background:var(--ink);color:var(--paper)}
+.btn-ink:hover{background:var(--accent);color:var(--ink)}
+.btn-ghost{border:1px solid var(--ink);border-radius:0;clip-path:none;padding:14px 25px}
+.btn-ghost:hover{background:var(--ink);color:var(--paper)}
+
+.pop{opacity:0;transform:translateY(14px)}
+.pop.in{opacity:1;transform:none;transition:opacity .5s ease var(--d,0s),transform .5s ease var(--d,0s)}
+
+/* ============================================================
+   HEADER + TAPE
+   ============================================================ */
+.site-head{position:sticky;top:0;z-index:60;background:rgba(242,239,231,.92);backdrop-filter:blur(8px)}
+.head-bar{height:var(--header-h);display:flex;align-items:center;gap:26px}
+.brand{display:flex;align-items:center;gap:11px;text-decoration:none}
+.brand-mark{width:38px;height:38px;flex:none}
+.brand-name{font-weight:800;font-size:.95rem;letter-spacing:.02em;line-height:1.1}
+.brand-sub{font-family:var(--mono);font-size:.53rem;letter-spacing:.14em;color:var(--ink-2)}
+.head-nav{display:flex;gap:26px;margin-left:auto}
+.head-nav a{font-family:var(--mono);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;
+  text-decoration:none;color:var(--ink-2);padding:6px 0;position:relative}
+.head-nav a::after{content:"";position:absolute;left:0;bottom:0;height:2px;width:0;background:var(--accent);transition:width .25s ease}
+.head-nav a:hover{color:var(--ink)}
+.head-nav a:hover::after{width:100%}
+.head-mail{display:inline-flex;align-items:center;gap:9px;font-weight:700;font-size:.88rem;
+  text-decoration:none;padding:10px 16px;border:1px solid var(--ink);transition:.18s ease}
+.head-mail:hover{background:var(--ink);color:var(--paper)}
+.head-mail svg{width:15px;height:15px}
+@media (max-width:900px){.head-nav{display:none}.head-mail{margin-left:auto}}
+
+.tape{position:relative;height:var(--tape-h);border-bottom:1px solid var(--line);
+  background:
+    repeating-linear-gradient(90deg,var(--line) 0 1px,transparent 1px 28px) left bottom / 100% 6px no-repeat,
+    repeating-linear-gradient(90deg,rgba(27,29,33,.3) 0 1px,transparent 1px 140px) left bottom / 100% 12px no-repeat}
+.tape-fill{position:absolute;left:0;top:0;bottom:0;width:0;background:rgba(242,182,12,.35);border-right:2px solid var(--accent)}
+.tape-read{position:absolute;right:-4px;top:-19px;transform:translateX(50%);font-family:var(--mono);
+  font-size:.58rem;letter-spacing:.06em;background:var(--paper);border:1px solid var(--line);padding:1px 6px;color:var(--ink-2)}
+@media (max-width:720px){.tape-read{display:none}}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line);
+  background:
+    linear-gradient(var(--line-soft) 1px,transparent 1px) left top / 100% 72px,
+    linear-gradient(90deg,var(--line-soft) 1px,transparent 1px) left top / 72px 100%}
+.hero-inner{padding:clamp(52px,7vw,84px) 0 clamp(44px,6vw,70px)}
+.eyebrow{font-family:var(--mono);font-size:.66rem;letter-spacing:.2em;font-weight:500;
+  color:var(--ink-2);text-transform:uppercase;margin-bottom:22px;display:flex;align-items:center;gap:12px}
+.dot-live{width:7px;height:7px;background:var(--accent);position:relative;flex:none;display:inline-block}
+.dot-live::after{content:"";position:absolute;inset:-4px;border:1.5px solid var(--accent);animation:ping 1.7s ease-out infinite}
+@keyframes ping{0%{transform:scale(.4);opacity:.9}80%,100%{transform:scale(1.6);opacity:0}}
+.hero h1{font-size:clamp(2.4rem,5.6vw,4.2rem);font-weight:800;letter-spacing:-.028em;line-height:1.02;margin-bottom:18px}
+.hero-corner{position:absolute;width:18px;height:18px;opacity:.5;pointer-events:none}
+.hero-corner.tl{top:14px;left:14px;border-top:1.5px solid var(--ink);border-left:1.5px solid var(--ink)}
+.hero-corner.tr{top:14px;right:14px;border-top:1.5px solid var(--ink);border-right:1.5px solid var(--ink)}
+.hero-corner.bl{bottom:14px;left:14px;border-bottom:1.5px solid var(--ink);border-left:1.5px solid var(--ink)}
+.hero-corner.br{bottom:14px;right:14px;border-bottom:1.5px solid var(--ink);border-right:1.5px solid var(--ink)}
+.hero-datum{position:absolute;right:22px;bottom:16px;font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;color:var(--ink-2);opacity:.75}
+
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:clamp(30px,4vw,46px)}
+.stat{background:var(--paper);padding:18px 20px}
+.stat b{font-size:clamp(1.5rem,3vw,2.2rem);font-weight:800;letter-spacing:-.02em;display:block;line-height:1.1}
+.stat span{font-family:var(--mono);font-size:.56rem;letter-spacing:.16em;color:var(--ink-2);text-transform:uppercase}
+@media (max-width:720px){.stats{grid-template-columns:repeat(2,1fr)}}
+
+/* ============================================================
+   TICKER
+   ============================================================ */
+.ticker{border-bottom:1px solid var(--line);overflow:hidden;padding:13px 0}
+.ticker-track{display:flex;width:max-content;animation:tick 44s linear infinite}
+.ticker:hover .ticker-track{animation-play-state:paused}
+@keyframes tick{to{transform:translateX(-50%)}}
+.ticker-group{display:flex;align-items:center;list-style:none}
+.ticker-group li{font-family:var(--mono);font-size:.66rem;letter-spacing:.2em;font-weight:500;display:flex;align-items:center;white-space:nowrap}
+.ticker-group li::after{content:"";width:6px;height:6px;background:var(--accent);transform:rotate(45deg);margin:0 30px;flex:none}
+
+/* ============================================================
+   TOOLBAR
+   ============================================================ */
+.toolbar{position:sticky;top:calc(var(--header-h) + var(--tape-h));z-index:50;
+  background:var(--paper);border-bottom:1px solid var(--line)}
+.toolbar-inner{display:flex;flex-wrap:wrap;gap:14px 26px;align-items:center;padding:15px 0}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font-family:var(--mono);font-size:.6rem;letter-spacing:.12em;font-weight:600;
+  text-transform:uppercase;border:1px solid var(--line);padding:8px 12px;
+  transition:background .15s ease,color .15s ease,border-color .15s ease}
+.chip .cnt{opacity:.5;margin-left:6px}
+.chip:hover{border-color:var(--ink)}
+.chip.active{background:var(--accent);border-color:var(--accent);color:var(--ink)}
+.chip.active .cnt{opacity:.75}
+.tb-right{display:flex;flex-wrap:wrap;gap:14px 20px;align-items:center;margin-left:auto}
+.search{position:relative}
+.search input{font-family:var(--mono);font-size:.68rem;letter-spacing:.08em;width:190px;
+  background:transparent;border:0;border-bottom:1px solid var(--line);color:var(--ink);
+  padding:8px 20px 8px 2px;border-radius:0;text-transform:uppercase}
+.search input:focus{outline:none;border-color:var(--accent);box-shadow:0 1px 0 var(--accent)}
+.search input::placeholder{color:var(--ink-2)}
+.search svg{position:absolute;right:2px;top:50%;transform:translateY(-50%);width:13px;height:13px;stroke:var(--ink-2);pointer-events:none}
+.sort{display:flex;align-items:center;gap:12px}
+.sort .lbl{font-family:var(--mono);font-size:.56rem;letter-spacing:.16em;color:var(--ink-2)}
+.srt{font-family:var(--mono);font-size:.6rem;letter-spacing:.12em;font-weight:600;
+  padding:6px 0;border-bottom:2px solid transparent;color:var(--ink-2);text-transform:uppercase}
+.srt:hover{color:var(--ink)}
+.srt.active{color:var(--ink);border-color:var(--accent)}
+.vtg{display:flex;border:1px solid var(--line)}
+.vtg button{width:36px;height:34px;display:grid;place-items:center;transition:.15s ease}
+.vtg svg{width:15px;height:15px;stroke:var(--ink-2)}
+.vtg button:hover svg{stroke:var(--ink)}
+.vtg button.active{background:var(--ink)}
+.vtg button.active svg{stroke:var(--paper)}
+.readout{font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;color:var(--ink-2);white-space:nowrap}
+@media (max-width:960px){.tb-right{margin-left:0}}
+
+/* ============================================================
+   REGISTER SECTION
+   ============================================================ */
+#register{padding:clamp(48px,6vw,80px) 0 clamp(70px,9vw,120px)}
+
+/* ---- SHEETS view ---- */
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1px;
+  background:var(--line);border:1px solid var(--line);margin-top:34px}
+.pcard{background:var(--paper);padding:22px 22px 18px;position:relative;cursor:pointer;
+  transition:background .2s ease}
+.pcard:hover{background:rgba(27,29,33,.028)}
+.pcard::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent);
+  transform:scaleX(0);transform-origin:left;transition:transform .3s ease}
+.pcard:hover::before{transform:scaleX(1)}
+.p-top{display:flex;align-items:baseline;gap:12px}
+.p-num{font-family:var(--mono);font-size:1.35rem;line-height:1;color:var(--ink-2)}
+@supports (-webkit-text-stroke:1px black){
+  .p-num{color:transparent;-webkit-text-stroke:1px var(--ink)}
+}
+.p-meta{margin-left:auto;font-family:var(--mono);font-size:.54rem;letter-spacing:.14em;color:var(--ink-2);text-transform:uppercase}
+
+/* ---- media strip: shared by card (.pfig) and modal (.m-media) ----
+   figmode = technical glyph · imgmode = thumbnail screenshot     */
+.pfig,.m-media{position:relative;background:var(--paper-2);overflow:hidden}
+.pfig{margin:16px -22px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.m-media{border:1px solid var(--line);margin:0 0 26px}
+.pfig.figmode,.m-media.figmode{padding:16px 20px}
+.pfig svg,.m-media svg{display:block;width:100%;height:auto}
+.pimg{display:block;width:100%;aspect-ratio:260/140;object-fit:cover;
+  filter:grayscale(.92) contrast(1.05);
+  transition:filter .4s ease,transform .5s ease}
+.m-media.imgmode img{display:block;width:100%;aspect-ratio:2/1;object-fit:cover;filter:none}
+.pcard:hover .pimg{filter:grayscale(0) contrast(1);transform:scale(1.025)}
+/* yellow survey brackets on image mode */
+.imgmode::before,.imgmode::after{content:"";position:absolute;width:18px;height:18px;
+  border:0 solid var(--accent);z-index:2;pointer-events:none}
+.imgmode::before{top:8px;left:8px;border-top-width:3px;border-left-width:3px}
+.imgmode::after{bottom:8px;right:8px;border-bottom-width:3px;border-right-width:3px}
+/* glyph strokes — apply in both containers */
+.pfig .k,.m-media .k{stroke:var(--ink);stroke-width:1.8;fill:none;stroke-linecap:square}
+.pfig .kt,.m-media .kt{stroke:var(--ink);stroke-width:1.1;fill:none;stroke-linecap:square;opacity:.75}
+.pfig .kf,.m-media .kf{fill:var(--ink);stroke:none}
+.pfig .fa,.m-media .fa{stroke:var(--accent);stroke-width:2.6;fill:none;stroke-linecap:square;
+  stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset .9s ease .05s}
+.pfig .faf,.m-media .faf{fill:var(--accent);stroke:none;opacity:0;transition:opacity .4s ease .55s}
+.pcard:hover .pfig .fa{stroke-dashoffset:0}
+.pcard:hover .pfig .faf{opacity:1}
+.pcard .imgmode img {width: 100%;height: auto;display: block;}
+/* in the modal the accent draws immediately — no hover concept */
+.m-media .fa{stroke-dashoffset:0}
+.m-media .faf{opacity:1}
+.pfig .cur,.m-media .cur{animation:blink 1.1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+
+.stamp-mini{position:absolute;top:10px;right:12px;z-index:3;font-family:var(--mono);font-size:.54rem;
+  letter-spacing:.14em;color:var(--stamp);border:2px solid var(--stamp);
+  padding:4px 8px;transform:rotate(-7deg);background:rgba(242,239,231,.85);white-space:nowrap}
+.stamp-mini.dim{color:var(--ink-2);border-color:var(--ink-2)}
+.pcard h3{font-size:1.28rem;font-weight:700;margin-top:15px}
+.p-tag{color:var(--ink-2);font-size:.87rem;margin-top:3px}
+.p-stack{font-family:var(--mono);font-size:.58rem;letter-spacing:.12em;color:var(--ink-2);
+  margin-top:11px;text-transform:uppercase}
+.p-foot{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:16px;
+  padding-top:13px;border-top:1px solid var(--line-soft)}
+.case-btn{display:inline-flex;align-items:center;gap:7px;text-decoration:none;
+  font-family:var(--mono);font-size:.56rem;letter-spacing:.1em;font-weight:600;
+  border:1px solid var(--ink);padding:8px 11px;transition:.2s ease;text-transform:uppercase}
+.case-btn svg{width:11px;height:11px;stroke:currentColor}
+.case-btn:hover{background:var(--ink);color:var(--paper)}
+.case-btn.solid{background:var(--accent);border-color:var(--accent);color:var(--ink)}
+.case-btn.solid:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.open-btn{margin-left:auto;display:inline-flex;align-items:center;gap:7px;
+  font-family:var(--mono);font-size:.56rem;letter-spacing:.1em;font-weight:600;
+  color:var(--ink-2);text-transform:uppercase;transition:color .15s ease}
+.open-btn svg{width:11px;height:11px;stroke:currentColor}
+.pcard:hover .open-btn{color:var(--ink)}
+
+/* ---- REGISTER view ---- */
+.reg{display:none;margin-top:34px;border:1px solid var(--line);background:var(--paper)}
+body.view-reg .reg{display:block}
+body.view-reg .pgrid{display:none}
+.reg-head,.reg-row{display:grid;align-items:center;gap:16px;
+  grid-template-columns:56px 1.5fr 120px 1.3fr 92px 128px 34px;padding:14px 18px}
+.reg-head{font-family:var(--mono);font-size:.54rem;letter-spacing:.16em;
+  color:var(--ink-2);text-transform:uppercase;background:var(--paper-2);border-bottom:1px solid var(--line)}
+.reg-row{position:relative;cursor:pointer;transition:background .2s ease}
+.reg-row::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--accent);
+  transform:scaleY(0);transform-origin:top;transition:transform .22s ease}
+.reg-row:hover{background:rgba(27,29,33,.03)}
+.reg-row:hover::before{transform:scaleY(1)}
+.r-num{font-family:var(--mono);font-size:.78rem;color:var(--ink-2)}
+.r-title strong{display:block;font-size:.92rem;font-weight:700}
+.r-title em{font-style:normal;font-family:var(--mono);font-size:.54rem;letter-spacing:.1em;color:var(--ink-2);text-transform:uppercase}
+.r-type,.r-year{font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;color:var(--ink-2);text-transform:uppercase}
+.r-stack{font-family:var(--mono);font-size:.58rem;letter-spacing:.08em;color:var(--ink-2);text-transform:uppercase}
+.r-stamp{font-family:var(--mono);font-size:.52rem;letter-spacing:.12em;color:var(--stamp);
+  border:1.5px solid var(--stamp);padding:3px 7px;justify-self:start;white-space:nowrap}
+.r-stamp.dim{color:var(--ink-2);border-color:var(--ink-2)}
+.r-arr svg{width:14px;height:14px;stroke:var(--ink-2);transition:transform .2s ease}
+.reg-row:hover .r-arr svg{stroke:var(--ink);transform:translateX(3px)}
+@media (max-width:860px){
+  .reg-head,.reg-row{grid-template-columns:44px 1fr 108px 28px;padding:13px 14px}
+  .c-type,.c-stack,.c-year{display:none}
+}
+
+.empty{display:none;border:1px dashed var(--line);padding:clamp(40px,6vw,70px);
+  text-align:center;margin-top:34px}
+.empty.show{display:block}
+.empty p{font-family:var(--mono);font-size:.68rem;letter-spacing:.16em;color:var(--ink-2);
+  text-transform:uppercase;margin-bottom:22px}
+
+/* ============================================================
+   YELLOW CTA BAND
+   ============================================================ */
+.band-cta{background:var(--accent);color:var(--ink);padding:clamp(58px,8vw,92px) 0;border-block:1px solid var(--ink)}
+.cta-flex{display:flex;align-items:center;justify-content:space-between;gap:34px;flex-wrap:wrap}
+.band-cta h2{font-size:clamp(2rem,4.6vw,3.4rem);font-weight:900;letter-spacing:-.025em;line-height:1.02}
+.cta-sub{font-family:var(--mono);font-size:.66rem;letter-spacing:.16em;margin-top:14px;text-transform:uppercase}
+
+/* ============================================================
+   SHEET MODAL
+   ============================================================ */
+.ovl{position:fixed;inset:0;z-index:90;display:none}
+.ovl.on{display:block}
+.ovl-back{position:absolute;inset:0;background:rgba(27,29,33,.62);backdrop-filter:blur(3px)}
+.msheet{position:relative;margin:4vh auto;width:min(940px,94vw);max-height:90vh;overflow:auto;
+  background:var(--paper);border:1px solid var(--ink);padding:clamp(24px,4.5vw,52px);
+  animation:msIn .35s cubic-bezier(.2,.9,.3,1)}
+@keyframes msIn{from{opacity:0;transform:translateY(26px) scale(.985)}}
+.m-top{display:flex;align-items:center;gap:14px;margin-bottom:20px}
+.m-num{font-family:var(--mono);font-size:1.5rem;line-height:1;color:var(--ink-2)}
+@supports (-webkit-text-stroke:1px black){.m-num{color:transparent;-webkit-text-stroke:1px var(--ink)}}
+.m-type,.m-year{font-family:var(--mono);font-size:.56rem;letter-spacing:.14em;color:var(--ink-2);text-transform:uppercase}
+.m-close{margin-left:auto;width:38px;height:38px;border:1px solid var(--ink);display:grid;place-items:center;transition:.15s ease;flex:none}
+.m-close:hover{background:var(--accent);border-color:var(--accent)}
+.m-close svg{width:15px;height:15px;stroke:var(--ink)}
+.m-stamp{display:inline-block;font-family:var(--mono);font-size:.62rem;letter-spacing:.16em;
+  color:var(--stamp);border:2px solid var(--stamp);padding:6px 11px;transform:rotate(-6deg);margin-bottom:18px}
+.m-stamp.dim{color:var(--ink-2);border-color:var(--ink-2)}
+#mTitle{font-size:clamp(1.6rem,3.4vw,2.3rem);font-weight:800;margin-bottom:6px}
+#mTag{color:var(--ink-2);font-style:italic;margin-bottom:24px}
+.m-cols{display:grid;grid-template-columns:1.15fr 1fr;gap:clamp(24px,4vw,48px)}
+@media (max-width:760px){.m-cols{grid-template-columns:1fr}}
+#mDesc{color:var(--ink-2);margin-bottom:24px}
+.spec-mini{border-top:1px solid var(--line)}
+.spec-mini div{display:grid;grid-template-columns:96px 1fr;gap:14px;padding:9px 0;border-bottom:1px solid var(--line);font-size:.84rem}
+.spec-mini span{font-family:var(--mono);font-size:.58rem;letter-spacing:.14em;color:var(--ink-2);padding-top:3px}
+.deliv-title{font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;color:var(--ink-2);margin-bottom:12px;text-transform:uppercase}
+.deliv{list-style:none}
+.deliv li{display:flex;gap:12px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--line-soft);font-size:.92rem;font-weight:500}
+.deliv svg{width:15px;height:15px;stroke:var(--ink);flex:none;margin-top:4px}
+.deliv li:last-child{border-bottom:0}
+.m-links{display:flex;gap:10px;flex-wrap:wrap;margin-top:26px}
+.m-links .case-btn{font-size:.62rem;padding:11px 15px}
+.m-nav{margin-top:36px;padding-top:20px;border-top:1px solid var(--line);
+  display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.m-nav-btn{display:inline-flex;align-items:center;gap:9px;font-family:var(--mono);
+  font-size:.6rem;letter-spacing:.1em;font-weight:600;border:1px solid var(--ink);
+  padding:11px 14px;text-transform:uppercase;transition:.15s ease;max-width:44%}
+.m-nav-btn span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.m-nav-btn:hover{background:var(--ink);color:var(--paper)}
+.m-nav-btn svg{width:12px;height:12px;stroke:currentColor;flex:none}
+.m-count{font-family:var(--mono);font-size:.58rem;letter-spacing:.14em;color:var(--ink-2);
+  margin-left:auto;text-transform:uppercase}
+@media (max-width:640px){.m-count{margin-left:0;width:100%;order:3}}
+
+/* ============================================================
+   FOOTER + MOBILE BAR
+   ============================================================ */
+.site-foot{background:var(--ink);color:var(--paper);padding:clamp(56px,7vw,84px) 0 34px;--line:rgba(242,239,231,.2)}
+.tblock{display:grid;grid-template-columns:2.4fr 1fr 1fr 1fr 1.3fr 1fr;gap:1px;
+  background:var(--line);border:1px solid var(--line);margin-bottom:clamp(40px,5vw,64px)}
+.tb-cell{background:var(--ink);padding:16px 18px}
+.tb-cell span{display:block;font-family:var(--mono);font-size:.55rem;letter-spacing:.18em;color:rgba(242,239,231,.5);margin-bottom:5px;text-transform:uppercase}
+.tb-cell strong{font-family:var(--mono);font-weight:500;font-size:.78rem;letter-spacing:.04em}
+.foot-cols{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:clamp(30px,4vw,70px);margin-bottom:clamp(40px,5vw,60px)}
+.foot-blurb{color:rgba(242,239,231,.6);font-size:.9rem;max-width:34ch;margin-top:16px}
+.foot-tag{font-family:var(--mono);font-size:.62rem;letter-spacing:.22em;color:var(--accent);margin-top:22px}
+.foot-col h4{font-family:var(--mono);font-size:.62rem;letter-spacing:.18em;color:rgba(242,239,231,.5);margin-bottom:18px;font-weight:500;text-transform:uppercase}
+.foot-col a{display:block;text-decoration:none;color:rgba(242,239,231,.82);font-size:.9rem;padding:5px 0;transition:color .2s}
+.foot-col a:hover{color:var(--accent)}
+.legal{border-top:1px solid var(--line);padding-top:24px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;color:rgba(242,239,231,.45)}
+@media (max-width:820px){
+  .tblock{grid-template-columns:repeat(3,1fr)}
+  .tb-cell:first-child{grid-column:1/-1}
+  .foot-cols{grid-template-columns:1fr}
+}
+.mob-bar{position:fixed;left:0;right:0;bottom:0;z-index:70;display:none;gap:1px;background:var(--line);
+  transition:transform .35s ease;padding-bottom:env(safe-area-inset-bottom)}
+.mob-bar.hide{transform:translateY(110%)}
+.mob-bar a{flex:1;display:flex;align-items:center;justify-content:center;gap:9px;padding:17px 10px;font-weight:700;font-size:.9rem;text-decoration:none}
+.mob-bar svg{width:16px;height:16px}
+.mob-bar .mb-mail{background:var(--accent);color:var(--ink)}
+.mob-bar .mb-gh{background:var(--ink);color:var(--paper)}
+@media (max-width:720px){.mob-bar{display:flex}body{padding-bottom:58px}}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.001s!important;transition-duration:.001s!important}
+  .ticker-track{animation:none}
+  .pop{opacity:1;transform:none}
+  .pimg{filter:grayscale(0)}
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     HEADER (homeUrl set in CONFIG — populates Overview link)
+     ============================================================ -->
+<header class="site-head">
+  <div class="wrap head-bar">
+    <a class="brand" href="#" data-home aria-label="Alex Moss — overview">
+      <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true">
+        <rect width="40" height="40" rx="2.5" fill="var(--ink)"/>
+        <path d="M20 8.5 L27.5 23 H12.5 Z" fill="var(--accent)"/>
+        <rect x="8" y="24.5" width="24" height="2.6" fill="var(--accent)"/>
+        <rect x="8" y="30" width="24" height="1.4" fill="rgba(242,239,231,.4)"/>
+      </svg>
+      <span>
+        <span class="brand-name">ALEX MOSS</span><br>
+        <span class="brand-sub">SHEET INDEX · COMPLETE SET</span>
+      </span>
+    </a>
+    <nav class="head-nav" aria-label="Primary">
+      <a href="#" data-home>Overview</a>
+      <a href="#register">Register</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="head-mail" href="mailto:you@example.com" data-mail data-track="Email">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><rect x="3" y="5" width="18" height="14"/><path d="M3 7l9 6 9-6"/></svg>
+      Email me
+    </a>
+  </div>
+  <div class="tape" aria-hidden="true">
+    <div class="tape-fill" id="tapeFill"><span class="tape-read" id="tapeRead">00.0 m</span></div>
+  </div>
+</header>
+
+<main>
+<!-- ============================================================
+     HERO (EDIT: headline + datum line)
+     ============================================================ -->
+<section class="hero">
+  <span class="hero-corner tl"></span><span class="hero-corner tr"></span>
+  <span class="hero-corner bl"></span><span class="hero-corner br"></span>
+  <p class="hero-datum">INDEX COMPLETE · NOTHING WITHHELD · REV C</p>
+  <div class="wrap hero-inner">
+    <p class="eyebrow"><span class="dot-live"></span>PROJECT ARCHIVE · EVERY SHEET IN THE SET</p>
+    <h1>The drawing register.</h1>
+    <p class="lead">Every build I've shipped, maintained or open-sourced — filter by discipline, search the stack, and open any sheet for the full specification.</p>
+    <div class="stats">
+      <div class="stat"><b id="sTotal">—</b><span>Sheets in set</span></div>
+      <div class="stat"><b id="sTypes">—</b><span>Disciplines</span></div>
+      <div class="stat"><b id="sStack">—</b><span>Stack items</span></div>
+      <div class="stat"><b id="sOpen">—</b><span>Still running</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     TICKER (EDIT: keep both groups identical)
+     ============================================================ -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    <ul class="ticker-group">
+      <li>SHEET INDEX — COMPLETE SET</li><li>REV C</li><li>FILTER · SEARCH · COMPARE</li>
+      <li>SHIPPED / MAINTAINED / OPEN SOURCE</li><li>OPEN A SHEET FOR FULL SPEC</li><li>DEEP-LINK ANY PROJECT</li>
+    </ul>
+    <ul class="ticker-group">
+      <li>SHEET INDEX — COMPLETE SET</li><li>REV C</li><li>FILTER · SEARCH · COMPARE</li>
+      <li>SHIPPED / MAINTAINED / OPEN SOURCE</li><li>OPEN A SHEET FOR FULL SPEC</li><li>DEEP-LINK ANY PROJECT</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ============================================================
+     REGISTER SECTION
+     ============================================================ -->
+<section id="register">
+  <div class="wrap">
+    <p class="sec-label">SECTION 01 — PROJECT REGISTER <span class="rev">REV C</span></p>
+
+    <div class="toolbar">
+      <div class="wrap toolbar-inner">
+        <div class="chips" id="chips" role="group" aria-label="Filter by discipline"></div>
+        <div class="tb-right">
+          <div class="search">
+            <input type="search" id="qInput" placeholder="SEARCH SHEETS…" aria-label="Search projects">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="square"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21"/></svg>
+          </div>
+          <div class="sort" role="group" aria-label="Sort order">
+            <span class="lbl">SORT</span>
+            <button class="srt active" data-sort="latest">Latest</button>
+            <button class="srt" data-sort="oldest">Oldest</button>
+            <button class="srt" data-sort="az">A–Z</button>
+          </div>
+          <div class="vtg" role="group" aria-label="View mode">
+            <button class="active" data-view="sheets" aria-label="Sheets view" title="Sheets">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="4" y="4" width="7" height="7"/><rect x="13" y="4" width="7" height="7"/><rect x="4" y="13" width="7" height="7"/><rect x="13" y="13" width="7" height="7"/></svg>
+            </button>
+            <button data-view="reg" aria-label="Register view" title="Register">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="square"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+            </button>
+          </div>
+          <span class="readout" id="readout">SHOWING — / —</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="pgrid" id="pgrid"></div>
+
+    <div class="reg" id="reg">
+      <div class="reg-head">
+        <span>NO</span><span>PROJECT</span><span class="c-type">TYPE</span>
+        <span class="c-stack">STACK</span><span class="c-year">YEAR</span><span>STATUS</span><span></span>
+      </div>
+      <div id="regRows"></div>
+    </div>
+
+    <div class="empty" id="empty">
+      <p>No sheets match the current filters.</p>
+      <button class="btn btn-ghost" id="resetBtn">Clear all filters</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     YELLOW CTA BAND
+     ============================================================ -->
+<section id="contact" class="band-cta">
+  <div class="wrap cta-flex">
+    <div>
+      <h2>Seen enough?<br>Start a sheet.</h2>
+      <p class="cta-sub">AVG. REPLY — ONE WORKING DAY · REMOTE-FRIENDLY · NO OBLIGATION</p>
+    </div>
+    <a class="btn btn-ink" href="mailto:you@example.com" data-mail data-track="Email">Start a project
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+  </div>
+</section>
+</main>
+
+<!-- ============================================================
+     FOOTER — title block
+     ============================================================ -->
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="tblock">
+      <div class="tb-cell"><span>Project</span><strong>SHEET INDEX — FULL ARCHIVE</strong></div>
+      <div class="tb-cell"><span>Sheets</span><strong id="tbCount">—</strong></div>
+      <div class="tb-cell"><span>Rev</span><strong>C</strong></div>
+      <div class="tb-cell"><span>Scale</span><strong>1 : 1</strong></div>
+      <div class="tb-cell"><span>Date</span><strong id="tbDate">—</strong></div>
+      <div class="tb-cell"><span>Drawn</span><strong>A.M.</strong></div>
+    </div>
+    <div class="foot-cols">
+      <div>
+        <a class="brand" href="#" data-home style="text-decoration:none">
+          <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true">
+            <rect width="40" height="40" rx="2.5" fill="rgba(242,239,231,.08)"/>
+            <path d="M20 8.5 L27.5 23 H12.5 Z" fill="var(--accent)"/>
+            <rect x="8" y="24.5" width="24" height="2.6" fill="var(--accent)"/>
+            <rect x="8" y="30" width="24" height="1.4" fill="rgba(242,239,231,.4)"/>
+          </svg>
+          <span>
+            <span class="brand-name" style="color:var(--paper)">ALEX MOSS</span><br>
+            <span class="brand-sub" style="color:rgba(242,239,231,.5)">FULLSTACK ENGINEER</span>
+          </span>
+        </a>
+        <p class="foot-blurb">The complete archive — every sheet accounted for, from first commit to handover.</p>
+        <p class="foot-tag">MADE TO BE MEASURED.</p>
+      </div>
+      <div class="foot-col">
+        <h4>Contact</h4>
+        <a href="mailto:you@example.com" data-mail data-track="Email">you@example.com</a>
+        <a href="https://github.com/yourhandle" data-gh data-track="GitHub" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.linkedin.com/in/yourhandle" data-li data-track="LinkedIn" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+      <div class="foot-col">
+        <h4>Index</h4>
+        <a href="#" data-home>Overview</a>
+        <a href="#register">Project register</a>
+        <a href="#contact">Start a project</a>
+      </div>
+    </div>
+    <div class="legal">
+      <span>© <span id="year">2025</span> ALEX MOSS — BUILT BY HAND, NO TEMPLATES</span>
+      <span>TYPESET IN ARCHIVO + IBM PLEX MONO</span>
+    </div>
+  </div>
+</footer>
+
+<!-- Sticky mobile bar -->
+<nav class="mob-bar" id="mobBar" aria-label="Quick contact">
+  <a class="mb-gh" href="https://github.com/yourhandle" data-gh data-track="GitHub" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M7 17L17 7M8 7h9v9"/></svg>
+    GitHub</a>
+  <a class="mb-mail" href="mailto:you@example.com" data-mail data-track="Email">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><rect x="3" y="5" width="18" height="14"/><path d="M3 7l9 6 9-6"/></svg>
+    Email me</a>
+</nav>
+
+<!-- ============================================================
+     SHEET MODAL (filled by JS)
+     ============================================================ -->
+<div class="ovl" id="ovl" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+  <div class="ovl-back" data-close></div>
+  <div class="msheet">
+    <div class="m-top">
+      <span class="m-num" id="mNum">P·00</span>
+      <span class="m-type" id="mType">—</span>
+      <span class="m-year" id="mYearTop">—</span>
+      <button class="m-close" data-close aria-label="Close sheet">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="square"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <span class="m-stamp" id="mStamp">—</span>
+    <h3 id="mTitle">—</h3>
+    <p id="mTag">—</p>
+    <!-- thumbnail banner (imgmode) or enlarged glyph (figmode), filled by JS -->
+    <div class="m-media" id="mMedia"></div>
+    <div class="m-cols">
+      <div>
+        <p id="mDesc">—</p>
+        <div class="spec-mini">
+          <div><span>ROLE</span><div id="mRole">—</div></div>
+          <div><span>STACK</span><div id="mStack">—</div></div>
+          <div><span>STATUS</span><div id="mStatus">—</div></div>
+          <div><span>YEAR</span><div id="mYear">—</div></div>
+        </div>
+      </div>
+      <div>
+        <p class="deliv-title">Highlights</p>
+        <ul class="deliv" id="mHl"></ul>
+        <div class="m-links" id="mLinks"></div>
+      </div>
+    </div>
+    <div class="m-nav">
+      <button class="m-nav-btn" id="mPrev">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="square"><path d="M19 12H5M11 5l-7 7 7 7"/></svg>
+        <span id="mPrevLbl">Prev</span>
+      </button>
+      <button class="m-nav-btn" id="mNext">
+        <span id="mNextLbl">Next</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="square"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </button>
+      <span class="m-count" id="mCount">SHEET — / —</span>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   CONFIG — the only setup block you need to touch
+   ============================================================ */
+const CONFIG = {
+  homeUrl:      "/",                            // EDIT: your overview/home page URL
+  email:        "you@example.com",              // EDIT
+  github:       "https://github.com/yourhandle",// EDIT
+  linkedin:     "https://www.linkedin.com/in/yourhandle", // EDIT
+  gaId:         "",                             // EDIT: "G-XXXXXXX" to enable GA4
+  pixelId:      "",                             // EDIT: Meta Pixel ID to enable it
+  formEndpoint: ""                              // unused here (no form) — kept for symmetry
+};
+const REDUCED = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* ---------- populate links everywhere from CONFIG ---------- */
+document.querySelectorAll("[data-home]").forEach(a => a.href = CONFIG.homeUrl);
+document.querySelectorAll("[data-mail]").forEach(a => a.href = "mailto:" + CONFIG.email);
+document.querySelectorAll("[data-gh]").forEach(a => a.href = CONFIG.github);
+document.querySelectorAll("[data-li]").forEach(a => a.href = CONFIG.linkedin);
+
+/* ---------- analytics ---------- */
+function trackEvent(name, params = {}) {
+  try { if (window.gtag) gtag("event", name, params); } catch (e) {}
+  try { if (window.fbq) fbq("trackCustom", name, params); } catch (e) {}
+}
+if (CONFIG.gaId) {
+  const s = document.createElement("script"); s.async = true;
+  s.src = "https://www.googletagmanager.com/gtag/js?id=" + CONFIG.gaId;
+  document.head.appendChild(s);
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = function(){ dataLayer.push(arguments); };
+  gtag("js", new Date()); gtag("config", CONFIG.gaId);
+}
+if (CONFIG.pixelId) {
+  (function(f,b,e,v,n,t,s){
+    if(f.fbq)return; n=f.fbq=function(){ n.callMethod ? n.callMethod.apply(n,arguments) : n.queue.push(arguments); };
+    if(!f._fbq) f._fbq=n; n.push=n; n.loaded=true; n.version="2.0"; n.queue=[];
+    t=b.createElement(e); t.async=true; t.src=v;
+    s=b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t,s);
+  })(window, document, "script", "https://connect.facebook.net/en_US/fbevents.js");
+  fbq("init", CONFIG.pixelId); fbq("track", "PageView");
+}
+document.querySelectorAll("[data-track]").forEach(a =>
+  a.addEventListener("click", () => trackEvent("outbound_" + a.dataset.track.toLowerCase())));
+
+/* ---------- dates ---------- */
+document.getElementById("year").textContent = new Date().getFullYear();
+document.getElementById("tbDate").textContent = new Date().toISOString().slice(0, 10);
+
+/* ---------- tape-measure scroll indicator ---------- */
+const tapeFill = document.getElementById("tapeFill");
+const tapeRead = document.getElementById("tapeRead");
+let tapeTick = false;
+function tapeUpdate() {
+  const max = document.documentElement.scrollHeight - innerHeight;
+  const p = max > 0 ? Math.min(1, scrollY / max) : 0;
+  tapeFill.style.width = (p * 100) + "%";
+  tapeRead.textContent = (p * 30).toFixed(1).padStart(4, "0") + " m";
+  tapeTick = false;
+}
+addEventListener("scroll", () => { if (!tapeTick) { tapeTick = true; requestAnimationFrame(tapeUpdate); } }, { passive: true });
+tapeUpdate();
+
+/* ============================================================
+   DATA — the whole page renders from this array. EDIT HERE.
+   ------------------------------------------------------------
+   Each object = one drawing sheet:
+   slug   — URL handle for deep links (lowercase, no spaces)
+   type   — discipline chip (new values auto-create new chips)
+   stamp  — status stamp (ARCHIVED renders grey, others red)
+   start/end — year numbers; omit end → "— NOW"
+   thumb  — OPTIONAL screenshot URL (~840×460 or larger, landscape).
+            If present it replaces the glyph in the card and becomes
+            a full-width banner in the modal. Omit it → glyph shows.
+            A broken URL auto-falls back to the glyph.
+   fig    — glyph fallback: schema | nodes | terminal | gauge | map | wave
+   ============================================================ */
+const PROJECTS = [
+  
+   {
+    slug:"medicare", num:"01", title:"Medicare",
+    tag:"Invoicing SaaS for freelancers — track time, invoice, get paid.",
+    type:"Web App", stamp:"LIVE", start:2026,
+    role:"Fullstack Developer",
+    stack:["PHP","mySql","Wordpress","Custom Theme Development"],
+    desc:"A complete billing platform for independent contractors: time tracking, recurring invoices, Stripe payments and VAT-ready PDF exports. Built solo, end to end — schema design to deploy pipeline.",
+    highlights:[
+      "Multi-tenant architecture with row-level security",
+      "Pixel-perfect PDF invoice engine, localised VAT rules",
+      "Stripe subscriptions + dunning flow, minimal PCI scope",
+      "99.98% measured uptime across the last 24 months"
+    ],
+    links:[{label:"Live site",href:"https://medicarewp.myartsonline.com",solid:true},{label:"Case study",href:"#"}],
+    fig:"wordpress",
+    thumb: "https://res.cloudinary.com/disivcuqr/image/upload/v1788538738/snippets-assets/v_yrxy.webp",
+  }, 
+  {
+    slug:"news", num:"02", title:"Newsportal",
+    tag:"Realtime telemetry dashboard for logistics fleets.",
+    type:"Web App", stamp:"SHIPPED", start:2025, end:2026,
+    thumb:"https://res.cloudinary.com/disivcuqr/image/upload/v1788543836/snippets-assets/v_7vnc.webp", /* EDIT: real screenshot */
+    role:"Backend lead · Frontend",
+    stack:["Laravel","MySQL","PHP","Cpanel","Javascript"],
+    desc:"Live map and operations dashboard tracking 1,200 vehicles: WebSocket ingestion, TimescaleDB downsampling, and a rule engine for geofence and maintenance alerts.",
+    highlights:[
+      "Ingests 2M GPS points/day via WebSocket fan-out",
+      "Custom map renderer holding 60fps with 1k live markers",
+      "Rule engine for geofence + maintenance alerting",
+      "Zero-downtime deploys from day one"
+    ],
+    links:[{label:"Case study",href:"#",solid:true}],
+    fig:"map"
+  },
+  {
+    slug:"atlas-ui", num:"03", title:"Atlas UI",
+    tag:"Open-source, headless React component library.",
+    type:"Open Source", stamp:"OPEN SOURCE", start:2022,
+    /* no thumb — fig glyph shows instead */
+    role:"Author · Maintainer",
+    stack:["TypeScript","React","Storybook","Vitest"],
+    desc:"Headless, accessible React components — unstyled logic, your CSS. WCAG-audited, tree-shakeable, documented with live editable examples.",
+    highlights:[
+      "WCAG 2.1 AA — audited, keyboard-first",
+      "Tree-shakeable, 12kb core bundle",
+      "Full keyboard + screen-reader test matrix",
+      "1.2k GitHub stars and counting"
+    ],
+    links:[{label:"GitHub repo",href:"#",solid:true},{label:"Docs site",href:"#"}],
+    fig:"nodes"
+  },
+  {
+    slug:"fieldnote-api", num:"04", title:"Fieldnote API",
+    tag:"Offline-first sync backend for field data apps.",
+    type:"API / Backend", stamp:"SHIPPED", start:2024, end:2024,
+    role:"Backend engineer",
+    stack:["Node","Fastify","PostgreSQL","CRDTs","Fly.io"],
+    desc:"Conflict-free offline sync for inspectors working with no signal: CRDT-based merge, resumable uploads and a client SDK that treats connectivity as optional.",
+    highlights:[
+      "CRDT merge — zero-conflict writes from any number of clients",
+      "Resumable binary uploads over flaky mobile networks",
+      "Typed client SDK, generated from the OpenAPI spec",
+      "Sub-100ms sync for typical field payloads"
+    ],
+    links:[{label:"Case study",href:"#",solid:true}],
+    fig:"terminal"
+  },
+  {
+    slug:"stockpile", num:"05", title:"Stockpile",
+    tag:"Warehouse inventory PWA with barcode scanning.",
+    type:"Web App", stamp:"SHIPPED", start:2022, end:2023,
+    thumb:"https://picsum.photos/seed/stockpile-app/840/460.jpg", /* EDIT: real screenshot */
+    role:"Fullstack developer",
+    stack:["Vue 3","Node","MongoDB","PWA","Docker"],
+    desc:"Inventory system for a 3-site warehouse: offline-capable PWA, camera barcode scanning, and stock movements reconciled nightly against the ERP.",
+    highlights:[
+      "Works fully offline; queues and replays stock moves",
+      "Camera-based barcode scan — no dedicated hardware",
+      "Nightly ERP reconciliation with discrepancy report",
+      "Picked-list routes cut walking distance ~30%"
+    ],
+    links:[{label:"Case study",href:"#",solid:true}],
+    fig:"gauge"
+  },
+  {
+    slug:"gridform", num:"06", title:"gridform",
+    tag:"2kb schema-driven form validation. Zero dependencies.",
+    type:"Open Source", stamp:"OPEN SOURCE", start:2023,
+    role:"Author · Maintainer",
+    stack:["TypeScript","Vitest","npm"],
+    desc:"Declare a schema, get validation, errors and accessibility wiring. Framework-agnostic core with thin adapters. Built out of frustration with 40kb form libraries.",
+    highlights:[
+      "2.1kb gzipped — zero runtime dependencies",
+      "Async + cross-field rules as first-class citizens",
+      "100% branch coverage, property-based tested",
+      "Adapters for React, Vue and web components"
+    ],
+    links:[{label:"GitHub repo",href:"#",solid:true},{label:"npm",href:"#"}],
+    fig:"nodes"
+  },
+  {
+    slug:"hatchmark", num:"07", title:"Hatchmark",
+    tag:"E-signature platform for SMEs.",
+    type:"Web App", stamp:"SHIPPED", start:2020, end:2021,
+    thumb:"https://picsum.photos/seed/hatchmark-doc/840/460.jpg", /* EDIT: real screenshot */
+    role:"Fullstack developer",
+    stack:["React","Node","PostgreSQL","PDFKit","S3"],
+    desc:"Document signing with an audit trail that holds up: field placement, multi-party routing, tamper-evident seals and court-admissible evidence packs.",
+    highlights:[
+      "Drag-and-drop field placement on any PDF",
+      "Tamper-evident hash chain over every event",
+      "Multi-party signing routes with reminders",
+      "Downloadable evidence pack per document"
+    ],
+    links:[{label:"Case study",href:"#",solid:true}],
+    fig:"wave"
+  },
+  {
+    slug:"metriq", num:"08", title:"Metriq",
+    tag:"Privacy-first analytics event pipeline.",
+    type:"API / Backend", stamp:"IN PRODUCTION", start:2024,
+    role:"Backend lead",
+    stack:["Node","Kafka","ClickHouse","Docker"],
+    desc:"Cookieless analytics ingestion: Kafka-queued events, ClickHouse rollups, and dashboards that answer product questions without harvesting identities.",
+    highlights:[
+      "Handles 50M events/day on three small nodes",
+      "Cookieless — salted, rotating visitor hashing",
+      "1-second dashboards via materialised views",
+      "Self-hostable in one docker compose up"
+    ],
+    links:[{label:"Live demo",href:"#",solid:true}],
+    fig:"wave"
+  },
+  {
+    slug:"tallyho", num:"09", title:"Tallyho",
+    tag:"Live scoring app for amateur sports leagues.",
+    type:"Mobile", stamp:"ARCHIVED", start:2019, end:2019,
+    thumb:"https://picsum.photos/seed/tallyho-mobile/840/460.jpg", /* EDIT: real screenshot */
+    role:"Solo developer",
+    stack:["React Native","Firebase"],
+    desc:"My first shipped mobile app: realtime scores, league tables and fixture reminders for local Sunday leagues. Retired with honour after 3 seasons.",
+    highlights:[
+      "Realtime scores via Firebase, offline-tolerant",
+      "Auto-generated league tables and fixtures",
+      "1.5k monthly active teams at peak",
+      "Taught me everything app-store review pain teaches"
+    ],
+    links:[],
+    fig:"gauge"
+  },
+  {
+    slug:"deploydog", num:"10", title:"Deploydog",
+    tag:"Zero-config deploy CLI for static sites and containers.",
+    type:"Tooling", stamp:"MAINTAINED", start:2023,
+    role:"Author",
+    stack:["Go","Docker","GitHub Actions"],
+    desc:"One command from git push to live: detects project type, builds, ships and rolls back. The tool I kept rewriting for every client, until I wrote it once.",
+    highlights:[
+      "Single static binary — no runtime deps",
+      "Detects Node, static, Python and container targets",
+      "Atomic releases with instant rollback",
+      "GitHub Action included, two-line setup"
+    ],
+    links:[{label:"GitHub repo",href:"#",solid:true}],
+    fig:"terminal"
+  },
+  {
+    slug:"cartwheel", num:"11", title:"Cartwheel",
+    tag:"Headless commerce storefront + merchandising CMS.",
+    type:"Web App", stamp:"SHIPPED", start:2022, end:2022,
+    thumb:"https://picsum.photos/seed/cartwheel-shop/840/460.jpg", /* EDIT: real screenshot */
+    role:"Frontend lead",
+    stack:["Next.js","Headless Shopify","Vercel","Sanity"],
+    desc:"A storefront that scores green across the board: statically rendered catalogs, edge-cached cart, and a merchandising CMS the marketing team runs without me.",
+    highlights:[
+      "95+ Lighthouse across the board, mobile included",
+      "Edge-cached cart with optimistic UI",
+      "Editorial CMS — merchandising ships without devs",
+      "Checkout conversion up 18% post-launch"
+    ],
+    links:[{label:"Live site",href:"#",solid:true}],
+    fig:"schema"
+  },
+  {
+    slug:"signalbox", num:"12", title:"Signalbox",
+    tag:"Multi-tenant WebSocket notification service.",
+    type:"API / Backend", stamp:"MAINTAINED", start:2021,
+    role:"Backend engineer",
+    stack:["Node","Redis","WebSockets","Docker"],
+    desc:"One socket, many products: a shared realtime layer serving in-app notifications, presence and live counters for four products on one deployment.",
+    highlights:[
+      "250k concurrent sockets on modest hardware",
+      "Redis pub/sub fan-out, per-tenant isolation",
+      "Presence + typing indicators as primitives",
+      "Graceful drain on deploys — nobody sees a disconnect"
+    ],
+    links:[{label:"Docs",href:"#",solid:true}],
+    fig:"nodes"
+  }
+];
+
+/* ============================================================
+   MINI SCHEMATIC LIBRARY — six technical glyphs
+   ============================================================ */
+const FIGS = {
+  schema: `<svg viewBox="0 0 260 140" aria-hidden="true">
+    <path class="k" d="M20 18 H110 V82 H20 Z M20 34 H110"/>
+    <path class="kt" d="M28 48 H70 M28 62 H84 M28 76 H64"/>
+    <path class="k" d="M150 18 H240 V64 H150 Z M150 34 H240"/>
+    <path class="kt" d="M158 48 H214 M158 56 H200"/>
+    <path class="k" d="M150 96 H240 V126 H150 Z M150 112 H240"/>
+    <path class="kt" d="M65 82 V110 H142 M150 110 l-8 -5 v10 z"/>
+    <path class="fa" pathLength="1" d="M110 40 H144"/>
+    <path class="faf" d="M144 34 L154 40 L144 46 Z"/>
+  </svg>`,
+  nodes: `<svg viewBox="0 0 260 140" aria-hidden="true">
+    <path class="kt" d="M40 100 L110 40 M110 40 L180 90 M110 40 L230 30 M180 90 L150 115 M180 90 L230 30"/>
+    <circle class="k" cx="40" cy="100" r="10"/><circle class="k" cx="110" cy="40" r="10"/>
+    <circle class="k" cx="180" cy="90" r="10"/><circle class="k" cx="230" cy="30" r="8"/>
+    <circle class="k" cx="150" cy="115" r="8"/>
+    <path class="fa" pathLength="1" d="M40 100 L110 40 L180 90"/>
+    <circle class="faf" cx="180" cy="90" r="4"/>
+  </svg>`,
+  terminal: `<svg viewBox="0 0 260 140" aria-hidden="true">
+    <path class="k" d="M20 16 H240 V124 H20 Z M20 36 H240"/>
+    <circle class="kf" cx="32" cy="26" r="3"/><circle class="kf" cx="44" cy="26" r="3"/><circle class="kf" cx="56" cy="26" r="3"/>
+    <path class="kt" d="M34 56 H130 M34 74 H168 M34 92 H96"/>
+    <path class="kt" d="M26 52 l4 4 l-4 4 M26 70 l4 4 l-4 4"/>
+    <path class="fa cur" pathLength="1" d="M104 86 V98"/>
+  </svg>`,
+  gauge: `<svg viewBox="0 0 260 140" aria-hidden="true">
+    <path class="k" d="M44 112 A86 86 0 0 1 216 112 M30 112 H230"/>
+    <path class="kt" d="M44 112 V100 M130 26 V38 M216 112 V100 M62 58 L70 66 M198 58 L190 66 M96 34 L101 44 M164 34 L159 44"/>
+    <circle class="k" cx="130" cy="112" r="5"/>
+    <path class="fa" pathLength="1" d="M130 112 L78 64"/>
+  </svg>`,
+  map: `<svg viewBox="0 0 260 140" aria-hidden="true">
+    <path class="kt" d="M58 14 V126 M108 14 V126 M158 14 V126 M208 14 V126 M14 44 H246 M14 74 H246 M14 104 H246"/>
+    <path class="k" d="M20 108 h10 v10 h-10 z"/>
+    <path class="k" d="M230 24 h10 v10 h-10 z"/>
+    <path class="fa" pathLength="1" d="M30 113 L84 84 L128 96 L176 44 L235 29"/>
+  </svg>`,
+  wave: `<svg viewBox="0 0 260 140" aria-hidden="true">
+    <path class="k" d="M24 120 H246 M24 120 V16"/>
+    <path class="kt" d="M24 48 H246 M24 84 H246"/>
+    <path class="fa" pathLength="1" d="M24 96 L48 60 L72 104 L96 40 L120 76 L144 52 L168 92 L192 44 L216 68 L240 36"/>
+    <path class="faf" d="M236 32 h8 v8 h-8 z"/>
+  </svg>`
+};
+
+/* ============================================================
+   MEDIA HELPER — fills a .pfig / .m-media container with either
+   the project thumbnail (imgmode) or its glyph (figmode).
+   A failed image URL automatically falls back to the glyph.
+   ============================================================ */
+function setMedia(el, p) {
+  if (p.thumb) {
+    el.classList.remove("figmode");
+    el.classList.add("imgmode");
+    el.innerHTML = `<img src="${p.thumb}" alt="${p.title} — project screenshot" loading="lazy" decoding="async">`;
+    el.querySelector("img").addEventListener("error", () => {
+      setMedia(el, Object.assign({}, p, { thumb: null }));
+    }, { once: true });
+  } else {
+    el.classList.remove("imgmode");
+    el.classList.add("figmode");
+    el.innerHTML = FIGS[p.fig] || FIGS.schema;
+  }
+}
+
+/* ============================================================
+   RENDER — cards + register rows
+   ============================================================ */
+const yearLabel = p => `${p.start} — ${p.end || "NOW"}`;
+const stackLine = p => p.stack.join(" · ");
+const isArchived = p => p.stamp === "ARCHIVED";
+
+const pgrid = document.getElementById("pgrid");
+const regRows = document.getElementById("regRows");
+
+const cardBySlug = {}, rowBySlug = {};
+
+PROJECTS.forEach(p => {
+  const card = document.createElement("article");
+  card.className = "pcard pop";
+  card.dataset.slug = p.slug;
+  card.innerHTML = `
+    <div class="p-top">
+      <span class="p-num">P·${p.num}</span>
+      <span class="p-meta">${p.type} · ${p.start}</span>
+    </div>
+    <div class="pfig"></div>
+    <h3>${p.title}</h3>
+    <p class="p-tag">${p.tag}</p>
+    <p class="p-stack">${stackLine(p)}</p>
+    <div class="p-foot">
+      ${p.links.map(l =>
+        `<a class="case-btn${l.solid ? " solid" : ""}" href="${l.href}" target="_blank" rel="noopener">${l.label}
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="square"><path d="M7 17L17 7M8 7h9v9"/></svg></a>`).join("")}
+      <span class="open-btn">Open sheet
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="square"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </span>
+    </div>`;
+
+  /* media strip: thumbnail or glyph, then the status stamp on top */
+  const media = card.querySelector(".pfig");
+  setMedia(media, p);
+  const st = document.createElement("span");
+  st.className = "stamp-mini" + (isArchived(p) ? " dim" : "");
+  st.textContent = p.stamp;
+  media.appendChild(st);
+
+  pgrid.appendChild(card);
+  cardBySlug[p.slug] = card;
+
+  const stackShort = p.stack.slice(0, 3).join(" · ") + (p.stack.length > 3 ? ` +${p.stack.length - 3}` : "");
+  const row = document.createElement("div");
+  row.className = "reg-row pop";
+  row.dataset.slug = p.slug;
+  row.innerHTML = `
+    <span class="r-num">${p.num}</span>
+    <span class="r-title"><strong>${p.title}</strong><em>${p.tag}</em></span>
+    <span class="r-type c-type">${p.type}</span>
+    <span class="r-stack c-stack">${stackShort}</span>
+    <span class="r-year c-year">${yearLabel(p)}</span>
+    <span class="r-stamp${isArchived(p) ? " dim" : ""}">${p.stamp}</span>
+    <span class="r-arr"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="square"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span>`;
+  regRows.appendChild(row);
+  rowBySlug[p.slug] = row;
+
+  /* links inside cards must not trigger the modal */
+  card.querySelectorAll("a").forEach(a => a.addEventListener("click", e => e.stopPropagation()));
+});
+
+/* ============================================================
+   FILTERING / SORTING / VIEW STATE
+   ============================================================ */
+const state = { type: "ALL", q: "", sort: "latest", view: "sheets", list: PROJECTS.slice() };
+const bySlug = Object.fromEntries(PROJECTS.map(p => [p.slug, p]));
+
+const types = [...new Set(PROJECTS.map(p => p.type))];
+const chipsHost = document.getElementById("chips");
+const countFor = t => t === "ALL" ? PROJECTS.length : PROJECTS.filter(p => p.type === t).length;
+chipsHost.innerHTML = ["ALL", ...types].map(t =>
+  `<button class="chip${t === "ALL" ? " active" : ""}" data-type="${t}">${t}<span class="cnt">${String(countFor(t)).padStart(2, "0")}</span></button>`).join("");
+
+const readout = document.getElementById("readout");
+const emptyBox = document.getElementById("empty");
+
+function sortList(list) {
+  const l = list.slice();
+  if (state.sort === "latest")   l.sort((a, b) => (b.start - a.start) || a.title.localeCompare(b.title));
+  if (state.sort === "oldest")   l.sort((a, b) => (a.start - b.start) || a.title.localeCompare(b.title));
+  if (state.sort === "az")       l.sort((a, b) => a.title.localeCompare(b.title));
+  return l;
+}
+
+function apply() {
+  let list = PROJECTS.filter(p => state.type === "ALL" || p.type === state.type);
+  if (state.q) {
+    const q = state.q.toLowerCase();
+    list = list.filter(p => (p.title + " " + p.tag + " " + p.type + " " + p.stack.join(" ")).toLowerCase().includes(q));
+  }
+  state.list = sortList(list);
+
+  state.list.forEach(p => { pgrid.appendChild(cardBySlug[p.slug]); regRows.appendChild(rowBySlug[p.slug]); });
+
+  readout.textContent = `SHOWING ${String(state.list.length).padStart(2, "0")} / ${String(PROJECTS.length).padStart(2, "0")} SHEETS`;
+  emptyBox.classList.toggle("show", state.list.length === 0);
+
+  const animate = els => els.forEach((el, i) => {
+    el.classList.remove("in");
+    el.style.setProperty("--d", Math.min(i * 35, 500) + "ms");
+    void el.offsetWidth;
+    el.classList.add("in");
+  });
+  if (state.view === "sheets") animate(state.list.map(p => cardBySlug[p.slug]));
+  else animate(state.list.map(p => rowBySlug[p.slug]));
+}
+
+/* toolbar events */
+chipsHost.addEventListener("click", e => {
+  const chip = e.target.closest(".chip"); if (!chip) return;
+  chipsHost.querySelectorAll(".chip").forEach(c => c.classList.toggle("active", c === chip));
+  state.type = chip.dataset.type;
+  apply();
+});
+document.getElementById("qInput").addEventListener("input", e => { state.q = e.target.value.trim(); apply(); });
+document.querySelectorAll(".srt").forEach(b => b.addEventListener("click", () => {
+  document.querySelectorAll(".srt").forEach(x => x.classList.toggle("active", x === b));
+  state.sort = b.dataset.sort; apply();
+}));
+document.querySelectorAll(".vtg button").forEach(b => b.addEventListener("click", () => {
+  document.querySelectorAll(".vtg button").forEach(x => x.classList.toggle("active", x === b));
+  state.view = b.dataset.view;
+  document.body.classList.toggle("view-reg", state.view === "reg");
+  apply();
+}));
+document.getElementById("resetBtn").addEventListener("click", () => {
+  state.type = "ALL"; state.q = "";
+  document.getElementById("qInput").value = "";
+  chipsHost.querySelectorAll(".chip").forEach(c => c.classList.toggle("active", c.dataset.type === "ALL"));
+  apply();
+});
+
+/* open modal from card or register row (delegated) */
+[pgrid, regRows].forEach(host => host.addEventListener("click", e => {
+  const el = e.target.closest("[data-slug]");
+  if (el && !e.target.closest("a")) openSheet(el.dataset.slug);
+}));
+
+/* ============================================================
+   SHEET MODAL — full spec, thumbnail banner, prev/next, deep links
+   ============================================================ */
+const ovl = document.getElementById("ovl");
+let lastFocus = null, openSlug = null;
+
+function fillModal(p) {
+  document.getElementById("mNum").textContent = "P·" + p.num;
+  document.getElementById("mType").textContent = p.type;
+  document.getElementById("mYearTop").textContent = yearLabel(p);
+  const st = document.getElementById("mStamp");
+  st.textContent = p.stamp;
+  st.classList.toggle("dim", isArchived(p));
+  document.getElementById("mTitle").textContent = p.title;
+  document.getElementById("mTag").textContent = p.tag;
+  /* banner: full-colour thumbnail, or the glyph enlarged */
+  setMedia(document.getElementById("mMedia"), p);
+  document.getElementById("mDesc").textContent = p.desc;
+  document.getElementById("mRole").textContent = p.role;
+  document.getElementById("mStack").textContent = stackLine(p);
+  document.getElementById("mStatus").textContent = p.stamp;
+  document.getElementById("mYear").textContent = yearLabel(p);
+  document.getElementById("mHl").innerHTML = p.highlights.map(h =>
+    `<li><svg viewBox="0 0 24 24" fill="none" stroke-linecap="square"><path d="M4 12.5l5 5L20 6.5"/></svg>${h}</li>`).join("");
+  document.getElementById("mLinks").innerHTML = p.links.map(l =>
+    `<a class="case-btn${l.solid ? " solid" : ""}" href="${l.href}" target="_blank" rel="noopener" data-track="Project">${l.label}
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="square"><path d="M7 17L17 7M8 7h9v9"/></svg></a>`).join("");
+  /* prev / next within the current filtered+sorted list */
+  const i = state.list.findIndex(x => x.slug === p.slug);
+  const n = state.list.length;
+  if (n > 1) {
+    const prev = state.list[(i - 1 + n) % n], next = state.list[(i + 1) % n];
+    document.getElementById("mPrevLbl").textContent = "P·" + prev.num + " " + prev.title;
+    document.getElementById("mNextLbl").textContent = next.num + " " + next.title + " ▸";
+    document.getElementById("mCount").textContent = `SHEET ${String(i + 1).padStart(2, "0")} / ${String(n).padStart(2, "0")}`;
+  } else {
+    document.getElementById("mPrevLbl").textContent = "—";
+    document.getElementById("mNextLbl").textContent = "—";
+    document.getElementById("mCount").textContent = "SHEET 01 / 01";
+  }
+}
+
+function openSheet(slug) {
+  const p = bySlug[slug]; if (!p) return;
+  openSlug = slug;
+  fillModal(p);
+  if (!ovl.classList.contains("on")) {
+    lastFocus = document.activeElement;
+    ovl.classList.add("on");
+    document.body.style.overflow = "hidden";
+    ovl.querySelector(".m-close").focus();
+  }
+  history.replaceState(null, "", "#" + slug);
+  trackEvent("view_project", { slug: p.slug, title: p.title, type: p.type });
+}
+function closeSheet() {
+  ovl.classList.remove("on");
+  document.body.style.overflow = "";
+  openSlug = null;
+  history.replaceState(null, "", location.pathname + location.search);
+  if (lastFocus) lastFocus.focus();
+}
+function stepSheet(dir) {
+  if (!openSlug || state.list.length < 2) return;
+  const i = state.list.findIndex(x => x.slug === openSlug);
+  openSheet(state.list[(i + dir + state.list.length) % state.list.length].slug);
+}
+
+ovl.addEventListener("click", e => { if (e.target.closest("[data-close]")) closeSheet(); });
+document.getElementById("mPrev").addEventListener("click", () => stepSheet(-1));
+document.getElementById("mNext").addEventListener("click", () => stepSheet(1));
+document.addEventListener("keydown", e => {
+  if (!ovl.classList.contains("on")) return;
+  if (e.key === "Escape") closeSheet();
+  if (e.key === "ArrowLeft") stepSheet(-1);
+  if (e.key === "ArrowRight") stepSheet(1);
+});
+
+/* copy-link button in the modal */
+const copyBtn = document.createElement("button");
+copyBtn.className = "case-btn";
+copyBtn.type = "button";
+copyBtn.innerHTML = `Copy link
+  <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="square"><rect x="9" y="9" width="11" height="11"/><path d="M5 15V4h11"/></svg>`;
+copyBtn.addEventListener("click", async () => {
+  const url = location.origin + location.pathname + "#" + openSlug;
+  try { await navigator.clipboard.writeText(url); copyBtn.firstChild.textContent = "Copied ✓ "; }
+  catch (e) {
+    const t = document.createElement("textarea"); t.value = url; document.body.appendChild(t);
+    t.select(); document.execCommand("copy"); t.remove();
+    copyBtn.firstChild.textContent = "Copied ✓ ";
+  }
+  setTimeout(() => { copyBtn.firstChild.textContent = "Copy link "; }, 1600);
+});
+document.getElementById("mLinks").after(copyBtn);
+
+/* ---------- hide mobile bar while the modal is open ---------- */
+new MutationObserver(() =>
+  document.getElementById("mobBar").classList.toggle("hide", ovl.classList.contains("on"))
+).observe(ovl, { attributes: true, attributeFilter: ["class"] });
+
+/* ============================================================
+   COMPUTED STATS + INITIAL PAINT
+   ============================================================ */
+document.getElementById("sTotal").textContent = String(PROJECTS.length).padStart(2, "0");
+document.getElementById("sTypes").textContent = String(types.length).padStart(2, "0");
+document.getElementById("sStack").textContent = new Set(PROJECTS.flatMap(p => p.stack)).size + "+";
+document.getElementById("sOpen").textContent  = String(PROJECTS.filter(p => !p.end).length);
+document.getElementById("tbCount").textContent = `${String(PROJECTS.length).padStart(2, "0")} / ${String(PROJECTS.length).padStart(2, "0")}`;
+
+apply();
+
+/* deep link: /projects#slug opens that sheet directly */
+const initial = location.hash.slice(1);
+if (initial && bySlug[initial]) openSheet(initial);
+</script>
+</body>
+</html>

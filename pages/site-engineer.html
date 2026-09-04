@@ -1,0 +1,1237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Site Engineer — Construction Project Management & Quality Control</title>
+
+<!-- ================= SEO (EDIT: update canonical URL + description) ================= -->
+<meta name="description" content="My Site Engineer puts a qualified engineer on your site — project management, hold-point quality inspections, daily photo-verified reports and sign-off to spec. Request a site review.">
+<link rel="canonical" href="https://www.mysiteengineer.com/">
+<meta name="theme-color" content="#F2EFE7">
+
+<!-- ================= SOCIAL / META TAGS (EDIT: swap og:image for a real 1200x630 banner) ================= -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="My Site Engineer — Your build, held to the line.">
+<meta property="og:description" content="On-site project management & quality control for residential and commercial builds. Daily reports. Hold-point inspections. Sign-off to spec.">
+<meta property="og:url" content="https://www.mysiteengineer.com/">
+<meta property="og:image" content="https://picsum.photos/seed/mse-og/1200/630.jpg">
+<meta name="twitter:card" content="summary_large_image">
+
+<!-- Favicon: survey bench-mark mark, inline so it needs no extra request -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='3' fill='%231B1D21'/%3E%3Cpath d='M16 8 L22 19 H10 Z' fill='%23F2B60C'/%3E%3Crect x='7' y='20' width='18' height='2.5' fill='%23F2B60C'/%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,500&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<!-- Local Business schema (EDIT: fill real phone / URL / area) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "My Site Engineer",
+  "description": "On-site construction project management and quality control. Hold-point inspections, daily reports, sign-off to spec.",
+  "url": "https://www.mysiteengineer.com/",
+  "telephone": "+00000000000",
+  "priceRange": "$$",
+  "areaServed": "Your region",
+  "knowsAbout": ["Project Management", "Quality Control", "Construction Supervision"]
+}
+</script>
+
+<style>
+/* ============================================================
+   MY SITE ENGINEER — design tokens
+   ============================================================ */
+:root{
+  --ink:      #1B1D21;
+  --ink-2:    #4A4E56;
+  --paper:    #F2EFE7;
+  --paper-2:  #E9E4D6;
+  --accent:   #F2B60C;   /* safety yellow — lines, marks, primary actions */
+  --stamp:    #B5442A;   /* oxide red — reserved for stamps, REV tags, errors */
+  --line:     rgba(27,29,33,.16);
+  --line-soft:rgba(27,29,33,.09);
+  --sans: "Archivo", sans-serif;
+  --mono: "IBM Plex Mono", monospace;
+  --header-h: 64px;
+  --tape-h: 14px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--sans);
+  background:var(--paper);
+  color:var(--ink);
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+img{max-width:100%;display:block}
+a{color:inherit}
+button{font:inherit;cursor:pointer;background:none;border:0;color:inherit}
+::selection{background:var(--accent);color:var(--ink)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+section{scroll-margin-top:calc(var(--header-h) + var(--tape-h) + 16px)}
+
+.wrap{width:min(1160px,92vw);margin-inline:auto}
+.mono{font-family:var(--mono)}
+
+/* ---- section label: "SECTION 0X — NAME" ---- */
+.sec-label{
+  font-family:var(--mono);font-size:.68rem;font-weight:600;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--ink-2);
+  display:flex;align-items:center;gap:14px;margin-bottom:18px;
+}
+.sec-label::before{content:"";width:34px;height:1px;background:var(--ink);flex:none}
+.sec-label .rev{margin-left:auto;border:1px solid var(--stamp);color:var(--stamp);
+  padding:2px 7px;font-size:.6rem;letter-spacing:.12em}
+
+h1,h2,h3{letter-spacing:-.02em;line-height:1.05}
+.h2{font-size:clamp(1.9rem,4vw,3rem);font-weight:800;margin-bottom:.5em}
+.lead{font-size:clamp(1rem,1.5vw,1.15rem);color:var(--ink-2);max-width:56ch}
+
+/* ---- buttons: sharp, one clipped corner, like a stamped plate ---- */
+.btn{
+  display:inline-flex;align-items:center;gap:10px;
+  font-weight:700;font-size:.95rem;letter-spacing:.01em;
+  padding:15px 26px;text-decoration:none;white-space:nowrap;
+  clip-path:polygon(0 0,calc(100% - 13px) 0,100% 13px,100% 100%,0 100%);
+  transition:transform .18s ease, background .18s ease, color .18s ease;
+}
+.btn svg{width:17px;height:17px;flex:none}
+.btn:active{transform:translateY(1px)}
+.btn-ink{background:var(--ink);color:var(--paper)}
+.btn-ink:hover{background:var(--accent);color:var(--ink)}
+.btn-accent{background:var(--accent);color:var(--ink)}
+.btn-accent:hover{background:var(--ink);color:var(--paper)}
+.btn-ghost{border:1px solid var(--ink);border-radius:0;clip-path:none;padding:14px 25px}
+.btn-ghost:hover{background:var(--ink);color:var(--paper)}
+
+/* ---- entrance reveals (JS adds .js to <html>; no-JS stays visible) ---- */
+.js .reveal{opacity:0;transform:translateY(16px);transition:opacity .7s ease var(--d,0s),transform .7s ease var(--d,0s)}
+.js .reveal.in{opacity:1;transform:none}
+
+/* ============================================================
+   HEADER + TAPE-MEASURE SCROLL BAR
+   ============================================================ */
+.site-head{
+  position:sticky;top:0;z-index:60;
+  background:rgba(242,239,231,.92);backdrop-filter:blur(8px);
+}
+.head-bar{
+  height:var(--header-h);display:flex;align-items:center;gap:26px;
+}
+.brand{display:flex;align-items:center;gap:11px;text-decoration:none}
+.brand-mark{width:38px;height:38px;flex:none}
+.brand-name{font-weight:800;font-size:.95rem;letter-spacing:.02em;line-height:1.1}
+.brand-sub{font-family:var(--mono);font-size:.53rem;letter-spacing:.14em;color:var(--ink-2)}
+.head-nav{display:flex;gap:26px;margin-left:auto}
+.head-nav a{
+  font-family:var(--mono);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;
+  text-decoration:none;color:var(--ink-2);padding:6px 0;position:relative;
+}
+.head-nav a::after{content:"";position:absolute;left:0;bottom:0;height:2px;width:0;background:var(--accent);transition:width .25s ease}
+.head-nav a:hover{color:var(--ink)}
+.head-nav a:hover::after{width:100%}
+.head-call{display:inline-flex;align-items:center;gap:9px;font-weight:700;font-size:.88rem;
+  text-decoration:none;padding:10px 16px;border:1px solid var(--ink);transition:.18s ease}
+.head-call:hover{background:var(--ink);color:var(--paper)}
+.head-call svg{width:15px;height:15px}
+@media (max-width:860px){.head-nav{display:none}.head-call{margin-left:auto}}
+
+/* the tape: header's bottom border is a working measuring tape */
+.tape{
+  position:relative;height:var(--tape-h);
+  border-bottom:1px solid var(--line);
+  background:
+    repeating-linear-gradient(90deg,var(--line) 0 1px,transparent 1px 28px) left bottom / 100% 6px no-repeat,
+    repeating-linear-gradient(90deg,rgba(27,29,33,.3) 0 1px,transparent 1px 140px) left bottom / 100% 12px no-repeat;
+}
+.tape-fill{position:absolute;left:0;top:0;bottom:0;width:0;background:rgba(242,182,12,.35);border-right:2px solid var(--accent)}
+.tape-read{
+  position:absolute;right:-4px;top:-19px;transform:translateX(50%);
+  font-family:var(--mono);font-size:.58rem;letter-spacing:.06em;
+  background:var(--paper);border:1px solid var(--line);padding:1px 6px;color:var(--ink-2);
+}
+@media (max-width:720px){.tape-read{display:none}}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero{
+  position:relative;overflow:hidden;cursor:crosshair;
+  border-bottom:1px solid var(--line);
+  background:
+    linear-gradient(var(--line-soft) 1px,transparent 1px) left top / 100% 72px,
+    linear-gradient(90deg,var(--line-soft) 1px,transparent 1px) left top / 72px 100%;
+}
+.hero-grid{
+  display:grid;grid-template-columns:7fr 4fr;gap:clamp(30px,5vw,80px);
+  padding:clamp(64px,9vh,110px) 0 clamp(56px,8vh,96px);
+  align-items:center;min-height:calc(86vh - var(--header-h) - var(--tape-h));
+}
+.eyebrow{
+  font-family:var(--mono);font-size:.66rem;letter-spacing:.2em;font-weight:500;
+  color:var(--ink-2);text-transform:uppercase;margin-bottom:26px;
+  display:flex;align-items:center;gap:12px;
+}
+.eyebrow .dot{width:7px;height:7px;background:var(--accent);flex:none}
+h1{font-size:clamp(2.6rem,6.2vw,4.8rem);font-weight:800;letter-spacing:-.028em;line-height:1.01;margin-bottom:26px}
+/* the level line under "held to the line" */
+.lvl{position:relative;display:inline-block}
+.lvl svg{position:absolute;left:-1%;right:-1%;width:102%;height:.2em;bottom:-.24em;overflow:visible}
+.lvl path{stroke:var(--accent);stroke-width:2.4;fill:none;stroke-linecap:square}
+.lvl .lvl-line{stroke-dasharray:400;stroke-dashoffset:400;animation:lvl 1s .7s cubic-bezier(.4,0,.2,1) forwards}
+.lvl .lvl-tri{fill:var(--accent);stroke:none;opacity:0;animation:trisin .3s 1.55s ease forwards}
+@keyframes lvl{to{stroke-dashoffset:0}}
+@keyframes trisin{to{opacity:1}}
+.hero-sub{font-size:clamp(1.02rem,1.6vw,1.2rem);color:var(--ink-2);max-width:52ch;margin-bottom:36px}
+.hero-ctas{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+
+/* right column — spec list like a drawing legend */
+.hero-specs{border-top:1px solid var(--line)}
+.spec-row{display:grid;grid-template-columns:110px 1fr;gap:16px;padding:15px 0;border-bottom:1px solid var(--line)}
+.spec-row dt{font-family:var(--mono);font-size:.62rem;letter-spacing:.16em;color:var(--ink-2);padding-top:3px}
+.spec-row dd{font-size:.92rem;font-weight:500}
+.hero-corner{position:absolute;width:18px;height:18px;opacity:.5;pointer-events:none}
+.hero-corner.tl{top:14px;left:14px;border-top:1.5px solid var(--ink);border-left:1.5px solid var(--ink)}
+.hero-corner.tr{top:14px;right:14px;border-top:1.5px solid var(--ink);border-right:1.5px solid var(--ink)}
+.hero-corner.bl{bottom:14px;left:14px;border-bottom:1.5px solid var(--ink);border-left:1.5px solid var(--ink)}
+.hero-corner.br{bottom:14px;right:14px;border-bottom:1.5px solid var(--ink);border-right:1.5px solid var(--ink)}
+.hero-datum{
+  position:absolute;right:22px;bottom:16px;font-family:var(--mono);
+  font-size:.58rem;letter-spacing:.1em;color:var(--ink-2);opacity:.75;pointer-events:none;
+}
+.scroll-cue{
+  position:absolute;left:22px;bottom:16px;font-family:var(--mono);
+  font-size:.58rem;letter-spacing:.22em;color:var(--ink-2);
+  display:flex;align-items:center;gap:8px;pointer-events:none;
+}
+.scroll-cue svg{width:11px;height:14px;stroke:var(--ink-2);animation:cue 1.8s ease-in-out infinite}
+@keyframes cue{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
+
+@media (max-width:900px){
+  .hero-grid{grid-template-columns:1fr;min-height:0;padding-top:56px}
+  .hero-specs{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));column-gap:26px}
+}
+
+/* ---- theodolite reticle (desktop, fine pointers) ---- */
+.reticle{position:absolute;left:0;top:0;pointer-events:none;z-index:2;opacity:0;transition:opacity .4s ease;color:var(--accent)}
+.reticle.on{opacity:1}
+.reticle svg{position:absolute;width:104px;height:104px;transform:translate(-50%,-50%)}
+.reticle circle,.reticle line{stroke:currentColor;fill:none;stroke-width:1.4}
+.reticle .ret-dot{fill:currentColor;stroke:none}
+.ret-read{
+  position:absolute;top:58px;white-space:nowrap;transform:translateX(-50%);
+  font-family:var(--mono);font-size:.56rem;letter-spacing:.1em;
+  background:var(--ink);color:var(--paper);padding:3px 8px;
+}
+
+/* ============================================================
+   TICKER — site-hoardings strip
+   ============================================================ */
+.ticker{border-bottom:1px solid var(--line);overflow:hidden;padding:13px 0;position:relative}
+.ticker-track{display:flex;width:max-content;animation:tick 44s linear infinite}
+.ticker:hover .ticker-track{animation-play-state:paused}
+@keyframes tick{to{transform:translateX(-50%)}}
+.ticker-group{display:flex;align-items:center;list-style:none}
+.ticker-group li{
+  font-family:var(--mono);font-size:.66rem;letter-spacing:.2em;font-weight:500;
+  display:flex;align-items:center;white-space:nowrap;
+}
+.ticker-group li::after{content:"";width:6px;height:6px;background:var(--accent);transform:rotate(45deg);margin:0 30px;flex:none}
+
+/* ============================================================
+   SERVICES — drawing sheets
+   ============================================================ */
+#services{padding:clamp(76px,10vw,130px) 0 clamp(60px,8vw,110px)}
+.svc-head{margin-bottom:44px}
+.svc-hint{font-family:var(--mono);font-size:.62rem;letter-spacing:.14em;color:var(--ink-2);margin-top:22px;text-transform:uppercase}
+
+.sheet{border-top:1px solid var(--line)}
+.sheet:last-of-type{border-bottom:1px solid var(--line)}
+.sheet-head{
+  width:100%;display:grid;grid-template-columns:auto 1fr auto auto;align-items:center;
+  gap:clamp(16px,3vw,44px);padding:clamp(24px,3.4vw,40px) 4px;text-align:left;
+  position:relative;transition:background .2s ease;
+}
+.sheet-head::before{content:"";position:absolute;left:-18px;top:0;bottom:0;width:3px;background:var(--accent);transform:scaleY(0);transition:transform .25s ease;transform-origin:top}
+.sheet-head:hover{background:rgba(27,29,33,.028)}
+.sheet-head:hover::before{transform:scaleY(1)}
+.sheet-num{
+  font-family:var(--mono);font-weight:400;font-size:clamp(2.2rem,4.4vw,3.6rem);line-height:1;
+  color:var(--ink-2);min-width:1.6em;
+}
+@supports (-webkit-text-stroke:1px black){
+  .sheet-num{color:transparent;-webkit-text-stroke:1.2px var(--ink)}
+}
+.sheet-title h3{font-size:clamp(1.45rem,2.6vw,2.15rem);font-weight:700;margin-bottom:6px}
+.sheet-tag{color:var(--ink-2);font-size:.95rem;font-style:italic;font-family:var(--sans)}
+.sheet-stamp{
+  font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;color:var(--stamp);
+  border:2px solid var(--stamp);padding:6px 10px;transform:rotate(-7deg) scale(1.5);opacity:0;
+  white-space:nowrap;
+}
+.sheet.open .sheet-stamp{opacity:.9;transform:rotate(-7deg) scale(1);transition:all .35s cubic-bezier(.2,1.5,.4,1) .3s}
+.sheet-chev{width:34px;height:34px;border:1px solid var(--line);display:grid;place-items:center;transition:transform .35s ease,background .2s}
+.sheet-chev svg{width:14px;height:14px;stroke:var(--ink)}
+.sheet.open .sheet-chev{transform:rotate(180deg);background:var(--accent);border-color:var(--accent)}
+
+.sheet-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .55s cubic-bezier(.25,.7,.2,1)}
+.sheet.open .sheet-body{grid-template-rows:1fr}
+.sheet-inner{overflow:hidden;min-height:0}
+.sheet-cols{
+  display:grid;grid-template-columns:1.15fr 1fr;gap:clamp(26px,4vw,64px);
+  padding:6px 4px clamp(30px,4vw,48px) 0;
+}
+.sheet-desc{color:var(--ink-2);max-width:52ch;margin-bottom:26px}
+.spec-mini{border-top:1px solid var(--line)}
+.spec-mini div{display:grid;grid-template-columns:110px 1fr;gap:14px;padding:9px 0;border-bottom:1px solid var(--line);font-size:.85rem}
+.spec-mini span{font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;color:var(--ink-2);padding-top:3px}
+.deliv-title{font-family:var(--mono);font-size:.62rem;letter-spacing:.16em;color:var(--ink-2);margin-bottom:12px;text-transform:uppercase}
+.deliv{list-style:none}
+.deliv li{display:flex;gap:12px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--line-soft);font-size:.93rem;font-weight:500}
+.deliv svg{width:15px;height:15px;stroke:var(--ink);flex:none;margin-top:4px}
+.deliv li:last-child{border-bottom:0}
+.include-btn{
+  margin-top:22px;display:inline-flex;align-items:center;gap:9px;
+  font-family:var(--mono);font-size:.68rem;letter-spacing:.12em;font-weight:600;
+  border:1px solid var(--ink);padding:11px 16px;transition:.2s ease;text-transform:uppercase;
+}
+.include-btn svg{width:13px;height:13px;stroke:currentColor}
+.include-btn .ic-tick{display:none}
+.include-btn:hover{background:var(--ink);color:var(--paper)}
+.include-btn.active{background:var(--accent);border-color:var(--accent);color:var(--ink)}
+.include-btn.active .ic-plus{display:none}
+.include-btn.active .ic-tick{display:block}
+
+@media (max-width:820px){
+  .sheet-head{grid-template-columns:auto 1fr auto}
+  .sheet-stamp{display:none}
+  .sheet-cols{grid-template-columns:1fr}
+}
+
+/* ============================================================
+   APPROACH — self-drawing schematic + sequence
+   ============================================================ */
+#approach{background:var(--paper-2);border-block:1px solid var(--line);padding:clamp(76px,10vw,130px) 0}
+.appr-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:clamp(34px,5vw,80px);align-items:center}
+.fig{border:1px solid var(--line);background:var(--paper);padding:clamp(16px,2.4vw,30px);position:relative}
+.fig svg{width:100%;height:auto;display:block}
+.fig .dline{stroke:var(--ink);stroke-width:2;fill:none;stroke-linecap:square}
+.fig .thin{stroke-width:1.3;opacity:.85}
+.fig .crane{opacity:.55}
+.fig .accline{stroke:var(--accent);stroke-width:2.6;fill:none;stroke-linecap:square}
+.fig .acctrifill{fill:var(--accent)}
+.fig .dim{stroke:var(--ink-2);stroke-width:1;fill:none}
+.fig text{font-family:var(--mono);font-size:11px;fill:var(--ink-2)}
+.js .fig .dtext{opacity:0;transition:opacity .8s ease 2.9s}
+.js .fig.go .dtext{opacity:1}
+.fig-cap{
+  font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;color:var(--ink-2);
+  margin-top:14px;text-transform:uppercase;display:flex;justify-content:space-between;gap:10px;
+}
+.steps{list-style:none;counter-reset:step}
+.steps li{
+  counter-increment:step;position:relative;padding:20px 0 20px 58px;
+  border-bottom:1px solid var(--line);opacity:.38;transition:opacity .5s ease;
+}
+.steps li:first-child{border-top:1px solid var(--line)}
+.steps li::before{
+  content:counter(step,decimal-leading-zero);position:absolute;left:0;top:20px;
+  font-family:var(--mono);font-size:.78rem;color:var(--ink-2);
+  border:1px solid var(--line);width:36px;height:36px;display:grid;place-items:center;
+  transition:all .4s ease;
+}
+.steps li h3{font-size:1.08rem;font-weight:700;margin-bottom:5px;letter-spacing:.02em;text-transform:uppercase;font-family:var(--mono);font-size:.86rem;letter-spacing:.1em}
+.steps li p{font-size:.92rem;color:var(--ink-2)}
+.steps li.active{opacity:1}
+.steps li.active::before{background:var(--accent);border-color:var(--accent);color:var(--ink);font-weight:600}
+@media (max-width:900px){.appr-grid{grid-template-columns:1fr}}
+
+/* ============================================================
+   FIELD NOTES — quote + photo slot
+   ============================================================ */
+#fieldnotes{padding:clamp(76px,10vw,130px) 0}
+.quote-grid{display:grid;grid-template-columns:5fr 7fr;gap:clamp(34px,5vw,90px);align-items:center}
+.photo-slot{position:relative;padding:14px}
+.photo-slot img{filter:grayscale(1) contrast(1.06);width:100%;aspect-ratio:4/5;object-fit:cover}
+.pcorner{position:absolute;width:26px;height:26px;border:0 solid var(--accent)}
+.pcorner.p-tl{top:0;left:0;border-top-width:3px;border-left-width:3px}
+.pcorner.p-tr{top:0;right:0;border-top-width:3px;border-right-width:3px}
+.pcorner.p-bl{bottom:0;left:0;border-bottom-width:3px;border-left-width:3px}
+.pcorner.p-br{bottom:0;right:0;border-bottom-width:3px;border-right-width:3px}
+blockquote{
+  font-size:clamp(1.3rem,2.5vw,1.85rem);font-weight:500;line-height:1.35;
+  letter-spacing:-.01em;position:relative;padding-left:26px;border-left:3px solid var(--accent);
+}
+.quote-cite{margin-top:26px;font-family:var(--mono);font-size:.68rem;letter-spacing:.16em;color:var(--ink-2);text-transform:uppercase}
+@media (max-width:860px){.quote-grid{grid-template-columns:1fr}.photo-slot{max-width:380px}}
+
+/* ============================================================
+   ASSURANCE — dark spec band
+   ============================================================ */
+.band-dark{background:var(--ink);color:var(--paper);padding:clamp(60px,8vw,96px) 0;--line:rgba(242,239,231,.18);--line-soft:rgba(242,239,231,.09)}
+.band-dark .sec-label{color:rgba(242,239,231,.55)}
+.band-dark .sec-label::before{background:var(--accent)}
+.assure{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:40px}
+.assure-cell{background:var(--ink);padding:clamp(22px,3vw,36px)}
+.assure-cell .a-tag{font-family:var(--mono);font-size:.64rem;letter-spacing:.18em;color:var(--accent);margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.assure-cell .a-tag svg{width:14px;height:14px;stroke:var(--accent)}
+.assure-cell p{font-size:.95rem;color:rgba(242,239,231,.82)}
+@media (max-width:820px){.assure{grid-template-columns:1fr}}
+
+/* ============================================================
+   YELLOW CTA BAND
+   ============================================================ */
+.band-cta{background:var(--accent);color:var(--ink);padding:clamp(58px,8vw,92px) 0;border-block:1px solid var(--ink)}
+.cta-flex{display:flex;align-items:center;justify-content:space-between;gap:34px;flex-wrap:wrap}
+.band-cta h2{font-size:clamp(2rem,4.6vw,3.4rem);font-weight:900;letter-spacing:-.025em;line-height:1.02}
+.cta-sub{font-family:var(--mono);font-size:.66rem;letter-spacing:.16em;margin-top:14px;text-transform:uppercase}
+
+/* ============================================================
+   CONTACT / LEAD FORM
+   ============================================================ */
+#contact{padding:clamp(76px,10vw,130px) 0 clamp(70px,9vw,120px)}
+.contact-grid{display:grid;grid-template-columns:7fr 4fr;gap:clamp(40px,6vw,100px);margin-top:46px}
+
+.field{margin-bottom:26px}
+.field label{
+  display:block;font-family:var(--mono);font-size:.62rem;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--ink-2);margin-bottom:8px;
+}
+.field input,.field select,.field textarea{
+  width:100%;background:transparent;border:0;border-bottom:1px solid var(--line);
+  font:inherit;font-size:1rem;color:var(--ink);padding:10px 2px;border-radius:0;
+  transition:border-color .2s ease,box-shadow .2s ease;
+}
+.field textarea{resize:vertical;min-height:70px}
+.field input:focus,.field select:focus,.field textarea:focus{
+  outline:none;border-color:var(--accent);box-shadow:0 1px 0 var(--accent);
+}
+.field.err input,.field.err select{border-color:var(--stamp)}
+.field-err{display:none;font-family:var(--mono);font-size:.62rem;letter-spacing:.06em;color:var(--stamp);margin-top:6px}
+.field.err .field-err{display:block}
+.sel-wrap{position:relative}
+.sel-wrap select{appearance:none;-webkit-appearance:none;padding-right:30px;cursor:pointer}
+.sel-wrap svg{position:absolute;right:4px;top:50%;transform:translateY(-50%);width:13px;height:13px;stroke:var(--ink-2);pointer-events:none}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:0 34px}
+@media (max-width:640px){.form-row{grid-template-columns:1fr}}
+
+/* service checkboxes as inspection checklist rows */
+.svc-checks{border-top:1px solid var(--line);margin:6px 0 30px;transition:box-shadow .3s ease}
+.svc-checks.flash{box-shadow:0 0 0 2px var(--accent)}
+.check{
+  display:flex;align-items:center;gap:15px;padding:14px 4px;cursor:pointer;
+  border-bottom:1px solid var(--line);
+}
+.check input{position:absolute;opacity:0;pointer-events:none}
+.check .box{
+  width:22px;height:22px;border:1.5px solid var(--ink);flex:none;
+  display:grid;place-items:center;transition:background .18s ease;
+}
+.check .box svg{width:13px;height:13px;stroke:var(--ink);stroke-width:2.6;fill:none;
+  stroke-dasharray:24;stroke-dashoffset:24;transition:stroke-dashoffset .25s ease .05s}
+.check input:checked ~ .box{background:var(--accent)}
+.check input:checked ~ .box svg{stroke-dashoffset:0}
+.check input:focus-visible ~ .box{outline:2px solid var(--accent);outline-offset:2px}
+.check strong{font-size:.95rem;display:block}
+.check em{font-style:normal;font-size:.78rem;color:var(--ink-2)}
+.form-note{font-size:.74rem;color:var(--ink-2);margin-top:16px;max-width:44ch}
+.form-alert{
+  display:none;border:1px solid var(--stamp);color:var(--stamp);
+  font-family:var(--mono);font-size:.7rem;letter-spacing:.06em;padding:12px 14px;margin-bottom:22px;
+}
+.form-alert.show{display:block}
+
+/* success panel */
+.success{display:none;border:1px solid var(--ink);padding:clamp(30px,5vw,56px);text-align:left}
+.success.show{display:block}
+.stamp-big{
+  display:inline-block;font-family:var(--mono);font-size:.72rem;letter-spacing:.2em;
+  color:var(--stamp);border:2.5px solid var(--stamp);padding:8px 14px;
+  transform:rotate(-6deg);margin-bottom:26px;
+}
+.success h3{font-size:clamp(1.5rem,3vw,2.1rem);font-weight:800;margin-bottom:12px}
+.success p{color:var(--ink-2);max-width:46ch}
+.success .ref{font-family:var(--mono);font-size:.68rem;letter-spacing:.12em;color:var(--ink-2);
+  border:1px dashed var(--line);display:inline-block;padding:6px 12px;margin-top:20px}
+
+/* contact aside */
+.c-aside{border-left:1px solid var(--line);padding-left:clamp(24px,3vw,44px)}
+.c-phone{font-size:clamp(1.4rem,2.4vw,1.9rem);font-weight:800;text-decoration:none;display:inline-block;
+  border-bottom:3px solid var(--accent);padding-bottom:4px;transition:.2s ease}
+.c-phone:hover{background:var(--accent)}
+.c-block{margin-top:34px}
+.c-block span{font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;color:var(--ink-2);text-transform:uppercase;display:block;margin-bottom:6px}
+.c-block p{font-size:.92rem}
+@media (max-width:900px){.contact-grid{grid-template-columns:1fr}.c-aside{border-left:0;padding-left:0;border-top:1px solid var(--line);padding-top:38px}}
+
+/* ============================================================
+   FOOTER — drawing title block
+   ============================================================ */
+.site-foot{background:var(--ink);color:var(--paper);padding:clamp(56px,7vw,84px) 0 34px;--line:rgba(242,239,231,.2)}
+.tblock{
+  display:grid;grid-template-columns:2.4fr 1fr 1fr 1fr 1.3fr 1fr;gap:1px;
+  background:var(--line);border:1px solid var(--line);margin-bottom:clamp(40px,5vw,64px);
+}
+.tb-cell{background:var(--ink);padding:16px 18px}
+.tb-cell span{display:block;font-family:var(--mono);font-size:.55rem;letter-spacing:.18em;color:rgba(242,239,231,.5);margin-bottom:5px;text-transform:uppercase}
+.tb-cell strong{font-family:var(--mono);font-weight:500;font-size:.78rem;letter-spacing:.04em}
+.foot-cols{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:clamp(30px,4vw,70px);margin-bottom:clamp(40px,5vw,60px)}
+.foot-blurb{color:rgba(242,239,231,.6);font-size:.9rem;max-width:34ch;margin-top:16px}
+.foot-tag{font-family:var(--mono);font-size:.62rem;letter-spacing:.22em;color:var(--accent);margin-top:22px}
+.foot-col h4{font-family:var(--mono);font-size:.62rem;letter-spacing:.18em;color:rgba(242,239,231,.5);margin-bottom:18px;font-weight:500;text-transform:uppercase}
+.foot-col a,.foot-col p{display:block;text-decoration:none;color:rgba(242,239,231,.82);font-size:.9rem;padding:5px 0;transition:color .2s}
+.foot-col a:hover{color:var(--accent)}
+.legal{border-top:1px solid var(--line);padding-top:24px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;color:rgba(242,239,231,.45)}
+@media (max-width:820px){
+  .tblock{grid-template-columns:repeat(3,1fr)}
+  .tb-cell:first-child{grid-column:1/-1}
+  .foot-cols{grid-template-columns:1fr}
+}
+
+/* ============================================================
+   STICKY MOBILE CTA BAR
+   ============================================================ */
+.mob-bar{
+  position:fixed;left:0;right:0;bottom:0;z-index:70;display:none;
+  gap:1px;background:var(--line);transform:translateY(0);transition:transform .35s ease;
+  padding-bottom:env(safe-area-inset-bottom);
+}
+.mob-bar.hide{transform:translateY(110%)}
+.mob-bar a{
+  flex:1;display:flex;align-items:center;justify-content:center;gap:9px;
+  padding:17px 10px;font-weight:700;font-size:.9rem;text-decoration:none;
+}
+.mob-bar svg{width:16px;height:16px}
+.mob-bar .mb-call{background:var(--accent);color:var(--ink)}
+.mob-bar .mb-form{background:var(--ink);color:var(--paper)}
+@media (max-width:720px){
+  .mob-bar{display:flex}
+  body{padding-bottom:58px}
+}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.001s!important;transition-duration:.001s!important}
+  .ticker-track{animation:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     HEADER  (EDIT: nav labels if needed)
+     ============================================================ -->
+<header class="site-head">
+  <div class="wrap head-bar">
+    <a class="brand" href="#top" aria-label="My Site Engineer — home">
+      <!-- Bench-mark mark: the symbol surveyors cut into structures as a datum -->
+      <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true">
+        <rect width="40" height="40" rx="2.5" fill="var(--ink)"/>
+        <path d="M20 8.5 L27.5 23 H12.5 Z" fill="var(--accent)"/>
+        <rect x="8" y="24.5" width="24" height="2.6" fill="var(--accent)"/>
+        <rect x="8" y="30" width="24" height="1.4" fill="rgba(242,239,231,.4)"/>
+      </svg>
+      <span>
+        <span class="brand-name">MY SITE ENGINEER</span><br>
+        <span class="brand-sub">PROJECT MGMT · QUALITY CONTROL</span>
+      </span>
+    </a>
+    <nav class="head-nav" aria-label="Primary">
+      <a href="#services">Services</a>
+      <a href="#approach">Method</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="head-call" href="tel:+00000000000" data-tel data-track="Contact">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M6.6 10.8c1.5 3 3.6 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.3 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.7 21 3 13.3 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.3 1l-2.2 2.2z"/></svg>
+      <span data-phone>010 000 0000</span>
+    </a>
+  </div>
+  <!-- Tape-measure scroll indicator -->
+  <div class="tape" aria-hidden="true">
+    <div class="tape-fill" id="tapeFill"><span class="tape-read" id="tapeRead">00.0 m</span></div>
+  </div>
+</header>
+
+<main>
+<!-- ============================================================
+     HERO  (EDIT: headline, sub-copy, CTA labels, spec rows)
+     ============================================================ -->
+<section class="hero" id="top">
+  <span class="hero-corner tl"></span><span class="hero-corner tr"></span>
+  <span class="hero-corner bl"></span><span class="hero-corner br"></span>
+  <p class="hero-datum">DATUM 000.000 · GRID: LOCAL · REF MSE-01</p>
+  <p class="scroll-cue">SCROLL
+    <svg viewBox="0 0 12 16" fill="none" stroke-width="1.6"><path d="M6 1v12M2 9l4 4 4-4"/></svg>
+  </p>
+
+  <!-- Theodolite reticle: follows your cursor across the hero (desktop only) -->
+  <div class="reticle" id="reticle" aria-hidden="true">
+    <svg viewBox="-52 -52 104 104">
+      <circle r="30"/><circle r="2" class="ret-dot"/>
+      <line x1="-46" y1="0" x2="-15" y2="0"/><line x1="15" y1="0" x2="46" y2="0"/>
+      <line x1="0" y1="-46" x2="0" y2="-15"/><line x1="0" y1="15" x2="0" y2="46"/>
+    </svg>
+    <span class="ret-read" id="retRead">E 0000 · N 0000</span>
+  </div>
+
+  <div class="wrap hero-grid">
+    <div>
+      <p class="eyebrow"><span class="dot"></span>CONSTRUCTION SUPERVISION · ON SITE, EVERY DAY</p>
+      <!-- EDIT: main headline. The accent line under the last phrase is automatic. -->
+      <h1>Your build,<br>held to <span class="lvl">the line.<svg viewBox="0 0 200 12" preserveAspectRatio="none" aria-hidden="true"><path class="lvl-line" d="M2 9 H198"/><path d="M2 4 V12"/><path d="M198 4 V12"/><path class="lvl-tri" d="M44 2 L51 9 H37 Z"/></svg></span></h1>
+      <p class="hero-sub">My Site Engineer puts a qualified engineer on your site — running the programme, enforcing the spec and documenting every stage from groundbreak to handover.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-ink" href="#contact">Request a site review
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+        <a class="btn btn-ghost" href="tel:+00000000000" data-tel data-track="Contact">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M6.6 10.8c1.5 3 3.6 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.3 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.7 21 3 13.3 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.3 1l-2.2 2.2z"/></svg>
+          Call <span data-phone>010 000 0000</span></a>
+      </div>
+    </div>
+
+    <dl class="hero-specs reveal">
+      <!-- EDIT: spec rows — replace with your real response times / coverage -->
+      <div class="spec-row"><dt>RESPONSE</dt><dd>Callback within one working day</dd></div>
+      <div class="spec-row"><dt>REPORTING</dt><dd>Daily site reports, photo-verified</dd></div>
+      <div class="spec-row"><dt>SCOPE</dt><dd>Residential · commercial · civil</dd></div>
+      <div class="spec-row"><dt>STANDARDS</dt><dd>Inspected to drawing &amp; spec, hold point by hold point</dd></div>
+    </dl>
+  </div>
+</section>
+
+<!-- ============================================================
+     TICKER  (EDIT: add / remove commitments — keep both groups identical)
+     ============================================================ -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    <ul class="ticker-group">
+      <li>HOLD-POINT INSPECTIONS</li><li>DAILY SITE REPORTS</li><li>PHOTO-VERIFIED QC</li>
+      <li>SNAG &amp; DEFECT LISTS</li><li>PROGRAMME CONTROL</li><li>VARIATION GUARD</li>
+      <li>TENDER COORDINATION</li><li>HANDOVER SIGN-OFF</li>
+    </ul>
+    <ul class="ticker-group">
+      <li>HOLD-POINT INSPECTIONS</li><li>DAILY SITE REPORTS</li><li>PHOTO-VERIFIED QC</li>
+      <li>SNAG &amp; DEFECT LISTS</li><li>PROGRAMME CONTROL</li><li>VARIATION GUARD</li>
+      <li>TENDER COORDINATION</li><li>HANDOVER SIGN-OFF</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ============================================================
+     SERVICES — the two flagship offerings  (EDIT: all copy below)
+     ============================================================ -->
+<section id="services">
+  <div class="wrap">
+    <div class="svc-head reveal">
+      <p class="sec-label">SECTION 01 — CORE SERVICES <span class="rev">REV A</span></p>
+      <h2 class="h2">Two disciplines.<br>One standard.</h2>
+      <p class="lead">Everything we do sits under two flags. You can hire them together — most clients do.</p>
+      <p class="svc-hint">↑ Select a sheet to open the full scope</p>
+    </div>
+
+    <!-- ---- Sheet 01 : PROJECT MANAGEMENT ---- -->
+    <article class="sheet reveal" id="svc-pm">
+      <button class="sheet-head" aria-expanded="false" aria-controls="body-pm">
+        <span class="sheet-num" aria-hidden="true">01</span>
+        <span class="sheet-title">
+          <h3>Project Management</h3>
+          <p class="sheet-tag">The build, run like it's our own.</p>
+        </span>
+        <span class="sheet-stamp">MSE · IN SCOPE</span>
+        <span class="sheet-chev"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="square"><path d="M5 9l7 7 7-7"/></svg></span>
+      </button>
+      <div class="sheet-body" id="body-pm">
+        <div class="sheet-inner">
+          <div class="sheet-cols">
+            <div>
+              <p class="sheet-desc">One point of accountability from groundbreak to keys. We plan the programme, coordinate trades and suppliers, guard the budget against scope creep, and keep you informed with reports you don't need an engineering degree to read.</p>
+              <div class="spec-mini">
+                <div><span>CADENCE</span><div>On site weekly + daily comms</div></div>
+                <div><span>REPORTING</span><div>Owner's report, weekly</div></div>
+                <div><span>GOAL</span><div>Time, cost &amp; scope — held</div></div>
+              </div>
+            </div>
+            <div>
+              <p class="deliv-title">Deliverables</p>
+              <ul class="deliv">
+                <li><svg viewBox="0 0 24 24" fill="none" stroke-linecap="square"><path d="M4 12.5l5 5L20 6.5"/></svg>Baseline programme &amp; weekly look-aheads</li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke-linecap="square"><path d="M4 12.5l5 5L20 6.5"/></svg>Tender, contractor &amp; supplier coordination</li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke-linecap="square"><path d="M4 12.5l5 5L20 6.5"/></svg>Cost, variation &amp; claims control</li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke-linecap="square"><path d="M4 12.5l5 5L20 6.5"/></svg>Weekly owner's report — plain language</li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke-linecap="square"><path d="M4 12.5l5 5L20 6.5"/></svg>Handover &amp; defects close-out</li>
+              </ul>
+              <button class="include-btn" data-svc="pm">
+                <svg class="ic-plus" viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="square"><path d="M12 5v14M5 12h14"/></svg>
+                <svg class="ic-tick" viewBox="0 0 24 24" fill="none" stroke-width="2.6" stroke-linecap="square"><path d="M4 12.5l5 5L20 6.5"/></svg>
+                <span class="inc-label">Include in enquiry</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- ---- Sheet 02 : QUALITY CONTROL ---- -->
+    <article class="sheet reveal" id="svc-qc">
+      <button class="sheet-head" aria-expanded="false" aria-controls="body-qc">
+        <span class="sheet-num" aria-hidden="true">02</span>
+        <span class="sheet-title">
+          <h3>Quality Control</h3>
+          <p class="sheet-tag">Nothing gets covered up before it's checked.</p>
+        </span>
+        <span class="sheet-stamp">MSE · IN SCOPE</span>
+        <span class="sheet-chev"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="square"><path d="M5 9l7 7 7-7"/></svg></span>
+      </button>
+      <div class="sheet-body" id="body-qc">
+        <div class="sheet-inner">
+          <div class="sheet-cols">
+            <div>
+              <p class="sheet-desc">We inspect every hold point against the drawings and spec — before concrete pours, before walls close, before finishes sign off — and back every finding with photos, so defects are caught while they're still cheap to fix.</p>
+              <div class="spec-mini">
+                <div><span>CADENCE</span><div>At every hold point + on call</div></div>
+                <div><span>REPORTING</span><div>Inspection record, same day</div></div>
+                <div><span>GOAL</span><div>Zero covered-up defects</div></div>
+              </div>
+            </div>
+            <div>
+              <p class="deliv-title">Deliverables</p>
+              <ul class="deliv">
+                <li><svg viewBox="0 0 24 24" fill="none" stroke-linecap="square"><path d="M4 12.5l5 5L20 6.5"/></svg>Hold-point &amp; stage inspections</li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke-linecap="square"><path d="M4 12.5l5 5L20 6.5"/></svg>Materials &amp; workmanship verification</li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke-linecap="square"><path d="M4 12.5l5 5L20 6.5"/></svg>Snag lists with photo evidence</li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke-linecap="square"><path d="M4 12.5l5 5L20 6.5"/></svg>Non-conformance reports &amp; follow-up</li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke-linecap="square"><path d="M4 12.5l5 5L20 6.5"/></svg>Practical-completion sign-off pack</li>
+              </ul>
+              <button class="include-btn" data-svc="qc">
+                <svg class="ic-plus" viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="square"><path d="M12 5v14M5 12h14"/></svg>
+                <svg class="ic-tick" viewBox="0 0 24 24" fill="none" stroke-width="2.6" stroke-linecap="square"><path d="M4 12.5l5 5L20 6.5"/></svg>
+                <span class="inc-label">Include in enquiry</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ============================================================
+     METHOD — self-drawing schematic + 4-step sequence  (EDIT: step copy)
+     ============================================================ -->
+<section id="approach">
+  <div class="wrap">
+    <div class="reveal" style="margin-bottom:46px">
+      <p class="sec-label">SECTION 02 — METHOD</p>
+      <h2 class="h2">Supervision is a sequence,<br>not a slogan.</h2>
+    </div>
+    <div class="appr-grid">
+      <figure class="fig reveal" id="fig">
+        <svg viewBox="0 0 560 400" role="img" aria-label="Schematic line drawing of a building under supervision by tower crane">
+          <!-- ground -->
+          <path class="dline" data-i="0" d="M30 344 H530"/>
+          <path class="dline thin crane" data-i="1" d="M60 344 l-12 14 M120 344 l-12 14 M180 344 l-12 14 M240 344 l-12 14 M300 344 l-12 14 M360 344 l-12 14 M420 344 l-12 14 M480 344 l-12 14"/>
+          <!-- frame + slabs -->
+          <path class="dline" data-i="2" d="M120 344 V150 H400 V344"/>
+          <path class="dline thin" data-i="3" d="M120 214 H400 M120 278 H400"/>
+          <path class="dline thin" data-i="4" d="M176 150 V214 M232 150 V214 M288 150 V214 M344 150 V214 M176 214 V278 M232 214 V278 M288 214 V278 M344 214 V278 M176 278 V344 M232 278 V344 M344 278 V344"/>
+          <path class="dline thin" data-i="5" d="M256 344 V300 H296 V344"/>
+          <!-- tower crane -->
+          <path class="dline thin crane" data-i="6" d="M470 344 V86"/>
+          <path class="dline thin crane" data-i="7" d="M470 86 H262 M470 86 H524 M470 60 V86"/>
+          <path class="dline thin crane" data-i="8" d="M470 60 L262 86 M470 60 L524 86 M300 86 V170 M292 170 h16 v12 h-16 z M500 86 V104 H522 V86"/>
+          <!-- level line + bench mark -->
+          <path class="accline" data-i="9" d="M96 128 H424 M96 121 V135 M424 121 V135"/>
+          <path class="acctrifill dtext" d="M260 128 L246 104 H274 Z"/>
+          <!-- dimensions -->
+          <path class="dim dline thin" data-i="10" d="M446 150 V344 M440 150 H452 M440 344 H452 M120 372 H400 M120 366 V378 M400 366 V378"/>
+          <text class="dtext" transform="translate(436 247) rotate(-90)" text-anchor="middle">H = 10.5 m</text>
+          <text class="dtext" x="260" y="392" text-anchor="middle">24.0 m</text>
+          <text class="dtext" x="30" y="30" style="font-size:10px;letter-spacing:.12em">FIG.01 — SUPERVISION SET-UP</text>
+        </svg>
+      </figure>
+
+      <ol class="steps reveal" id="steps">
+        <li><h3>Mobilise</h3><p>We walk the site, read the drawings, and agree the standard before work starts.</p></li>
+        <li><h3>Set the line</h3><p>Baseline programme, QA checklists and inspection hold points — fixed, written, shared.</p></li>
+        <li><h3>Inspect &amp; report</h3><p>Daily presence, hold-point checks, photo-documented findings and clear actions.</p></li>
+        <li><h3>Sign off</h3><p>Snags closed, records handed over, your build signed off to spec.</p></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FIELD NOTES — testimonial  (EDIT: real quote + name + photo)
+     Photo: replace the picsum placeholder URL with your own site photo
+     ============================================================ -->
+<section id="fieldnotes">
+  <div class="wrap quote-grid">
+    <div class="photo-slot reveal">
+      <span class="pcorner p-tl"></span><span class="pcorner p-tr"></span>
+      <span class="pcorner p-bl"></span><span class="pcorner p-br"></span>
+      <img src="https://picsum.photos/seed/mse-onsite/840/1050.jpg" alt="Site engineer on site — placeholder photo" loading="lazy">
+    </div>
+    <div class="reveal" style="--d:.12s">
+      <p class="sec-label">SECTION 03 — FIELD NOTES</p>
+      <blockquote>"For the first time on a build, I stopped driving out to check on things — and started reading reports that told me it was already handled."</blockquote>
+      <p class="quote-cite">— EDIT: CLIENT NAME · DIRECTOR, [DEVELOPMENT CO.]</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     ASSURANCE BAND  (EDIT: proof points)
+     ============================================================ -->
+<section class="band-dark">
+  <div class="wrap">
+    <p class="sec-label">SECTION 04 — WHY MSE</p>
+    <h2 class="h2" style="max-width:18ch">Built for people who don't compromise on site.</h2>
+    <div class="assure">
+      <div class="assure-cell reveal">
+        <p class="a-tag"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="square"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7l8-4z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg>ENGINEER-LED</p>
+        <p>Every site visit is made by a qualified engineer — never a salesperson with a clipboard.</p>
+      </div>
+      <div class="assure-cell reveal" style="--d:.1s">
+        <p class="a-tag"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="square"><path d="M5 4h14v16H5z"/><path d="M9 9h6M9 13h6M9 17h4"/></svg>DOCUMENTED DAILY</p>
+        <p>Photos, checklists and reports filed the same day. If it isn't written down, it didn't happen.</p>
+      </div>
+      <div class="assure-cell reveal" style="--d:.2s">
+        <p class="a-tag"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="square"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>ON YOUR SIDE</p>
+        <p>We work for the owner, not the contractor. Our only deliverable is your build done right.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     YELLOW CTA BAND
+     ============================================================ -->
+<section class="band-cta">
+  <div class="wrap cta-flex">
+    <div>
+      <h2>Don't just build.<br>Build to spec.</h2>
+      <p class="cta-sub">AVG. CALLBACK — ONE WORKING DAY · NO OBLIGATION</p>
+    </div>
+    <a class="btn btn-ink" href="#contact">Request a site review
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+  </div>
+</section>
+
+<!-- ============================================================
+     CONTACT / LEAD CAPTURE  (EDIT: aside details — hours, area)
+     ============================================================ -->
+<section id="contact">
+  <div class="wrap">
+    <div class="reveal">
+      <p class="sec-label">SECTION 05 — CONTACT <span class="rev">REV A</span></p>
+      <h2 class="h2">Tell us about your build.</h2>
+      <p class="lead">Two minutes of your time, one working day to our callback.</p>
+    </div>
+
+    <div class="contact-grid">
+      <div>
+        <!--
+          FORM NOTE (EDIT): out of the box this validates and shows a success state locally.
+          To actually RECEIVE leads, create a free form at formspree.io (or use Netlify Forms)
+          and paste the endpoint into CONFIG.formEndpoint at the top of the <script> below.
+          The page will then POST submissions there automatically — no other changes needed.
+        -->
+        <div class="form-alert" id="formAlert">NETWORK HICUP — YOUR REQUEST DIDN'T SEND. PLEASE CALL US DIRECTLY.</div>
+
+        <form id="leadForm" novalidate>
+          <div class="form-row">
+            <div class="field" data-req>
+              <label for="f-name">Your name *</label>
+              <input id="f-name" name="name" type="text" autocomplete="name" placeholder="Jan van der Merwe">
+              <small class="field-err">PLEASE ENTER YOUR NAME</small>
+            </div>
+            <div class="field" data-req data-phonefield>
+              <label for="f-phone">Phone *</label>
+              <input id="f-phone" name="phone" type="tel" autocomplete="tel" placeholder="010 000 0000">
+              <small class="field-err">PLEASE ENTER A VALID PHONE NUMBER</small>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="field">
+              <label for="f-email">Email <em style="text-transform:none;letter-spacing:0">(optional)</em></label>
+              <input id="f-email" name="email" type="email" autocomplete="email" placeholder="you@example.com">
+              <small class="field-err">THAT EMAIL DOESN'T LOOK RIGHT</small>
+            </div>
+            <div class="field">
+              <label for="f-loc">Site location</label>
+              <input id="f-loc" name="location" type="text" placeholder="Town / suburb">
+            </div>
+          </div>
+          <div class="field">
+            <label for="f-type">Project type</label>
+            <div class="sel-wrap">
+              <select id="f-type" name="type">
+                <option>New build — residential</option>
+                <option>New build — commercial</option>
+                <option>Renovation &amp; extension</option>
+                <option>Civil &amp; infrastructure</option>
+                <option>Other</option>
+              </select>
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="square"><path d="M5 9l7 7 7-7"/></svg>
+            </div>
+          </div>
+
+          <fieldset style="border:0">
+            <label style="display:block" for="svc-pm-check" class="field">
+              <span style="display:block">Services needed</span>
+            </label>
+            <div class="svc-checks" id="svcChecks">
+              <label class="check">
+                <input type="checkbox" id="svc-pm-check" name="services" value="Project Management" data-svc-check="pm">
+                <span class="box"><svg viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5"/></svg></span>
+                <span><strong>Project Management</strong><em>Programme, cost &amp; coordination</em></span>
+              </label>
+              <label class="check">
+                <input type="checkbox" id="svc-qc-check" name="services" value="Quality Control" data-svc-check="qc">
+                <span class="box"><svg viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5"/></svg></span>
+                <span><strong>Quality Control</strong><em>Hold-point inspections &amp; snag lists</em></span>
+              </label>
+            </div>
+          </fieldset>
+
+          <div class="field">
+            <label for="f-msg">About the project <em style="text-transform:none;letter-spacing:0">(optional)</em></label>
+            <textarea id="f-msg" name="message" rows="3" placeholder="Stage, size, timeline — anything useful."></textarea>
+          </div>
+
+          <button class="btn btn-ink" type="submit" id="submitBtn">Send request
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M5 12h14M13 5l7 7-7 7"/></svg></button>
+          <p class="form-note">We use your details only to respond to this enquiry. No lists, no spam.</p>
+        </form>
+
+        <!-- Success state (revealed by JS) -->
+        <div class="success" id="successPanel" aria-live="polite">
+          <span class="stamp-big">RECEIVED</span>
+          <h3 id="successTitle">Request logged.</h3>
+          <p id="successBody">We'll call you back within one working day.</p>
+          <span class="ref" id="successRef">REF: —</span>
+          <p style="margin-top:22px"><a class="btn btn-ghost" href="tel:+00000000000" data-tel data-track="Contact">Urgent? Call <span data-phone>010 000 0000</span></a></p>
+        </div>
+      </div>
+
+      <aside class="c-aside reveal" style="--d:.12s">
+        <span class="c-block" style="display:block">
+          <span style="font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;color:var(--ink-2);text-transform:uppercase">Prefer to talk?</span>
+          <a class="c-phone" href="tel:+00000000000" data-tel data-track="Contact" data-phone>010 000 0000</a>
+        </span>
+        <div class="c-block">
+          <span>HOURS</span><p>Mon – Sat, 07:00 – 17:00</p>
+        </div>
+        <div class="c-block">
+          <span>EMAIL</span><p><a href="mailto:hello@mysiteengineer.com" data-mail data-email="hello@mysiteengineer.com">hello@mysiteengineer.com</a></p>
+        </div>
+        <div class="c-block">
+          <span>SERVICE AREA</span><p><!-- EDIT -->Greater region &amp; surrounding — multi-site coverage.</p>
+        </div>
+        <div class="c-block">
+          <span>PROMISE</span><p>A qualified engineer calls you back — within one working day, every time.</p>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ============================================================
+     FOOTER — drawing title block  (EDIT: contact details)
+     ============================================================ -->
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="tblock">
+      <div class="tb-cell"><span>Project</span><strong>MY SITE ENGINEER — LANDING SHEET</strong></div>
+      <div class="tb-cell"><span>Sheet</span><strong>01 / 01</strong></div>
+      <div class="tb-cell"><span>Rev</span><strong>A</strong></div>
+      <div class="tb-cell"><span>Scale</span><strong>1 : 1</strong></div>
+      <div class="tb-cell"><span>Date</span><strong id="tbDate">—</strong></div>
+      <div class="tb-cell"><span>Drawn</span><strong>MSE</strong></div>
+    </div>
+
+    <div class="foot-cols">
+      <div>
+        <a class="brand" href="#top" style="text-decoration:none">
+          <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true">
+            <rect width="40" height="40" rx="2.5" fill="rgba(242,239,231,.08)"/>
+            <path d="M20 8.5 L27.5 23 H12.5 Z" fill="var(--accent)"/>
+            <rect x="8" y="24.5" width="24" height="2.6" fill="var(--accent)"/>
+            <rect x="8" y="30" width="24" height="1.4" fill="rgba(242,239,231,.4)"/>
+          </svg>
+          <span>
+            <span class="brand-name" style="color:var(--paper)">MY SITE ENGINEER</span><br>
+            <span class="brand-sub" style="color:rgba(242,239,231,.5)">PROJECT MGMT · QUALITY CONTROL</span>
+          </span>
+        </a>
+        <p class="foot-blurb">Independent, engineer-led supervision for owners who want their build finished the way it was drawn.</p>
+        <p class="foot-tag">MADE TO BE MEASURED.</p>
+      </div>
+      <div class="foot-col">
+        <h4>Contact</h4>
+        <a href="tel:+00000000000" data-tel data-track="Contact" data-phone>010 000 0000</a>
+        <a href="mailto:hello@mysiteengineer.com" data-mail data-email="hello@mysiteengineer.com">hello@mysiteengineer.com</a>
+        <p><!-- EDIT -->Street address or service region</p>
+      </div>
+      <div class="foot-col">
+        <h4>Index</h4>
+        <a href="#services">Core services</a>
+        <a href="#approach">Method</a>
+        <a href="#fieldnotes">Field notes</a>
+        <a href="#contact">Request a review</a>
+      </div>
+    </div>
+
+    <div class="legal">
+      <span>© <span id="year">2025</span> MY SITE ENGINEER — ALL RIGHTS RESERVED</span>
+      <span>REG: EDIT-REG-NUMBER · VAT: EDIT-VAT-NUMBER</span>
+    </div>
+  </div>
+</footer>
+
+<!-- Sticky mobile CTA bar (ad-traffic conversion pattern) -->
+<nav class="mob-bar" id="mobBar" aria-label="Quick contact">
+  <a class="mb-call" href="tel:+00000000000" data-tel data-track="Contact">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M6.6 10.8c1.5 3 3.6 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.3 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.7 21 3 13.3 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.3 1l-2.2 2.2z"/></svg>
+    Call now</a>
+  <a class="mb-form" href="#contact">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M5 4h14v16H5z"/><path d="M9 9h6M9 13h4"/></svg>
+    Request review</a>
+</nav>
+
+<script>
+/* ============================================================
+   CONFIG — the only block you ever need to edit for setup
+   ============================================================ */
+const CONFIG = {
+  phoneDisplay: "010 000 0000",          // EDIT: your phone, as humans read it
+  phoneHref:    "tel:+00000000000",      // EDIT: same number for dialing
+  email:        "hello@mysiteengineer.com",
+  gaId:         "",                      // EDIT: paste "G-XXXXXXX" to enable GA4
+  pixelId:      "",                      // EDIT: paste your Meta Pixel ID to enable it
+  formEndpoint: ""                       // EDIT: e.g. "https://formspree.io/f/abcdwxyz"
+};
+const REDUCED = matchMedia("(prefers-reduced-motion: reduce)").matches;
+document.documentElement.classList.add("js");
+
+/* ---------- populate phone / email everywhere from CONFIG ---------- */
+document.querySelectorAll("[data-phone]").forEach(el => el.textContent = CONFIG.phoneDisplay);
+document.querySelectorAll("[data-tel]").forEach(a => a.href = CONFIG.phoneHref);
+document.querySelectorAll("[data-mail]").forEach(a => { a.href = "mailto:" + CONFIG.email; a.textContent = CONFIG.email; });
+
+/* ---------- analytics: GA4 + Meta Pixel load only if IDs are set ---------- */
+function trackEvent(name, params = {}) {
+  try { if (window.fbq) fbq("track", name === "Lead" ? "Lead" : "Contact", params); } catch (e) {}
+  try { if (window.gtag) gtag("event", name === "Lead" ? "generate_lead" : "contact", params); } catch (e) {}
+}
+if (CONFIG.gaId) {
+  const s = document.createElement("script"); s.async = true;
+  s.src = "https://www.googletagmanager.com/gtag/js?id=" + CONFIG.gaId;
+  document.head.appendChild(s);
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = function(){ dataLayer.push(arguments); };
+  gtag("js", new Date()); gtag("config", CONFIG.gaId);
+}
+if (CONFIG.pixelId) {
+  (function(f,b,e,v,n,t,s){
+    if(f.fbq)return; n=f.fbq=function(){ n.callMethod ? n.callMethod.apply(n,arguments) : n.queue.push(arguments); };
+    if(!f._fbq) f._fbq=n; n.push=n; n.loaded=true; n.version="2.0"; n.queue=[];
+    t=b.createElement(e); t.async=true; t.src=v;
+    s=b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t,s);
+  })(window, document, "script", "https://connect.facebook.net/en_US/fbevents.js");
+  fbq("init", CONFIG.pixelId); fbq("track", "PageView");
+}
+document.querySelectorAll('[data-track="Contact"]').forEach(a =>
+  a.addEventListener("click", () => trackEvent("Contact")));
+
+/* ---------- footer dates ---------- */
+document.getElementById("year").textContent = new Date().getFullYear();
+document.getElementById("tbDate").textContent = new Date().toISOString().slice(0, 10);
+
+/* ---------- tape-measure scroll indicator ---------- */
+const tapeFill = document.getElementById("tapeFill");
+const tapeRead = document.getElementById("tapeRead");
+let tapeTick = false;
+function tapeUpdate() {
+  const max = document.documentElement.scrollHeight - innerHeight;
+  const p = max > 0 ? Math.min(1, scrollY / max) : 0;
+  tapeFill.style.width = (p * 100) + "%";
+  tapeRead.textContent = (p * 30).toFixed(1).padStart(4, "0") + " m";
+  tapeTick = false;
+}
+addEventListener("scroll", () => { if (!tapeTick) { tapeTick = true; requestAnimationFrame(tapeUpdate); } }, { passive: true });
+tapeUpdate();
+
+/* ---------- theodolite reticle (fine pointers, hero only) ---------- */
+const hero = document.querySelector(".hero");
+const ret = document.getElementById("reticle");
+const retRead = document.getElementById("retRead");
+if (matchMedia("(pointer: fine)").matches && !REDUCED) {
+  let tx = 0, ty = 0, x = 0, y = 0, running = false, started = false;
+  hero.addEventListener("mousemove", e => {
+    const r = hero.getBoundingClientRect();
+    tx = e.clientX - r.left; ty = e.clientY - r.top;
+    if (!started) { started = true; x = tx; y = ty; ret.classList.add("on"); running = true; requestAnimationFrame(loop); }
+  });
+  hero.addEventListener("mouseleave", () => ret.classList.remove("on"));
+  hero.addEventListener("mouseenter", () => started && ret.classList.add("on"));
+  function loop() {
+    x += (tx - x) * 0.13; y += (ty - y) * 0.13;
+    ret.style.transform = `translate3d(${x}px,${y}px,0)`;
+    retRead.textContent = `E ${String(Math.round(x)).padStart(4, "0")} · N ${String(Math.round(y)).padStart(4, "0")}`;
+    if (running) requestAnimationFrame(loop);
+  }
+  /* pause the loop when the hero scrolls out of view */
+  new IntersectionObserver(([en]) => {
+    if (en.isIntersecting && started && !running) { running = true; requestAnimationFrame(loop); }
+    if (!en.isIntersecting) running = false;
+  }).observe(hero);
+}
+
+/* ---------- entrance reveals ---------- */
+const revIO = new IntersectionObserver(entries => entries.forEach(en => {
+  if (en.isIntersecting) { en.target.classList.add("in"); revIO.unobserve(en.target); }
+}), { threshold: 0.12 });
+document.querySelectorAll(".reveal").forEach(el => revIO.observe(el));
+
+/* ---------- service sheets: accordion + stamp ---------- */
+document.querySelectorAll(".sheet-head").forEach(head => {
+  head.addEventListener("click", () => {
+    const sheet = head.closest(".sheet");
+    const open = sheet.classList.toggle("open");
+    head.setAttribute("aria-expanded", open);
+  });
+});
+
+/* ---------- "include in enquiry" <-> form checkboxes (single source of truth) ---------- */
+const svcState = { pm: false, qc: false };
+const svcLabels = { pm: "Project Management", qc: "Quality Control" };
+const svcChecks = document.querySelectorAll("[data-svc-check]");
+const svcBtns = document.querySelectorAll(".include-btn");
+const svcChecksBox = document.getElementById("svcChecks");
+function renderServices() {
+  svcBtns.forEach(btn => {
+    const on = svcState[btn.dataset.svc];
+    btn.classList.toggle("active", on);
+    btn.querySelector(".inc-label").textContent = on ? "In your enquiry" : "Include in enquiry";
+  });
+  svcChecks.forEach(c => c.checked = svcState[c.dataset.svcCheck]);
+}
+svcBtns.forEach(btn => btn.addEventListener("click", () => {
+  const k = btn.dataset.svc;
+  svcState[k] = !svcState[k];
+  renderServices();
+  if (svcState[k] && !REDUCED) {
+    svcChecksBox.classList.add("flash");
+    setTimeout(() => svcChecksBox.classList.remove("flash"), 900);
+  }
+}));
+svcChecks.forEach(c => c.addEventListener("change", () => {
+  svcState[c.dataset.svcCheck] = c.checked;
+  renderServices();
+}));
+
+/* ---------- lead form: validation, optional endpoint POST, success panel ---------- */
+const form = document.getElementById("leadForm");
+const alertBox = document.getElementById("formAlert");
+const successPanel = document.getElementById("successPanel");
+form.addEventListener("submit", async e => {
+  e.preventDefault();
+  alertBox.classList.remove("show");
+  let firstBad = null;
+  form.querySelectorAll(".field.err").forEach(f => f.classList.remove("err"));
+
+  const name = form.name.value.trim();
+  const phone = form.phone.value.replace(/[^\d+]/g, "");
+  const email = form.email.value.trim();
+
+  function mark(sel, bad) {
+    const f = form.querySelector(sel).closest(".field");
+    f.classList.toggle("err", bad);
+    if (bad && !firstBad) firstBad = f;
+  }
+  mark("#f-name", name.length < 2);
+  mark("#f-phone", phone.length < 7);
+  mark("#f-email", email !== "" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email));
+  if (firstBad) { firstBad.querySelector("input").focus(); return; }
+
+  const payload = {
+    name, phone, email: email || "",
+    type: form.type.value,
+    location: form.location.value.trim(),
+    services: Object.keys(svcState).filter(k => svcState[k]).map(k => svcLabels[k]),
+    message: form.message.value.trim()
+  };
+
+  const btn = document.getElementById("submitBtn");
+  btn.disabled = true; btn.style.opacity = ".6"; btn.firstChild.textContent = "Sending… ";
+  try {
+    if (CONFIG.formEndpoint) {
+      const res = await fetch(CONFIG.formEndpoint, {
+        method: "POST",
+        headers: { "Accept": "application/json", "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+      if (!res.ok) throw new Error("send failed");
+    } else {
+      await new Promise(r => setTimeout(r, 700)); /* local demo: swap in your endpoint for real sends */
+    }
+  } catch (err) {
+    alertBox.classList.add("show");
+    btn.disabled = false; btn.style.opacity = ""; btn.firstChild.textContent = "Send request ";
+    return;
+  }
+
+  const first = name.split(" ")[0];
+  document.getElementById("successTitle").textContent = `Request logged, ${first}.`;
+  document.getElementById("successBody").textContent =
+    `Thanks — we'll call you back on ${form.phone.value.trim()} within one working day.` +
+    (payload.services.length ? ` Noted: ${payload.services.join(" + ")}.` : "");
+  document.getElementById("successRef").textContent =
+    `REF: ENQ-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
+  form.hidden = true;
+  successPanel.classList.add("show");
+  successPanel.scrollIntoView({ behavior: REDUCED ? "auto" : "smooth", block: "center" });
+  trackEvent("Lead", { services: payload.services.join(", ") });
+});
+form.querySelectorAll("input").forEach(i =>
+  i.addEventListener("input", () => i.closest(".field")?.classList.remove("err")));
+
+/* ---------- method section: draw the schematic, light the steps ---------- */
+const fig = document.getElementById("fig");
+const figPaths = fig.querySelectorAll("[data-i]");
+if (REDUCED) {
+  fig.classList.add("go");
+} else {
+  figPaths.forEach(p => {
+    const L = p.getTotalLength();
+    p.style.strokeDasharray = L;
+    p.style.strokeDashoffset = L;
+    p.style.transition = `stroke-dashoffset ${Math.min(1.5, 0.4 + L / 750)}s cubic-bezier(.4,0,.2,1) ${(+p.dataset.i) * 0.24}s`;
+  });
+  new IntersectionObserver((entries, io) => entries.forEach(en => {
+    if (!en.isIntersecting) return;
+    io.disconnect();
+    fig.classList.add("go");
+    requestAnimationFrame(() => requestAnimationFrame(() =>
+      figPaths.forEach(p => p.style.strokeDashoffset = 0)));
+    document.querySelectorAll("#steps li").forEach((li, i) =>
+      setTimeout(() => li.classList.add("active"), 250 + i * 850));
+  }), { threshold: 0.3 }).observe(fig);
+}
+if (REDUCED) document.querySelectorAll("#steps li").forEach(li => li.classList.add("active"));
+
+/* ---------- hide sticky mobile bar while the form is on screen ---------- */
+const mobBar = document.getElementById("mobBar");
+new IntersectionObserver(([en]) =>
+  mobBar.classList.toggle("hide", en.isIntersecting), { threshold: 0.1 }
+).observe(document.getElementById("contact"));
+</script>
+</body>
+</html>

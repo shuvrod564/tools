@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth" x-data="{ mobileMenu: false, searchOpen: false, activeDropdown: null }">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apex Legal Group | Premier Law Firm</title>
+    <link rel="shortcut icon" href="https://res.cloudinary.com/disivcuqr/image/upload/v1780638888/snippets-assets/phpD387_gvlpi1.png" type="image/x-icon">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        navy: {
+                            50: '#f0f4f8',
+                            100: '#d9e2ec',
+                            200: '#bcccdc',
+                            300: '#9fb3c8',
+                            400: '#829ab1',
+                            500: '#627d98',
+                            600: '#486581',
+                            700: '#334e68',
+                            800: '#243b53',
+                            900: '#102a43',
+                            950: '#0a1929',
+                        },
+                        gold: {
+                            400: '#d4a843',
+                            500: '#c9952a',
+                            600: '#b8841f',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        [x-cloak] { display: none !important; }
+
+        .line-reveal {
+            overflow: hidden;
+        }
+        .line-reveal span {
+            display: inline-block;
+            transform: translateY(110%);
+            animation: slideUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        @keyframes slideUp {
+            to { transform: translateY(0); }
+        }
+        .line-reveal span:nth-child(2) { animation-delay: 0.12s; }
+        .line-reveal span:nth-child(3) { animation-delay: 0.24s; }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .hero-overlay {
+            background: linear-gradient(to top, rgba(10,25,41,0.95) 0%, rgba(10,25,41,0.6) 40%, rgba(10,25,41,0.3) 100%);
+        }
+
+        .nav-scrolled {
+            background: rgba(10,25,41,0.97) !important;
+            backdrop-filter: blur(16px);
+            box-shadow: 0 1px 20px rgba(0,0,0,0.15);
+        }
+
+        .card-hover {
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .card-hover:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 50px -12px rgba(0,0,0,0.15);
+        }
+
+        .img-zoom {
+            transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .group:hover .img-zoom {
+            transform: scale(1.05);
+        }
+
+        .dropdown-menu {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(8px);
+            transition: all 0.25s ease;
+        }
+        .dropdown-active .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .marquee-track {
+            display: flex;
+            animation: marquee 40s linear infinite;
+        }
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .gold-line {
+            width: 0;
+            transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .group:hover .gold-line {
+            width: 48px;
+        }
+
+        .search-overlay {
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        .search-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0a1929; }
+        ::-webkit-scrollbar-thumb { background: #334e68; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #486581; }
+
+        .stat-counter {
+            font-variant-numeric: tabular-nums;
+        }
+    </style>
+</head>
+<body class="font-sans bg-white text-navy-900 antialiased">
+
+    <!-- Top Bar -->
+    <div class="bg-navy-950 text-white/70 text-xs border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-6 flex items-center justify-between h-9">
+            <div class="hidden md:flex items-center gap-6">
+                <a href="#" class="hover:text-white transition-colors flex items-center gap-1.5">
+                    <iconify-icon icon="lucide:phone" width="12"></iconify-icon>
+                    +971 4 123 4567
+                </a>
+                <a href="#" class="hover:text-white transition-colors flex items-center gap-1.5">
+                    <iconify-icon icon="lucide:mail" width="12"></iconify-icon>
+                    contact@alrashidlegal.com
+                </a>
+            </div>
+            <div class="flex items-center gap-4 ml-auto md:ml-0">
+                <a href="#" class="hover:text-white transition-colors">Locations</a>
+                <span class="text-white/20">|</span>
+                <a href="#" class="hover:text-white transition-colors">Careers</a>
+                <span class="text-white/20">|</span>
+                <div class="flex items-center gap-2">
+                    <a href="#" class="hover:text-white transition-colors font-medium text-white">EN</a>
+                    <a href="#" class="hover:text-white transition-colors">AR</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav id="mainNav" class="fixed top-9 left-0 right-0 z-50 bg-navy-950/80 backdrop-blur-md transition-all duration-300"
+         @scroll.window="if(window.scrollY > 50) $el.classList.add('nav-scrolled'); else $el.classList.remove('nav-scrolled')">
+        <div class="max-w-7xl mx-auto px-6 flex items-center justify-between h-16">
+            <!-- Logo -->
+            <a href="#" class="flex items-center gap-3">
+                <div class="w-9 h-9 bg-gold-400 rounded-sm flex items-center justify-center">
+                    <span class="font-serif font-bold text-navy-950 text-lg leading-none">A</span>
+                </div>
+                <div class="leading-tight">
+                    <span class="text-white font-medium text-sm tracking-wide">Apex Legal Group</span>
+                    <span class="block text-white/40 text-[10px] tracking-[0.25em] uppercase">Legal Consultants</span>
+                </div>
+            </a>
+
+            <!-- Desktop Nav -->
+            <div class="hidden lg:flex items-center gap-1">
+                <div class="relative" @mouseenter="activeDropdown = 'about'" @mouseleave="activeDropdown = null"
+                     :class="activeDropdown === 'about' ? 'dropdown-active' : ''">
+                    <button class="flex items-center gap-1 px-4 py-5 text-sm text-white/80 hover:text-white transition-colors">
+                        About
+                        <iconify-icon icon="lucide:chevron-down" width="14" class="transition-transform duration-200"
+                                      :class="activeDropdown === 'about' ? 'rotate-180' : ''"></iconify-icon>
+                    </button>
+                    <div class="dropdown-menu absolute top-full left-0 w-64 bg-white rounded-lg shadow-xl border border-navy-100 py-2">
+                        <a href="#" class="flex items-center justify-between px-5 py-3 text-sm text-navy-700 hover:bg-navy-50 hover:text-gold-500 transition-colors">
+                            Our Firm
+                            <iconify-icon icon="lucide:arrow-right" width="14" class="text-navy-300"></iconify-icon>
+                        </a>
+                        <a href="#" class="flex items-center justify-between px-5 py-3 text-sm text-navy-700 hover:bg-navy-50 hover:text-gold-500 transition-colors">
+                            Leadership
+                            <iconify-icon icon="lucide:arrow-right" width="14" class="text-navy-300"></iconify-icon>
+                        </a>
+                        <a href="#" class="flex items-center justify-between px-5 py-3 text-sm text-navy-700 hover:bg-navy-50 hover:text-gold-500 transition-colors">
+                            History & Values
+                            <iconify-icon icon="lucide:arrow-right" width="14" class="text-navy-300"></iconify-icon>
+                        </a>
+                        <a href="#" class="flex items-center justify-between px-5 py-3 text-sm text-navy-700 hover:bg-navy-50 hover:text-gold-500 transition-colors">
+                            Pro Bono
+                            <iconify-icon icon="lucide:arrow-right" width="14" class="text-navy-300"></iconify-icon>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="relative" @mouseenter="activeDropdown = 'services'" @mouseleave="activeDropdown = null"
+                     :class="activeDropdown === 'services' ? 'dropdown-active' : ''">
+                    <button class="flex items-center gap-1 px-4 py-5 text-sm text-white/80 hover:text-white transition-colors">
+                        Services
+                        <iconify-icon icon="lucide:chevron-down" width="14" class="transition-transform duration-200"
+                                      :class="activeDropdown === 'services' ? 'rotate-180' : ''"></iconify-icon>
+                    </button>
+                    <div class="dropdown-menu absolute top-full left-0 w-80 bg-white rounded-lg shadow-xl border border-navy-100 py-2">
+                        <div class="grid grid-cols-2 gap-px bg-navy-50">
+                            <a href="#" class="flex items-center gap-2.5 px-5 py-3 bg-white text-sm text-navy-700 hover:bg-navy-50 hover:text-gold-500 transition-colors">
+                                <iconify-icon icon="lucide:landmark" width="16" class="text-gold-400"></iconify-icon>
+                                Banking & Finance
+                            </a>
+                            <a href="#" class="flex items-center gap-2.5 px-5 py-3 bg-white text-sm text-navy-700 hover:bg-navy-50 hover:text-gold-500 transition-colors">
+                                <iconify-icon icon="lucide:building-2" width="16" class="text-gold-400"></iconify-icon>
+                                Corporate
+                            </a>
+                            <a href="#" class="flex items-center gap-2.5 px-5 py-3 bg-white text-sm text-navy-700 hover:bg-navy-50 hover:text-gold-500 transition-colors">
+                                <iconify-icon icon="lucide:scale" width="16" class="text-gold-400"></iconify-icon>
+                                Dispute Resolution
+                            </a>
+                            <a href="#" class="flex items-center gap-2.5 px-5 py-3 bg-white text-sm text-navy-700 hover:bg-navy-50 hover:text-gold-500 transition-colors">
+                                <iconify-icon icon="lucide:hard-hat" width="16" class="text-gold-400"></iconify-icon>
+                                Construction
+                            </a>
+                            <a href="#" class="flex items-center gap-2.5 px-5 py-3 bg-white text-sm text-navy-700 hover:bg-navy-50 hover:text-gold-500 transition-colors">
+                                <iconify-icon icon="lucide:cpu" width="16" class="text-gold-400"></iconify-icon>
+                                Technology & IP
+                            </a>
+                            <a href="#" class="flex items-center gap-2.5 px-5 py-3 bg-white text-sm text-navy-700 hover:bg-navy-50 hover:text-gold-500 transition-colors">
+                                <iconify-icon icon="lucide:shield-check" width="16" class="text-gold-400"></iconify-icon>
+                                Regulatory
+                            </a>
+                            <a href="#" class="flex items-center gap-2.5 px-5 py-3 bg-white text-sm text-navy-700 hover:bg-navy-50 hover:text-gold-500 transition-colors">
+                                <iconify-icon icon="lucide:globe" width="16" class="text-gold-400"></iconify-icon>
+                                International Trade
+                            </a>
+                            <a href="#" class="flex items-center gap-2.5 px-5 py-3 bg-white text-sm text-navy-700 hover:bg-navy-50 hover:text-gold-500 transition-colors">
+                                <iconify-icon icon="lucide:home" width="16" class="text-gold-400"></iconify-icon>
+                                Real Estate
+                            </a>
+                        </div>
+                        <div class="px-5 py-3 border-t border-navy-50">
+                            <a href="#" class="text-xs font-medium text-gold-500 hover:text-gold-600 transition-colors flex items-center gap-1">
+                                View all services
+                                <iconify-icon icon="lucide:arrow-right" width="12"></iconify-icon>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="#" class="px-4 py-5 text-sm text-white/80 hover:text-white transition-colors">People</a>
+                <a href="#" class="px-4 py-5 text-sm text-white/80 hover:text-white transition-colors">Insights</a>
+                <a href="#" class="px-4 py-5 text-sm text-white/80 hover:text-white transition-colors">Sectors</a>
+                <a href="#" class="px-4 py-5 text-sm text-white/80 hover:text-white transition-colors">Contact</a>
+            </div>
+
+            <!-- Right Actions -->
+            <div class="flex items-center gap-3">
+                <button @click="searchOpen = !searchOpen" class="w-9 h-9 flex items-center justify-center text-white/60 hover:text-white transition-colors rounded-full hover:bg-white/10">
+                    <iconify-icon icon="lucide:search" width="18"></iconify-icon>
+                </button>
+                <a href="#" class="hidden md:inline-flex items-center gap-2 bg-gold-400 hover:bg-gold-500 text-navy-950 text-xs font-semibold tracking-wider uppercase px-5 py-2.5 rounded-sm transition-colors">
+                    Contact Us
+                </a>
+                <button @click="mobileMenu = !mobileMenu" class="lg:hidden w-9 h-9 flex items-center justify-center text-white/60 hover:text-white transition-colors">
+                    <iconify-icon :icon="mobileMenu ? 'lucide:x' : 'lucide:menu'" width="22"></iconify-icon>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div x-show="mobileMenu" x-cloak
+             x-transition:enter="transition ease-out duration-300"
+             x-transition:enter-start="opacity-0 -translate-y-4"
+             x-transition:enter-end="opacity-100 translate-y-0"
+             x-transition:leave="transition ease-in duration-200"
+             x-transition:leave-start="opacity-100 translate-y-0"
+             x-transition:leave-end="opacity-0 -translate-y-4"
+             class="lg:hidden bg-navy-950 border-t border-white/10 px-6 py-6 space-y-1">
+            <a href="#" class="block py-3 text-white/80 hover:text-white border-b border-white/5 transition-colors">About</a>
+            <a href="#" class="block py-3 text-white/80 hover:text-white border-b border-white/5 transition-colors">Services</a>
+            <a href="#" class="block py-3 text-white/80 hover:text-white border-b border-white/5 transition-colors">People</a>
+            <a href="#" class="block py-3 text-white/80 hover:text-white border-b border-white/5 transition-colors">Insights</a>
+            <a href="#" class="block py-3 text-white/80 hover:text-white border-b border-white/5 transition-colors">Sectors</a>
+            <a href="#" class="block py-3 text-white/80 hover:text-white transition-colors">Contact</a>
+            <div class="pt-4 flex items-center gap-3 text-xs">
+                <a href="tel:+97141234567" class="flex items-center gap-1.5 text-white/60">
+                    <iconify-icon icon="lucide:phone" width="13"></iconify-icon>
+                    +971 4 123 4567
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Search Overlay -->
+    <div class="search-overlay fixed inset-0 z-[60] bg-navy-950/95 backdrop-blur-lg flex items-start justify-center pt-32"
+         :class="searchOpen ? 'active' : ''" @keydown.escape.window="searchOpen = false">
+        <div class="w-full max-w-2xl px-6" x-show="searchOpen" x-cloak
+             x-transition:enter="transition ease-out duration-300 delay-100"
+             x-transition:enter-start="opacity-0 -translate-y-6"
+             x-transition:enter-end="opacity-100 translate-y-0">
+            <div class="relative">
+                <iconify-icon icon="lucide:search" width="22" class="absolute left-0 top-1/2 -translate-y-1/2 text-white/40"></iconify-icon>
+                <input type="text" placeholder="Search for services, people, insights..."
+                       class="w-full bg-transparent border-b-2 border-white/20 focus:border-gold-400 text-white text-xl md:text-2xl font-light pl-8 pr-12 py-4 outline-none placeholder:text-white/30 transition-colors"
+                       x-ref="searchInput"
+                       @keydown.enter="searchOpen = false">
+                <button @click="searchOpen = false" class="absolute right-0 top-1/2 -translate-y-1/2 text-white/40 hover:text-white transition-colors">
+                    <iconify-icon icon="lucide:x" width="22"></iconify-icon>
+                </button>
+            </div>
+            <div class="mt-8 flex flex-wrap gap-2">
+                <span class="text-xs text-white/40 mr-2 self-center">Popular:</span>
+                <a href="#" class="text-xs px-3 py-1.5 rounded-full border border-white/10 text-white/60 hover:border-gold-400/50 hover:text-gold-400 transition-colors">Corporate Law</a>
+                <a href="#" class="text-xs px-3 py-1.5 rounded-full border border-white/10 text-white/60 hover:border-gold-400/50 hover:text-gold-400 transition-colors">Arbitration</a>
+                <a href="#" class="text-xs px-3 py-1.5 rounded-full border border-white/10 text-white/60 hover:border-gold-400/50 hover:text-gold-400 transition-colors">M&A</a>
+                <a href="#" class="text-xs px-3 py-1.5 rounded-full border border-white/10 text-white/60 hover:border-gold-400/50 hover:text-gold-400 transition-colors">FDI</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-[92vh] flex items-end overflow-hidden">
+        <img src="https://picsum.photos/seed/lawfirm-hero/1920/1080.jpg" alt="Hero"
+             class="absolute inset-0 w-full h-full object-cover">
+        <div class="hero-overlay absolute inset-0"></div>
+
+        <!-- Floating Badge -->
+        <div class="absolute top-32 right-6 md:right-16 z-10 fade-in" x-data="{ shown: false }" x-intersect.once="shown = true">
+            <div x-show="shown" x-transition:enter="transition ease-out duration-700 delay-700"
+                 x-transition:enter-start="opacity-0 translate-y-4"
+                 x-transition:enter-end="opacity-100 translate-y-0"
+                 class="bg-white/10 backdrop-blur-md border border-white/10 rounded-lg p-4 w-48">
+                <div class="text-gold-400 text-2xl font-serif font-bold stat-counter">35+</div>
+                <div class="text-white/60 text-xs mt-1">Years of Excellence</div>
+            </div>
+        </div>
+
+        <div class="relative z-10 w-full max-w-7xl mx-auto px-6 pb-16 md:pb-24 pt-40">
+            <div class="max-w-3xl">
+                <div class="line-reveal">
+                    <span class="block text-gold-400 text-xs font-semibold tracking-[0.3em] uppercase mb-6">Middle East & Beyond</span>
+                </div>
+                <div class="line-reveal">
+                    <h1 class="font-serif text-4xl md:text-6xl lg:text-7xl font-bold text-white leading-[0.95] tracking-tight">
+                        <span>Clear Guidance. </span> 
+                        <span class="block mt-2 text-gold-400">Relentless Advocacy.</span>
+                    </h1>
+                </div>
+                <div class="line-reveal mt-8">
+                    <span class="block text-white/60 text-base md:text-lg font-light leading-relaxed max-w-xl">
+                        When the stakes are high, you need a legal team with a proven track record. We protect your business, your assets, and your future.
+                    </span>
+                </div>
+                <div class="mt-10 flex flex-wrap gap-4" x-data="{ shown: false }" x-intersect.once="shown = true">
+                    <a href="#" x-show="shown" x-transition:enter="transition ease-out duration-500 delay-500"
+                       x-transition:enter-start="opacity-0 translate-y-4"
+                       x-transition:enter-end="opacity-100 translate-y-0"
+                       class="inline-flex items-center gap-2 bg-gold-400 hover:bg-gold-500 text-navy-950 text-sm font-semibold tracking-wider uppercase px-8 py-4 rounded-sm transition-colors group">
+                        Our Services
+                        <iconify-icon icon="lucide:arrow-right" width="16" class="transition-transform group-hover:translate-x-1"></iconify-icon>
+                    </a>
+                    <a href="#" x-show="shown" x-transition:enter="transition ease-out duration-500 delay-600"
+                       x-transition:enter-start="opacity-0 translate-y-4"
+                       x-transition:enter-end="opacity-100 translate-y-0"
+                       class="inline-flex items-center gap-2 border border-white/30 hover:border-white/60 text-white text-sm font-medium tracking-wider uppercase px-8 py-4 rounded-sm transition-colors group">
+                        <iconify-icon icon="lucide:play-circle" width="18" class="text-gold-400"></iconify-icon>
+                        Watch Overview
+                    </a>
+                </div>
+            </div>
+
+            <!-- Scroll indicator -->
+            <div class="hidden md:flex absolute bottom-8 right-6 flex-col items-center gap-2 text-white/30">
+                <span class="text-[10px] tracking-[0.2em] uppercase rotate-90 origin-center translate-y-6">Scroll</span>
+                <div class="w-px h-12 bg-white/20 mt-8 relative overflow-hidden">
+                    <div class="w-full h-1/2 bg-gold-400 animate-bounce"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ticker / Marquee -->
+    <div class="bg-navy-950 border-y border-white/5 py-4 overflow-hidden">
+        <div class="marquee-track whitespace-nowrap">
+            <template x-for="i in 2" :key="i">
+                <div class="flex items-center gap-8 mr-8">
+                    <span class="text-white/30 text-sm font-light">Chambers Global — Band 1</span>
+                    <span class="text-gold-400/50">◆</span>
+                    <span class="text-white/30 text-sm font-light">IFLR1000 — Tier 1</span>
+                    <span class="text-gold-400/50">◆</span>
+                    <span class="text-white/30 text-sm font-light">Legal 500 — Leading Firm</span>
+                    <span class="text-gold-400/50">◆</span>
+                    <span class="text-white/30 text-sm font-light">ALB — MENA Law Firm of the Year</span>
+                    <span class="text-gold-400/50">◆</span>
+                    <span class="text-white/30 text-sm font-light">Who's Who Legal — Highly Recommended</span>
+                    <span class="text-gold-400/50">◆</span>
+                    <span class="text-white/30 text-sm font-light">IFLR1000 — Tier 1 Banking</span>
+                    <span class="text-gold-400/50">◆</span>
+                </div>
+            </template>
+        </div>
+    </div>
+
+    <!-- Stats Bar -->
+    <section class="bg-white border-b border-navy-100">
+        <div class="max-w-7xl mx-auto px-6 py-12 md:py-16">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-0 md:divide-x divide-navy-100">
+                <div class="md:px-8 first:md:pl-0 fade-in">
+                    <div class="text-3xl md:text-4xl font-serif font-bold text-navy-900 stat-counter" x-data="{ count: 0 }" x-intersect.once="$dispatch('count-up', { el: $el, target: 200 })" @count-up.window="if($event.detail.el === $el) { let start = 0; let step = Math.ceil($event.detail.target / 40); let interval = setInterval(() => { start += step; if(start >= $event.detail.target) { start = $event.detail.target; clearInterval(interval); } $el.textContent = start + '+'; }, 40); }">0+</div>
+                    <div class="text-navy-500 text-sm mt-2 font-light">Legal Professionals</div>
+                </div>
+                <div class="md:px-8 fade-in" style="transition-delay: 0.1s">
+                    <div class="text-3xl md:text-4xl font-serif font-bold text-navy-900 stat-counter" x-data="{ count: 0 }" x-intersect.once="$dispatch('count-up', { el: $el, target: 12 })" @count-up.window="if($event.detail.el === $el) { let start = 0; let step = 1; let interval = setInterval(() => { start += step; if(start >= $event.detail.target) { start = $event.detail.target; clearInterval(interval); } $el.textContent = start; }, 80); }">0</div>
+                    <div class="text-navy-500 text-sm mt-2 font-light">Offices Worldwide</div>
+                </div>
+                <div class="md:px-8 fade-in" style="transition-delay: 0.2s">
+                    <div class="text-3xl md:text-4xl font-serif font-bold text-navy-900 stat-counter" x-data="{ count: 0 }" x-intersect.once="$dispatch('count-up', { el: $el, target: 5000 })" @count-up.window="if($event.detail.el === $el) { let start = 0; let step = Math.ceil($event.detail.target / 40); let interval = setInterval(() => { start += step; if(start >= $event.detail.target) { start = $event.detail.target; clearInterval(interval); } $el.textContent = start.toLocaleString() + '+'; }, 40); }">0+</div>
+                    <div class="text-navy-500 text-sm mt-2 font-light">Matters Handled</div>
+                </div>
+                <div class="md:px-8 last:md:pr-0 fade-in" style="transition-delay: 0.3s">
+                    <div class="text-3xl md:text-4xl font-serif font-bold text-navy-900 stat-counter" x-data="{ count: 0 }" x-intersect.once="$dispatch('count-up', { el: $el, target: 98 })" @count-up.window="if($event.detail.el === $el) { let start = 0; let step = 1; let interval = setInterval(() => { start += step; if(start >= $event.detail.target) { start = $event.detail.target; clearInterval(interval); } $el.textContent = start + '%'; }, 30); }">0%</div>
+                    <div class="text-navy-500 text-sm mt-2 font-light">Client Retention Rate</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Practice Areas -->
+    <section class="bg-navy-50/50 py-20 md:py-28">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14 fade-in">
+                <div>
+                    <span class="text-gold-500 text-xs font-semibold tracking-[0.25em] uppercase">What We Do</span>
+                    <h2 class="font-serif text-3xl md:text-4xl font-bold text-navy-900 mt-3 tracking-tight">Practice Areas</h2>
+                </div>
+                <a href="#" class="group inline-flex items-center gap-2 text-sm font-medium text-navy-600 hover:text-gold-500 transition-colors">
+                    Explore all services
+                    <iconify-icon icon="lucide:arrow-right" width="16" class="transition-transform group-hover:translate-x-1"></iconify-icon>
+                </a>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-navy-100 rounded-xl overflow-hidden" x-data="{ hovered: null }">
+                <template x-for="(area, index) in [
+                    { icon: 'lucide:landmark', title: 'Banking & Finance', desc: 'Structured finance, project finance, Islamic banking, and regulatory compliance.', count: '45+' },
+                    { icon: 'lucide:building-2', title: 'Corporate & M&A', desc: 'Mergers, acquisitions, joint ventures, and corporate restructuring.', count: '120+' },
+                    { icon: 'lucide:scale', title: 'Dispute Resolution', desc: 'Commercial litigation, arbitration, and alternative dispute resolution.', count: '800+' },
+                    { icon: 'lucide:hard-hat', title: 'Construction & Infrastructure', desc: 'Project development, FIDIC contracts, and construction disputes.', count: '200+' },
+                    { icon: 'lucide:cpu', title: 'Technology & Data', desc: 'Digital transformation, data privacy, fintech, and intellectual property.', count: '90+' },
+                    { icon: 'lucide:shield-check', title: 'Regulatory & Compliance', desc: 'Government relations, licensing, anti-corruption, and sanctions.', count: '150+' },
+                ]" :key="index">
+                    <a href="#"
+                       class="group bg-white p-8 md:p-10 relative overflow-hidden transition-all duration-500 hover:bg-navy-900"
+                       @mouseenter="hovered = index" @mouseleave="hovered = null">
+                        <div class="flex items-start justify-between mb-6">
+                            <div class="w-12 h-12 rounded-lg flex items-center justify-center transition-all duration-500"
+                                 :class="hovered === index ? 'bg-gold-400' : 'bg-navy-50'">
+                                <iconify-icon :icon="area.icon" width="22"
+                                              :class="hovered === index ? 'text-navy-950' : 'text-navy-500'"
+                                              class="transition-colors duration-500"></iconify-icon>
+                            </div>
+                            <span class="text-xs font-semibold tracking-wider"
+                                  :class="hovered === index ? 'text-gold-400' : 'text-navy-300'"
+                                  x-text="area.count" class="transition-colors duration-500"></span>
+                        </div>
+                        <h3 class="font-serif text-xl font-semibold mb-3 transition-colors duration-500"
+                            :class="hovered === index ? 'text-white' : 'text-navy-900'" x-text="area.title"></h3>
+                        <p class="text-sm leading-relaxed transition-colors duration-500"
+                           :class="hovered === index ? 'text-white/60' : 'text-navy-500'" x-text="area.desc"></p>
+                        <div class="gold-line h-0.5 bg-gold-400 mt-6" :class="hovered === index ? '!w-12' : ''"></div>
+                    </a>
+                </template>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Insight -->
+    <section class="bg-white py-20 md:py-28">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14 fade-in">
+                <div>
+                    <span class="text-gold-500 text-xs font-semibold tracking-[0.25em] uppercase">Knowledge Center</span>
+                    <h2 class="font-serif text-3xl md:text-4xl font-bold text-navy-900 mt-3 tracking-tight">Latest Insights</h2>
+                </div>
+                <div class="flex gap-2">
+                    <button class="px-4 py-2 text-xs font-medium tracking-wider uppercase bg-navy-900 text-white rounded-sm">All</button>
+                    <button class="px-4 py-2 text-xs font-medium tracking-wider uppercase text-navy-500 hover:text-navy-900 border border-navy-200 rounded-sm hover:border-navy-400 transition-colors">Articles</button>
+                    <button class="px-4 py-2 text-xs font-medium tracking-wider uppercase text-navy-500 hover:text-navy-900 border border-navy-200 rounded-sm hover:border-navy-400 transition-colors">Alerts</button>
+                </div>
+            </div>
+
+            <div class="grid lg:grid-cols-12 gap-8">
+                <!-- Featured Article -->
+                <a href="#" class="lg:col-span-7 group relative rounded-xl overflow-hidden h-[400px] md:h-[500px] fade-in">
+                    <img src="https://picsum.photos/seed/legal-insight-main/900/600.jpg" alt="Featured Insight"
+                         class="absolute inset-0 w-full h-full object-cover img-zoom">
+                    <div class="absolute inset-0 bg-gradient-to-t from-navy-950 via-navy-950/40 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-8 md:p-10">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="px-3 py-1 bg-gold-400 text-navy-950 text-[10px] font-bold tracking-wider uppercase rounded-sm">Featured</span>
+                            <span class="text-white/50 text-xs">January 15, 2025</span>
+                        </div>
+                        <h3 class="font-serif text-2xl md:text-3xl font-bold text-white leading-tight mb-3 group-hover:text-gold-400 transition-colors duration-300">
+                            New UAE Federal Decree-Law Reshapes the Regulatory Landscape for Financial Institutions
+                        </h3>
+                        <p class="text-white/60 text-sm leading-relaxed max-w-lg">
+                            A comprehensive analysis of the landmark decree and its implications for banking operations across the Emirates.
+                        </p>
+                        <div class="flex items-center gap-3 mt-6">
+                            <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white text-xs font-semibold">SA</div>
+                            <span class="text-white/70 text-sm">Sarah Al-Mansouri</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Side Articles -->
+                <div class="lg:col-span-5 flex flex-col gap-6">
+                    <a href="#" class="group flex gap-5 p-5 rounded-xl border border-navy-100 hover:border-navy-200 hover:shadow-lg card-hover fade-in" style="transition-delay: 0.1s">
+                        <div class="w-28 h-28 flex-shrink-0 rounded-lg overflow-hidden">
+                            <img src="https://picsum.photos/seed/legal-art2/300/300.jpg" alt="" class="w-full h-full object-cover img-zoom">
+                        </div>
+                        <div class="flex flex-col justify-center min-w-0">
+                            <span class="text-gold-500 text-[10px] font-semibold tracking-wider uppercase">Regulatory Alert</span>
+                            <h4 class="font-serif text-base font-semibold text-navy-900 mt-1.5 leading-snug line-clamp-2 group-hover:text-gold-500 transition-colors">
+                                Saudi Vision 2030: Updated Foreign Investment Regulations
+                            </h4>
+                            <span class="text-navy-400 text-xs mt-2">Jan 12, 2025</span>
+                        </div>
+                    </a>
+
+                    <a href="#" class="group flex gap-5 p-5 rounded-xl border border-navy-100 hover:border-navy-200 hover:shadow-lg card-hover fade-in" style="transition-delay: 0.2s">
+                        <div class="w-28 h-28 flex-shrink-0 rounded-lg overflow-hidden">
+                            <img src="https://picsum.photos/seed/legal-art3/300/300.jpg" alt="" class="w-full h-full object-cover img-zoom">
+                        </div>
+                        <div class="flex flex-col justify-center min-w-0">
+                            <span class="text-gold-500 text-[10px] font-semibold tracking-wider uppercase">Article</span>
+                            <h4 class="font-serif text-base font-semibold text-navy-900 mt-1.5 leading-snug line-clamp-2 group-hover:text-gold-500 transition-colors">
+                                Arbitration in the GCC: Trends and Developments in 2025
+                            </h4>
+                            <span class="text-navy-400 text-xs mt-2">Jan 8, 2025</span>
+                        </div>
+                    </a>
+
+                    <a href="#" class="group flex gap-5 p-5 rounded-xl border border-navy-100 hover:border-navy-200 hover:shadow-lg card-hover fade-in" style="transition-delay: 0.3s">
+                        <div class="w-28 h-28 flex-shrink-0 rounded-lg overflow-hidden">
+                            <img src="https://picsum.photos/seed/legal-art4/300/300.jpg" alt="" class="w-full h-full object-cover img-zoom">
+                        </div>
+                        <div class="flex flex-col justify-center min-w-0">
+                            <span class="text-gold-500 text-[10px] font-semibold tracking-wider uppercase">Client Briefing</span>
+                            <h4 class="font-serif text-base font-semibold text-navy-900 mt-1.5 leading-snug line-clamp-2 group-hover:text-gold-500 transition-colors">
+                                ESG Compliance: What Middle East Companies Need to Know
+                            </h4>
+                            <span class="text-navy-400 text-xs mt-2">Jan 3, 2025</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sectors -->
+    <section class="bg-navy-950 py-20 md:py-28 relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-1/2 h-full opacity-5">
+            <img src="https://picsum.photos/seed/legal-texture/1000/800.jpg" alt="" class="w-full h-full object-cover">
+        </div>
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="text-center mb-16 fade-in">
+                <span class="text-gold-400 text-xs font-semibold tracking-[0.25em] uppercase">Industry Focus</span>
+                <h2 class="font-serif text-3xl md:text-4xl font-bold text-white mt-3 tracking-tight">Sectors We Serve</h2>
+                <p class="text-white/50 text-base font-light mt-4 max-w-xl mx-auto">Deep industry knowledge combined with legal expertise to deliver sector-specific solutions.</p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4" x-data="{ hoveredSector: null }">
+                <template x-for="(sector, index) in [
+                    { icon: 'lucide:factory', name: 'Energy & Resources' },
+                    { icon: 'lucide:building', name: 'Real Estate' },
+                    { icon: 'lucide:plane', name: 'Transport & Logistics' },
+                    { icon: 'lucide:heart-pulse', name: 'Healthcare & Life Sciences' },
+                    { icon: 'lucide:zap', name: 'Technology & Telecom' },
+                    { icon: 'lucide:shopping-bag', name: 'Consumer & Retail' },
+                ]" :key="index">
+                    <a href="#"
+                       class="group flex flex-col items-center text-center p-6 rounded-xl border border-white/5 hover:border-gold-400/30 hover:bg-white/5 transition-all duration-500 cursor-pointer"
+                       @mouseenter="hoveredSector = index" @mouseleave="hoveredSector = null">
+                        <div class="w-14 h-14 rounded-full flex items-center justify-center mb-4 transition-all duration-500"
+                             :class="hoveredSector === index ? 'bg-gold-400' : 'bg-white/5'">
+                            <iconify-icon :icon="sector.icon" width="24"
+                                          :class="hoveredSector === index ? 'text-navy-950' : 'text-white/40'"
+                                          class="transition-colors duration-500"></iconify-icon>
+                        </div>
+                        <span class="text-sm font-medium transition-colors duration-500"
+                              :class="hoveredSector === index ? 'text-white' : 'text-white/50'" x-text="sector.name"></span>
+                    </a>
+                </template>
+            </div>
+        </div>
+    </section>
+
+    <!-- People / Team -->
+    <section class="bg-white py-20 md:py-28">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14 fade-in">
+                <div>
+                    <span class="text-gold-500 text-xs font-semibold tracking-[0.25em] uppercase">Our People</span>
+                    <h2 class="font-serif text-3xl md:text-4xl font-bold text-navy-900 mt-3 tracking-tight">Featured Lawyers</h2>
+                </div>
+                <a href="#" class="group inline-flex items-center gap-2 text-sm font-medium text-navy-600 hover:text-gold-500 transition-colors">
+                    View all people
+                    <iconify-icon icon="lucide:arrow-right" width="16" class="transition-transform group-hover:translate-x-1"></iconify-icon>
+                </a>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <template x-for="(person, index) in [
+                    { name: 'Dr. Hassan Al-Rashid', role: 'Founding Partner', img: 'lawyer-1', tag: 'Banking' },
+                    { name: 'Fatima Al-Zaabi', role: 'Senior Partner', img: 'lawyer-2', tag: 'Corporate' },
+                    { name: 'Omar Khalil', role: 'Partner', img: 'lawyer-3', tag: 'Arbitration' },
+                    { name: 'Nadia El-Sayed', role: 'Counsel', img: 'lawyer-4', tag: 'Technology' },
+                ]" :key="index">
+                    <a href="#" class="group block fade-in" :style="'transition-delay:' + (index * 0.1) + 's'">
+                        <div class="relative rounded-xl overflow-hidden h-80 mb-5">
+                            <img :src="'https://picsum.photos/seed/' + person.img + '/400/500.jpg'" :alt="person.name"
+                                 class="w-full h-full object-cover img-zoom">
+                            <div class="absolute inset-0 bg-navy-950/0 group-hover:bg-navy-950/60 transition-all duration-500 flex items-end justify-center opacity-0 group-hover:opacity-100">
+                                <span class="text-white text-xs font-medium tracking-wider uppercase pb-6 flex items-center gap-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                                    View Profile
+                                    <iconify-icon icon="lucide:arrow-right" width="14"></iconify-icon>
+                                </span>
+                            </div>
+                        </div>
+                        <span class="text-gold-500 text-[10px] font-semibold tracking-wider uppercase" x-text="person.tag"></span>
+                        <h3 class="font-serif text-lg font-semibold text-navy-900 mt-1 group-hover:text-gold-500 transition-colors" x-text="person.name"></h3>
+                        <p class="text-navy-500 text-sm font-light mt-0.5" x-text="person.role"></p>
+                    </a>
+                </template>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonial -->
+    <section class="bg-navy-50/50 py-20 md:py-28">
+        <div class="max-w-4xl mx-auto px-6 text-center fade-in" x-data="{ active: 0 }">
+            <iconify-icon icon="lucide:quote" width="48" class="text-gold-400/30 mb-6"></iconify-icon>
+            <div x-show="active === 0" x-transition:enter="transition ease-out duration-500" x-transition:leave="transition ease-in duration-300 absolute opacity-0">
+                <blockquote class="font-serif text-2xl md:text-3xl font-medium text-navy-900 leading-snug tracking-tight">
+                    "Apex Legal Group's deep understanding of regional regulations and their ability to navigate complex multi-jurisdictional transactions has been invaluable to our operations."
+                </blockquote>
+                <div class="mt-8">
+                    <div class="text-navy-900 font-medium">Ahmed Al-Fahim</div>
+                    <div class="text-navy-500 text-sm font-light mt-1">General Counsel, Gulf Energy Holdings</div>
+                </div>
+            </div>
+            <div x-show="active === 1" x-transition:enter="transition ease-out duration-500" x-transition:leave="transition ease-in duration-300 absolute opacity-0">
+                <blockquote class="font-serif text-2xl md:text-3xl font-medium text-navy-900 leading-snug tracking-tight">
+                    "Their arbitration team is second to none. They secured a landmark victory for us in one of the most complex disputes we've faced."
+                </blockquote>
+                <div class="mt-8">
+                    <div class="text-navy-900 font-medium">Catherine Moreau</div>
+                    <div class="text-navy-500 text-sm font-light mt-1">VP Legal, Euro-Med Infrastructure Fund</div>
+                </div>
+            </div>
+            <div x-show="active === 2" x-transition:enter="transition ease-out duration-500" x-transition:leave="transition ease-in duration-300 absolute opacity-0">
+                <blockquote class="font-serif text-2xl md:text-3xl font-medium text-navy-900 leading-snug tracking-tight">
+                    "A trusted partner who combines technical excellence with commercial pragmatism. They consistently deliver results that exceed expectations."
+                </blockquote>
+                <div class="mt-8">
+                    <div class="text-navy-900 font-medium">Rajesh Patel</div>
+                    <div class="text-navy-500 text-sm font-light mt-1">CEO, Meridian Capital Partners</div>
+                </div>
+            </div>
+            <div class="flex items-center justify-center gap-3 mt-10">
+                <template x-for="i in 3" :key="i">
+                    <button @click="active = i - 1"
+                            class="w-2.5 h-2.5 rounded-full transition-all duration-300"
+                            :class="active === i - 1 ? 'bg-gold-400 w-8' : 'bg-navy-200 hover:bg-navy-300'"></button>
+                </template>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA / Contact -->
+    <section class="relative py-24 md:py-32 overflow-hidden">
+        <img src="https://picsum.photos/seed/legal-cta-bg/1920/800.jpg" alt="" class="absolute inset-0 w-full h-full object-cover">
+        <div class="absolute inset-0 bg-navy-950/90"></div>
+        <div class="relative z-10 max-w-7xl mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div class="fade-in">
+                    <span class="text-gold-400 text-xs font-semibold tracking-[0.25em] uppercase">Get In Touch</span>
+                    <h2 class="font-serif text-3xl md:text-5xl font-bold text-white mt-4 tracking-tight leading-tight">
+                        Let's Discuss<br>Your Legal Needs
+                    </h2>
+                    <p class="text-white/50 text-base font-light mt-6 max-w-md leading-relaxed">
+                        Whether you're exploring a new venture or navigating a complex challenge, our team is ready to help.
+                    </p>
+                    <div class="mt-10 space-y-5">
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center">
+                                <iconify-icon icon="lucide:map-pin" width="16" class="text-gold-400"></iconify-icon>
+                            </div>
+                            <div>
+                                <div class="text-white text-sm font-medium">Dubai, UAE</div>
+                                <div class="text-white/40 text-xs">Emirates Towers, Level 42</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center">
+                                <iconify-icon icon="lucide:phone" width="16" class="text-gold-400"></iconify-icon>
+                            </div>
+                            <div>
+                                <div class="text-white text-sm font-medium">+971 4 123 4567</div>
+                                <div class="text-white/40 text-xs">Mon–Fri, 8:00 AM – 6:00 PM</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center">
+                                <iconify-icon icon="lucide:mail" width="16" class="text-gold-400"></iconify-icon>
+                            </div>
+                            <div>
+                                <div class="text-white text-sm font-medium">contact@alrashidlegal.com</div>
+                                <div class="text-white/40 text-xs">We respond within 24 hours</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div class="fade-in" style="transition-delay: 0.2s" x-data="{ submitted: false }">
+                    <form @submit.prevent="submitted = true" class="bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-8 md:p-10"
+                          x-show="!submitted">
+                        <div class="grid md:grid-cols-2 gap-5 mb-5">
+                            <div>
+                                <label class="block text-white/50 text-xs font-medium tracking-wider uppercase mb-2">First Name</label>
+                                <input type="text" class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white text-sm placeholder:text-white/20 outline-none focus:border-gold-400/50 transition-colors" placeholder="John">
+                            </div>
+                            <div>
+                                <label class="block text-white/50 text-xs font-medium tracking-wider uppercase mb-2">Last Name</label>
+                                <input type="text" class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white text-sm placeholder:text-white/20 outline-none focus:border-gold-400/50 transition-colors" placeholder="Doe">
+                            </div>
+                        </div>
+                        <div class="mb-5">
+                            <label class="block text-white/50 text-xs font-medium tracking-wider uppercase mb-2">Email</label>
+                            <input type="email" class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white text-sm placeholder:text-white/20 outline-none focus:border-gold-400/50 transition-colors" placeholder="john@company.com">
+                        </div>
+                        <div class="mb-5">
+                            <label class="block text-white/50 text-xs font-medium tracking-wider uppercase mb-2">Area of Interest</label>
+                            <select class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white/60 text-sm outline-none focus:border-gold-400/50 transition-colors appearance-none">
+                                <option value="">Select a practice area</option>
+                                <option>Banking & Finance</option>
+                                <option>Corporate & M&A</option>
+                                <option>Dispute Resolution</option>
+                                <option>Construction</option>
+                                <option>Technology & Data</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+                        <div class="mb-6">
+                            <label class="block text-white/50 text-xs font-medium tracking-wider uppercase mb-2">Message</label>
+                            <textarea rows="4" class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white text-sm placeholder:text-white/20 outline-none focus:border-gold-400/50 transition-colors resize-none" placeholder="Briefly describe your inquiry..."></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-gold-400 hover:bg-gold-500 text-navy-950 text-sm font-semibold tracking-wider uppercase py-4 rounded-lg transition-colors flex items-center justify-center gap-2 group">
+                            Send Inquiry
+                            <iconify-icon icon="lucide:arrow-right" width="16" class="transition-transform group-hover:translate-x-1"></iconify-icon>
+                        </button>
+                    </form>
+                    <div x-show="submitted" x-transition:enter="transition ease-out duration-500"
+                         x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
+                         class="bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-8 md:p-10 text-center">
+                        <div class="w-16 h-16 bg-gold-400/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <iconify-icon icon="lucide:check" width="28" class="text-gold-400"></iconify-icon>
+                        </div>
+                        <h3 class="font-serif text-2xl font-bold text-white">Thank You</h3>
+                        <p class="text-white/50 text-sm font-light mt-3 leading-relaxed">Your inquiry has been received. A member of our team will be in touch within 24 hours.</p>
+                        <button @click="submitted = false" class="mt-6 text-gold-400 text-sm font-medium hover:text-gold-500 transition-colors">Send another inquiry</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Offices -->
+    <section class="bg-white py-20 md:py-24 border-t border-navy-100">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-14 fade-in">
+                <span class="text-gold-500 text-xs font-semibold tracking-[0.25em] uppercase">Global Presence</span>
+                <h2 class="font-serif text-3xl md:text-4xl font-bold text-navy-900 mt-3 tracking-tight">Our Offices</h2>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 fade-in">
+                <template x-for="(office, index) in [
+                    { city: 'Dubai', country: 'UAE', main: true },
+                    { city: 'Abu Dhabi', country: 'UAE' },
+                    { city: 'Riyadh', country: 'Saudi Arabia' },
+                    { city: 'Cairo', country: 'Egypt' },
+                    { city: 'London', country: 'UK' },
+                    { city: 'Singapore', country: 'Singapore' },
+                ]" :key="index">
+                    <a href="#" class="group text-center p-5 rounded-xl border border-navy-100 hover:border-gold-400/30 hover:shadow-md transition-all duration-300">
+                        <div class="w-3 h-3 rounded-full mx-auto mb-4" :class="office.main ? 'bg-gold-400' : 'bg-navy-200 group-hover:bg-gold-400/50'"></div>
+                        <div class="font-serif font-semibold text-navy-900 group-hover:text-gold-500 transition-colors" x-text="office.city"></div>
+                        <div class="text-navy-400 text-xs mt-1" x-text="office.country"></div>
+                    </a>
+                </template>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-navy-950 pt-16 md:pt-20 pb-8">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-8 pb-14 border-b border-white/5">
+                <!-- Brand -->
+                <div class="lg:col-span-2">
+                    <a href="#" class="flex items-center gap-3 mb-5">
+                        <div class="w-9 h-9 bg-gold-400 rounded-sm flex items-center justify-center">
+                            <span class="font-serif font-bold text-navy-950 text-lg leading-none">A</span>
+                        </div>
+                        <div class="leading-tight">
+                            <span class="text-white font-medium text-sm tracking-wide">Apex Legal Group</span>
+                            <span class="block text-white/40 text-[10px] tracking-[0.25em] uppercase">Legal Consultants</span>
+                        </div>
+                    </a>
+                    <p class="text-white/40 text-sm font-light leading-relaxed max-w-sm">
+                        A leading full-service law firm with over 35 years of experience serving clients across the Middle East and beyond.
+                    </p>
+                    <div class="flex gap-3 mt-6">
+                        <a href="#" class="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-white/40 hover:text-gold-400 hover:border-gold-400/30 transition-colors">
+                            <iconify-icon icon="lucide:linkedin" width="16"></iconify-icon>
+                        </a>
+                        <a href="#" class="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-white/40 hover:text-gold-400 hover:border-gold-400/30 transition-colors">
+                            <iconify-icon icon="lucide:twitter" width="16"></iconify-icon>
+                        </a>
+                        <a href="#" class="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-white/40 hover:text-gold-400 hover:border-gold-400/30 transition-colors">
+                            <iconify-icon icon="lucide:instagram" width="16"></iconify-icon>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Links -->
+                <div>
+                    <h4 class="text-white text-xs font-semibold tracking-[0.2em] uppercase mb-5">Firm</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-white/40 text-sm hover:text-white transition-colors">About Us</a></li>
+                        <li><a href="#" class="text-white/40 text-sm hover:text-white transition-colors">Leadership</a></li>
+                        <li><a href="#" class="text-white/40 text-sm hover:text-white transition-colors">Pro Bono</a></li>
+                        <li><a href="#" class="text-white/40 text-sm hover:text-white transition-colors">Careers</a></li>
+                        <li><a href="#" class="text-white/40 text-sm hover:text-white transition-colors">CSR</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white text-xs font-semibold tracking-[0.2em] uppercase mb-5">Services</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-white/40 text-sm hover:text-white transition-colors">Banking & Finance</a></li>
+                        <li><a href="#" class="text-white/40 text-sm hover:text-white transition-colors">Corporate & M&A</a></li>
+                        <li><a href="#" class="text-white/40 text-sm hover:text-white transition-colors">Dispute Resolution</a></li>
+                        <li><a href="#" class="text-white/40 text-sm hover:text-white transition-colors">Construction</a></li>
+                        <li><a href="#" class="text-white/40 text-sm hover:text-white transition-colors">All Services →</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white text-xs font-semibold tracking-[0.2em] uppercase mb-5">Resources</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-white/40 text-sm hover:text-white transition-colors">Insights</a></li>
+                        <li><a href="#" class="text-white/40 text-sm hover:text-white transition-colors">Newsletters</a></li>
+                        <li><a href="#" class="text-white/40 text-sm hover:text-white transition-colors">Events</a></li>
+                        <li><a href="#" class="text-white/40 text-sm hover:text-white transition-colors">Publications</a></li>
+                        <li><a href="#" class="text-white/40 text-sm hover:text-white transition-colors">Media Center</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Bottom bar -->
+            <div class="flex flex-col md:flex-row items-center justify-between pt-8 gap-4">
+                <div class="text-white/25 text-xs font-light">
+                    © 2025 Apex Legal Group Consultants. All rights reserved.
+                </div>
+                <div class="flex items-center gap-6">
+                    <a href="#" class="text-white/25 text-xs hover:text-white/50 transition-colors">Privacy Policy</a>
+                    <a href="#" class="text-white/25 text-xs hover:text-white/50 transition-colors">Terms of Use</a>
+                    <a href="#" class="text-white/25 text-xs hover:text-white/50 transition-colors">Cookie Settings</a>
+                    <a href="#" class="text-white/25 text-xs hover:text-white/50 transition-colors">Disclaimer</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top -->
+    <button x-data="{ show: false }" @scroll.window="show = window.scrollY > 600"
+            x-show="show" x-cloak
+            x-transition:enter="transition ease-out duration-300"
+            x-transition:enter-start="opacity-0 translate-y-4"
+            x-transition:enter-end="opacity-100 translate-y-0"
+            x-transition:leave="transition ease-in duration-200"
+            x-transition:leave-start="opacity-100 translate-y-0"
+            x-transition:leave-end="opacity-0 translate-y-4"
+            @click="window.scrollTo({ top: 0, behavior: 'smooth' })"
+            class="fixed bottom-8 right-8 z-50 w-11 h-11 bg-navy-900 hover:bg-navy-800 border border-white/10 rounded-full flex items-center justify-center text-white/60 hover:text-white shadow-lg transition-all">
+        <iconify-icon icon="lucide:arrow-up" width="18"></iconify-icon>
+    </button>
+
+    <!-- Intersection Observer for fade-in -->
+    <script>
+        document.addEventListener('alpine:init', () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+            // Observe after a small delay to let Alpine render
+            setTimeout(() => {
+                document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+            }, 100);
+        });
+    </script>
+</body>
+</html>

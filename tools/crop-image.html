@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, shrink-to-fit=no">
+  <link rel="shortcut icon" href="https://res.cloudinary.com/disivcuqr/image/upload/v1775628193/snippets-assets/phpA036_lttoxq.ico"
+        type="image/x-icon">
+  <!-- Primary Meta -->
+  <title>Image Crop Tool — Export Fixed 800×560px | Shuvro Dev Roy</title>
+  <meta name="description" content="Free online image crop tool with drag-to-position, 9-point anchor selection, and high-quality 800×560px export in PNG or JPEG. Built by a fullstack developer with 6+ years of experience in PHP, Laravel, React, and Next.js.">
+  <meta name="keywords" content="image crop tool, crop image 800x560, fixed size image export, online image cropper, drag to crop, batch crop position, free image tool, web image editor, frontend tool, PHP developer tool, Laravel developer, React developer, Next.js developer, fullstack developer, Shuvro Dev Roy">
+  <meta name="author" content="Shuvro Dev Roy">
+  <meta name="copyright" content="© 2025 Shuvro Dev Roy. All rights reserved.">
+  <meta name="robots" content="index, follow">
+  <meta name="language" content="English">
+
+  <!-- Theme Color (matches app accent) -->
+  <meta name="theme-color" content="#d4943a">
+  <meta name="msapplication-TileColor" content="#d4943a">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Image Crop Tool — Export Fixed 800×560px | Shuvro Dev Roy">
+  <meta property="og:description" content="Drag-to-position image cropper with 9-point anchor, zoom control, and pixel-perfect 800×560 export. No upload to server — everything runs locally in your browser.">
+   
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['"Space Grotesk"', 'sans-serif'],
+            body: ['"DM Sans"', 'sans-serif'],
+          },
+          colors: {
+            bg: '#0e1014',
+            surface: '#171a21',
+            card: '#1e222b',
+            border: '#2a2f3a',
+            fg: '#e8eaed',
+            muted: '#6e7589',
+            accent: '#d4943a',
+            accentHover: '#e8a94e',
+            accentDim: 'rgba(212,148,58,0.12)',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    :root {
+      --bg:#0e1014;--surface:#171a21;--card:#1e222b;--border:#2a2f3a;
+      --fg:#e8eaed;--muted:#6e7589;--accent:#d4943a;--accent-hover:#e8a94e;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--fg);overflow-x:hidden}
+
+    .bg-atmos{position:fixed;inset:0;z-index:0;pointer-events:none;
+      background:radial-gradient(ellipse 700px 500px at 10% 15%,rgba(212,148,58,.05),transparent),
+                 radial-gradient(ellipse 500px 400px at 90% 85%,rgba(212,148,58,.035),transparent)}
+
+    /* Upload zone */
+    .upload-zone{border:2px dashed var(--border);transition:all .3s ease;position:relative;overflow:hidden}
+    .upload-zone::after{content:'';position:absolute;inset:0;background:radial-gradient(circle,rgba(212,148,58,.04),transparent 70%);opacity:0;transition:opacity .3s}
+    .upload-zone:hover,.upload-zone.drag-over{border-color:var(--accent);background:rgba(212,148,58,.03)}
+    .upload-zone:hover::after,.upload-zone.drag-over::after{opacity:1}
+
+    /* Position grid */
+    .pos-btn{width:46px;height:46px;border:2px solid var(--border);background:var(--surface);border-radius:9px;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center}
+    .pos-btn:hover{border-color:var(--muted);background:var(--card);transform:scale(1.06)}
+    .pos-btn.active{border-color:var(--accent);background:var(--accentDim);box-shadow:0 0 14px rgba(212,148,58,.15)}
+    .pos-btn .dot{width:7px;height:7px;border-radius:50%;background:var(--muted);transition:all .2s}
+    .pos-btn.active .dot{background:var(--accent);width:9px;height:9px;box-shadow:0 0 6px rgba(212,148,58,.5)}
+
+    /* Canvas wrapper */
+    .canvas-wrap{position:relative;border-radius:12px;overflow:hidden;border:1px solid var(--border);
+      background:repeating-conic-gradient(#1a1d24 0% 25%,#14161b 0% 50%) 50%/18px 18px}
+    .canvas-wrap.dragging{cursor:grabbing!important}
+    .canvas-wrap:not(.dragging){cursor:grab}
+
+    /* Range */
+    input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:5px;background:var(--border);border-radius:3px;outline:none}
+    input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--accent);cursor:pointer;box-shadow:0 0 8px rgba(212,148,58,.35);transition:transform .15s}
+    input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.2)}
+    input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--accent);cursor:pointer;border:none}
+
+    /* Buttons */
+    .btn-export{background:linear-gradient(135deg,var(--accent),#b87a28);color:#0e1014;font-weight:700;padding:13px 28px;border-radius:11px;border:none;cursor:pointer;font-size:14px;font-family:'DM Sans',sans-serif;transition:all .25s;position:relative;overflow:hidden}
+    .btn-export::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,transparent 30%,rgba(255,255,255,.15) 50%,transparent 70%);transform:translateX(-100%);transition:transform .5s}
+    .btn-export:hover::before{transform:translateX(100%)}
+    .btn-export:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(212,148,58,.3)}
+    .btn-export:active{transform:translateY(0)}
+    .btn-export:disabled{opacity:.35;cursor:not-allowed;transform:none!important;box-shadow:none!important}
+
+    .format-btn{padding:9px;border:2px solid var(--border);background:var(--card);border-radius:9px;color:var(--muted);font-size:13px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .2s}
+    .format-btn:hover{border-color:var(--muted);color:var(--fg)}
+    .format-btn.active{border-color:var(--accent);background:var(--accentDim);color:var(--accent)}
+
+    .info-badge{display:inline-flex;align-items:center;gap:5px;background:var(--surface);border:1px solid var(--border);border-radius:7px;padding:5px 10px;font-size:12px;color:var(--muted)}
+    .info-badge span{color:var(--fg);font-weight:600}
+
+    /* Toast */
+    .toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(70px);background:var(--card);border:1px solid var(--accent);color:var(--fg);padding:12px 24px;border-radius:11px;font-size:13px;font-weight:500;z-index:1000;opacity:0;transition:all .4s cubic-bezier(.16,1,.3,1);box-shadow:0 12px 40px rgba(0,0,0,.5);pointer-events:none;white-space:nowrap}
+    .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+    /* Animations */
+    @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+    .fade-up{animation:fadeUp .45s cubic-bezier(.16,1,.3,1) forwards}
+    .fd1{animation-delay:.05s;opacity:0}.fd2{animation-delay:.1s;opacity:0}.fd3{animation-delay:.15s;opacity:0}
+
+    @keyframes pulse-border{0%,100%{box-shadow:0 0 0 0 rgba(212,148,58,.3)}50%{box-shadow:0 0 0 4px rgba(212,148,58,.1)}}
+    .canvas-wrap.dragging{animation:pulse-border 1s ease infinite}
+
+    ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+  </style>
+</head>
+<body class="min-h-screen">
+  <div class="bg-atmos"></div>
+  <div id="toast" class="toast"><i class="fa-solid fa-circle-check mr-2 text-accent"></i><span id="toastMsg"></span></div>
+
+  <div class="relative z-10 container mx-auto px-4 py-6 sm:px-6 lg:px-8">
+
+    <!-- Header -->
+    <header class="mb-8 fade-up">
+      <div class="flex items-center gap-3 mb-1.5">
+        <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-accent to-amber-800 flex items-center justify-center shrink-0">
+          <i class="fa-solid fa-crop-simple text-bg text-base"></i>
+        </div>
+        <div class="flex-1">
+          <h1 class="font-display text-xl sm:text-2xl font-bold tracking-tight">Crop & Export</h1> 
+          <p class="text-white/65 text-sm">Drag the crop area to reposition. Export at exactly 800 x 560 px.</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- Layout -->
+    <div class="flex flex-col lg:flex-row gap-5">
+
+      <!-- Left: Preview -->
+      <div class="flex-1 min-w-0 fade-up fd1 flex flex-row gap-5">
+        <!-- Upload zone -->
+        <div id="uploadZone" class="upload-zone rounded-xl flex flex-col items-center justify-center text-center cursor-pointer min-h-[180px] lg:min-h-[538px] p-8 w-full">
+          <div class="w-14 h-14 rounded-xl bg-card border border-border flex items-center justify-center mb-4">
+            <i class="fa-solid fa-cloud-arrow-up text-xl text-muted"></i>
+          </div>
+          <p class="text-fg font-semibold text-base mb-1">Drop your image here</p>
+          <p class="text-muted text-sm mb-4">or click to browse — JPG, PNG, WebP</p>
+          <div class="flex items-center gap-2 text-xs text-muted bg-surface border border-border rounded-lg px-3 py-1.5">
+            <i class="fa-solid fa-arrows-up-down-left-right text-accent"></i>
+            Drag on image to reposition crop
+          </div>
+          <input type="file" id="fileInput" accept="image/*" class="hidden" aria-label="Upload image">
+        </div>
+
+        <!-- Preview -->
+        <div id="previewArea" class="hidden w-full">
+          <div class="canvas-wrap" id="canvasWrap">
+            <canvas id="previewCanvas" class="block w-full" aria-label="Crop preview — drag to reposition"></canvas>
+          </div>
+          <div class="flex flex-wrap items-center gap-2.5 mt-2.5">
+            <div class="info-badge"><i class="fa-solid fa-image text-[10px]"></i>Source: <span id="srcSizeLabel">—</span></div>
+            <div class="info-badge"><i class="fa-solid fa-arrow-right text-[10px]"></i>Output: <span>800 x 560</span></div>
+            <div class="info-badge"><i class="fa-solid fa-scissors text-[10px]"></i>Crop: <span id="cropSizeLabel">—</span></div>
+            <button id="changeBtn" class="ml-auto text-xs text-muted hover:text-accent transition-colors flex items-center gap-1.5 bg-surface border border-border rounded-lg px-3 py-1.5 hover:border-accent/40" aria-label="Change image">
+              <i class="fa-solid fa-rotate"></i> Change
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Thumbnail -->
+      <div id="thumbSection" class="hidden bg-surface border border-border rounded-xl p-4 lg:w-[240px] xl:w-[400px]">
+        <p class="text-[11px] text-muted mb-2 font-medium"><i class="fa-solid fa-eye mr-1"></i>Output Preview</p>
+        <div class="bg-card border border-border rounded-lg overflow-hidden">
+          <canvas id="thumbCanvas" class="block !w-full !h-auto" aria-label="Output preview"></canvas>
+        </div>
+        <p class="text-[10px] text-muted mt-1.5 text-center">800 x 560 final output</p>
+      </div>
+
+      <!-- Right: Controls -->
+      <aside class="w-full lg:w-[280px] xl:w-[340px] shrink-0 fade-up fd2">
+        <div class="bg-surface border border-border rounded-xl p-5 space-y-6">
+
+          <!-- Crop Position -->
+          <div>
+            <label class="text-sm font-semibold text-fg mb-2.5 block">
+              <i class="fa-solid fa-crosshairs text-accent mr-1.5 text-xs"></i>Crop Position
+            </label>
+            <div class="grid grid-cols-3 gap-1.5 w-fit mx-auto" id="posGrid" role="radiogroup" aria-label="Crop position"></div>
+            <p id="posLabel" class="text-center text-xs text-muted mt-2.5">Center Center</p>
+          </div>
+
+          <!-- Zoom -->
+          <div>
+            <label class="text-sm font-semibold text-fg mb-2.5 flex items-center justify-between">
+              <span><i class="fa-solid fa-magnifying-glass-plus text-accent mr-1.5 text-xs"></i>Zoom</span>
+              <span id="zoomVal" class="text-xs text-muted font-normal">1.00x</span>
+            </label>
+            <input type="range" id="zoomSlider" min="1" max="3" step="0.02" value="1" aria-label="Zoom level">
+            <div class="flex justify-between text-[10px] text-muted mt-1"><span>Fit</span><span>3x Max</span></div>
+          </div>
+
+          <!-- Format -->
+          <div>
+            <label class="text-sm font-semibold text-fg mb-2.5 block">
+              <i class="fa-solid fa-file-image text-accent mr-1.5 text-xs"></i>Format
+            </label>
+            <div class="grid grid-cols-2 gap-2" id="formatGroup" role="radiogroup" aria-label="Output format">
+              <button class="format-btn active" data-fmt="png" aria-pressed="true">PNG</button>
+              <button class="format-btn" data-fmt="jpeg" aria-pressed="false">JPEG</button>
+            </div>
+          </div>
+
+          <!-- JPEG Quality -->
+          <div id="qualityRow" class="hidden">
+            <label class="text-sm font-semibold text-fg mb-2.5 flex items-center justify-between">
+              <span><i class="fa-solid fa-sliders text-accent mr-1.5 text-xs"></i>Quality</span>
+              <span id="qualityVal" class="text-xs text-muted font-normal">92%</span>
+            </label>
+            <input type="range" id="qualitySlider" min="50" max="100" step="1" value="92" aria-label="JPEG quality">
+          </div>
+
+          <div class="border-t border-border"></div>
+
+          <button id="exportBtn" class="btn-export w-full flex items-center justify-center gap-2" disabled>
+            <i class="fa-solid fa-download"></i> Export 800 x 540
+          </button>
+          <button id="resetBtn" class="w-full text-center text-base text-white/65 hover:text-red-400 transition-colors py-0.5 hidden">
+            <i class="fa-solid fa-trash-can mr-1"></i> Remove & Reset
+          </button>
+        </div>
+ 
+      </aside>
+    </div>
+  </div>
+
+  <canvas id="exportCanvas" class="hidden" width="800" height="540"></canvas>
+
+  <script>
+    /* ════════════════════════════════════════
+       State
+    ════════════════════════════════════════ */
+    const TW = 800, TH = 540, TRATIO = TW / TH;
+    let srcImg = null;
+    let zoom = 1;
+    let fmt = 'png';
+    let jpgQ = 0.92;
+    let activePosId = 'center-center';
+
+    // Free-form crop offset (source coords). null = use position-based calc
+    let freeSx = null, freeSy = null;
+
+    // Display scale (set during render)
+    let dispScale = 1;
+
+    // Drag state
+    let dragging = false;
+    let dragLastX = 0, dragLastY = 0;
+
+    // Render batching
+    let renderPending = false;
+
+    /* ════════════════════════════════════════
+       Position definitions
+    ════════════════════════════════════════ */
+    const POS = [
+      { id:'top-left',      label:'Top Left',      vx:0,   vy:0   },
+      { id:'top-center',    label:'Top Center',    vx:0.5, vy:0   },
+      { id:'top-right',     label:'Top Right',     vx:1,   vy:0   },
+      { id:'center-left',   label:'Center Left',   vx:0,   vy:0.5 },
+      { id:'center-center', label:'Center Center', vx:0.5, vy:0.5 },
+      { id:'center-right',  label:'Center Right',  vx:1,   vy:0.5 },
+      { id:'bottom-left',   label:'Bottom Left',   vx:0,   vy:1   },
+      { id:'bottom-center', label:'Bottom Center', vx:0.5, vy:1   },
+      { id:'bottom-right',  label:'Bottom Right',  vx:1,   vy:1   },
+    ];
+
+    /* ════════════════════════════════════════
+       DOM
+    ════════════════════════════════════════ */
+    const $ = id => document.getElementById(id);
+    const uploadZone   = $('uploadZone');
+    const fileInput    = $('fileInput');
+    const previewArea  = $('previewArea');
+    const canvasWrap   = $('canvasWrap');
+    const pCanvas      = $('previewCanvas');
+    const tCanvas      = $('thumbCanvas');
+    const eCanvas      = $('exportCanvas');
+    const posGrid      = $('posGrid');
+    const posLabel     = $('posLabel');
+    const zoomSlider   = $('zoomSlider');
+    const zoomVal      = $('zoomVal');
+    const qualSlider   = $('qualitySlider');
+    const qualVal      = $('qualityVal');
+    const qualRow      = $('qualityRow');
+    const fmtGroup     = $('formatGroup');
+    const exportBtn    = $('exportBtn');
+    const resetBtn     = $('resetBtn');
+    const changeBtn    = $('changeBtn');
+    const thumbSect    = $('thumbSection');
+    const srcSizeLbl   = $('srcSizeLabel');
+    const cropSizeLbl  = $('cropSizeLabel');
+    const toastEl      = $('toast');
+    const toastMsg     = $('toastMsg');
+
+    /* ════════════════════════════════════════
+       Build position grid
+    ════════════════════════════════════════ */
+    POS.forEach(p => {
+      const b = document.createElement('button');
+      b.className = 'pos-btn' + (p.id === activePosId ? ' active' : '');
+      b.dataset.pos = p.id;
+      b.setAttribute('role','radio');
+      b.setAttribute('aria-checked', p.id === activePosId);
+      b.setAttribute('aria-label', p.label);
+      b.title = p.label;
+      b.innerHTML = '<div class="dot"></div>';
+      b.addEventListener('click', () => snapToPosition(p.id));
+      posGrid.appendChild(b);
+    });
+
+    function snapToPosition(id) {
+      activePosId = id;
+      freeSx = freeSy = null; // Reset free-form offset
+      posGrid.querySelectorAll('.pos-btn').forEach(b => {
+        const a = b.dataset.pos === id;
+        b.classList.toggle('active', a);
+        b.setAttribute('aria-checked', a);
+      });
+      posLabel.textContent = POS.find(p => p.id === id).label;
+      scheduleRender();
+    }
+
+    function setCustomLabel() {
+      posGrid.querySelectorAll('.pos-btn').forEach(b => {
+        b.classList.remove('active');
+        b.setAttribute('aria-checked','false');
+      });
+      posLabel.textContent = 'Custom Position';
+    }
+
+    /* ════════════════════════════════════════
+       Crop math
+    ════════════════════════════════════════ */
+    function getCropSize(sw, sh) {
+      // Crop dimensions in source coords based on zoom
+      const sr = sw / sh;
+      let cw, ch;
+      if (sr > TRATIO) {
+        ch = sh / zoom;
+        cw = ch * TRATIO;
+      } else {
+        cw = sw / zoom;
+        ch = cw / TRATIO;
+      }
+      cw = Math.min(cw, sw);
+      ch = Math.min(ch, sh);
+      return { cw, ch };
+    }
+
+    function getCropRect(sw, sh) {
+      const { cw, ch } = getCropSize(sw, sh);
+      let sx, sy;
+      if (freeSx !== null && freeSy !== null) {
+        sx = freeSx;
+        sy = freeSy;
+      } else {
+        const p = POS.find(x => x.id === activePosId);
+        sx = p.vx * (sw - cw);
+        sy = p.vy * (sh - ch);
+      }
+      // Clamp
+      sx = Math.max(0, Math.min(sx, sw - cw));
+      sy = Math.max(0, Math.min(sy, sh - ch));
+      return { sx, sy, sw: cw, sh: ch };
+    }
+
+    /* ════════════════════════════════════════
+       Rendering
+    ════════════════════════════════════════ */
+    function scheduleRender() {
+      if (!renderPending) {
+        renderPending = true;
+        requestAnimationFrame(() => { renderPending = false; render(); });
+      }
+    }
+
+    function render() {
+      if (!srcImg) return;
+      const sw = srcImg.naturalWidth, sh = srcImg.naturalHeight;
+      const crop = getCropRect(sw, sh);
+
+      cropSizeLbl.textContent = `${Math.round(crop.sw)} × ${Math.round(crop.sh)}`;
+
+      // Fit source into preview container
+      const maxW = canvasWrap.clientWidth;
+      const maxH = Math.max(360, window.innerHeight * 0.52);
+      dispScale = Math.min(maxW / sw, maxH / sh, 1);
+      const dpr = window.devicePixelRatio || 1;
+      const cssW = Math.round(sw * dispScale);
+      const cssH = Math.round(sh * dispScale);
+
+      pCanvas.width  = Math.round(cssW * dpr);
+      pCanvas.height = Math.round(cssH * dpr);
+      pCanvas.style.width  = cssW + 'px';
+      pCanvas.style.height = cssH + 'px';
+
+      const ctx = pCanvas.getContext('2d');
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = 'high';
+
+      // Draw full image dimmed
+      ctx.drawImage(srcImg, 0, 0, cssW, cssH);
+      ctx.fillStyle = 'rgba(0,0,0,0.58)';
+      ctx.fillRect(0, 0, cssW, cssH);
+
+      // Crop area in CSS coords
+      const cx = crop.sx * dispScale;
+      const cy = crop.sy * dispScale;
+      const cw = crop.sw * dispScale;
+      const ch = crop.sh * dispScale;
+
+      // Bright crop area
+      ctx.save();
+      ctx.beginPath();
+      ctx.rect(cx, cy, cw, ch);
+      ctx.clip();
+      ctx.drawImage(srcImg, 0, 0, cssW, cssH);
+      ctx.restore();
+
+      // Crop border
+      ctx.strokeStyle = '#d4943a';
+      ctx.lineWidth = 2;
+      ctx.setLineDash([]);
+      ctx.strokeRect(cx + .5, cy + .5, cw - 1, ch - 1);
+
+      // Rule of thirds
+      ctx.strokeStyle = 'rgba(212,148,58,0.2)';
+      ctx.lineWidth = 1;
+      for (let i = 1; i <= 2; i++) {
+        ctx.beginPath(); ctx.moveTo(cx + cw*i/3, cy); ctx.lineTo(cx + cw*i/3, cy+ch); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(cx, cy + ch*i/3); ctx.lineTo(cx+cw, cy + ch*i/3); ctx.stroke();
+      }
+
+      // Corner handles
+      const hs = 10;
+      ctx.fillStyle = '#d4943a';
+      [[cx,cy],[cx+cw,cy],[cx,cy+ch],[cx+cw,cy+ch]].forEach(([hx,hy]) => {
+        ctx.beginPath();
+        ctx.arc(hx, hy, hs/2, 0, Math.PI*2);
+        ctx.fill();
+      });
+
+      // Edge midpoint handles (smaller)
+      ctx.fillStyle = 'rgba(212,148,58,0.7)';
+      const es = 5;
+      [[cx+cw/2, cy],[cx+cw/2, cy+ch],[cx, cy+ch/2],[cx+cw, cy+ch/2]].forEach(([hx,hy]) => {
+        ctx.beginPath();
+        ctx.arc(hx, hy, es/2, 0, Math.PI*2);
+        ctx.fill();
+      });
+
+      // Label
+      const label = `${Math.round(crop.sw)}×${Math.round(crop.sh)} → 800×540`;
+      ctx.font = '600 11px "DM Sans",sans-serif';
+      const tw = ctx.measureText(label).width;
+      const lp = 7, lh = 20, lr = 5;
+      const lx = cx + cw/2 - tw/2 - lp;
+      const ly = cy + ch - lh - 6;
+      ctx.fillStyle = 'rgba(14,16,20,0.82)';
+      roundRect(ctx, lx, ly, tw + lp*2, lh, lr);
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(212,148,58,0.3)';
+      ctx.lineWidth = 1;
+      roundRect(ctx, lx, ly, tw + lp*2, lh, lr);
+      ctx.stroke();
+      ctx.fillStyle = '#e8eaed';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(label, lx + lp, ly + lh/2);
+
+      // Drag hint arrow icon if first render
+      if (!dragging) {
+        ctx.fillStyle = 'rgba(212,148,58,0.5)';
+        ctx.font = '16px "Font Awesome 6 Free"';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('\uf0b2', cx + cw/2, cy + 18);
+        ctx.textAlign = 'start';
+      }
+
+      renderThumb();
+    }
+
+    function renderThumb() {
+      if (!srcImg) return;
+      const sw = srcImg.naturalWidth, sh = srcImg.naturalHeight;
+      const crop = getCropRect(sw, sh);
+      const tw = 280, th = Math.round(tw * TH / TW);
+      tCanvas.width = tw * 2;
+      tCanvas.height = th * 2;
+      tCanvas.style.width = tw + 'px';
+      tCanvas.style.height = th + 'px';
+      const ctx = tCanvas.getContext('2d');
+      ctx.setTransform(2, 0, 0, 2, 0, 0);
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = 'high';
+      ctx.drawImage(srcImg, crop.sx, crop.sy, crop.sw, crop.sh, 0, 0, tw, th);
+    }
+
+    function roundRect(ctx, x, y, w, h, r) {
+      r = Math.max(0, Math.min(r, Math.min(w,h)/2));
+      ctx.beginPath();
+      ctx.moveTo(x+r,y); ctx.lineTo(x+w-r,y);
+      ctx.quadraticCurveTo(x+w,y,x+w,y+r); ctx.lineTo(x+w,y+h-r);
+      ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h); ctx.lineTo(x+r,y+h);
+      ctx.quadraticCurveTo(x,y+h,x,y+h-r); ctx.lineTo(x,y+r);
+      ctx.quadraticCurveTo(x,y,x+r,y); ctx.closePath();
+    }
+
+    /* ════════════════════════════════════════
+       Drag handling
+    ════════════════════════════════════════ */
+    function getCanvasCoords(e) {
+      const rect = pCanvas.getBoundingClientRect();
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+      return {
+        x: (clientX - rect.left) / dispScale,
+        y: (clientY - rect.top)  / dispScale
+      };
+    }
+
+    function onDragStart(e) {
+      if (!srcImg) return;
+      e.preventDefault();
+      dragging = true;
+      canvasWrap.classList.add('dragging');
+      const c = getCanvasCoords(e);
+      dragLastX = c.x;
+      dragLastY = c.y;
+    }
+
+    function onDragMove(e) {
+      if (!dragging || !srcImg) return;
+      e.preventDefault();
+      const c = getCanvasCoords(e);
+      const dx = (c.x - dragLastX);
+      const dy = (c.y - dragLastY);
+      dragLastX = c.x;
+      dragLastY = c.y;
+
+      const sw = srcImg.naturalWidth, sh = srcImg.naturalHeight;
+      const { cw, ch } = getCropSize(sw, sh);
+
+      // If we don't have free offsets yet, compute from current position
+      if (freeSx === null || freeSy === null) {
+        const crop = getCropRect(sw, sh);
+        freeSx = crop.sx;
+        freeSy = crop.sy;
+        setCustomLabel();
+      }
+
+      freeSx += dx;
+      freeSy += dy;
+
+      // Clamp
+      freeSx = Math.max(0, Math.min(freeSx, sw - cw));
+      freeSy = Math.max(0, Math.min(freeSy, sh - ch));
+
+      scheduleRender();
+    }
+
+    function onDragEnd() {
+      if (!dragging) return;
+      dragging = false;
+      canvasWrap.classList.remove('dragging');
+    }
+
+    // Mouse events
+    canvasWrap.addEventListener('mousedown', onDragStart);
+    window.addEventListener('mousemove', onDragMove);
+    window.addEventListener('mouseup', onDragEnd);
+
+    // Touch events
+    canvasWrap.addEventListener('touchstart', onDragStart, { passive: false });
+    window.addEventListener('touchmove', onDragMove, { passive: false });
+    window.addEventListener('touchend', onDragEnd);
+
+    /* ════════════════════════════════════════
+       File upload
+    ════════════════════════════════════════ */
+    uploadZone.addEventListener('click', () => fileInput.click());
+    changeBtn.addEventListener('click', () => fileInput.click());
+
+    fileInput.addEventListener('change', e => {
+      if (e.target.files?.[0]) loadFile(e.target.files[0]);
+    });
+
+    uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.classList.add('drag-over'); });
+    uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('drag-over'));
+    uploadZone.addEventListener('drop', e => {
+      e.preventDefault();
+      uploadZone.classList.remove('drag-over');
+      if (e.dataTransfer.files?.[0]) loadFile(e.dataTransfer.files[0]);
+    });
+
+    function loadFile(file) {
+      if (!file.type.startsWith('image/')) { showToast('Please select a valid image file', true); return; }
+      const reader = new FileReader();
+      reader.onload = ev => {
+        const img = new Image();
+        img.onload = () => {
+          srcImg = img;
+          srcSizeLbl.textContent = `${img.naturalWidth} × ${img.naturalHeight}`;
+          uploadZone.classList.add('hidden');
+          previewArea.classList.remove('hidden');
+          thumbSect.classList.remove('hidden');
+          resetBtn.classList.remove('hidden');
+          exportBtn.disabled = false;
+          zoomSlider.value = 1; zoom = 1; zoomVal.textContent = '1.00x';
+          freeSx = freeSy = null;
+          snapToPosition('center-center');
+        };
+        img.src = ev.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    /* ════════════════════════════════════════
+       Controls
+    ════════════════════════════════════════ */
+    zoomSlider.addEventListener('input', e => {
+      zoom = parseFloat(e.target.value);
+      zoomVal.textContent = zoom.toFixed(2) + 'x';
+      // Re-clamp free offset when zoom changes
+      if (srcImg && freeSx !== null) {
+        const { cw, ch } = getCropSize(srcImg.naturalWidth, srcImg.naturalHeight);
+        freeSx = Math.max(0, Math.min(freeSx, srcImg.naturalWidth - cw));
+        freeSy = Math.max(0, Math.min(freeSy, srcImg.naturalHeight - ch));
+      }
+      scheduleRender();
+    });
+
+    qualSlider.addEventListener('input', e => {
+      jpgQ = parseInt(e.target.value) / 100;
+      qualVal.textContent = e.target.value + '%';
+      renderThumb();
+    });
+
+    fmtGroup.querySelectorAll('.format-btn').forEach(b => {
+      b.addEventListener('click', () => {
+        fmt = b.dataset.fmt;
+        fmtGroup.querySelectorAll('.format-btn').forEach(x => {
+          const a = x.dataset.fmt === fmt;
+          x.classList.toggle('active', a);
+          x.setAttribute('aria-pressed', a);
+        });
+        qualRow.classList.toggle('hidden', fmt !== 'jpeg');
+        renderThumb();
+      });
+    });
+
+    resetBtn.addEventListener('click', () => {
+      srcImg = null; fileInput.value = '';
+      uploadZone.classList.remove('hidden');
+      previewArea.classList.add('hidden');
+      thumbSect.classList.add('hidden');
+      resetBtn.classList.add('hidden');
+      exportBtn.disabled = true;
+      srcSizeLbl.textContent = '—';
+      cropSizeLbl.textContent = '—';
+      freeSx = freeSy = null;
+      snapToPosition('center-center');
+    });
+
+    /* ════════════════════════════════════════
+       Export — high quality
+    ════════════════════════════════════════ */
+    exportBtn.addEventListener('click', () => {
+      if (!srcImg) return;
+      const sw = srcImg.naturalWidth, sh = srcImg.naturalHeight;
+      const crop = getCropRect(sw, sh);
+
+      const ctx = eCanvas.getContext('2d');
+      ctx.clearRect(0, 0, TW, TH);
+
+      // Highest quality settings
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = 'high';
+
+      // Draw directly from original source at full resolution
+      ctx.drawImage(srcImg, crop.sx, crop.sy, crop.sw, crop.sh, 0, 0, TW, TH);
+
+      const mime = fmt === 'jpeg' ? 'image/jpeg' : 'image/png';
+      const quality = fmt === 'jpeg' ? jpgQ : undefined;
+      const dataUrl = eCanvas.toDataURL(mime, quality);
+      const ext = fmt === 'jpeg' ? 'jpg' : 'png';
+
+      const a = document.createElement('a');
+      a.href = dataUrl;
+      a.download = `cropped-800x540.${ext}`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+
+      showToast(`Exported as ${ext.toUpperCase()} — 800 × 540 px`);
+    });
+
+    /* ════════════════════════════════════════
+       Toast
+    ════════════════════════════════════════ */
+    let toastTimer;
+    function showToast(msg, err) {
+      clearTimeout(toastTimer);
+      toastMsg.textContent = msg;
+      const i = toastEl.querySelector('i');
+      if (err) { i.className='fa-solid fa-circle-xmark mr-2 text-red-400'; toastEl.style.borderColor='#e85555'; }
+      else     { i.className='fa-solid fa-circle-check mr-2 text-accent'; toastEl.style.borderColor='var(--accent)'; }
+      toastEl.classList.add('show');
+      toastTimer = setTimeout(() => toastEl.classList.remove('show'), 2800);
+    }
+
+    /* ════════════════════════════════════════
+       Resize
+    ════════════════════════════════════════ */
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => { if (srcImg) render(); }, 80);
+    });
+  </script>
+</body>
+</html>

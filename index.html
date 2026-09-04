@@ -1,166 +1,1286 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, shrink-to-fit=no">
-    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon-16x16.png">
-    <link rel="manifest" href="assets/images/site.webmanifest">
-    <title>Usefull Tools for Developers</title>
-    <script src="https://cdn.tailwindcss.com"></script> 
-    <link rel="stylesheet" href="assets/css/style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shuvrodeb — Fullstack Developer | Portfolio</title>
+
+<!-- ================= SEO (EDIT: canonical + description) ================= -->
+<meta name="description" content="Fullstack developer taking products from empty repo to production — typed frontends, tested APIs, CI/CD you can trust. Selected work, stack and contact.">
+<link rel="canonical" href="https://alexmoss.dev/">
+<meta name="theme-color" content="#F2EFE7">
+
+<!-- ================= SOCIAL / META (EDIT: swap og:image for a real 1200x630 banner) ================= -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Shuvrodeb — Fullstack Developer">
+<meta property="og:description" content="Software, engineered to spec. Selected work, stack and method — plus a direct line to start a project.">
+<meta property="og:url" content="https://alexmoss.dev/">
+<meta property="og:image" content="https://picsum.photos/seed/devfolio-og/1200/630.jpg">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='3' fill='%231B1D21'/%3E%3Cpath d='M16 8 L22 19 H10 Z' fill='%23F2B60C'/%3E%3Crect x='7' y='20' width='18' height='2.5' fill='%23F2B60C'/%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,500&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<!-- Person schema (EDIT: real name, URL, sameAs handles) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Shuvrodeb",
+  "jobTitle": "Fullstack Developer",
+  "url": "https://alexmoss.dev/",
+  "sameAs": ["https://github.com/shuvrod564", "https://www.linkedin.com/in/shuvrod/"],
+  "knowsAbout": ["TypeScript", "Node.js", "React", "PostgreSQL", "DevOps"]
+}
+</script>
+
+<style>
+/* ============================================================
+   PORTFOLIO — same design tokens as the MSE system
+   ============================================================ */
+:root{
+  --ink:      #1B1D21;
+  --ink-2:    #4A4E56;
+  --paper:    #F2EFE7;
+  --paper-2:  #E9E4D6;
+  --accent:   #F2B60C;
+  --stamp:    #B5442A;
+  --line:     rgba(27,29,33,.16);
+  --line-soft:rgba(27,29,33,.09);
+  --sans: "Archivo", sans-serif;
+  --mono: "IBM Plex Mono", monospace;
+  --header-h: 64px;
+  --tape-h: 14px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--sans);
+  background:var(--paper);
+  color:var(--ink);
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+img{max-width:100%;display:block}
+a{color:inherit}
+button{font:inherit;cursor:pointer;background:none;border:0;color:inherit}
+::selection{background:var(--accent);color:var(--ink)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+section{scroll-margin-top:calc(var(--header-h) + var(--tape-h) + 16px)}
+
+.wrap{width:min(1160px,92vw);margin-inline:auto}
+
+.sec-label{
+  font-family:var(--mono);font-size:.68rem;font-weight:600;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--ink-2);
+  display:flex;align-items:center;gap:14px;margin-bottom:18px;
+}
+.sec-label::before{content:"";width:34px;height:1px;background:var(--ink);flex:none}
+.sec-label .rev{margin-left:auto;border:1px solid var(--stamp);color:var(--stamp);
+  padding:2px 7px;font-size:.6rem;letter-spacing:.12em}
+
+h1,h2,h3{letter-spacing:-.02em;line-height:1.05}
+.h2{font-size:clamp(1.9rem,4vw,3rem);font-weight:800;margin-bottom:.5em}
+.lead{font-size:clamp(1rem,1.5vw,1.15rem);color:var(--ink-2);max-width:56ch}
+
+.btn{
+  display:inline-flex;align-items:center;gap:10px;
+  font-weight:700;font-size:.95rem;letter-spacing:.01em;
+  padding:15px 26px;text-decoration:none;white-space:nowrap;
+  clip-path:polygon(0 0,calc(100% - 13px) 0,100% 13px,100% 100%,0 100%);
+  transition:transform .18s ease, background .18s ease, color .18s ease;
+}
+.btn svg{width:17px;height:17px;flex:none}
+.btn:active{transform:translateY(1px)}
+.btn-ink{background:var(--ink);color:var(--paper)}
+.btn-ink:hover{background:var(--accent);color:var(--ink)}
+.btn-ghost{border:1px solid var(--ink);border-radius:0;clip-path:none;padding:14px 25px}
+.btn-ghost:hover{background:var(--ink);color:var(--paper)}
+
+.js .reveal{opacity:0;transform:translateY(16px);transition:opacity .7s ease var(--d,0s),transform .7s ease var(--d,0s)}
+.js .reveal.in{opacity:1;transform:none}
+
+/* ---- pulsing availability dot ---- */
+.dot-live{width:7px;height:7px;background:var(--accent);position:relative;flex:none;display:inline-block}
+.dot-live::after{content:"";position:absolute;inset:-4px;border:1.5px solid var(--accent);animation:ping 1.7s ease-out infinite}
+@keyframes ping{0%{transform:scale(.4);opacity:.9}80%,100%{transform:scale(1.6);opacity:0}}
+
+/* ============================================================
+   HEADER + TAPE
+   ============================================================ */
+.site-head{position:sticky;top:0;z-index:60;background:rgba(242,239,231,.92);backdrop-filter:blur(8px)}
+.head-bar{height:var(--header-h);display:flex;align-items:center;gap:26px}
+.brand{display:flex;align-items:center;gap:11px;text-decoration:none}
+.brand-mark{width:38px;height:38px;flex:none}
+.brand-name{font-weight:800;font-size:.95rem;letter-spacing:.02em;line-height:1.1}
+.brand-sub{font-family:var(--mono);font-size:.53rem;letter-spacing:.14em;color:var(--ink-2)}
+.head-nav{display:flex;gap:26px;margin-left:auto}
+.head-nav a{
+  font-family:var(--mono);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;
+  text-decoration:none;color:var(--ink-2);padding:6px 0;position:relative;
+}
+.head-nav a::after{content:"";position:absolute;left:0;bottom:0;height:2px;width:0;background:var(--accent);transition:width .25s ease}
+.head-nav a:hover{color:var(--ink)}
+.head-nav a:hover::after{width:100%}
+.head-mail{display:inline-flex;align-items:center;gap:9px;font-weight:700;font-size:.88rem;
+  text-decoration:none;padding:10px 16px;border:1px solid var(--ink);transition:.18s ease}
+.head-mail:hover{background:var(--ink);color:var(--paper)}
+.head-mail svg{width:15px;height:15px}
+@media (max-width:900px){.head-nav{display:none}.head-mail{margin-left:auto}}
+
+.tape{
+  position:relative;height:var(--tape-h);
+  border-bottom:1px solid var(--line);
+  background:
+    repeating-linear-gradient(90deg,var(--line) 0 1px,transparent 1px 28px) left bottom / 100% 6px no-repeat,
+    repeating-linear-gradient(90deg,rgba(27,29,33,.3) 0 1px,transparent 1px 140px) left bottom / 100% 12px no-repeat;
+}
+.tape-fill{position:absolute;left:0;top:0;bottom:0;width:0;background:rgba(242,182,12,.35);border-right:2px solid var(--accent)}
+.tape-read{
+  position:absolute;right:-4px;top:-19px;transform:translateX(50%);
+  font-family:var(--mono);font-size:.58rem;letter-spacing:.06em;
+  background:var(--paper);border:1px solid var(--line);padding:1px 6px;color:var(--ink-2);
+}
+@media (max-width:720px){.tape-read{display:none}}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero{
+  position:relative;overflow:hidden;cursor:crosshair;border-bottom:1px solid var(--line);
+  background:
+    linear-gradient(var(--line-soft) 1px,transparent 1px) left top / 100% 72px,
+    linear-gradient(90deg,var(--line-soft) 1px,transparent 1px) left top / 72px 100%;
+}
+.hero-grid{
+  display:grid;grid-template-columns:7fr 4fr;gap:clamp(30px,5vw,80px);
+  padding:clamp(64px,9vh,110px) 0 clamp(56px,8vh,96px);
+  align-items:center;min-height:calc(86vh - var(--header-h) - var(--tape-h));
+}
+.eyebrow{
+  font-family:var(--mono);font-size:.66rem;letter-spacing:.2em;font-weight:500;
+  color:var(--ink-2);text-transform:uppercase;margin-bottom:26px;
+  display:flex;align-items:center;gap:12px;
+}
+h1{font-size:clamp(2.6rem,6.2vw,4.8rem);font-weight:800;letter-spacing:-.028em;line-height:1.01;margin-bottom:26px}
+.lvl{position:relative;display:inline-block}
+.lvl svg{position:absolute;left:-1%;right:-1%;width:102%;height:.2em;bottom:-.24em;overflow:visible}
+.lvl path{stroke:var(--accent);stroke-width:2.4;fill:none;stroke-linecap:square}
+.lvl .lvl-line{stroke-dasharray:400;stroke-dashoffset:400;animation:lvl 1s .7s cubic-bezier(.4,0,.2,1) forwards}
+.lvl .lvl-tri{fill:var(--accent);stroke:none;opacity:0;animation:trisin .3s 1.55s ease forwards}
+@keyframes lvl{to{stroke-dashoffset:0}}
+@keyframes trisin{to{opacity:1}}
+.hero-sub{font-size:clamp(1.02rem,1.6vw,1.2rem);color:var(--ink-2);max-width:52ch;margin-bottom:36px}
+.hero-ctas{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+
+.hero-specs{border-top:1px solid var(--line)}
+.spec-row{display:grid;grid-template-columns:110px 1fr;gap:16px;padding:15px 0;border-bottom:1px solid var(--line)}
+.spec-row dt{font-family:var(--mono);font-size:.62rem;letter-spacing:.16em;color:var(--ink-2);padding-top:3px}
+.spec-row dd{font-size:.92rem;font-weight:500}
+.hero-corner{position:absolute;width:18px;height:18px;opacity:.5;pointer-events:none}
+.hero-corner.tl{top:14px;left:14px;border-top:1.5px solid var(--ink);border-left:1.5px solid var(--ink)}
+.hero-corner.tr{top:14px;right:14px;border-top:1.5px solid var(--ink);border-right:1.5px solid var(--ink)}
+.hero-corner.bl{bottom:14px;left:14px;border-bottom:1.5px solid var(--ink);border-left:1.5px solid var(--ink)}
+.hero-corner.br{bottom:14px;right:14px;border-bottom:1.5px solid var(--ink);border-right:1.5px solid var(--ink)}
+.hero-datum{position:absolute;right:22px;bottom:16px;font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;color:var(--ink-2);opacity:.75;pointer-events:none}
+.scroll-cue{position:absolute;left:22px;bottom:16px;font-family:var(--mono);font-size:.58rem;letter-spacing:.22em;color:var(--ink-2);display:flex;align-items:center;gap:8px;pointer-events:none}
+.scroll-cue svg{width:11px;height:14px;stroke:var(--ink-2);animation:cue 1.8s ease-in-out infinite}
+@keyframes cue{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
+
+@media (max-width:900px){
+  .hero-grid{grid-template-columns:1fr;min-height:0;padding-top:56px}
+  .hero-specs{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));column-gap:26px}
+}
+
+/* ---- CAD cursor (fine pointers, hero only) ---- */
+.reticle{position:absolute;left:0;top:0;pointer-events:none;z-index:2;opacity:0;transition:opacity .4s ease;color:var(--accent)}
+.reticle.on{opacity:1}
+.reticle svg{position:absolute;width:104px;height:104px;transform:translate(-50%,-50%)}
+.reticle circle,.reticle line{stroke:currentColor;fill:none;stroke-width:1.4}
+.reticle .ret-dot{fill:currentColor;stroke:none}
+.ret-read{
+  position:absolute;top:58px;white-space:nowrap;transform:translateX(-50%);
+  font-family:var(--mono);font-size:.56rem;letter-spacing:.1em;
+  background:var(--ink);color:var(--paper);padding:3px 8px;
+}
+
+/* ============================================================
+   TICKER
+   ============================================================ */
+.ticker{border-bottom:1px solid var(--line);overflow:hidden;padding:13px 0;position:relative}
+.ticker-track{display:flex;width:max-content;animation:tick 44s linear infinite}
+.ticker:hover .ticker-track{animation-play-state:paused}
+@keyframes tick{to{transform:translateX(-50%)}}
+.ticker-group{display:flex;align-items:center;list-style:none}
+.ticker-group li{font-family:var(--mono);font-size:.66rem;letter-spacing:.2em;font-weight:500;display:flex;align-items:center;white-space:nowrap}
+.ticker-group li::after{content:"";width:6px;height:6px;background:var(--accent);transform:rotate(45deg);margin:0 30px;flex:none}
+
+/* ============================================================
+   WORK — project sheets (rendered from PROJECTS array)
+   ============================================================ */
+#work{padding:clamp(76px,10vw,130px) 0 clamp(60px,8vw,110px)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin:36px 0 46px}
+.stat{background:var(--paper);padding:20px 22px}
+.stat b{font-size:clamp(1.6rem,3vw,2.3rem);font-weight:800;letter-spacing:-.02em;display:block;line-height:1.1}
+.stat span{font-family:var(--mono);font-size:.56rem;letter-spacing:.16em;color:var(--ink-2);text-transform:uppercase}
+@media (max-width:720px){.stats{grid-template-columns:repeat(2,1fr)}}
+.sheet-hint{font-family:var(--mono);font-size:.62rem;letter-spacing:.14em;color:var(--ink-2);margin-top:22px;text-transform:uppercase}
+
+.sheet{border-top:1px solid var(--line)}
+.sheet:last-of-type{border-bottom:1px solid var(--line)}
+.sheet-head{
+  width:100%;display:grid;grid-template-columns:auto 1fr auto auto;align-items:center;
+  gap:clamp(16px,3vw,44px);padding:clamp(24px,3.4vw,40px) 4px;text-align:left;
+  position:relative;transition:background .2s ease;
+}
+.sheet-head::before{content:"";position:absolute;left:-18px;top:0;bottom:0;width:3px;background:var(--accent);transform:scaleY(0);transition:transform .25s ease;transform-origin:top}
+.sheet-head:hover{background:rgba(27,29,33,.028)}
+.sheet-head:hover::before{transform:scaleY(1)}
+.sheet-num{
+  font-family:var(--mono);font-weight:400;font-size:clamp(1.9rem,4vw,3.2rem);line-height:1;
+  color:var(--ink-2);min-width:2.1em;
+}
+@supports (-webkit-text-stroke:1px black){
+  .sheet-num{color:transparent;-webkit-text-stroke:1.2px var(--ink)}
+}
+.sheet-title h3{font-size:clamp(1.45rem,2.6vw,2.15rem);font-weight:700;margin-bottom:6px}
+.sheet-tag{color:var(--ink-2);font-size:.95rem;font-style:italic}
+.sheet-stamp{
+  font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;color:var(--stamp);
+  border:2px solid var(--stamp);padding:6px 10px;transform:rotate(-7deg) scale(1.5);opacity:0;white-space:nowrap;
+}
+.sheet.open .sheet-stamp{opacity:.9;transform:rotate(-7deg) scale(1);transition:all .35s cubic-bezier(.2,1.5,.4,1) .3s}
+.sheet-chev{width:34px;height:34px;border:1px solid var(--line);display:grid;place-items:center;transition:transform .35s ease,background .2s}
+.sheet-chev svg{width:14px;height:14px;stroke:var(--ink)}
+.sheet.open .sheet-chev{transform:rotate(180deg);background:var(--accent);border-color:var(--accent)}
+
+.sheet-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .55s cubic-bezier(.25,.7,.2,1)}
+.sheet.open .sheet-body{grid-template-rows:1fr}
+.sheet-inner{overflow:hidden;min-height:0}
+.sheet-cols{display:grid;grid-template-columns:1.15fr 1fr;gap:clamp(26px,4vw,64px);padding:6px 4px clamp(30px,4vw,48px) 0}
+.sheet-desc{color:var(--ink-2);max-width:52ch;margin-bottom:26px}
+.spec-mini{border-top:1px solid var(--line)}
+.spec-mini div{display:grid;grid-template-columns:110px 1fr;gap:14px;padding:9px 0;border-bottom:1px solid var(--line);font-size:.85rem}
+.spec-mini span{font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;color:var(--ink-2);padding-top:3px}
+.deliv-title{font-family:var(--mono);font-size:.62rem;letter-spacing:.16em;color:var(--ink-2);margin-bottom:12px;text-transform:uppercase}
+.deliv{list-style:none}
+.deliv li{display:flex;gap:12px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--line-soft);font-size:.93rem;font-weight:500}
+.deliv svg{width:15px;height:15px;stroke:var(--ink);flex:none;margin-top:4px}
+.deliv li:last-child{border-bottom:0}
+.case-links{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
+.case-btn{
+  display:inline-flex;align-items:center;gap:9px;text-decoration:none;
+  font-family:var(--mono);font-size:.68rem;letter-spacing:.12em;font-weight:600;
+  border:1px solid var(--ink);padding:11px 16px;transition:.2s ease;text-transform:uppercase;
+}
+.case-btn svg{width:13px;height:13px;stroke:currentColor}
+.case-btn:hover{background:var(--ink);color:var(--paper)}
+.case-btn.solid{background:var(--accent);border-color:var(--accent);color:var(--ink)}
+.case-btn.solid:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.more-link{display:flex;justify-content:center;margin-top:44px}
+@media (max-width:820px){
+  .sheet-head{grid-template-columns:auto 1fr auto}
+  .sheet-stamp{display:none}
+  .sheet-cols{grid-template-columns:1fr}
+}
+
+/* ============================================================
+   STACK — schedule of materials legend
+   ============================================================ */
+#stack{background:var(--paper-2);border-block:1px solid var(--line);padding:clamp(76px,10vw,130px) 0}
+.legend{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:44px}
+.lg-cell{background:var(--paper);padding:clamp(20px,3vw,32px)}
+.lg-cell h3{
+  font-family:var(--mono);font-size:.66rem;letter-spacing:.18em;color:var(--ink-2);
+  margin-bottom:14px;font-weight:600;display:flex;align-items:center;gap:10px;text-transform:uppercase;
+}
+.lg-cell h3::before{content:"";width:9px;height:9px;background:var(--accent);outline:1.5px solid var(--ink);outline-offset:2px;flex:none}
+.lg-list{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:0 22px}
+.lg-list li{display:flex;align-items:center;gap:11px;padding:8px 0;border-bottom:1px solid var(--line-soft);font-size:.88rem;font-weight:500}
+.lg-list li::before{content:"";width:7px;height:7px;border:1.2px solid var(--ink);flex:none;transition:background .15s ease}
+.lg-list li:hover::before{background:var(--accent)}
+@media (max-width:860px){.legend{grid-template-columns:1fr}}
+@media (max-width:560px){.lg-list{grid-template-columns:1fr}}
+
+/* ============================================================
+   METHOD — schematic + sequence
+   ============================================================ */
+#approach{padding:clamp(76px,10vw,130px) 0}
+.appr-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:clamp(34px,5vw,80px);align-items:center}
+.fig{border:1px solid var(--line);background:var(--paper);padding:clamp(16px,2.4vw,30px);position:relative}
+.fig svg{width:100%;height:auto;display:block}
+.fig .dline{stroke:var(--ink);stroke-width:2;fill:none;stroke-linecap:square}
+.fig .thin{stroke-width:1.3;opacity:.85}
+.fig .accline{stroke:var(--accent);stroke-width:2.6;fill:none;stroke-linecap:square}
+.fig .acctrifill{fill:var(--accent)}
+.fig .dim{stroke:var(--ink-2);stroke-width:1;fill:none}
+.fig text{font-family:var(--mono);font-size:11px;fill:var(--ink-2)}
+.js .fig .dtext{opacity:0;transition:opacity .8s ease 2.9s}
+.js .fig.go .dtext{opacity:1}
+.fig-cap{font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;color:var(--ink-2);margin-top:14px;text-transform:uppercase;display:flex;justify-content:space-between;gap:10px}
+.steps{list-style:none;counter-reset:step}
+.steps li{counter-increment:step;position:relative;padding:20px 0 20px 58px;border-bottom:1px solid var(--line);opacity:.38;transition:opacity .5s ease}
+.steps li:first-child{border-top:1px solid var(--line)}
+.steps li::before{
+  content:counter(step,decimal-leading-zero);position:absolute;left:0;top:20px;
+  font-family:var(--mono);font-size:.78rem;color:var(--ink-2);
+  border:1px solid var(--line);width:36px;height:36px;display:grid;place-items:center;transition:all .4s ease;
+}
+.steps li h3{font-family:var(--mono);font-size:.86rem;letter-spacing:.1em;font-weight:700;margin-bottom:5px;text-transform:uppercase}
+.steps li p{font-size:.92rem;color:var(--ink-2)}
+.steps li.active{opacity:1}
+.steps li.active::before{background:var(--accent);border-color:var(--accent);color:var(--ink);font-weight:600}
+@media (max-width:900px){.appr-grid{grid-template-columns:1fr}}
+
+/* ============================================================
+   EXPERIENCE — programme chart (Gantt)
+   ============================================================ */
+#experience{background:var(--paper-2);border-block:1px solid var(--line);padding:clamp(76px,10vw,130px) 0}
+.gantt{
+  --labelw:230px;
+  border:1px solid var(--line);background:var(--paper);
+  padding:clamp(16px,2.5vw,28px);margin-top:44px;position:relative;
+}
+.g-head{display:grid;grid-template-columns:var(--labelw) 1fr;margin-bottom:4px}
+.g-years{position:relative;height:20px;font-family:var(--mono);font-size:.56rem;color:var(--ink-2)}
+.g-years span{position:absolute;top:2px;transform:translateX(-50%)}
+.g-years span:first-child{transform:translateX(0)}
+.g-body{position:relative}
+.g-row{display:grid;grid-template-columns:var(--labelw) 1fr;border-top:1px solid var(--line-soft);align-items:center}
+.g-label{padding:13px 16px 13px 0;font-size:.8rem;line-height:1.3}
+.g-label strong{display:block;font-weight:700}
+.g-label em{font-style:normal;font-family:var(--mono);font-size:.54rem;letter-spacing:.12em;color:var(--ink-2);text-transform:uppercase}
+.g-track{position:relative;height:54px}
+.g-bar{
+  position:absolute;top:13px;height:28px;background:var(--ink);color:var(--paper);
+  display:flex;align-items:center;padding:0 10px;font-family:var(--mono);
+  font-size:.56rem;letter-spacing:.08em;white-space:nowrap;overflow:hidden;
+  transform-origin:left center;transform:scaleX(0);
+  transition:transform .9s cubic-bezier(.25,.7,.2,1) var(--d,0s);
+}
+.g-bar.current{background:var(--accent);color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--ink)}
+.gantt.in .g-bar{transform:scaleX(1)}
+.g-today{position:absolute;top:0;bottom:0;width:0;border-left:1.5px dashed var(--stamp);z-index:2;pointer-events:none}
+.g-today::after{content:"TODAY";position:absolute;top:-2px;left:5px;font-family:var(--mono);font-size:.52rem;letter-spacing:.14em;color:var(--stamp)}
+.g-today.flip{border-left:0;border-right:1.5px dashed var(--stamp)}
+.g-today.flip::after{left:auto;right:5px}
+@media (max-width:680px){
+  .gantt{--labelw:104px}
+  .g-label strong{font-size:.68rem}
+  .g-years span.gy-min{display:none}
+}
+
+/* ============================================================
+   DARK BAND
+   ============================================================ */
+.band-dark{background:var(--ink);color:var(--paper);padding:clamp(60px,8vw,96px) 0;--line:rgba(242,239,231,.18);--line-soft:rgba(242,239,231,.09)}
+.band-dark .sec-label{color:rgba(242,239,231,.55)}
+.band-dark .sec-label::before{background:var(--accent)}
+.assure{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:40px}
+.assure-cell{background:var(--ink);padding:clamp(22px,3vw,36px)}
+.assure-cell .a-tag{font-family:var(--mono);font-size:.64rem;letter-spacing:.18em;color:var(--accent);margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.assure-cell .a-tag svg{width:14px;height:14px;stroke:var(--accent)}
+.assure-cell p{font-size:.95rem;color:rgba(242,239,231,.82)}
+@media (max-width:820px){.assure{grid-template-columns:1fr}}
+
+/* ============================================================
+   YELLOW CTA BAND
+   ============================================================ */
+.band-cta{background:var(--accent);color:var(--ink);padding:clamp(58px,8vw,92px) 0;border-block:1px solid var(--ink)}
+.cta-flex{display:flex;align-items:center;justify-content:space-between;gap:34px;flex-wrap:wrap}
+.band-cta h2{font-size:clamp(2rem,4.6vw,3.4rem);font-weight:900;letter-spacing:-.025em;line-height:1.02}
+.cta-sub{font-family:var(--mono);font-size:.66rem;letter-spacing:.16em;margin-top:14px;text-transform:uppercase}
+
+/* ============================================================
+   CONTACT
+   ============================================================ */
+#contact{padding:clamp(76px,10vw,130px) 0 clamp(70px,9vw,120px)}
+.contact-grid{display:grid;grid-template-columns:7fr 4fr;gap:clamp(40px,6vw,100px);margin-top:46px}
+
+.field{margin-bottom:26px}
+.field label{display:block;font-family:var(--mono);font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2);margin-bottom:8px}
+.field input,.field select,.field textarea{
+  width:100%;background:transparent;border:0;border-bottom:1px solid var(--line);
+  font:inherit;font-size:1rem;color:var(--ink);padding:10px 2px;border-radius:0;
+  transition:border-color .2s ease,box-shadow .2s ease;
+}
+.field textarea{resize:vertical;min-height:70px}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 1px 0 var(--accent)}
+.field.err input,.field.err select{border-color:var(--stamp)}
+.field-err{display:none;font-family:var(--mono);font-size:.62rem;letter-spacing:.06em;color:var(--stamp);margin-top:6px}
+.field.err .field-err{display:block}
+.sel-wrap{position:relative}
+.sel-wrap select{appearance:none;-webkit-appearance:none;padding-right:30px;cursor:pointer}
+.sel-wrap svg{position:absolute;right:4px;top:50%;transform:translateY(-50%);width:13px;height:13px;stroke:var(--ink-2);pointer-events:none}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:0 34px}
+@media (max-width:640px){.form-row{grid-template-columns:1fr}}
+.form-note{font-size:.74rem;color:var(--ink-2);margin-top:16px;max-width:44ch}
+.form-alert{display:none;border:1px solid var(--stamp);color:var(--stamp);font-family:var(--mono);font-size:.7rem;letter-spacing:.06em;padding:12px 14px;margin-bottom:22px}
+.form-alert.show{display:block}
+
+.success{display:none;border:1px solid var(--ink);padding:clamp(30px,5vw,56px)}
+.success.show{display:block}
+.stamp-big{
+  display:inline-block;font-family:var(--mono);font-size:.72rem;letter-spacing:.2em;
+  color:var(--stamp);border:2.5px solid var(--stamp);padding:8px 14px;transform:rotate(-6deg);margin-bottom:26px;
+}
+.success h3{font-size:clamp(1.5rem,3vw,2.1rem);font-weight:800;margin-bottom:12px}
+.success p{color:var(--ink-2);max-width:46ch}
+.success .ref{font-family:var(--mono);font-size:.68rem;letter-spacing:.12em;color:var(--ink-2);border:1px dashed var(--line);display:inline-block;padding:6px 12px;margin-top:20px}
+
+.c-aside{border-left:1px solid var(--line);padding-left:clamp(24px,3vw,44px)}
+.c-mail{font-size:clamp(1.15rem,2.2vw,1.6rem);font-weight:800;text-decoration:none;display:inline-block;
+  border-bottom:3px solid var(--accent);padding-bottom:4px;transition:.2s ease;word-break:break-all}
+.c-mail:hover{background:var(--accent)}
+.c-block{margin-top:32px}
+.c-block span{font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;color:var(--ink-2);text-transform:uppercase;display:block;margin-bottom:6px}
+.c-block p{font-size:.92rem}
+.c-block a{font-weight:600;text-decoration:none;border-bottom:1px solid var(--line)}
+.c-block a:hover{border-color:var(--accent);background:var(--accent)}
+@media (max-width:900px){.contact-grid{grid-template-columns:1fr}.c-aside{border-left:0;padding-left:0;border-top:1px solid var(--line);padding-top:38px}}
+
+/* ============================================================
+   FOOTER — title block
+   ============================================================ */
+.site-foot{background:var(--ink);color:var(--paper);padding:clamp(56px,7vw,84px) 0 34px;--line:rgba(242,239,231,.2)}
+.tblock{
+  display:grid;grid-template-columns:2.4fr 1fr 1fr 1fr 1.3fr 1fr;gap:1px;
+  background:var(--line);border:1px solid var(--line);margin-bottom:clamp(40px,5vw,64px);
+}
+.tb-cell{background:var(--ink);padding:16px 18px}
+.tb-cell span{display:block;font-family:var(--mono);font-size:.55rem;letter-spacing:.18em;color:rgba(242,239,231,.5);margin-bottom:5px;text-transform:uppercase}
+.tb-cell strong{font-family:var(--mono);font-weight:500;font-size:.78rem;letter-spacing:.04em}
+.foot-cols{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:clamp(30px,4vw,70px);margin-bottom:clamp(40px,5vw,60px)}
+.foot-blurb{color:rgba(242,239,231,.6);font-size:.9rem;max-width:34ch;margin-top:16px}
+.foot-tag{font-family:var(--mono);font-size:.62rem;letter-spacing:.22em;color:var(--accent);margin-top:22px}
+.foot-col h4{font-family:var(--mono);font-size:.62rem;letter-spacing:.18em;color:rgba(242,239,231,.5);margin-bottom:18px;font-weight:500;text-transform:uppercase}
+.foot-col a,.foot-col p{display:block;text-decoration:none;color:rgba(242,239,231,.82);font-size:.9rem;padding:5px 0;transition:color .2s}
+.foot-col a:hover{color:var(--accent)}
+.legal{border-top:1px solid var(--line);padding-top:24px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;color:rgba(242,239,231,.45)}
+@media (max-width:820px){
+  .tblock{grid-template-columns:repeat(3,1fr)}
+  .tb-cell:first-child{grid-column:1/-1}
+  .foot-cols{grid-template-columns:1fr}
+}
+
+/* ============================================================
+   STICKY MOBILE BAR
+   ============================================================ */
+.mob-bar{position:fixed;left:0;right:0;bottom:0;z-index:70;display:none;gap:1px;background:var(--line);transition:transform .35s ease;padding-bottom:env(safe-area-inset-bottom)}
+.mob-bar.hide{transform:translateY(110%)}
+.mob-bar a{flex:1;display:flex;align-items:center;justify-content:center;gap:9px;padding:17px 10px;font-weight:700;font-size:.9rem;text-decoration:none}
+.mob-bar svg{width:16px;height:16px}
+.mob-bar .mb-mail{background:var(--accent);color:var(--ink)}
+.mob-bar .mb-gh{background:var(--ink);color:var(--paper)}
+@media (max-width:720px){.mob-bar{display:flex}body{padding-bottom:58px}}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.001s!important;transition-duration:.001s!important}
+  .ticker-track{animation:none}
+  .g-bar{transform:none}
+}
+</style>
 </head>
-<body class="relative isolate bg-gray-50"> 
-    <nav class="py-4 text-center">
-        <div class="container mx-auto">
-            <a href="/" class="inline-block" aria-label="Shuvro Dev Roy">
-                <img 
-                    src="assets/images/shuvrodev.webp" 
-                    alt="shuvrodev"
-                    class="w-auto h-12"
-                >
-            </a>
-        </div>
+<body>
+
+<!-- ============================================================
+     HEADER (EDIT: name + nav labels)
+     ============================================================ -->
+<header class="site-head">
+  <div class="wrap head-bar">
+    <a class="brand" href="index.html" aria-label="Shuvrodeb — portfolio home">
+      <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true">
+        <rect width="40" height="40" rx="2.5" fill="var(--ink)"/>
+        <path d="M20 8.5 L27.5 23 H12.5 Z" fill="var(--accent)"/>
+        <rect x="8" y="24.5" width="24" height="2.6" fill="var(--accent)"/>
+        <rect x="8" y="30" width="24" height="1.4" fill="rgba(242,239,231,.4)"/>
+      </svg>
+      <span>
+        <span class="brand-name">Shuvrodeb</span><br>
+        <span class="brand-sub">FULLSTACK ENGINEER · PORTFOLIO</span>
+      </span>
+    </a>
+    <nav class="head-nav" aria-label="Primary">
+      <a href="#work">Work</a>
+      <a href="#stack">Stack</a>
+      <a href="#experience">Experience</a>
+      <a href="#contact">Contact</a>
     </nav>
-    <div class="py-12">
-        <div class="container mx-auto 2xl:max-w-[1120px] px-4">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-12">
-                <div class="bg-white shadow-sm p-3 relative">
-                    <a href="./pages/ai-sass-landing-page.html" class="block">
-                        <img 
-                            src="https://res.cloudinary.com/disivcuqr/image/upload/v1787802552/snippets-assets/v_t7mi.webp" 
-                            alt="input file component"
-                            class="w-auto h-auto"
-                        >
-                    </a>
-                    <h2 class="text-lg md:text-xl font-medium text-black mt-4">
-                        <a href="./pages/ai-sass-landing-page.html">SASS landing page</a>
-                    </h2> 
-                </div> 
-                <div class="bg-white shadow-sm p-3 relative">
-                    <a href="./pages/careflow.html" class="block">
-                        <img 
-                            src="https://res.cloudinary.com/disivcuqr/image/upload/v1787802982/snippets-assets/v_lc0h.webp" 
-                            alt="input file component"
-                            class="w-auto h-auto"
-                        >
-                    </a>
-                    <h2 class="text-lg md:text-xl font-medium text-black mt-4">
-                        <a href="./pages/careflow.html">Careflow - Healcare landing page</a>
-                    </h2> 
-                </div> 
-                <div class="bg-white shadow-sm p-3 relative">
-                    <a href="./pages/developer-portfolio.html" class="block">
-                        <img 
-                            src="https://res.cloudinary.com/disivcuqr/image/upload/v1787803118/snippets-assets/v_0qfa.webp" 
-                            alt="input file component"
-                            class="w-auto h-auto"
-                        >
-                    </a>
-                    <h2 class="text-lg md:text-xl font-medium text-black mt-4">
-                        <a href="./pages/developer-portfolio.html">Portfolio landing page</a>
-                    </h2> 
-                </div> 
-                <div class="bg-white shadow-sm p-3 relative">
-                    <a href="./pages/globe.html" class="block">
-                        <img 
-                            src="https://res.cloudinary.com/disivcuqr/image/upload/v1787803424/snippets-assets/v_9anc.webp" 
-                            alt="input file component"
-                            class="w-auto h-auto"
-                        >
-                    </a>
-                    <h2 class="text-lg md:text-xl font-medium text-black mt-4">
-                        <a href="./pages/globe.html">NuvantaOS - landing page</a>
-                    </h2> 
-                </div> 
-                <div class="bg-white shadow-sm p-3 relative">
-                    <a href="./pages/catalyst-edge.html" class="block">
-                        <img 
-                            src="https://res.cloudinary.com/disivcuqr/image/upload/v1787803424/snippets-assets/v_9anc.webp" 
-                            alt="input file component"
-                            class="w-auto h-auto"
-                        >
-                    </a>
-                    <h2 class="text-lg md:text-xl font-medium text-black mt-4">
-                        <a href="./pages/catalyst-edge.html">CatalystEdge - Leadership Edge</a>
-                    </h2> 
-                </div> 
-            </div><!--grid-->
+    <a class="head-mail" href="mailto:shuvrod564@gmail.com" data-mail data-track="Email">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><rect x="3" y="5" width="18" height="14"/><path d="M3 7l9 6 9-6"/></svg>
+      Email me
+    </a>
+  </div>
+  <div class="tape" aria-hidden="true">
+    <div class="tape-fill" id="tapeFill"><span class="tape-read" id="tapeRead">00.0 m</span></div>
+  </div>
+</header>
 
+<main>
+<!-- ============================================================
+     HERO (EDIT: headline, sub-copy, spec rows)
+     ============================================================ -->
+<section class="hero" id="top">
+  <span class="hero-corner tl"></span><span class="hero-corner tr"></span>
+  <span class="hero-corner bl"></span><span class="hero-corner br"></span>
+  <p class="hero-datum">DATUM 000.000 · BUILD: PROD · REF AM-01</p>
+  <p class="scroll-cue">SCROLL
+    <svg viewBox="0 0 12 16" fill="none" stroke-width="1.6"><path d="M6 1v12M2 9l4 4 4-4"/></svg>
+  </p>
 
+  <div class="reticle" id="reticle" aria-hidden="true">
+    <svg viewBox="-52 -52 104 104">
+      <circle r="30"/><circle r="2" class="ret-dot"/>
+      <line x1="-46" y1="0" x2="-15" y2="0"/><line x1="15" y1="0" x2="46" y2="0"/>
+      <line x1="0" y1="-46" x2="0" y2="-15"/><line x1="0" y1="15" x2="0" y2="46"/>
+    </svg>
+    <span class="ret-read" id="retRead">X 0000 · Y 0000</span>
+  </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                <div class="bg-white shadow-sm p-3 relative">
-                    <a href="./input-file-component/" class="block">
-                        <img 
-                            src="assets/images/banners/input-file-component.webp" 
-                            alt="input file component"
-                            class="w-auto h-auto"
-                        >
-                    </a>
-                    <h2 class="text-lg md:text-xl font-medium text-black mt-4">
-                        <a href="./input-file-component/">File Input Component</a>
-                    </h2>
-                    <p class="text-gray-400 text-sm mt-2">
-                        A globally reusable file input with drag-and-drop, preview, metadata, and validation. Works for any file type.
-                    </p>
-                </div>
-                <div class="bg-white shadow-sm p-3 relative">
-                    <a href="./responsive-check/" class="block">
-                        <img 
-                            src="assets/images/banners/responsive-checker.webp" 
-                            alt="shuvrodev"
-                            class="w-auto h-auto"
-                        >
-                    </a>
-                    <h2 class="text-lg md:text-xl font-medium text-black mt-4">
-                        <a href="./responsive-check/">Responsive Checker</a>
-                    </h2>
-                    <p class="text-gray-400 text-sm mt-2">
-                        Quickly test if any website is mobile, tablet, or desktop-friendly in real time.
-                    </p>
-                </div>
-                <div class="bg-white shadow-sm p-3 relative">
-                    <a href="image-converter/" class="block">
-                        <img 
-                            src="assets/images/banners/image-converter.webp" 
-                            alt="shuvrodev"
-                            class="w-auto h-auto"
-                        >
-                    </a>
-                    <h2 class="text-lg md:text-xl font-medium text-black mt-4">
-                        <a href="image-converter/">Image Converter & Resizer</a>
-                    </h2>
-                    <p class="text-gray-400 text-sm mt-2">
-                        Resize and convert your images to modern formats like WebP to reduce file size without losing quality. All processing happens locally in your browser.
-                    </p>
-                </div>
-                <div class="bg-white shadow-sm p-3 relative"> 
-                    <a href="https://shuvrod564.github.io/windows-11/" class="block">
-                        <img 
-                            src="assets/images/banners/windows-11.png" 
-                            alt="shuvrodev"
-                            class="w-auto h-auto"
-                        >
-                    </a>
-                    <h2 class="text-lg md:text-xl font-medium text-black mt-4 relative">
-                        <a href="https://shuvrod564.github.io/windows-11/">Windows 11</a>
-
-                        <img src="assets/images/github-pages.jpg" alt="github pages" class="w-auto h-10 absolute -top-3 right-2">
-                    </h2>
-                    <p class="text-gray-400 text-sm mt-2">
-                        A browser-based desktop operating system inspired by Windows 95, built with PHP, HTML, Tailwind CSS & JS. Users can interact with desktop icons, open multiple windows, manage files, customize themes, and run built-in applications. 
-                    </p>
-                </div>
-            </div>
-
-
-            
-        </div><!--./container-->
+  <div class="wrap hero-grid">
+    <div>
+      <p class="eyebrow"><span class="dot-live"></span>FULLSTACK DEVELOPER · AVAILABLE FOR NEW PROJECTS</p>
+      <h1>Software,<br>engineered to <span class="lvl">spec.<svg viewBox="0 0 200 12" preserveAspectRatio="none" aria-hidden="true"><path class="lvl-line" d="M2 9 H198"/><path d="M2 4 V12"/><path d="M198 4 V12"/><path class="lvl-tri" d="M44 2 L51 9 H37 Z"/></svg></span></h1>
+      <p class="hero-sub">I'm Shuvrodeb — a full-stack engineer specializing in performant web applications, developer tools, and infrastructure. Currently crafting the future at the intersection of design and engineering. </p>
+      <div class="hero-ctas">
+        <a class="btn btn-ink" href="./projects.html">View selected work
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+        <a class="btn btn-ghost" href="mailto:shuvrod564@gmail.com" data-mail data-track="Email">Email me</a>
+      </div>
     </div>
 
+    <dl class="hero-specs reveal">
+      <!-- EDIT: your real focus / years / current role / base -->
+      <div class="spec-row"><dt>FOCUS</dt><dd>Fullstack web apps — design to deploy</dd></div>
+      <div class="spec-row"><dt>EXPERIENCE</dt><dd>6+ years · 20+ production builds</dd></div>
+      <div class="spec-row"><dt>CURRENTLY</dt><dd>Senior fullstack dev @ Dataward</dd></div>
+      <div class="spec-row"><dt>STATUS</dt><dd><span class="dot-live" style="display:inline-block;margin-right:8px;transform:translateY(-1px)"></span>Open for freelance &amp; contracts</dd></div>
+    </dl>
+  </div>
+</section>
 
+<!-- ============================================================
+     TICKER (EDIT: keep both groups identical)
+     ============================================================ -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    <ul class="ticker-group">
+      <li>TYPESCRIPT</li><li>REACT / NEXT.JS</li><li>NODE.JS</li><li>POSTGRESQL</li>
+      <li>REST &amp; GRAPHQL</li><li>DOCKER</li><li>CI/CD</li><li>WEBSOCKETS</li><li>TESTS THAT PASS</li>
+    </ul>
+    <ul class="ticker-group">
+      <li>TYPESCRIPT</li><li>REACT / NEXT.JS</li><li>NODE.JS</li><li>POSTGRESQL</li>
+      <li>REST &amp; GRAPHQL</li><li>DOCKER</li><li>CI/CD</li><li>WEBSOCKETS</li><li>TESTS THAT PASS</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ============================================================
+     SECTION 01 — SELECTED WORK (rendered from the PROJECTS array)
+     ============================================================ -->
+<section id="work">
+  <div class="wrap">
+    <div class="reveal">
+      <p class="sec-label">SECTION 01 — SELECTED WORK <span class="rev">REV A</span></p>
+      <h2 class="h2">Shipped, not shelved.</h2>
+      <p class="lead">Builds that went live and stayed live. Open a sheet for the full story.</p>
+      <!-- EDIT: your headline numbers -->
+      <div class="stats">
+        <div class="stat"><b>09</b><span>Projects shipped</span></div>
+        <div class="stat"><b>40k</b><span>Users served</span></div>
+        <div class="stat"><b>99.98%</b><span>Uptime maintained</span></div>
+        <div class="stat"><b>6</b><span>Years on the tools</span></div>
+      </div>
+      <p class="sheet-hint">↑ Open a sheet — role, stack &amp; outcomes inside</p>
+    </div>
+
+    <div id="workSheets"></div>
+
+    <div class="more-link reveal">
+      <a class="case-btn" href="https://github.com/shuvrod564" data-gh data-track="GitHub" target="_blank" rel="noopener">
+        More on GitHub
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="square"><path d="M7 17L17 7M8 7h9v9"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 02 — STACK (rendered from the STACK array)
+     ============================================================ -->
+<section id="stack">
+  <div class="wrap">
+    <div class="reveal">
+      <p class="sec-label">SECTION 02 — STACK &amp; TOOLING</p>
+      <h2 class="h2">Schedule of materials.</h2>
+      <p class="lead">Every trade listed, every tool accounted for. This is the daily kit — nothing decorative.</p>
+    </div>
+    <div class="legend reveal" id="legendGrid" style="--d:.1s"></div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 03 — METHOD (EDIT: step copy if you like)
+     ============================================================ -->
+<section id="approach">
+  <div class="wrap">
+    <div class="reveal" style="margin-bottom:46px">
+      <p class="sec-label">SECTION 03 — METHOD</p>
+      <h2 class="h2">How the work<br>gets built.</h2>
+    </div>
+    <div class="appr-grid">
+      <figure class="fig reveal" id="fig">
+        <svg viewBox="0 0 560 400" role="img" aria-label="Schematic line drawing of a system architecture: client, API, Postgres, Redis and a CI/CD pipeline">
+          <!-- level line + bench mark -->
+          <path class="accline" data-i="0" d="M60 40 H500 M60 33 V47 M500 33 V47"/>
+          <path class="acctrifill dtext" d="M280 40 L266 16 H294 Z"/>
+          <!-- client -->
+          <path class="dline" data-i="1" d="M40 90 H190 V190 H40 Z"/>
+          <path class="dline thin" data-i="2" d="M40 114 H190 M48 99 h7 v7 h-7 z M60 99 h7 v7 h-7 z M72 99 h7 v7 h-7 z M52 168 H140"/>
+          <!-- client -> api -->
+          <path class="dline" data-i="3" d="M190 140 H246 M236 134 L246 140 L236 146"/>
+          <!-- api -->
+          <path class="dline" data-i="4" d="M250 90 H380 V190 H250 Z"/>
+          <path class="dline thin" data-i="5" d="M262 168 H340 M262 182 H310"/>
+          <!-- api -> db -->
+          <path class="dline" data-i="6" d="M380 140 H406 M396 134 L406 140 L396 146"/>
+          <!-- database -->
+          <ellipse class="dline" data-i="7" cx="450" cy="100" rx="40" ry="12"/>
+          <path class="dline" data-i="8" d="M410 100 V170 a40 12 0 0 0 80 0 V100"/>
+          <!-- cache -->
+          <path class="dline thin" data-i="9" d="M315 190 V224 M309 216 L315 224 L321 216 M285 230 H345 V270 H285 Z"/>
+          <!-- pipeline boxes -->
+          <path class="dline thin" data-i="10" d="M60 310 H140 V350 H60 Z M170 310 H250 V350 H170 Z M280 310 H360 V350 H280 Z M390 310 H470 V350 H390 Z"/>
+          <path class="dline thin" data-i="11" d="M142 330 H166 M158 325 L166 330 L158 335 M252 330 H276 M268 325 L276 330 L268 335 M362 330 H386 M378 325 L386 330 L378 335"/>
+          <path class="accline" data-i="12" d="M412 332 l8 8 l16 -16"/>
+          <!-- dim: p95 latency on db -->
+          <path class="dim dline thin" data-i="13" d="M505 100 V170 M499 100 H511 M499 170 H511"/>
+          <!-- labels -->
+          <text class="dtext" x="52" y="138">CLIENT</text>
+          <text class="dtext" x="52" y="154" style="font-size:9px;letter-spacing:.08em">REACT + TYPESCRIPT</text>
+          <text class="dtext" x="218" y="130" text-anchor="middle" style="font-size:9px">HTTPS</text>
+          <text class="dtext" x="262" y="140">API</text>
+          <text class="dtext" x="262" y="156" style="font-size:9px;letter-spacing:.08em">NODE + TYPESCRIPT</text>
+          <text class="dtext" x="450" y="142" text-anchor="middle">POSTGRES</text>
+          <text class="dtext" x="315" y="254" text-anchor="middle" style="font-size:9px">REDIS</text>
+          <text class="dtext" x="100" y="334" text-anchor="middle" style="font-size:9px;letter-spacing:.1em">PUSH</text>
+          <text class="dtext" x="210" y="334" text-anchor="middle" style="font-size:9px;letter-spacing:.1em">TEST</text>
+          <text class="dtext" x="320" y="334" text-anchor="middle" style="font-size:9px;letter-spacing:.1em">BUILD</text>
+          <text class="dtext" x="430" y="334" text-anchor="middle" style="font-size:9px;letter-spacing:.1em">DEPLOY</text>
+          <text class="dtext" transform="translate(523 135) rotate(-90)" text-anchor="middle" style="font-size:9px;letter-spacing:.1em">P95 &lt; 120 MS</text>
+          <text class="dtext" x="40" y="36" text-anchor="start" style="font-size:10px;letter-spacing:.12em">FIG.01 — SYSTEM TOPOLOGY</text>
+        </svg>
+        <figcaption class="fig-cap"><span>FIG.01 — SYSTEM TOPOLOGY</span><span>EVERY PROJECT GETS ONE, BEFORE LINE ONE</span></figcaption>
+      </figure>
+
+      <ol class="steps reveal" id="steps">
+        <li><h3>Scope</h3><p>Cut scope before it cuts you. What's the smallest shippable core, and what does "done" mean? Written down, agreed.</p></li>
+        <li><h3>Architect</h3><p>Data model, interfaces and infrastructure designed before the first commit — the cheapest place to fix mistakes is on paper.</p></li>
+        <li><h3>Build</h3><p>Short cycles, reviewed pull requests, tests riding along. You see progress weekly, not surprises monthly.</p></li>
+        <li><h3>Ship &amp; own</h3><p>Pipelines, monitoring, docs, handover. I don't disappear at launch — software that stays shipped is the deliverable.</p></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 04 — EXPERIENCE (rendered from the EXPERIENCE array)
+     ============================================================ -->
+<section id="experience">
+  <div class="wrap">
+    <div class="reveal">
+      <p class="sec-label">SECTION 04 — TRACK RECORD</p>
+      <h2 class="h2">Six years on the tools.</h2>
+      <p class="lead">A programme chart of the roles so far — each bar drawn to the months it actually spans.</p>
+    </div>
+    <div class="gantt reveal" id="gantt" style="--d:.1s">
+      <div class="g-head"><span></span><div class="g-years" id="gYears"></div></div>
+      <div class="g-body" id="gBody"></div>
+    </div>
+    <div class="fig-cap" style="max-width:1160px;margin:14px auto 0">
+      <span>FIG.02 — PROGRAMME TO DATE</span><span>DRAWN TO SCALE, HONESTLY</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     DARK BAND (EDIT: proof points)
+     ============================================================ -->
+<section class="band-dark">
+  <div class="wrap">
+    <p class="sec-label">SECTION 05 — WHY ME</p>
+    <h2 class="h2" style="max-width:20ch">One developer. The whole stack. No lost hand-offs.</h2>
+    <div class="assure">
+      <div class="assure-cell reveal">
+        <p class="a-tag"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="square"><path d="M12 3l9 5-9 5-9-5 9-5z"/><path d="M3 13l9 5 9-5"/></svg>END-TO-END</p>
+        <p>Design to deploy, one accountable engineer. Nothing gets lost between "the frontend team" and "the backend team" — there isn't one.</p>
+      </div>
+      <div class="assure-cell reveal" style="--d:.1s">
+        <p class="a-tag"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="square"><path d="M5 4h14v16H5z"/><path d="M9 9h6M9 13h6M9 17h4"/></svg>TESTED &amp; DOCUMENTED</p>
+        <p>Tests, types and docs are part of "done". Hand me a legacy repo and I'll leave it better documented than I found it.</p>
+      </div>
+      <div class="assure-cell reveal" style="--d:.2s">
+        <p class="a-tag"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="square"><path d="M3 12h4l3-7 4 14 3-7h4"/></svg>SHIPS, THEN STAYS SHIPPED</p>
+        <p>Monitoring, alerts and sane deploys. The launch is the midpoint of the project, not the finish line.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     YELLOW CTA BAND
+     ============================================================ -->
+<section class="band-cta">
+  <div class="wrap cta-flex">
+    <div>
+      <h2>Have a build<br>in mind?</h2>
+      <p class="cta-sub">AVG. REPLY — ONE WORKING DAY · REMOTE-FRIENDLY · NO OBLIGATION</p>
+    </div>
+    <a class="btn btn-ink" href="#contact">Start a project
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 06 — CONTACT (EDIT: aside details)
+     ============================================================ -->
+<section id="contact">
+  <div class="wrap">
+    <div class="reveal">
+      <p class="sec-label">SECTION 06 — CONTACT <span class="rev">REV A</span></p>
+      <h2 class="h2">Tell me what we're building.</h2>
+      <p class="lead">Two minutes of your time, one working day to my reply.</p>
+    </div>
+
+    <div class="contact-grid">
+      <div>
+        <!--
+          FORM NOTE (EDIT): this validates + shows a success state locally.
+          To RECEIVE messages, create a free form at formspree.io and paste the
+          endpoint into CONFIG.formEndpoint in the <script> below. Nothing else to change.
+        -->
+        <div class="form-alert" id="formAlert">NETWORK HICUP — YOUR MESSAGE DIDN'T SEND. PLEASE EMAIL ME DIRECTLY.</div>
+
+        <form id="leadForm" novalidate>
+          <div class="form-row">
+            <div class="field" data-req>
+              <label for="f-name">Your name *</label>
+              <input id="f-name" name="name" type="text" autocomplete="name" placeholder="Jordan Blake">
+              <small class="field-err">PLEASE ENTER YOUR NAME</small>
+            </div>
+            <div class="field" data-req>
+              <label for="f-email">Email *</label>
+              <input id="f-email" name="email" type="email" autocomplete="email" placeholder="you@company.com">
+              <small class="field-err">THAT EMAIL DOESN'T LOOK RIGHT</small>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="field">
+              <label for="f-type">Project type</label>
+              <div class="sel-wrap">
+                <select id="f-type" name="type">
+                  <option>Web application</option>
+                  <option>API / backend</option>
+                  <option>Frontend &amp; UI build</option>
+                  <option>Performance or rescue work</option>
+                  <option>Consulting / code review</option>
+                  <option>Something else</option>
+                </select>
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="square"><path d="M5 9l7 7 7-7"/></svg>
+              </div>
+            </div>
+            <div class="field">
+              <label for="f-budget">Budget <!-- EDIT: adjust ranges/currency --></label>
+              <div class="sel-wrap">
+                <select id="f-budget" name="budget">
+                  <option>Not sure yet</option>
+                  <option>Under 5k</option>
+                  <option>5k – 15k</option>
+                  <option>15k – 40k</option>
+                  <option>40k+</option>
+                </select>
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="square"><path d="M5 9l7 7 7-7"/></svg>
+              </div>
+            </div>
+          </div>
+          <div class="field">
+            <label for="f-msg">About the project <em style="text-transform:none;letter-spacing:0">(optional)</em></label>
+            <textarea id="f-msg" name="message" rows="3" placeholder="Stage, stack, timeline — anything useful."></textarea>
+          </div>
+
+          <button class="btn btn-ink" type="submit" id="submitBtn"><span class="s-label">Send message</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M5 12h14M13 5l7 7-7 7"/></svg></button>
+          <p class="form-note">No agencies, no mailing lists — your message lands in my own inbox and comes straight back to you.</p>
+        </form>
+
+        <div class="success" id="successPanel" aria-live="polite">
+          <span class="stamp-big">RECEIVED</span>
+          <h3 id="successTitle">Message sent.</h3>
+          <p id="successBody">I'll get back to you within one working day — usually sooner.</p>
+          <span class="ref" id="successRef">REF: —</span>
+        </div>
+      </div>
+
+      <aside class="c-aside reveal" style="--d:.12s">
+        <span class="c-block" style="display:block;margin-top:0">
+          <span>Direct</span>
+          <a class="c-mail" href="mailto:shuvrod564@gmail.com" data-mail data-track="Email">shuvrod564@gmail.com</a>
+        </span>
+        <div class="c-block">
+          <span>GitHub</span>
+          <p><a href="https://github.com/shuvrod564" data-gh data-track="GitHub" target="_blank" rel="noopener">github.com/shuvrod564</a></p>
+        </div>
+        <div class="c-block">
+          <span>LinkedIn</span>
+          <p><a href="https://www.linkedin.com/in/shuvrod/" data-li data-track="LinkedIn" target="_blank" rel="noopener">in/shuvrod</a></p>
+        </div>
+        <div class="c-block">
+          <span>Base &amp; hours</span>
+          <p>Dinajpur, Bangladesh · GMT+6 — remote worldwide, overlap-friendly.</p>
+        </div>
+        <div class="c-block">
+          <span>Promise</span>
+          <p>A reply from me — not a bot — within one working day, every time.</p>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ============================================================
+     FOOTER — title block
+     ============================================================ -->
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="tblock">
+      <div class="tb-cell"><span>Project</span><strong>PORTFOLIO — FULLSTACK ENGINEER</strong></div>
+      <div class="tb-cell"><span>Sheet</span><strong>01 / 01</strong></div>
+      <div class="tb-cell"><span>Rev</span><strong>A</strong></div>
+      <div class="tb-cell"><span>Scale</span><strong>1 : 1</strong></div>
+      <div class="tb-cell"><span>Date</span><strong id="tbDate">—</strong></div>
+      <div class="tb-cell"><span>Drawn</span><strong>A.M.</strong></div>
+    </div>
+
+    <div class="foot-cols">
+      <div>
+        <a class="brand" href="#top" style="text-decoration:none">
+          <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true">
+            <rect width="40" height="40" rx="2.5" fill="rgba(242,239,231,.08)"/>
+            <path d="M20 8.5 L27.5 23 H12.5 Z" fill="var(--accent)"/>
+            <rect x="8" y="24.5" width="24" height="2.6" fill="var(--accent)"/>
+            <rect x="8" y="30" width="24" height="1.4" fill="rgba(242,239,231,.4)"/>
+          </svg>
+          <span>
+            <span class="brand-name" style="color:var(--paper)">Shuvrodeb</span><br>
+            <span class="brand-sub" style="color:rgba(242,239,231,.5)">FULLSTACK ENGINEER</span>
+          </span>
+        </a>
+        <p class="foot-blurb">From empty repo to production — typed frontends, tested APIs, deploys that behave.</p>
+        <p class="foot-tag">MADE TO BE MEASURED.</p>
+      </div>
+      <div class="foot-col">
+        <h4>Contact</h4>
+        <a href="mailto:shuvrod564@gmail.com" data-mail data-track="Email">shuvrod564@gmail.com</a>
+        <a href="https://github.com/shuvrod564" data-gh data-track="GitHub" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.linkedin.com/in/shuvrod/" data-li data-track="LinkedIn" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+      <div class="foot-col">
+        <h4>Index</h4>
+        <a href="#work">Selected work</a>
+        <a href="#stack">Stack</a>
+        <a href="#experience">Track record</a>
+        <a href="#contact">Start a project</a>
+      </div>
+    </div>
+
+    <div class="legal">
+      <span>© <span id="year">2025</span> Shuvrodeb — BUILT BY HAND, NO TEMPLATES</span>
+      <span>TYPESET IN ARCHIVO + IBM PLEX MONO</span>
+    </div>
+  </div>
+</footer>
+
+<!-- Sticky mobile bar -->
+<nav class="mob-bar" id="mobBar" aria-label="Quick contact">
+  <a class="mb-gh" href="https://github.com/shuvrod564" data-gh data-track="GitHub" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M7 17L17 7M8 7h9v9"/></svg>
+    GitHub</a>
+  <a class="mb-mail" href="mailto:shuvrod564@gmail.com" data-mail data-track="Email">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><rect x="3" y="5" width="18" height="14"/><path d="M3 7l9 6 9-6"/></svg>
+    Email me</a>
+</nav>
+
+<script>
+/* ============================================================
+   CONFIG — the only setup block you need to touch
+   ============================================================ */
+const CONFIG = {
+  email:        "shuvrod564@gmail.com",              // EDIT
+  github:       "https://github.com/shuvrod564",// EDIT
+  linkedin:     "https://www.linkedin.com/in/shuvrod/", // EDIT
+  gaId:         "",                             // EDIT: "G-XXXXXXX" to enable GA4
+  pixelId:      "",                             // EDIT: Meta Pixel ID to enable it
+  formEndpoint: ""                              // EDIT: e.g. "https://formspree.io/f/abcdwxyz"
+};
+const REDUCED = matchMedia("(prefers-reduced-motion: reduce)").matches;
+document.documentElement.classList.add("js");
+
+/* ---------- populate links everywhere from CONFIG ---------- */
+document.querySelectorAll("[data-mail]").forEach(a => { a.href = "mailto:" + CONFIG.email; if (a.classList.contains("c-mail")) a.textContent = CONFIG.email; });
+document.querySelectorAll("[data-gh]").forEach(a => a.href = CONFIG.github);
+document.querySelectorAll("[data-li]").forEach(a => a.href = CONFIG.linkedin);
+
+/* ---------- analytics: GA4 + Meta Pixel load only when IDs are set ---------- */
+function trackEvent(kind, params = {}) {
+  try { if (window.gtag) gtag("event", kind === "lead" ? "generate_lead" : kind, params); } catch (e) {}
+  try { if (window.fbq) kind === "lead" ? fbq("track", "Lead", params) : fbq("trackCustom", kind, params); } catch (e) {}
+}
+if (CONFIG.gaId) {
+  const s = document.createElement("script"); s.async = true;
+  s.src = "https://www.googletagmanager.com/gtag/js?id=" + CONFIG.gaId;
+  document.head.appendChild(s);
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = function(){ dataLayer.push(arguments); };
+  gtag("js", new Date()); gtag("config", CONFIG.gaId);
+}
+if (CONFIG.pixelId) {
+  (function(f,b,e,v,n,t,s){
+    if(f.fbq)return; n=f.fbq=function(){ n.callMethod ? n.callMethod.apply(n,arguments) : n.queue.push(arguments); };
+    if(!f._fbq) f._fbq=n; n.push=n; n.loaded=true; n.version="2.0"; n.queue=[];
+    t=b.createElement(e); t.async=true; t.src=v;
+    s=b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t,s);
+  })(window, document, "script", "https://connect.facebook.net/en_US/fbevents.js");
+  fbq("init", CONFIG.pixelId); fbq("track", "PageView");
+}
+document.querySelectorAll("[data-track]").forEach(a =>
+  a.addEventListener("click", () => trackEvent("outbound_" + a.dataset.track.toLowerCase())));
+
+/* ---------- footer dates ---------- */
+document.getElementById("year").textContent = new Date().getFullYear();
+document.getElementById("tbDate").textContent = new Date().toISOString().slice(0, 10);
+
+/* ---------- tape-measure scroll indicator ---------- */
+const tapeFill = document.getElementById("tapeFill");
+const tapeRead = document.getElementById("tapeRead");
+let tapeTick = false;
+function tapeUpdate() {
+  const max = document.documentElement.scrollHeight - innerHeight;
+  const p = max > 0 ? Math.min(1, scrollY / max) : 0;
+  tapeFill.style.width = (p * 100) + "%";
+  tapeRead.textContent = (p * 30).toFixed(1).padStart(4, "0") + " m";
+  tapeTick = false;
+}
+addEventListener("scroll", () => { if (!tapeTick) { tapeTick = true; requestAnimationFrame(tapeUpdate); } }, { passive: true });
+tapeUpdate();
+
+/* ---------- CAD cursor (fine pointers, hero only) ---------- */
+const hero = document.querySelector(".hero");
+const ret = document.getElementById("reticle");
+const retRead = document.getElementById("retRead");
+if (matchMedia("(pointer: fine)").matches && !REDUCED) {
+  let tx = 0, ty = 0, x = 0, y = 0, running = false, started = false;
+  hero.addEventListener("mousemove", e => {
+    const r = hero.getBoundingClientRect();
+    tx = e.clientX - r.left; ty = e.clientY - r.top;
+    if (!started) { started = true; x = tx; y = ty; ret.classList.add("on"); running = true; requestAnimationFrame(loop); }
+  });
+  hero.addEventListener("mouseleave", () => ret.classList.remove("on"));
+  hero.addEventListener("mouseenter", () => started && ret.classList.add("on"));
+  function loop() {
+    x += (tx - x) * 0.13; y += (ty - y) * 0.13;
+    ret.style.transform = `translate3d(${x}px,${y}px,0)`;
+    retRead.textContent = `X ${String(Math.round(x)).padStart(4, "0")} · Y ${String(Math.round(y)).padStart(4, "0")}`;
+    if (running) requestAnimationFrame(loop);
+  }
+  new IntersectionObserver(([en]) => {
+    if (en.isIntersecting && started && !running) { running = true; requestAnimationFrame(loop); }
+    if (!en.isIntersecting) running = false;
+  }).observe(hero);
+}
+
+/* ============================================================
+   DATA — edit these arrays to update the page. No markup needed.
+   ============================================================ */
+
+/* ---- PROJECTS: each object becomes one drawing sheet ----
+   num, title, tag, stamp (short status shown as red stamp),
+   desc, role, status, year, stack[], highlights[], links[{label,href,solid}] */
+const PROJECTS = [
+  {
+    num: "01", title: "Ledgerline",
+    tag: "Invoicing SaaS for freelancers — track time, invoice, get paid.",
+    stamp: "IN PRODUCTION",
+    desc: "A complete billing platform for independent contractors: time tracking, recurring invoices, Stripe payments and VAT-ready PDF exports. Built solo, end to end — schema design to deploy pipeline.",
+    role: "Design · Frontend · Backend · DevOps",
+    status: "Live SaaS, 4 yrs running",
+    year: "2021 — Ongoing",
+    stack: ["Next.js", "Node", "PostgreSQL", "Stripe", "Docker"],
+    highlights: [
+      "Multi-tenant architecture with row-level security",
+      "PDF invoice engine — pixel-perfect, localised VAT rules",
+      "Stripe subscriptions + dunning flow, minimal PCI scope",
+      "99.98% measured uptime across the last 24 months"
+    ],
+    links: [
+      { label: "Visit live site", href: "#", solid: true },
+      { label: "Case study", href: "#" }
+    ]
+  },
+  {
+    num: "02", title: "Fleetgrid",
+    tag: "Realtime telemetry dashboard for logistics fleets.",
+    stamp: "SHIPPED",
+    desc: "Live map and operations dashboard tracking 1,200 vehicles: WebSocket ingestion, TimescaleDB downsampling, and a rule engine for geofence and maintenance alerts — handed over with Grafana dashboards the ops team actually uses.",
+    role: "Backend lead · Frontend",
+    status: "Delivered & handed over",
+    year: "2023 — 2024",
+    stack: ["React", "Node", "WebSockets", "TimescaleDB", "AWS"],
+    highlights: [
+      "Ingests 2M GPS points/day via WebSocket fan-out",
+      "Custom map renderer holding 60fps with 1k live markers",
+      "Rule engine for geofence + maintenance alerting",
+      "Zero-downtime deploys from day one"
+    ],
+    links: [
+      { label: "Case study", href: "#", solid: true }
+    ]
+  },
+  {
+    num: "03", title: "Atlas UI",
+    tag: "Open-source, headless React component library.",
+    stamp: "OPEN SOURCE",
+    desc: "Headless, accessible React components — unstyled logic, your CSS. WCAG-audited, tree-shakeable, and documented with live editable examples. Used in production by teams I've never met, which is the best review there is.",
+    role: "Author · Maintainer",
+    status: "Public repo, active",
+    year: "2022 — Ongoing",
+    stack: ["TypeScript", "React", "Storybook", "Vitest"],
+    highlights: [
+      "WCAG 2.1 AA — audited, keyboard-first",
+      "Tree-shakeable, 12kb core bundle",
+      "Full keyboard + screen-reader test matrix",
+      "1.2k GitHub stars and counting"
+    ],
+    links: [
+      { label: "GitHub repo", href: "#", solid: true },
+      { label: "Docs site", href: "#" }
+    ]
+  }
+];
+
+/* ---- STACK: four legend groups ---- */
+const STACK = [
+  { group: "Frontend", items: ["TypeScript", "React / Next.js", "Vue 3", "Tailwind CSS", "Vite", "Web performance"] },
+  { group: "Backend",  items: ["Node.js", "Express / Fastify", "REST & GraphQL", "WebSockets", "Python", "Auth & payments"] },
+  { group: "Data",     items: ["PostgreSQL", "Redis", "Prisma / Drizzle", "MongoDB", "Elasticsearch", "Data modelling"] },
+  { group: "Infra & tools", items: ["Docker", "AWS / Vercel", "CI/CD — Actions", "Vitest / Playwright", "Grafana", "Linux / Nginx"] }
+];
+
+/* ---- EXPERIENCE: fractional years ok (2022.6 ≈ mid-2022); end omitted = current ---- */
+const EXPERIENCE = [
+  { role: "Senior Fullstack Developer", org: "Dataward — SaaS security", start: 2022.6 },
+  { role: "Fullstack Developer",        org: "Kinetic Labs — agency",    start: 2020.3, end: 2022.5 },
+  { role: "Frontend Developer",         org: "Studio Norr — design co.", start: 2018.6, end: 2020.2 },
+  { role: "Freelance Web Developer",    org: "Self-employed",            start: 2017.2, end: 2018.5 }
+];
+
+/* ============================================================
+   RENDER — projects, stack legend, experience chart
+   ============================================================ */
+
+/* ---- project sheets ---- */
+const sheetsHost = document.getElementById("workSheets");
+sheetsHost.innerHTML = PROJECTS.map((p, i) => `
+  <article class="sheet reveal" id="proj-${i}">
+    <button class="sheet-head" aria-expanded="false" aria-controls="pbody-${i}">
+      <span class="sheet-num" aria-hidden="true">P·${p.num}</span>
+      <span class="sheet-title">
+        <h3>${p.title}</h3>
+        <p class="sheet-tag">${p.tag}</p>
+      </span>
+      <span class="sheet-stamp">${p.stamp}</span>
+      <span class="sheet-chev"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="square"><path d="M5 9l7 7 7-7"/></svg></span>
+    </button>
+    <div class="sheet-body" id="pbody-${i}">
+      <div class="sheet-inner">
+        <div class="sheet-cols">
+          <div>
+            <p class="sheet-desc">${p.desc}</p>
+            <div class="spec-mini">
+              <div><span>ROLE</span><div>${p.role}</div></div>
+              <div><span>STACK</span><div>${p.stack.join(" · ")}</div></div>
+              <div><span>STATUS</span><div>${p.status}</div></div>
+              <div><span>YEAR</span><div>${p.year}</div></div>
+            </div>
+          </div>
+          <div>
+            <p class="deliv-title">Highlights</p>
+            <ul class="deliv">
+              ${p.highlights.map(h => `<li><svg viewBox="0 0 24 24" fill="none" stroke-linecap="square"><path d="M4 12.5l5 5L20 6.5"/></svg>${h}</li>`).join("")}
+            </ul>
+            <div class="case-links">
+              ${p.links.map(l => `<a class="case-btn${l.solid ? " solid" : ""}" href="${l.href}" target="_blank" rel="noopener">${l.label}
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="square"><path d="M7 17L17 7M8 7h9v9"/></svg></a>`).join("")}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>`).join("");
+
+sheetsHost.querySelectorAll(".sheet-head").forEach(head => {
+  head.addEventListener("click", () => {
+    const sheet = head.closest(".sheet");
+    const open = sheet.classList.toggle("open");
+    head.setAttribute("aria-expanded", open);
+  });
+});
+
+/* ---- stack legend ---- */
+document.getElementById("legendGrid").innerHTML = STACK.map(g => `
+  <div class="lg-cell">
+    <h3>${g.group}</h3>
+    <ul class="lg-list">${g.items.map(it => `<li>${it}</li>`).join("")}</ul>
+  </div>`).join("");
+
+/* ---- experience Gantt ---- */
+(function renderGantt() {
+  const yearsHost = document.getElementById("gYears");
+  const body = document.getElementById("gBody");
+  const min = Math.floor(Math.min(...EXPERIENCE.map(e => e.start)));
+  const maxYear = new Date().getFullYear();
+  const span = maxYear + 1 - min;                       // domain: [min, maxYear+1)
+  const pct = v => (v - min) / span * 100;
+
+  yearsHost.innerHTML = Array.from({ length: span }, (_, i) =>
+    `<span class="${i % 2 ? "gy-min" : ""}" style="left:${i * 100 / span}%">${min + i}</span>`).join("");
+
+  body.innerHTML = EXPERIENCE.map((e, i) => {
+    const left = pct(e.start);
+    const width = (e.end ? pct(e.end) : 100) - left;
+    const label = `${Math.floor(e.start)} — ${e.end ? Math.floor(e.end) : "NOW"}`;
+    return `<div class="g-row">
+      <div class="g-label"><strong>${e.role}</strong><em>${e.org}</em></div>
+      <div class="g-track">
+        <div class="g-bar${e.end ? "" : " current"}" style="left:${left}%;width:${width}%;--d:${i * 0.15}s">${label}</div>
+      </div>
+    </div>`;
+  }).join("");
+
+  /* year gridlines on every track */
+  body.querySelectorAll(".g-track").forEach(t =>
+    t.style.backgroundImage = `repeating-linear-gradient(90deg, var(--line-soft) 0 1px, transparent 1px ${100 / span}%)`);
+
+  /* TODAY marker, positioned from the real date */
+  const now = new Date();
+  const frac = (now.getFullYear() + now.getMonth() / 12 + now.getDate() / 365 - min) / span;
+  const today = document.createElement("div");
+  today.className = "g-today" + (frac > 0.86 ? " flip" : "");
+  today.style.left = `calc(var(--labelw) + ${frac * 100} * (100% - var(--labelw)) / 100)`;
+  body.appendChild(today);
+})();
+
+/* ---------- entrance reveals (after renders, so all .reveal exist) ---------- */
+const revIO = new IntersectionObserver(entries => entries.forEach(en => {
+  if (en.isIntersecting) { en.target.classList.add("in"); revIO.unobserve(en.target); }
+}), { threshold: 0.12 });
+document.querySelectorAll(".reveal").forEach(el => revIO.observe(el));
+
+/* ---------- method: draw the schematic, light the steps ---------- */
+const fig = document.getElementById("fig");
+const figPaths = fig.querySelectorAll("[data-i]");
+if (REDUCED) {
+  fig.classList.add("go");
+} else {
+  figPaths.forEach(p => {
+    const L = p.getTotalLength();
+    p.style.strokeDasharray = L;
+    p.style.strokeDashoffset = L;
+    p.style.transition = `stroke-dashoffset ${Math.min(1.5, 0.4 + L / 750)}s cubic-bezier(.4,0,.2,1) ${(+p.dataset.i) * 0.22}s`;
+  });
+  new IntersectionObserver((entries, io) => entries.forEach(en => {
+    if (!en.isIntersecting) return;
+    io.disconnect();
+    fig.classList.add("go");
+    requestAnimationFrame(() => requestAnimationFrame(() =>
+      figPaths.forEach(p => p.style.strokeDashoffset = 0)));
+    document.querySelectorAll("#steps li").forEach((li, i) =>
+      setTimeout(() => li.classList.add("active"), 250 + i * 850));
+  }), { threshold: 0.3 }).observe(fig);
+}
+if (REDUCED) document.querySelectorAll("#steps li").forEach(li => li.classList.add("active"));
+
+/* ---------- lead form: validation, optional endpoint POST, success panel ---------- */
+const form = document.getElementById("leadForm");
+const alertBox = document.getElementById("formAlert");
+const successPanel = document.getElementById("successPanel");
+form.addEventListener("submit", async e => {
+  e.preventDefault();
+  alertBox.classList.remove("show");
+  let firstBad = null;
+  form.querySelectorAll(".field.err").forEach(f => f.classList.remove("err"));
+
+  const val = n => { const el = form.elements.namedItem(n); return el ? el.value.trim() : ""; };
+  const name = val("name"), email = val("email");
+
+  function mark(id, bad) {
+    const f = form.querySelector(id).closest(".field");
+    f.classList.toggle("err", bad);
+    if (bad && !firstBad) firstBad = f;
+  }
+  mark("#f-name", name.length < 2);
+  mark("#f-email", !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email));
+  if (firstBad) { firstBad.querySelector("input").focus(); return; }
+
+  const payload = {
+    name, email,
+    type: val("type"), budget: val("budget"), message: val("message")
+  };
+
+  const btn = document.getElementById("submitBtn");
+  const btnLabel = btn.querySelector(".s-label");
+  btn.disabled = true; btn.style.opacity = ".6"; btnLabel.textContent = "Sending…";
+  try {
+    if (CONFIG.formEndpoint) {
+      const res = await fetch(CONFIG.formEndpoint, {
+        method: "POST",
+        headers: { "Accept": "application/json", "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+      if (!res.ok) throw new Error("send failed");
+    } else {
+      await new Promise(r => setTimeout(r, 700)); /* local demo: paste your endpoint for real sends */
+    }
+  } catch (err) {
+    alertBox.classList.add("show");
+    btn.disabled = false; btn.style.opacity = ""; btnLabel.textContent = "Send message";
+    return;
+  }
+
+  const first = name.split(" ")[0];
+  document.getElementById("successTitle").textContent = `Message sent, ${first}.`;
+  document.getElementById("successBody").textContent =
+    `Thanks — I'll reply to ${email} within one working day, usually sooner.`;
+  document.getElementById("successRef").textContent =
+    `REF: PRJ-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
+  form.hidden = true;
+  successPanel.classList.add("show");
+  successPanel.scrollIntoView({ behavior: REDUCED ? "auto" : "smooth", block: "center" });
+  trackEvent("lead", { type: payload.type, budget: payload.budget });
+});
+form.querySelectorAll("input").forEach(i =>
+  i.addEventListener("input", () => i.closest(".field")?.classList.remove("err")));
+
+/* ---------- hide sticky mobile bar while the form is on screen ---------- */
+const mobBar = document.getElementById("mobBar");
+new IntersectionObserver(([en]) =>
+  mobBar.classList.toggle("hide", en.isIntersecting), { threshold: 0.1 }
+).observe(document.getElementById("contact"));
+</script>
 </body>
 </html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Minifier / Compressor</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col items-center justify-center p-4">
+
+    <div class="w-full max-w-3xl bg-slate-800 rounded-xl shadow-2xl p-6 border border-slate-700">
+        <h1 class="text-2xl font-bold mb-2 text-indigo-400">CSS Single-Line Compressor</h1>
+        <p class="text-sm text-slate-400 mb-6">Transforms multi-line CSS rules into a clean, single-line format.</p>
+
+        <div class="space-y-4">
+            <div>
+                <label for="inputCss" class="block text-sm font-medium text-slate-300 mb-2">Paste CSS Here</label>
+                <textarea id="inputCss" rows="8" class="w-full p-3 bg-slate-950 border border-slate-700 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none font-mono text-sm resize-y" placeholder="position: fixed;&#10;top: 2rem;&#10;left: 50%;"></textarea>
+            </div>
+
+            <div class="flex gap-3">
+                <button id="compressBtn" class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-2.5 px-4 rounded-lg transition-colors cursor-pointer">
+                    Compress CSS
+                </button>
+                <button id="clearBtn" class="bg-slate-700 hover:bg-slate-600 text-slate-200 font-medium py-2.5 px-4 rounded-lg transition-colors cursor-pointer">
+                    Clear
+                </button>
+            </div>
+
+            <div class="relative">
+                <label for="outputCss" class="block text-sm font-medium text-slate-300 mb-2">Compressed Output</label>
+                <textarea id="outputCss" readonly rows="4" class="w-full p-3 bg-slate-950 border border-slate-700 rounded-lg font-mono text-sm text-emerald-400 cursor-not-allowed resize-none" placeholder="Compressed output will appear here..."></textarea>
+                
+                <button id="copyBtn" class="absolute bottom-3 right-3 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-600 text-xs py-1.5 px-3 rounded transition-colors opacity-0 pointer-events-none cursor-pointer">
+                    Copy
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const inputCss = document.getElementById('inputCss');
+            const outputCss = document.getElementById('outputCss');
+            const compressBtn = document.getElementById('compressBtn');
+            const clearBtn = document.getElementById('clearBtn');
+            const copyBtn = document.getElementById('copyBtn');
+
+            // Compression Logic
+            compressBtn.addEventListener('click', () => {
+                const rawInput = inputCss.value;
+                if (!rawInput.trim()) {
+                    outputCss.value = '';
+                    toggleCopyButton(false);
+                    return;
+                }
+
+                // Remove line breaks, carriage returns, and extra whitespace segments
+                let compressed = rawInput
+                    .replace(/[\r\n]+/g, ' ') 
+                    .replace(/\s+/g, ' ')     
+                    .trim();                  
+
+                outputCss.value = compressed;
+                toggleCopyButton(compressed.length > 0);
+            });
+
+            // Clear Logic
+            clearBtn.addEventListener('click', () => {
+                inputCss.value = '';
+                outputCss.value = '';
+                toggleCopyButton(false);
+            });
+
+            // Copy to Clipboard Logic
+            copyBtn.addEventListener('click', async () => {
+                if (!outputCss.value) return;
+                
+                try {
+                    await navigator.clipboard.writeText(outputCss.value);
+                    const originalText = copyBtn.innerText;
+                    copyBtn.innerText = 'Copied!';
+                    copyBtn.classList.add('border-emerald-500', 'text-emerald-400');
+                    
+                    setTimeout(() => {
+                        copyBtn.innerText = originalText;
+                        copyBtn.classList.remove('border-emerald-500', 'text-emerald-400');
+                    }, 2000);
+                } catch (err) {
+                    console.error('Failed to copy text: ', err);
+                }
+            });
+
+            // Control visibility of copy button
+            function toggleCopyButton(show) {
+                if (show) {
+                    copyBtn.classList.remove('opacity-0', 'pointer-events-none');
+                } else {
+                    copyBtn.classList.add('opacity-0', 'pointer-events-none');
+                }
+            }
+        });
+    </script>
+</body>
+</html>

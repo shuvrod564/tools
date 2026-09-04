@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HEX to RGB & RGBA Color Converter | Free Online Web Tool</title>
+    <meta name="description" content="Easily convert HEX color codes to comma-separated RGB and RGBA formats. Features a live color preview and one-click copy options for web design and development.">
+    <meta name="keywords" content="hex to rgb, hex to rgba, color converter, color code transformation, rgb comma separated, hex color tool, web design colors, css color generator">
+    <meta name="robots" content="index, follow">
+    
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="HEX to RGB & RGBA Color Converter">
+    <meta property="og:description" content="Convert HEX color codes instantly into clean RGB and RGBA strings with copy-to-clipboard functionality.">
+    
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="HEX to RGB & RGBA Color Converter">
+    <meta name="twitter:description" content="Fast and lightweight online tool to parse HEX values into standard web development RGB/RGBA color formats.">
+
+    <link rel="shortcut icon" href="https://res.cloudinary.com/disivcuqr/image/upload/v1774776732/sd-logo_nvlz4t.png" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: "Plus Jakarta Sans", sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex items-center justify-center p-4">
+
+    <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md border border-slate-200">
+        <div class="text-center mb-6">
+            <div class="bg-white shadow border border-3 border-gray-100 p-2 rounded-full inline-flex w-14 h-14 justify-center items-center">
+                <img src="https://res.cloudinary.com/disivcuqr/image/upload/v1774776732/sd-logo_nvlz4t.png" alt="Logo" class="h-7 w-auto">
+            </div>
+        </div>
+        <h1 class="text-2xl font-bold mb-6 text-center text-slate-900">HEX to RGB / RGBA</h1>
+        
+        <div class="space-y-4">
+            <div>
+                <label for="hexInput" class="block text-sm font-medium text-slate-600 mb-1">Enter HEX Color</label>
+                <input 
+                    type="text" 
+                    id="hexInput" 
+                    placeholder="#02c39a" 
+                    value="#02c39a"
+                    class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2.5 text-slate-900 focus:outline-none focus:border-indigo-500 font-mono tracking-wider"
+                >
+            </div>
+
+            <div class="flex items-center justify-center py-2">
+                <div id="colorPreview" class="w-16 h-16 rounded-full border-2 border-slate-200 shadow-inner transition-colors duration-200"></div>
+            </div>
+
+            <div class="space-y-3 pt-2">
+                <div>
+                    <label class="block text-xs font-medium text-slate-500 uppercase tracking-wider mb-1">RGB (Comma Separated)</label>
+                    <div class="flex gap-2">
+                        <input type="text" id="rgbRaw" readonly class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 text-indigo-600 font-mono readonly">
+                        <button id="copyRgb" class="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-lg text-sm font-medium transition-colors active:scale-95">Copy</button>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-medium text-slate-500 uppercase tracking-wider mb-1">RGBA Format</label>
+                    <div class="flex gap-2">
+                        <input type="text" id="rgbaFull" readonly class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 text-indigo-600 font-mono readonly">
+                        <button id="copyRgba" class="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-lg text-sm font-medium transition-colors active:scale-95">Copy</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const hexInput = document.getElementById('hexInput');
+            const rgbRaw = document.getElementById('rgbRaw');
+            const rgbaFull = document.getElementById('rgbaFull');
+            const colorPreview = document.getElementById('colorPreview');
+            const copyRgbBtn = document.getElementById('copyRgb');
+            const copyRgbaBtn = document.getElementById('copyRgba');
+
+            const convertHex = () => {
+                let hex = hexInput.value.trim();
+                
+                if (hex.startsWith('#')) {
+                    hex = hex.slice(1);
+                }
+
+                if (hex.length === 3) {
+                    hex = hex.split('').map(char => char + char).join('');
+                }
+
+                const hexRegex = /^[0-9A-Fa-f]{6}$/;
+                if (!hexRegex.test(hex)) {
+                    rgbRaw.value = "Invalid HEX";
+                    rgbaFull.value = "Invalid HEX";
+                    colorPreview.style.backgroundColor = 'transparent';
+                    return;
+                }
+
+                const r = parseInt(hex.substring(0, 2), 16);
+                const g = parseInt(hex.substring(2, 4), 16);
+                const b = parseInt(hex.substring(4, 6), 16);
+
+                const commaSeparatedRgb = `${r}, ${g}, ${b}`;
+                const fullRgba = `rgba(${r}, ${g}, ${b}, 1)`;
+
+                rgbRaw.value = commaSeparatedRgb;
+                rgbaFull.value = fullRgba;
+                colorPreview.style.backgroundColor = `#${hex}`;
+            };
+
+            // Clipboard copy functionality with temporary button feedback
+            const handleCopy = async (inputElement, buttonElement) => {
+                if (inputElement.value === "Invalid HEX" || !inputElement.value) return;
+                
+                try {
+                    await navigator.clipboard.writeText(inputElement.value);
+                    const originalText = buttonElement.innerText;
+                    buttonElement.innerText = "Copied!";
+                    buttonElement.classList.replace('bg-slate-900', 'bg-emerald-600');
+                    buttonElement.classList.replace('hover:bg-slate-800', 'hover:bg-emerald-700');
+                    
+                    setTimeout(() => {
+                        buttonElement.innerText = originalText;
+                        buttonElement.classList.replace('bg-emerald-600', 'bg-slate-900');
+                        buttonElement.classList.replace('hover:bg-emerald-700', 'hover:bg-slate-800');
+                    }, 1500);
+                } catch (err) {
+                    console.error('Failed to copy text: ', err);
+                }
+            };
+
+            hexInput.addEventListener('input', convertHex);
+            copyRgbBtn.addEventListener('click', () => handleCopy(rgbRaw, copyRgbBtn));
+            copyRgbaBtn.addEventListener('click', () => handleCopy(rgbaFull, copyRgbaBtn));
+            
+            convertHex();
+        });
+    </script>
+
+
+
+
+
+</body>
+</html>
