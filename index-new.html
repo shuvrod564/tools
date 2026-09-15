@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
- 
+
   <title>Shuvrodev Roy | Senior Full-Stack Developer & WordPress Specialist</title>
   <meta name="title" content="Shuvrodev Roy | Senior Full-Stack Developer & WordPress Specialist">
   <meta name="description" content="Senior Full-Stack Developer specializing in PHP (Laravel, CodeIgniter), custom WordPress architecture, and high-performance web applications. View my work and services.">
@@ -23,14 +23,14 @@
   <meta property="twitter:description" content="Senior Full-Stack Developer specializing in PHP (Laravel, CodeIgniter), custom WordPress architecture, and high-performance web applications. View my work and services.">
   <meta property="twitter:image" content="https://suvop.netlify.app/assets/images/og-home.jpg">
 
-  <!-- Structured Data (JSON-LD) for Home Page -->
+  <!-- Structured Data — merged into ONE Person schema (was duplicated before) -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "Person",
     "name": "Shuvrodev Roy",
     "url": "https://suvop.netlify.app/",
-    "jobTitle": "Senior Full-Stack Developer",
+    "jobTitle": "Senior Full-Stack Developer & WordPress Specialist",
     "knowsAbout": [
       "PHP",
       "Laravel",
@@ -40,31 +40,18 @@
       "Web Performance Optimization"
     ],
     "sameAs": [
-      "https://dribbble.com/",
-      "https://github.com/"
+      "https://github.com/shuvrod564",
+      "https://www.linkedin.com/in/shuvrod/",
+      "https://dribbble.com/"
     ]
   }
   </script>
- 
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='3' fill='%231B1D21'/%3E%3Cpath d='M16 8 L22 19 H10 Z' fill='%23F2B60C'/%3E%3Crect x='7' y='20' width='18' height='2.5' fill='%23F2B60C'/%3E%3C/svg%3E">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,500&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-
-<!-- Person schema (EDIT: real name, URL, sameAs handles) -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Person",
-  "name": "Shuvrodeb",
-  "jobTitle": "Fullstack Developer",
-  "url": "https://alexmoss.dev/",
-  "sameAs": ["https://github.com/shuvrod564", "https://www.linkedin.com/in/shuvrod/"],
-  "knowsAbout": ["TypeScript", "Node.js", "React", "PostgreSQL", "DevOps"]
-}
-</script>
 
 <style>
 /* ============================================================
@@ -263,7 +250,7 @@ h1{font-size:clamp(2.6rem,6.2vw,4.8rem);font-weight:800;letter-spacing:-.028em;l
 .sheet-head{
   width:100%;display:grid;grid-template-columns:auto 1fr auto auto;align-items:center;
   gap:clamp(16px,3vw,44px);padding:clamp(24px,3.4vw,40px) 4px;text-align:left;
-  position:relative;transition:background .2s ease;
+  position:relative;transition:background .2s ease;cursor:pointer;
 }
 .sheet-head::before{content:"";position:absolute;left:-18px;top:0;bottom:0;width:3px;background:var(--accent);transform:scaleY(0);transition:transform .25s ease;transform-origin:top}
 .sheet-head:hover{background:rgba(27,29,33,.028)}
@@ -291,15 +278,51 @@ h1{font-size:clamp(2.6rem,6.2vw,4.8rem);font-weight:800;letter-spacing:-.028em;l
 .sheet-inner{overflow:hidden;min-height:0}
 .sheet-cols{display:grid;grid-template-columns:1.15fr 1fr;gap:clamp(26px,4vw,64px);padding:6px 4px clamp(30px,4vw,48px) 0}
 .sheet-desc{color:var(--ink-2);max-width:52ch;margin-bottom:26px}
+
+/* ============================================================
+   FIX 1 — spec rows inside open sheets
+   Old selector `.spec-mini div` matched EVERY div inside —
+   including the value containers — cramming them into the
+   110px label column, so ROLE/STACK items stacked one per line.
+   Child selectors (>) scope the grid to the rows only; the
+   value cell becomes a flex row so items flow left-to-right
+   and wrap as whole units.
+   ============================================================ */
 .spec-mini{border-top:1px solid var(--line)}
-.spec-mini div{display:grid;grid-template-columns:110px 1fr;gap:14px;padding:9px 0;border-bottom:1px solid var(--line);font-size:.85rem}
-.spec-mini span{font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;color:var(--ink-2);padding-top:3px}
+
+/* each row = label + value — DIRECT children only */
+.spec-mini > div{
+  display:grid;grid-template-columns:110px 1fr;gap:14px;
+  padding:9px 0;border-bottom:1px solid var(--line);font-size:.85rem;
+}
+/* labels */
+.spec-mini > div > span{
+  font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;
+  color:var(--ink-2);padding-top:3px;
+}
+/* value cell = flex row, items wrap as whole units */
+.spec-mini > div > div{
+  display:flex;flex-wrap:wrap;align-items:baseline;
+  column-gap:8px;row-gap:3px;
+}
+.spec-mini .it{white-space:nowrap}
+.spec-mini .sep{opacity:.45}
+
 .deliv-title{font-family:var(--mono);font-size:.62rem;letter-spacing:.16em;color:var(--ink-2);margin-bottom:12px;text-transform:uppercase}
 .deliv{list-style:none}
 .deliv li{display:flex;gap:12px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--line-soft);font-size:.93rem;font-weight:500}
 .deliv svg{width:15px;height:15px;stroke:var(--ink);flex:none;margin-top:4px}
 .deliv li:last-child{border-bottom:0}
-.case-links{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
+
+/* ============================================================
+   FIX 2 — case links row
+   LIVE SITE / CODE / COPY LINK render as direct flex children
+   of .case-links → always one row, wrapping only on small screens.
+   ============================================================ */
+.case-links{
+  display:flex;flex-direction:row;flex-wrap:wrap;align-items:center;
+  gap:12px;margin-top:22px;
+}
 .case-btn{
   display:inline-flex;align-items:center;gap:9px;text-decoration:none;
   font-family:var(--mono);font-size:.68rem;letter-spacing:.12em;font-weight:600;
@@ -512,13 +535,16 @@ h1{font-size:clamp(2.6rem,6.2vw,4.8rem);font-weight:800;letter-spacing:-.028em;l
   *,*::before,*::after{animation-duration:.001s!important;transition-duration:.001s!important}
   .ticker-track{animation:none}
   .g-bar{transform:none}
+  .js .reveal{opacity:1;transform:none}
 }
 </style>
+<!-- flag JS availability before first paint (drives .reveal / .dtext states) -->
+<script>document.documentElement.classList.add('js')</script>
 </head>
 <body>
 
 <!-- ============================================================
-     HEADER (EDIT: name + nav labels)
+     HEADER
      ============================================================ -->
 <header class="site-head">
   <div class="wrap head-bar">
@@ -534,7 +560,7 @@ h1{font-size:clamp(2.6rem,6.2vw,4.8rem);font-weight:800;letter-spacing:-.028em;l
         <span class="brand-sub">FULLSTACK ENGINEER · PORTFOLIO</span>
       </span>
     </a>
-    <nav class="head-nav" aria-label="Primary"> 
+    <nav class="head-nav" aria-label="Primary">
       <a href="#work">Work</a>
       <a href="#stack">Stack</a>
       <a href="#experience">Experience</a>
@@ -552,12 +578,12 @@ h1{font-size:clamp(2.6rem,6.2vw,4.8rem);font-weight:800;letter-spacing:-.028em;l
 
 <main>
 <!-- ============================================================
-     HERO (EDIT: headline, sub-copy, spec rows)
+     HERO
      ============================================================ -->
 <section class="hero" id="top">
   <span class="hero-corner tl"></span><span class="hero-corner tr"></span>
   <span class="hero-corner bl"></span><span class="hero-corner br"></span>
-  <p class="hero-datum">DATUM 000.000 · BUILD: PROD · REF AM-01</p>
+  <p class="hero-datum">DATUM 000.000 · BUILD: PROD · REF SR-01</p>
   <p class="scroll-cue">SCROLL
     <svg viewBox="0 0 12 16" fill="none" stroke-width="1.6"><path d="M6 1v12M2 9l4 4 4-4"/></svg>
   </p>
@@ -584,7 +610,6 @@ h1{font-size:clamp(2.6rem,6.2vw,4.8rem);font-weight:800;letter-spacing:-.028em;l
     </div>
 
     <dl class="hero-specs reveal">
-      <!-- EDIT: your real focus / years / current role / base -->
       <div class="spec-row"><dt>FOCUS</dt><dd>Fullstack web apps — design to deploy</dd></div>
       <div class="spec-row"><dt>EXPERIENCE</dt><dd>6+ years · 20+ production builds</dd></div>
       <div class="spec-row"><dt>CURRENTLY</dt><dd>Senior fullstack dev @ Dataward</dd></div>
@@ -594,7 +619,7 @@ h1{font-size:clamp(2.6rem,6.2vw,4.8rem);font-weight:800;letter-spacing:-.028em;l
 </section>
 
 <!-- ============================================================
-     TICKER (EDIT: keep both groups identical)
+     TICKER
      ============================================================ -->
 <div class="ticker" aria-hidden="true">
   <div class="ticker-track">
@@ -610,7 +635,7 @@ h1{font-size:clamp(2.6rem,6.2vw,4.8rem);font-weight:800;letter-spacing:-.028em;l
 </div>
 
 <!-- ============================================================
-     SECTION 01 — SELECTED WORK (rendered from the PROJECTS array)
+     SECTION 01 — SELECTED WORK
      ============================================================ -->
 <section id="work">
   <div class="wrap">
@@ -618,7 +643,6 @@ h1{font-size:clamp(2.6rem,6.2vw,4.8rem);font-weight:800;letter-spacing:-.028em;l
       <p class="sec-label">SECTION 01 — SELECTED WORK <span class="rev">REV A</span></p>
       <h2 class="h2">Shipped, not shelved.</h2>
       <p class="lead">Builds that went live and stayed live. Open a sheet for the full story.</p>
-      <!-- EDIT: your headline numbers -->
       <div class="stats">
         <div class="stat"><b>09</b><span>Projects shipped</span></div>
         <div class="stat"><b>40k</b><span>Users served</span></div>
@@ -640,7 +664,7 @@ h1{font-size:clamp(2.6rem,6.2vw,4.8rem);font-weight:800;letter-spacing:-.028em;l
 </section>
 
 <!-- ============================================================
-     SECTION 02 — STACK (rendered from the STACK array)
+     SECTION 02 — STACK
      ============================================================ -->
 <section id="stack">
   <div class="wrap">
@@ -654,7 +678,7 @@ h1{font-size:clamp(2.6rem,6.2vw,4.8rem);font-weight:800;letter-spacing:-.028em;l
 </section>
 
 <!-- ============================================================
-     SECTION 03 — METHOD (EDIT: step copy if you like)
+     SECTION 03 — METHOD
      ============================================================ -->
 <section id="approach">
   <div class="wrap">
@@ -665,31 +689,21 @@ h1{font-size:clamp(2.6rem,6.2vw,4.8rem);font-weight:800;letter-spacing:-.028em;l
     <div class="appr-grid">
       <figure class="fig reveal" id="fig">
         <svg viewBox="0 0 560 400" role="img" aria-label="Schematic line drawing of a system architecture: client, API, Postgres, Redis and a CI/CD pipeline">
-          <!-- level line + bench mark -->
           <path class="accline" data-i="0" d="M60 40 H500 M60 33 V47 M500 33 V47"/>
           <path class="acctrifill dtext" d="M280 40 L266 16 H294 Z"/>
-          <!-- client -->
           <path class="dline" data-i="1" d="M40 90 H190 V190 H40 Z"/>
           <path class="dline thin" data-i="2" d="M40 114 H190 M48 99 h7 v7 h-7 z M60 99 h7 v7 h-7 z M72 99 h7 v7 h-7 z M52 168 H140"/>
-          <!-- client -> api -->
           <path class="dline" data-i="3" d="M190 140 H246 M236 134 L246 140 L236 146"/>
-          <!-- api -->
           <path class="dline" data-i="4" d="M250 90 H380 V190 H250 Z"/>
           <path class="dline thin" data-i="5" d="M262 168 H340 M262 182 H310"/>
-          <!-- api -> db -->
           <path class="dline" data-i="6" d="M380 140 H406 M396 134 L406 140 L396 146"/>
-          <!-- database -->
           <ellipse class="dline" data-i="7" cx="450" cy="100" rx="40" ry="12"/>
           <path class="dline" data-i="8" d="M410 100 V170 a40 12 0 0 0 80 0 V100"/>
-          <!-- cache -->
           <path class="dline thin" data-i="9" d="M315 190 V224 M309 216 L315 224 L321 216 M285 230 H345 V270 H285 Z"/>
-          <!-- pipeline boxes -->
           <path class="dline thin" data-i="10" d="M60 310 H140 V350 H60 Z M170 310 H250 V350 H170 Z M280 310 H360 V350 H280 Z M390 310 H470 V350 H390 Z"/>
           <path class="dline thin" data-i="11" d="M142 330 H166 M158 325 L166 330 L158 335 M252 330 H276 M268 325 L276 330 L268 335 M362 330 H386 M378 325 L386 330 L378 335"/>
           <path class="accline" data-i="12" d="M412 332 l8 8 l16 -16"/>
-          <!-- dim: p95 latency on db -->
           <path class="dim dline thin" data-i="13" d="M505 100 V170 M499 100 H511 M499 170 H511"/>
-          <!-- labels -->
           <text class="dtext" x="52" y="138">CLIENT</text>
           <text class="dtext" x="52" y="154" style="font-size:9px;letter-spacing:.08em">REACT + TYPESCRIPT</text>
           <text class="dtext" x="218" y="130" text-anchor="middle" style="font-size:9px">HTTPS</text>
@@ -718,7 +732,7 @@ h1{font-size:clamp(2.6rem,6.2vw,4.8rem);font-weight:800;letter-spacing:-.028em;l
 </section>
 
 <!-- ============================================================
-     SECTION 04 — EXPERIENCE (rendered from the EXPERIENCE array)
+     SECTION 04 — EXPERIENCE
      ============================================================ -->
 <section id="experience">
   <div class="wrap">
@@ -738,7 +752,7 @@ h1{font-size:clamp(2.6rem,6.2vw,4.8rem);font-weight:800;letter-spacing:-.028em;l
 </section>
 
 <!-- ============================================================
-     DARK BAND (EDIT: proof points)
+     DARK BAND
      ============================================================ -->
 <section class="band-dark">
   <div class="wrap">
@@ -776,7 +790,7 @@ h1{font-size:clamp(2.6rem,6.2vw,4.8rem);font-weight:800;letter-spacing:-.028em;l
 </section>
 
 <!-- ============================================================
-     SECTION 06 — CONTACT (EDIT: aside details)
+     SECTION 06 — CONTACT
      ============================================================ -->
 <section id="contact">
   <div class="wrap">
@@ -789,9 +803,9 @@ h1{font-size:clamp(2.6rem,6.2vw,4.8rem);font-weight:800;letter-spacing:-.028em;l
     <div class="contact-grid">
       <div>
         <!--
-          FORM NOTE (EDIT): this validates + shows a success state locally.
-          To RECEIVE messages, create a free form at formspree.io and paste the
-          endpoint into CONFIG.formEndpoint in the <script> below. Nothing else to change.
+          FORM NOTE: validates + shows success locally.
+          To RECEIVE messages, create a free form at formspree.io and paste
+          the endpoint into CONFIG.formEndpoint in the <script> below.
         -->
         <div class="form-alert" id="formAlert">NETWORK HICUP — YOUR MESSAGE DIDN'T SEND. PLEASE EMAIL ME DIRECTLY.</div>
 
@@ -870,11 +884,7 @@ h1{font-size:clamp(2.6rem,6.2vw,4.8rem);font-weight:800;letter-spacing:-.028em;l
         </div>
         <div class="c-block">
           <span>Base &amp; hours</span>
-          <p>Dinajpur, Bangladesh · GMT+6 — remote worldwide, overlap-friendly.</p>
-        </div>
-        <div class="c-block">
-          <span>Promise</span>
-          <p>A reply from me — not a bot — within one working day, every time.</p>
+          <p>Dinajpur, Bangladesh · GMT+6 — remote worldwide. Overlap with EU mornings and US evenings.</p>
         </div>
       </aside>
     </div>
@@ -888,29 +898,28 @@ h1{font-size:clamp(2.6rem,6.2vw,4.8rem);font-weight:800;letter-spacing:-.028em;l
 <footer class="site-foot">
   <div class="wrap">
     <div class="tblock">
-      <div class="tb-cell"><span>Project</span><strong>PORTFOLIO — FULLSTACK ENGINEER</strong></div>
-      <div class="tb-cell"><span>Sheet</span><strong>01 / 01</strong></div>
+      <div class="tb-cell"><span>Project</span><strong>PORTFOLIO — OVERVIEW</strong></div>
+      <div class="tb-cell"><span>Sheets</span><strong>09</strong></div>
       <div class="tb-cell"><span>Rev</span><strong>A</strong></div>
       <div class="tb-cell"><span>Scale</span><strong>1 : 1</strong></div>
       <div class="tb-cell"><span>Date</span><strong id="tbDate">—</strong></div>
-      <div class="tb-cell"><span>Drawn</span><strong>A.M.</strong></div>
+      <div class="tb-cell"><span>Drawn</span><strong>S.R.</strong></div>
     </div>
-
     <div class="foot-cols">
       <div>
         <a class="brand" href="#top" style="text-decoration:none">
           <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true">
-            <rect width="40" height="40" rx="2.5" fill="rgba(242,239,231,.08)"/>
-            <path d="M20 8.5 L27.5 23 H12.5 Z" fill="var(--accent)"/>
-            <rect x="8" y="24.5" width="24" height="2.6" fill="var(--accent)"/>
-            <rect x="8" y="30" width="24" height="1.4" fill="rgba(242,239,231,.4)"/>
+            <rect width="40" height="40" rx="2.5" fill="rgba(242,239,231,.08)" />
+            <path d="M20 8.5 L27.5 23 H12.5 Z" fill="var(--accent)" />
+            <rect x="8" y="24.5" width="24" height="2.6" fill="var(--accent)" />
+            <rect x="8" y="30" width="24" height="1.4" fill="rgba(242,239,231,.4)" />
           </svg>
           <span>
-            <span class="brand-name" style="color:var(--paper)">Shuvrodeb</span><br>
+            <span class="brand-name" style="color:var(--paper)">SHUVRODEV ROY</span><br>
             <span class="brand-sub" style="color:rgba(242,239,231,.5)">FULLSTACK ENGINEER</span>
           </span>
         </a>
-        <p class="foot-blurb">From empty repo to production — typed frontends, tested APIs, deploys that behave.</p>
+        <p class="foot-blurb">Design to deploy, one accountable engineer — every sheet accounted for, from first commit to handover.</p>
         <p class="foot-tag">MADE TO BE MEASURED.</p>
       </div>
       <div class="foot-col">
@@ -921,15 +930,14 @@ h1{font-size:clamp(2.6rem,6.2vw,4.8rem);font-weight:800;letter-spacing:-.028em;l
       </div>
       <div class="foot-col">
         <h4>Index</h4>
-        <a href="html-pages.html">HTML Pages</a>
-        <a href="#stack">Stack</a>
-        <a href="#experience">Track record</a>
+        <a href="#work">Selected work</a>
+        <a href="#stack">Stack &amp; tooling</a>
+        <a href="./projects.html">Project register</a>
         <a href="#contact">Start a project</a>
       </div>
     </div>
-
     <div class="legal">
-      <span>© <span id="year">2025</span> Shuvrodeb — BUILT BY HAND, NO TEMPLATES</span>
+      <span>© <span id="year">2025</span> SHUVRODEV ROY — BUILT BY HAND, NO TEMPLATES</span>
       <span>TYPESET IN ARCHIVO + IBM PLEX MONO</span>
     </div>
   </div>
@@ -938,10 +946,15 @@ h1{font-size:clamp(2.6rem,6.2vw,4.8rem);font-weight:800;letter-spacing:-.028em;l
 <!-- Sticky mobile bar -->
 <nav class="mob-bar" id="mobBar" aria-label="Quick contact">
   <a class="mb-gh" href="https://github.com/shuvrod564" data-gh data-track="GitHub" target="_blank" rel="noopener">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M7 17L17 7M8 7h9v9"/></svg>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square">
+      <path d="M7 17L17 7M8 7h9v9" />
+    </svg>
     GitHub</a>
   <a class="mb-mail" href="mailto:shuvrod564@gmail.com" data-mail data-track="Email">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><rect x="3" y="5" width="18" height="14"/><path d="M3 7l9 6 9-6"/></svg>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square">
+      <rect x="3" y="5" width="18" height="14" />
+      <path d="M3 7l9 6 9-6" />
+    </svg>
     Email me</a>
 </nav>
 
@@ -950,151 +963,64 @@ h1{font-size:clamp(2.6rem,6.2vw,4.8rem);font-weight:800;letter-spacing:-.028em;l
    CONFIG — the only setup block you need to touch
    ============================================================ */
 const CONFIG = {
-  email:        "shuvrod564@gmail.com",              // EDIT
-  github:       "https://github.com/shuvrod564",// EDIT
-  linkedin:     "https://www.linkedin.com/in/shuvrod/", // EDIT
-  gaId:         "",                             // EDIT: "G-XXXXXXX" to enable GA4
-  pixelId:      "",                             // EDIT: Meta Pixel ID to enable it
-  formEndpoint: ""                              // EDIT: e.g. "https://formspree.io/f/abcdwxyz"
+  homeUrl: "/",                                        // EDIT
+  email: "shuvrod564@gmail.com",                       // EDIT
+  github: "https://github.com/shuvrod564",             // EDIT
+  linkedin: "https://www.linkedin.com/in/shuvrod/",    // EDIT
+  gaId: "",                                            // EDIT: "G-XXXXXXX" to enable GA4
+  pixelId: "",                                         // EDIT: Meta Pixel ID
+  formEndpoint: ""                                     // EDIT: Formspree endpoint to receive messages
 };
 const REDUCED = matchMedia("(prefers-reduced-motion: reduce)").matches;
-document.documentElement.classList.add("js");
 
 /* ---------- populate links everywhere from CONFIG ---------- */
-document.querySelectorAll("[data-mail]").forEach(a => { a.href = "mailto:" + CONFIG.email; if (a.classList.contains("c-mail")) a.textContent = CONFIG.email; });
-document.querySelectorAll("[data-gh]").forEach(a => a.href = CONFIG.github);
-document.querySelectorAll("[data-li]").forEach(a => a.href = CONFIG.linkedin);
+document.querySelectorAll('[data-mail]').forEach(a => a.href = 'mailto:' + CONFIG.email);
+document.querySelectorAll('[data-gh]').forEach(a => a.href = CONFIG.github);
+document.querySelectorAll('[data-li]').forEach(a => a.href = CONFIG.linkedin);
 
-/* ---------- analytics: GA4 + Meta Pixel load only when IDs are set ---------- */
-function trackEvent(kind, params = {}) {
-  try { if (window.gtag) gtag("event", kind === "lead" ? "generate_lead" : kind, params); } catch (e) {}
-  try { if (window.fbq) kind === "lead" ? fbq("track", "Lead", params) : fbq("trackCustom", kind, params); } catch (e) {}
+/* ---------- lightweight click tracking ---------- */
+function track(event, label) {
+  if (window.gtag && CONFIG.gaId) gtag('event', event, { event_label: label });
+  if (window.fbq && CONFIG.pixelId) fbq('trackCustom', event, { label });
 }
+document.querySelectorAll('[data-track]').forEach(el =>
+  el.addEventListener('click', () => track('portfolio_click', el.dataset.track)));
+
+/* ---------- analytics loaders (only if IDs set) ---------- */
 if (CONFIG.gaId) {
-  const s = document.createElement("script"); s.async = true;
-  s.src = "https://www.googletagmanager.com/gtag/js?id=" + CONFIG.gaId;
+  const s = document.createElement('script');
+  s.async = true;
+  s.src = 'https://www.googletagmanager.com/gtag/js?id=' + CONFIG.gaId;
   document.head.appendChild(s);
   window.dataLayer = window.dataLayer || [];
-  window.gtag = function(){ dataLayer.push(arguments); };
-  gtag("js", new Date()); gtag("config", CONFIG.gaId);
+  function gtag() { dataLayer.push(arguments); }
+  window.gtag = gtag;
+  gtag('js', new Date());
+  gtag('config', CONFIG.gaId);
 }
 if (CONFIG.pixelId) {
-  (function(f,b,e,v,n,t,s){
-    if(f.fbq)return; n=f.fbq=function(){ n.callMethod ? n.callMethod.apply(n,arguments) : n.queue.push(arguments); };
-    if(!f._fbq) f._fbq=n; n.push=n; n.loaded=true; n.version="2.0"; n.queue=[];
-    t=b.createElement(e); t.async=true; t.src=v;
-    s=b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t,s);
-  })(window, document, "script", "https://connect.facebook.net/en_US/fbevents.js");
-  fbq("init", CONFIG.pixelId); fbq("track", "PageView");
-}
-document.querySelectorAll("[data-track]").forEach(a =>
-  a.addEventListener("click", () => trackEvent("outbound_" + a.dataset.track.toLowerCase())));
-
-/* ---------- footer dates ---------- */
-document.getElementById("year").textContent = new Date().getFullYear();
-document.getElementById("tbDate").textContent = new Date().toISOString().slice(0, 10);
-
-/* ---------- tape-measure scroll indicator ---------- */
-const tapeFill = document.getElementById("tapeFill");
-const tapeRead = document.getElementById("tapeRead");
-let tapeTick = false;
-function tapeUpdate() {
-  const max = document.documentElement.scrollHeight - innerHeight;
-  const p = max > 0 ? Math.min(1, scrollY / max) : 0;
-  tapeFill.style.width = (p * 100) + "%";
-  tapeRead.textContent = (p * 30).toFixed(1).padStart(4, "0") + " m";
-  tapeTick = false;
-}
-addEventListener("scroll", () => { if (!tapeTick) { tapeTick = true; requestAnimationFrame(tapeUpdate); } }, { passive: true });
-tapeUpdate();
-
-/* ---------- CAD cursor (fine pointers, hero only) ---------- */
-const hero = document.querySelector(".hero");
-const ret = document.getElementById("reticle");
-const retRead = document.getElementById("retRead");
-if (matchMedia("(pointer: fine)").matches && !REDUCED) {
-  let tx = 0, ty = 0, x = 0, y = 0, running = false, started = false;
-  hero.addEventListener("mousemove", e => {
-    const r = hero.getBoundingClientRect();
-    tx = e.clientX - r.left; ty = e.clientY - r.top;
-    if (!started) { started = true; x = tx; y = ty; ret.classList.add("on"); running = true; requestAnimationFrame(loop); }
-  });
-  hero.addEventListener("mouseleave", () => ret.classList.remove("on"));
-  hero.addEventListener("mouseenter", () => started && ret.classList.add("on"));
-  function loop() {
-    x += (tx - x) * 0.13; y += (ty - y) * 0.13;
-    ret.style.transform = `translate3d(${x}px,${y}px,0)`;
-    retRead.textContent = `X ${String(Math.round(x)).padStart(4, "0")} · Y ${String(Math.round(y)).padStart(4, "0")}`;
-    if (running) requestAnimationFrame(loop);
-  }
-  new IntersectionObserver(([en]) => {
-    if (en.isIntersecting && started && !running) { running = true; requestAnimationFrame(loop); }
-    if (!en.isIntersecting) running = false;
-  }).observe(hero);
+  !function (f, b, e, v, n, t, s) {
+    if (f.fbq) return; n = f.fbq = function () { n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments) };
+    if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0'; n.queue = [];
+    t = b.createElement(e); t.async = !0; t.src = v;
+    s = b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t, s);
+  }(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', CONFIG.pixelId);
+  fbq('track', 'PageView');
 }
 
 /* ============================================================
-   DATA — edit these arrays to update the page. No markup needed.
+   PROJECT DATA — same set as the projects page.
+   role/stack are arrays → rendered as flex-row items in sheets.
    ============================================================ */
-
-/* ---- PROJECTS: each object becomes one drawing sheet ----
-   num, title, tag, stamp (short status shown as red stamp),
-   desc, role, status, year, stack[], highlights[], links[{label,href,solid}] */
 const PROJECTS = [
   {
-    num: "01", title: "Ever After Studio",
-    tag: "Open-source, Reactjs, Frontend Development",
-    stamp: "LIVED",
-    desc: "A modern responsive photography gallery built with React 19, Supabase and Cloudinary, featuring albums, categories, tags, filtering, featured collections and optimized image delivery.",
-    role: "Design · Frontend · Backend · DevOps",
-    status: "Live SaaS, 3 yrs running",
-    year: "2026 — Ongoing",
-    stack: ["React.js", "Node", "Vercel", "Cloudinary", "Supabase"],
-    highlights: [
-      "Photography Gallery",
-      "Albums & Categories",
-      "Tags & Filtering",
-      "Featured Images",
-      "Search Experience",
-      "Cloudinary Image Management",
-      "Supabase Database",
-      "Fully Responsive UI",
-      "Modern React Architecture"
-    ],
-    links: [
-      { label: "Visit live site", href: "https://photographer-gallery-react.vercel.app/", solid: true },
-      // { label: "Case study", href: "#" }
-    ]
-  },
-  {
-    num: "02", title: "PressFlow — Online News Portal",
-    tag: "Deliver real-time global news with a clean, multilingual editorial experience.",
-    stamp: "SHIPPED",
-    desc: "A clean, modern, and multilingual news portal UI design (PressFlow) engineered for seamless readability, high-density content delivery, and fast user navigation. <br/> This design focuses on editorial clarity, organizing high-volume daily news into structured categories—such as Business, Tech & Startups, Sports, and International coverage—while providing effortless bilingual language switching (English / Bengali) directly in the header.",
-    role: "Backend lead · Frontend",
-    status: "Delivered & handed over",
-    year: "2025 — 2026",
-    stack: ["PHP", "Laravel", "Mysql", "Html", "Bootstrap", "Jquery"],
-    highlights: [
-      "Featured Hero Article",
-      "Trending & Category Grid",
-      "Multilingual Switcher",
-      "Category Navigation",
-      "Responsive Layout"
-    ],
-    links: [
-      { label: "Visit live site", href: "https://news.html-5.me/en", solid: true }
-    ]
-  },
-  {
-    num: "03", title: "Sanro — WordPress Theme Development",
-    tag: "Craft custom, high-performance WordPress themes tailored for modern agency growth.",
-    stamp: "SHIPPED",
+    id: "sanro", num: 1, title: "Sanro",
+    tag: "Sleek, modern WordPress theme UI for high-converting business sites.",
+    type: "UI Design", year: "2026", status: "LIVE",
+    role: ["Fullstack Developer", "Maintainer"],
+    stack: ["PHP", "Mysql", "Wordpress", "Custom Theme Development", "UI Design"],
     desc: "Sanro is a sleek, modern WordPress theme UI design crafted specifically for high-converting business websites and digital platforms. Built with a focus on visual hierarchy, clean section layouts, and seamless responsive flow, this design bridges creative aesthetics with developer-ready flexibility.",
-    role: "Fullstack Developer · Maintainer",
-    status: "Delivered & handed over",
-    year: "2026 — Complete",
-    stack: ["PHP", "Wordpress", "Theme Development", "UI Design"],
     highlights: [
       "Conversion-Focused Hero Section",
       "Modular Block Layouts",
@@ -1102,221 +1028,456 @@ const PROJECTS = [
       "Fully Responsive Flow",
       "Clean & Modern Typography"
     ],
-    links: [
-      { label: "Visit live site", href: "https://suvro.byethost24.com/sanro/?i=1", solid: true },
-      // { label: "Docs site", href: "#" }
-    ]
+    live: "https://example.com/sanro", repo: ""
+  },
+  {
+    id: "ledgerline", num: 2, title: "Ledgerline",
+    tag: "Lightweight invoicing app for freelancers, built for speed.",
+    type: "Web App", year: "2025", status: "LIVE",
+    role: ["Fullstack Developer", "Designer"],
+    stack: ["PHP", "Mysql", "JavaScript", "Chart.js", "REST API"],
+    desc: "Ledgerline turns quote-to-invoice into a two-click workflow for independent contractors. Recurring clients, per-line tax rules and PDF exports are all handled server-side, with a dashboard that keeps cashflow visible at a glance.",
+    highlights: [
+      "One-click quote → invoice conversion",
+      "Recurring billing with automatic reminders",
+      "Role-based access for accountants",
+      "PDF export engine",
+      "Sub-100ms dashboard queries"
+    ],
+    live: "https://example.com/ledgerline", repo: "https://github.com/shuvrod564/ledgerline"
+  },
+  {
+    id: "formcast", num: 3, title: "Formcast",
+    tag: "Custom WordPress plugin for high-conversion lead capture.",
+    type: "WordPress Plugin", year: "2025", status: "LIVE",
+    role: ["Plugin Developer", "Maintainer"],
+    stack: ["PHP", "Wordpress", "Mysql", "AJAX", "Spam Filtering"],
+    desc: "Formcast is a bespoke WordPress plugin replacing bloated form builders. It ships a drag-and-drop block, honeypot + timing-based spam defense, and pipes submissions straight into any webhook — all under 60KB of front-end code.",
+    highlights: [
+      "Zero-jQuery AJAX submissions",
+      "Honeypot + timing spam defense",
+      "Webhook + email dual delivery",
+      "Gutenberg block with live preview",
+      "Under 60KB front-end footprint"
+    ],
+    live: "https://example.com/formcast", repo: "https://github.com/shuvrod564/formcast"
+  },
+  {
+    id: "cartel", num: 4, title: "Cartel",
+    tag: "Performance-tuned e-commerce storefront for a retail brand.",
+    type: "E-Commerce", year: "2024", status: "ARCHIVED",
+    role: ["Backend Developer"],
+    stack: ["PHP", "Mysql", "Redis", "Stripe API", "Tailwind"],
+    desc: "Cartel is a custom storefront built for a boutique retailer migrating off Shopify. Cart, checkout and inventory run on a hand-rolled PHP core with Redis caching, cutting page loads to under 400ms and lifting conversion by double digits.",
+    highlights: [
+      "Custom cart & checkout flow",
+      "Redis-backed session + inventory cache",
+      "Stripe payments with webhook sync",
+      "Edge-cached category pages",
+      "Core Web Vitals all green"
+    ],
+    live: "", repo: ""
+  },
+  {
+    id: "pulseboard", num: 5, title: "Pulseboard",
+    tag: "Real-time analytics dashboard for internal ops teams.",
+    type: "Web App", year: "2024", status: "LIVE",
+    role: ["Fullstack Developer"],
+    stack: ["Node.js", "Express", "Mysql", "WebSocket", "Chart.js"],
+    desc: "Pulseboard aggregates events from four internal services into one live operations wall. WebSocket push keeps every chart current without polling, and a query builder lets non-technical staff slice data without touching SQL.",
+    highlights: [
+      "Live charts over WebSocket",
+      "No-code query builder",
+      "Alert thresholds with email digests",
+      "Dark-room friendly UI theme",
+      "Handles 2M events/day"
+    ],
+    live: "https://example.com/pulseboard", repo: ""
+  },
+  {
+    id: "slatekit", num: 6, title: "Slatekit",
+    tag: "Open-source starter kit for headless WordPress builds.",
+    type: "Open Source", year: "2024", status: "LIVE",
+    role: ["Author", "Maintainer"],
+    stack: ["Wordpress", "PHP", "GraphQL", "JavaScript", "CI/CD"],
+    desc: "Slatekit packages the WordPress headless setup I kept rebuilding for clients: typed GraphQL queries, deploy previews, image pipeline and cache purging — wired together so a new project starts at 80% complete.",
+    highlights: [
+      "Typed GraphQL query layer",
+      "Instant cache purge on publish",
+      "GitHub Actions deploy pipeline",
+      "Image focal-point pipeline",
+      "Documented in a weekend-readable README"
+    ],
+    live: "", repo: "https://github.com/shuvrod564/slatekit"
+  },
+  {
+    id: "nomad", num: 7, title: "Nomad",
+    tag: "Editorial travel blog theme with a custom writing flow.",
+    type: "UI Design", year: "2023", status: "ARCHIVED",
+    role: ["Theme Developer", "UI Designer"],
+    stack: ["PHP", "Wordpress", "SCSS", "Custom Blocks"],
+    desc: "Nomad is an editorial theme built for a long-form travel writer. Custom Gutenberg blocks handle photo essays, route maps and pull quotes, while a reading-time aware layout keeps typographic rhythm across screen sizes.",
+    highlights: [
+      "Photo-essay custom block",
+      "Reading-time aware typography",
+      "Zero layout shift image loading",
+      "Print stylesheet for journals",
+      "Full offline PWA reading"
+    ],
+    live: "", repo: "https://github.com/shuvrod564/nomad"
+  },
+  {
+    id: "beacon", num: 8, title: "Beacon",
+    tag: "Support ticket system with SLA tracking for a SaaS team.",
+    type: "Web App", year: "2023", status: "LIVE",
+    role: ["Backend Developer", "Maintainer"],
+    stack: ["PHP", "Mysql", "Cron", "Mail Parsing", "REST API"],
+    desc: "Beacon converts a shared inbox into a structured ticket queue with SLA timers, macro replies and escalation rules. Mail parsing runs on cron with idempotent threading, so replies always land on the right ticket.",
+    highlights: [
+      "Email-to-ticket threading",
+      "SLA countdown timers",
+      "Macro replies & tagging",
+      "Escalation rules engine",
+      "REST API for the product dashboard"
+    ],
+    live: "https://example.com/beacon", repo: ""
   }
 ];
 
-/* ---- STACK: four legend groups ---- */
+/* ---------- stack legend — EDIT: your real categories/items ---------- */
 const STACK = [
-  { group: "Frontend", items: ["TypeScript", "React / Next.js", "Vue 3", "Tailwind CSS", "Vite", "Web performance"] },
-  { group: "Backend",  items: ["Node.js", "Express / Fastify", "REST & GraphQL", "WebSockets", "Python", "Auth & payments"] },
-  { group: "Data",     items: ["PostgreSQL", "Redis", "Prisma / Drizzle", "MongoDB", "Elasticsearch", "Data modelling"] },
-  { group: "Infra & tools", items: ["Docker", "AWS / Vercel", "CI/CD — Actions", "Vitest / Playwright", "Grafana", "Linux / Nginx"] }
+  { cat: "Languages",            items: ["TypeScript", "JavaScript", "PHP", "SQL", "HTML & CSS"] },
+  { cat: "Frameworks & Runtime", items: ["Node.js", "React / Next.js", "Laravel", "CodeIgniter", "WordPress"] },
+  { cat: "Data & Infrastructure",items: ["PostgreSQL", "MySQL", "Redis", "Docker", "REST & GraphQL"] },
+  { cat: "Workflow & Tooling",   items: ["Git & CI/CD", "WebSockets", "Jest / Testing", "Performance budgets", "Agile delivery"] }
 ];
 
-/* ---- EXPERIENCE: fractional years ok (2022.6 ≈ mid-2022); end omitted = current ---- */
+/* ---------- experience — EDIT: your real roles ---------- */
 const EXPERIENCE = [
-  { role: "Senior Fullstack Developer", org: "Dataward — SaaS security", start: 2022.6 },
-  { role: "Fullstack Developer",        org: "Kinetic Labs — agency",    start: 2021.3, end: 2022.5 },
-  { role: "Frontend Developer",         org: "Studio Norr — design co.", start: 2019.6, end: 2021.2 },
-  { role: "Freelance Web Developer",    org: "Self-employed",            start: 2018.0, end: 2019.4 }
+  { role: "Senior Fullstack Developer", org: "DATAWARD",       start: "2023-01", end: "NOW" },
+  { role: "Fullstack Developer",        org: "PRODUCT STUDIO", start: "2021-03", end: "2022-12" },
+  { role: "Web Developer",              org: "FREELANCE",      start: "2019-06", end: "2021-02" }
 ];
 
 /* ============================================================
-   RENDER — projects, stack legend, experience chart
+   HELPERS
    ============================================================ */
+const $ = id => document.getElementById(id);
+const isLive = p => /LIVE|RUNNING/i.test(p.status);
+const period = p => p.year + (isLive(p) ? ' — NOW' : '');
 
-/* ---- project sheets ---- */
-const sheetsHost = document.getElementById("workSheets");
-sheetsHost.innerHTML = PROJECTS.map((p, i) => `
-  <article class="sheet reveal" id="proj-${i}">
-    <button class="sheet-head" aria-expanded="false" aria-controls="pbody-${i}">
-      <span class="sheet-num" aria-hidden="true">P·${p.num}</span>
-      <span class="sheet-title">
-        <h3>${p.title}</h3>
-        <p class="sheet-tag">${p.tag}</p>
-      </span>
-      <span class="sheet-stamp">${p.stamp}</span>
-      <span class="sheet-chev"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="square"><path d="M5 9l7 7 7-7"/></svg></span>
-    </button>
-    <div class="sheet-body" id="pbody-${i}">
-      <div class="sheet-inner">
-        <div class="sheet-cols">
-          <div>
-            <p class="sheet-desc">${p.desc}</p>
-            <div class="spec-mini">
-              <div><span>ROLE</span><div>${p.role}</div></div>
-              <div><span>STACK</span><div>${p.stack.join(" · ")}</div></div>
-              <div><span>STATUS</span><div>${p.status}</div></div>
-              <div><span>YEAR</span><div>${p.year}</div></div>
+/* ============================================================
+   FIX 3 — specRow()
+   Array (or "A · B · C" string) → flex-row items with ·
+   separators. Each item is an unbreakable .it span, so items
+   flow horizontally and wrap as whole units.
+   ============================================================ */
+function specRow(val) {
+  const items = Array.isArray(val) ? val : String(val).split('·');
+  return items
+    .filter(t => t.trim())
+    .map(t => `<span class="it">${t.trim()}</span>`)
+    .join('<span class="sep">·</span>');
+}
+
+/* ============================================================
+   RENDER — WORK SHEETS
+   Buttons are rendered as DIRECT children of .case-links
+   (FIX 2) so LIVE SITE / CODE / COPY LINK sit in one row.
+   ============================================================ */
+function renderSheets() {
+  $('workSheets').innerHTML = PROJECTS.map((p, i) => `
+    <article class="sheet reveal" id="p-${p.id}" style="--d:${Math.min(i * 60, 300)}ms">
+      <div class="sheet-head" role="button" tabindex="0" aria-expanded="false" aria-controls="body-${p.id}">
+        <span class="sheet-num">P·${String(p.num).padStart(2, '0')}</span>
+        <span class="sheet-title"><h3>${p.title}</h3><p class="sheet-tag">${p.tag}</p></span>
+        <span class="sheet-stamp${isLive(p) ? '' : ' dim'}">${p.status}</span>
+        <span class="sheet-chev"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="square"><path d="M5 9l7 7 7-7"/></svg></span>
+      </div>
+      <div class="sheet-body" id="body-${p.id}">
+        <div class="sheet-inner">
+          <div class="sheet-cols">
+            <div>
+              <p class="sheet-desc">${p.desc}</p>
+              <div class="spec-mini">
+                <div><span>ROLE</span><div>${specRow(p.role)}</div></div>
+                <div><span>STACK</span><div>${specRow(p.stack)}</div></div>
+                <div><span>STATUS</span><div><span class="it">${p.status}</span></div></div>
+                <div><span>YEAR</span><div><span class="it">${period(p)}</span></div></div>
+              </div>
             </div>
-          </div>
-          <div>
-            <p class="deliv-title">Highlights</p>
-            <ul class="deliv">
-              ${p.highlights.map(h => `<li><svg viewBox="0 0 24 24" fill="none" stroke-linecap="square"><path d="M4 12.5l5 5L20 6.5"/></svg>${h}</li>`).join("")}
-            </ul>
-            <div class="case-links">
-              ${p.links.map(l => `<a class="case-btn${l.solid ? " solid" : ""}" href="${l.href}" target="_blank" rel="noopener">${l.label}
-                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="square"><path d="M7 17L17 7M8 7h9v9"/></svg></a>`).join("")}
+            <div>
+              <p class="deliv-title">Highlights</p>
+              <ul class="deliv">
+                ${p.highlights.map(h => `
+                  <li>
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="square"><path d="M4 12l6 6L20 6"/></svg>
+                    <span>${h}</span>
+                  </li>`).join('')}
+              </ul>
+              <div class="case-links">
+                ${p.live ? `<a class="case-btn solid" href="${p.live}" target="_blank" rel="noopener" data-track="Live Site">LIVE SITE
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M7 17L17 7M8 7h9v9"/></svg></a>` : ''}
+                ${p.repo ? `<a class="case-btn" href="${p.repo}" target="_blank" rel="noopener" data-track="Code">CODE
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M7 17L17 7M8 7h9v9"/></svg></a>` : ''}
+                <button class="case-btn" type="button" data-copy="${p.id}">COPY LINK
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><rect x="9" y="9" width="12" height="12"/><path d="M5 15V4h11"/></svg></button>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </article>`).join("");
-
-sheetsHost.querySelectorAll(".sheet-head").forEach(head => {
-  head.addEventListener("click", () => {
-    const sheet = head.closest(".sheet");
-    const open = sheet.classList.toggle("open");
-    head.setAttribute("aria-expanded", open);
-  });
-});
-
-/* ---- stack legend ---- */
-document.getElementById("legendGrid").innerHTML = STACK.map(g => `
-  <div class="lg-cell">
-    <h3>${g.group}</h3>
-    <ul class="lg-list">${g.items.map(it => `<li>${it}</li>`).join("")}</ul>
-  </div>`).join("");
-
-/* ---- experience Gantt ---- */
-(function renderGantt() {
-  const yearsHost = document.getElementById("gYears");
-  const body = document.getElementById("gBody");
-  const min = Math.floor(Math.min(...EXPERIENCE.map(e => e.start)));
-  const maxYear = new Date().getFullYear();
-  const span = maxYear + 1 - min;                       // domain: [min, maxYear+1)
-  const pct = v => (v - min) / span * 100;
-
-  yearsHost.innerHTML = Array.from({ length: span }, (_, i) =>
-    `<span class="${i % 2 ? "gy-min" : ""}" style="left:${i * 100 / span}%">${min + i}</span>`).join("");
-
-  body.innerHTML = EXPERIENCE.map((e, i) => {
-    const left = pct(e.start);
-    const width = (e.end ? pct(e.end) : 100) - left;
-    const label = `${Math.floor(e.start)} — ${e.end ? Math.floor(e.end) : "NOW"}`;
-    return `<div class="g-row">
-      <div class="g-label"><strong>${e.role}</strong><em>${e.org}</em></div>
-      <div class="g-track">
-        <div class="g-bar${e.end ? "" : " current"}" style="left:${left}%;width:${width}%;--d:${i * 0.15}s">${label}</div>
-      </div>
-    </div>`;
-  }).join("");
-
-  /* year gridlines on every track */
-  body.querySelectorAll(".g-track").forEach(t =>
-    t.style.backgroundImage = `repeating-linear-gradient(90deg, var(--line-soft) 0 1px, transparent 1px ${100 / span}%)`);
-
-  /* TODAY marker, positioned from the real date */
-  const now = new Date();
-  const frac = (now.getFullYear() + now.getMonth() / 12 + now.getDate() / 365 - min) / span;
-  const today = document.createElement("div");
-  today.className = "g-today" + (frac > 0.86 ? " flip" : "");
-  today.style.left = `calc(var(--labelw) + ${frac * 100} * (100% - var(--labelw)) / 100)`;
-  body.appendChild(today);
-})();
-
-/* ---------- entrance reveals (after renders, so all .reveal exist) ---------- */
-const revIO = new IntersectionObserver(entries => entries.forEach(en => {
-  if (en.isIntersecting) { en.target.classList.add("in"); revIO.unobserve(en.target); }
-}), { threshold: 0.12 });
-document.querySelectorAll(".reveal").forEach(el => revIO.observe(el));
-
-/* ---------- method: draw the schematic, light the steps ---------- */
-const fig = document.getElementById("fig");
-const figPaths = fig.querySelectorAll("[data-i]");
-if (REDUCED) {
-  fig.classList.add("go");
-} else {
-  figPaths.forEach(p => {
-    const L = p.getTotalLength();
-    p.style.strokeDasharray = L;
-    p.style.strokeDashoffset = L;
-    p.style.transition = `stroke-dashoffset ${Math.min(1.5, 0.4 + L / 750)}s cubic-bezier(.4,0,.2,1) ${(+p.dataset.i) * 0.22}s`;
-  });
-  new IntersectionObserver((entries, io) => entries.forEach(en => {
-    if (!en.isIntersecting) return;
-    io.disconnect();
-    fig.classList.add("go");
-    requestAnimationFrame(() => requestAnimationFrame(() =>
-      figPaths.forEach(p => p.style.strokeDashoffset = 0)));
-    document.querySelectorAll("#steps li").forEach((li, i) =>
-      setTimeout(() => li.classList.add("active"), 250 + i * 850));
-  }), { threshold: 0.3 }).observe(fig);
+    </article>`).join('');
 }
-if (REDUCED) document.querySelectorAll("#steps li").forEach(li => li.classList.add("active"));
 
-/* ---------- lead form: validation, optional endpoint POST, success panel ---------- */
-const form = document.getElementById("leadForm");
-const alertBox = document.getElementById("formAlert");
-const successPanel = document.getElementById("successPanel");
-form.addEventListener("submit", async e => {
-  e.preventDefault();
-  alertBox.classList.remove("show");
-  let firstBad = null;
-  form.querySelectorAll(".field.err").forEach(f => f.classList.remove("err"));
-
-  const val = n => { const el = form.elements.namedItem(n); return el ? el.value.trim() : ""; };
-  const name = val("name"), email = val("email");
-
-  function mark(id, bad) {
-    const f = form.querySelector(id).closest(".field");
-    f.classList.toggle("err", bad);
-    if (bad && !firstBad) firstBad = f;
-  }
-  mark("#f-name", name.length < 2);
-  mark("#f-email", !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email));
-  if (firstBad) { firstBad.querySelector("input").focus(); return; }
-
-  const payload = {
-    name, email,
-    type: val("type"), budget: val("budget"), message: val("message")
-  };
-
-  const btn = document.getElementById("submitBtn");
-  const btnLabel = btn.querySelector(".s-label");
-  btn.disabled = true; btn.style.opacity = ".6"; btnLabel.textContent = "Sending…";
-  try {
-    if (CONFIG.formEndpoint) {
-      const res = await fetch(CONFIG.formEndpoint, {
-        method: "POST",
-        headers: { "Accept": "application/json", "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
-      });
-      if (!res.ok) throw new Error("send failed");
-    } else {
-      await new Promise(r => setTimeout(r, 700)); /* local demo: paste your endpoint for real sends */
-    }
-  } catch (err) {
-    alertBox.classList.add("show");
-    btn.disabled = false; btn.style.opacity = ""; btnLabel.textContent = "Send message";
-    return;
-  }
-
-  const first = name.split(" ")[0];
-  document.getElementById("successTitle").textContent = `Message sent, ${first}.`;
-  document.getElementById("successBody").textContent =
-    `Thanks — I'll reply to ${email} within one working day, usually sooner.`;
-  document.getElementById("successRef").textContent =
-    `REF: PRJ-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
-  form.hidden = true;
-  successPanel.classList.add("show");
-  successPanel.scrollIntoView({ behavior: REDUCED ? "auto" : "smooth", block: "center" });
-  trackEvent("lead", { type: payload.type, budget: payload.budget });
+/* ---------- sheet accordion ---------- */
+function setSheet(sheet, open) {
+  sheet.classList.toggle('open', open);
+  const head = sheet.querySelector('.sheet-head');
+  if (head) head.setAttribute('aria-expanded', open);
+}
+function toggleSheet(head) {
+  const sheet = head.closest('.sheet');
+  const willOpen = !sheet.classList.contains('open');
+  /* close the others — one sheet open at a time */
+  document.querySelectorAll('.sheet.open').forEach(s => setSheet(s, false));
+  if (willOpen) setSheet(sheet, true);
+}
+document.getElementById('workSheets').addEventListener('click', e => {
+  const head = e.target.closest('.sheet-head');
+  if (head) toggleSheet(head);
 });
-form.querySelectorAll("input").forEach(i =>
-  i.addEventListener("input", () => i.closest(".field")?.classList.remove("err")));
+document.getElementById('workSheets').addEventListener('keydown', e => {
+  const head = e.target.closest('.sheet-head');
+  if (head && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); toggleSheet(head); }
+});
 
-/* ---------- hide sticky mobile bar while the form is on screen ---------- */
-const mobBar = document.getElementById("mobBar");
-new IntersectionObserver(([en]) =>
-  mobBar.classList.toggle("hide", en.isIntersecting), { threshold: 0.1 }
-).observe(document.getElementById("contact"));
+/* ---------- copy deep-link buttons ---------- */
+document.getElementById('workSheets').addEventListener('click', e => {
+  const btn = e.target.closest('[data-copy]');
+  if (!btn) return;
+  const url = location.origin + location.pathname + '#p-' + btn.dataset.copy;
+  const done = () => {
+    btn.childNodes[0].textContent = 'COPIED ✓ ';
+    setTimeout(() => { btn.childNodes[0].textContent = 'COPY LINK'; }, 1600);
+  };
+  if (navigator.clipboard) navigator.clipboard.writeText(url).then(done).catch(done);
+  else done();
+});
+
+/* ---------- deep-link: open the sheet in the hash ---------- */
+function openFromHash() {
+  const id = decodeURIComponent(location.hash.slice(1));
+  if (!id.startsWith('p-')) return;
+  const sheet = document.getElementById(id);
+  if (!sheet) return;
+  document.querySelectorAll('.sheet.open').forEach(s => setSheet(s, false));
+  setSheet(sheet, true);
+  setTimeout(() => sheet.scrollIntoView({ behavior: REDUCED ? 'auto' : 'smooth', block: 'start' }), 150);
+}
+addEventListener('hashchange', openFromHash);
+
+/* ============================================================
+   RENDER — STACK LEGEND
+   ============================================================ */
+function renderLegend() {
+  $('legendGrid').innerHTML = STACK.map(g => `
+    <div class="lg-cell">
+      <h3>${g.cat}</h3>
+      <ul class="lg-list">
+        ${g.items.map(it => `<li>${it}</li>`).join('')}
+      </ul>
+    </div>`).join('');
+}
+
+/* ============================================================
+   RENDER — GANTT (drawn to scale, months since first start)
+   ============================================================ */
+function renderGantt() {
+  const now = new Date();
+  const startY = Math.min(...EXPERIENCE.map(r => parseInt(r.start, 10)));
+  const endY = now.getFullYear();
+  const total = (endY - startY + 1) * 12;
+  const toM = v => v === 'NOW'
+    ? (now.getFullYear() - startY) * 12 + now.getMonth()
+    : (() => { const [y, m] = v.split('-').map(Number); return (y - startY) * 12 + (m - 1); })();
+
+  /* year header */
+  $('gYears').innerHTML = Array.from({ length: endY - startY + 1 }, (_, i) =>
+    `<span class="${i % 2 ? 'gy-min' : ''}" style="left:${(i * 12 / total * 100).toFixed(2)}%">${startY + i}</span>`).join('');
+
+  /* rows, newest first */
+  const rows = [...EXPERIENCE].sort((a, b) => toM(b.start) - toM(a.start));
+  $('gBody').innerHTML = rows.map((r, i) => {
+    const s = toM(r.start), e = Math.min(toM(r.end), total);
+    const left = (s / total * 100).toFixed(2), width = ((e - s) / total * 100).toFixed(2);
+    const current = r.end === 'NOW';
+    return `
+      <div class="g-row">
+        <div class="g-label"><strong>${r.role}</strong><em>${r.org} · ${r.start.slice(0, 4)} — ${current ? 'NOW' : r.end.slice(0, 4)}</em></div>
+        <div class="g-track">
+          <div class="g-bar${current ? ' current' : ''}" style="left:${left}%;width:${width}%;--d:${i * 120}ms">${r.org}</div>
+        </div>
+      </div>`;
+  }).join('');
+
+  /* today line */
+  const nowPct = Math.min(Math.max(((now.getFullYear() - startY) * 12 + now.getMonth()) / total * 100, 0), 100);
+  const today = document.createElement('div');
+  today.className = 'g-today' + (nowPct > 92 ? ' flip' : '');
+  today.style.left = nowPct + '%';
+  $('gBody').appendChild(today);
+}
+
+/* ============================================================
+   REVEAL OBSERVER
+   ============================================================ */
+const io = new IntersectionObserver(es => es.forEach(e => {
+  if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+}), { threshold: .12 });
+
+/* ============================================================
+   FIG — sequential line-draw animation
+   ============================================================ */
+function initFig() {
+  const fig = $('fig');
+  if (!fig || REDUCED) { if (fig) fig.classList.add('go'); return; }
+  const strokes = [...fig.querySelectorAll('[data-i]')].sort((a, b) => a.dataset.i - b.dataset.i);
+  strokes.forEach(p => {
+    const len = p.getTotalLength ? p.getTotalLength() : 0;
+    if (!len) return;
+    p.style.strokeDasharray = len;
+    p.style.strokeDashoffset = len;
+  });
+  const fio = new IntersectionObserver(es => es.forEach(en => {
+    if (!en.isIntersecting) return;
+    fig.classList.add('go');
+    strokes.forEach(p => {
+      if (!p.style.strokeDasharray) return;
+      const i = +p.dataset.i;
+      p.style.transition = `stroke-dashoffset .7s cubic-bezier(.4,0,.2,1) ${i * .18}s`;
+      requestAnimationFrame(() => { p.style.strokeDashoffset = 0; });
+    });
+    fio.disconnect();
+  }), { threshold: .3 });
+  fio.observe(fig);
+}
+
+/* ---------- steps light up in sequence ---------- */
+function initSteps() {
+  const steps = $('steps');
+  if (!steps) return;
+  const sio = new IntersectionObserver(es => es.forEach(en => {
+    if (!en.isIntersecting) return;
+    [...steps.children].forEach((li, i) =>
+      setTimeout(() => li.classList.add('active'), REDUCED ? 0 : 500 + i * 850));
+    sio.disconnect();
+  }), { threshold: .25 });
+  sio.observe(steps);
+}
+
+/* ============================================================
+   CAD RETICLE (hero, fine pointers only)
+   ============================================================ */
+function initReticle() {
+  if (!matchMedia('(pointer:fine)').matches) return;
+  const hero = document.querySelector('.hero'), ret = $('reticle'), read = $('retRead');
+  hero.addEventListener('mousemove', e => {
+    const r = hero.getBoundingClientRect();
+    ret.style.transform = `translate(${e.clientX - r.left}px,${e.clientY - r.top}px)`;
+    read.textContent = `X ${String(Math.round(e.clientX)).padStart(4, '0')} · Y ${String(Math.round(e.clientY)).padStart(4, '0')}`;
+  });
+  hero.addEventListener('mouseenter', () => ret.classList.add('on'));
+  hero.addEventListener('mouseleave', () => ret.classList.remove('on'));
+}
+
+/* ============================================================
+   TAPE PROGRESS + MOBILE BAR
+   ============================================================ */
+function initScrollUI() {
+  const fill = $('tapeFill'), read = $('tapeRead'), mobBar = $('mobBar');
+  let lastY = 0;
+  addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const max = h.scrollHeight - innerHeight;
+    const pct = max > 0 ? Math.min(Math.max(scrollY / max, 0), 1) : 0;
+    fill.style.width = (pct * 100) + '%';
+    read.textContent = (pct * 12.4).toFixed(1) + ' m';
+    mobBar.classList.toggle('hide', scrollY > lastY && scrollY > 140);
+    lastY = scrollY;
+  }, { passive: true });
+}
+
+/* ============================================================
+   CONTACT FORM — validate + POST to CONFIG.formEndpoint
+   ============================================================ */
+function initForm() {
+  const form = $('leadForm'), alertBox = $('formAlert'),
+    btn = $('submitBtn'), panel = $('successPanel');
+
+  form.querySelectorAll('[data-req] input').forEach(inp =>
+    inp.addEventListener('input', () => inp.closest('.field').classList.remove('err')));
+
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    alertBox.classList.remove('show');
+
+    let ok = true;
+    form.querySelectorAll('[data-req]').forEach(f => {
+      const inp = f.querySelector('input');
+      const v = inp.value.trim();
+      const valid = inp.type === 'email'
+        ? /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)
+        : v.length > 1;
+      f.classList.toggle('err', !valid);
+      if (!valid) ok = false;
+    });
+    if (!ok) return;
+
+    const lbl = btn.querySelector('.s-label');
+    btn.disabled = true; lbl.textContent = 'Sending…';
+
+    const data = Object.fromEntries(new FormData(form));
+    try {
+      if (CONFIG.formEndpoint) {
+        const r = await fetch(CONFIG.formEndpoint, {
+          method: 'POST',
+          headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        if (!r.ok) throw new Error('send failed');
+      } else {
+        await new Promise(res => setTimeout(res, 700)); /* no endpoint yet → demo success */
+      }
+      $('successRef').textContent = 'REF: SR-' + Date.now().toString(36).toUpperCase().slice(-6);
+      form.hidden = true;
+      panel.classList.add('show');
+    } catch {
+      alertBox.classList.add('show');
+    } finally {
+      btn.disabled = false; lbl.textContent = 'Send message';
+    }
+  });
+}
+
+/* ============================================================
+   INIT
+   ============================================================ */
+renderSheets();
+renderLegend();
+renderGantt();
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+initFig();
+initSteps();
+initReticle();
+initScrollUI();
+initForm();
+openFromHash();
+
+ $('tbDate').textContent = new Date()
+  .toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }).toUpperCase();
+ $('year').textContent = new Date().getFullYear();
 </script>
 </body>
+
 </html>
