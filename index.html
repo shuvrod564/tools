@@ -373,6 +373,15 @@ h1{font-size:clamp(2.6rem,6.2vw,4.8rem);font-weight:800;letter-spacing:-.028em;l
 @supports (-webkit-text-stroke:1px black){
   .sheet-num{color:transparent;-webkit-text-stroke:1.2px var(--ink)}
 }
+@media (max-width: 768px) {
+  .sheet-head {
+    grid-template-columns: 1fr;
+  }
+  .sheet-num {
+    width: 100%;
+    min-width: 0;
+  }
+}
 .sheet-title h3{font-size:clamp(1.45rem,2.6vw,2.15rem);font-weight:700;margin-bottom:6px}
 .sheet-tag{color:var(--ink-2);font-size:.95rem;font-style:italic}
 .sheet-stamp{
