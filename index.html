@@ -85,7 +85,8 @@
   --tape-h: 14px;
 }
 *{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;font-size: 100%;overflow-x: hidden;}
+ @media (max-width:767px) { html{font-size: 92.5%;} }
 body{
   font-family:var(--sans);
   background:var(--paper);
@@ -159,6 +160,103 @@ h1,h2,h3{letter-spacing:-.02em;line-height:1.05}
 .head-mail:hover{background:var(--ink);color:var(--paper)}
 .head-mail svg{width:15px;height:15px}
 @media (max-width:900px){.head-nav{display:none}.head-mail{margin-left:auto}}
+.head-nav-btn {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  flex: none;
+  border: 1px solid var(--ink);
+  transition: background .15s ease, color .15s ease;
+}
+
+.head-nav-btn:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.head-nav-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+.head-nav-btn .ic-x { display: none; }
+.head-nav-btn.open .ic-menu { display: none; }
+.head-nav-btn.open .ic-x { display: block; }
+
+/* keep this breakpoint in sync with where .head-nav hides */
+@media (max-width: 900px) {
+  .head-nav-btn {
+    display: inline-flex;
+    margin-left: auto;
+  }
+
+  .head-nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin: 0;
+    padding: 6px 4vw 16px;
+    background: var(--paper);
+    border-bottom: 1px solid var(--ink);
+    box-shadow: 0 22px 34px -20px rgba(27, 29, 33, .45);
+    opacity: 0;
+    transform: translateY(-10px);
+    visibility: hidden;
+    transition: opacity .2s ease, transform .2s ease, visibility 0s linear .2s;
+  }
+
+  .head-nav.show {
+    opacity: 1;
+    transform: none;
+    visibility: visible;
+    transition: opacity .2s ease, transform .2s ease;
+  }
+
+  .head-nav a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: .8rem;
+    padding: 15px 2px;
+    border-bottom: 1px solid var(--line-soft);
+  }
+
+  /* repurpose the underline ::after as a survey-diamond bullet */
+  .head-nav a::after {
+    position: static;
+    width: 7px;
+    height: 7px;
+    background: transparent;
+    border: 1px solid var(--accent);
+    transform: rotate(45deg);
+  }
+
+  .head-nav a:hover { color: var(--ink); }
+  .head-nav a:hover::after { width: 7px; background: var(--accent); }
+
+  .head-mail { margin-left: 0; }
+}
+
+@media (max-width: 600px) {
+  .head-mail { display: none; }
+}
+
+body.menu-open { overflow: hidden; } /* scroll lock while menu is open */
+ @media (max-width:600px) {
+  .head-nav-btn {
+    display: flex;justify-content: center;align-items: center;
+    width: 32px;height: 32px;border: 1px solid #aaa;
+  }
+   .head-mail {
+     display: none;
+   }
+ }
 
 .tape{
   position:relative;height:var(--tape-h);
@@ -521,34 +619,88 @@ h1{font-size:clamp(2.6rem,6.2vw,4.8rem);font-weight:800;letter-spacing:-.028em;l
      HEADER (EDIT: name + nav labels)
      ============================================================ -->
 <header class="site-head">
-  <div class="wrap head-bar">
-    <a class="brand" href="/" aria-label="Shuvrodeb — portfolio home">
-      <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true">
-        <rect width="40" height="40" rx="2.5" fill="var(--ink)"/>
-        <path d="M20 8.5 L27.5 23 H12.5 Z" fill="var(--accent)"/>
-        <rect x="8" y="24.5" width="24" height="2.6" fill="var(--accent)"/>
-        <rect x="8" y="30" width="24" height="1.4" fill="rgba(242,239,231,.4)"/>
-      </svg>
-      <span>
-        <span class="brand-name">Shuvrodeb</span><br>
-        <span class="brand-sub">FULLSTACK ENGINEER · PORTFOLIO</span>
-      </span>
-    </a>
-    <nav class="head-nav" aria-label="Primary"> 
-      <a href="#work">Work</a>
-      <a href="#stack">Stack</a>
-      <a href="#experience">Experience</a>
-      <a href="#contact">Contact</a>
-    </nav>
-    <a class="head-mail" href="mailto:shuvrod564@gmail.com" data-mail data-track="Email">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><rect x="3" y="5" width="18" height="14"/><path d="M3 7l9 6 9-6"/></svg>
-      Email me
-    </a>
-  </div>
-  <div class="tape" aria-hidden="true">
-    <div class="tape-fill" id="tapeFill"><span class="tape-read" id="tapeRead">00.0 m</span></div>
-  </div>
-</header>
+    <div class="wrap head-bar">
+      <a class="brand" href="/" aria-label="Shuvrodeb">
+        <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true">
+          <rect width="40" height="40" rx="2.5" fill="var(--ink)" />
+          <path d="M20 8.5 L27.5 23 H12.5 Z" fill="var(--accent)" />
+          <rect x="8" y="24.5" width="24" height="2.6" fill="var(--accent)" />
+          <rect x="8" y="30" width="24" height="1.4" fill="rgba(242,239,231,.4)" />
+        </svg>
+        <span>
+          <span class="brand-name block" style="display: block;">Shuvrodeb</span>
+          <span class="brand-sub">FULLSTACK ENGINEER · PORTFOLIO</span>
+        </span>
+      </a>
+      <button class="head-nav-btn" id="menuBtn" type="button"
+        aria-expanded="false" aria-controls="menu_list"
+        aria-label="Open menu" onclick="toggleMenu()">
+        <svg class="ic-menu" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <path d="M4 5h16"/><path d="M4 12h16"/><path d="M4 19h16"/>
+        </svg>
+        <svg class="ic-x" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
+        </svg>
+      </button>
+      <nav class="head-nav" id="menu_list" aria-label="Primary">
+        <a href="/#work">Work</a>
+        <a href="/#stack">Stack</a>
+        <a href="/#experience">Experience</a>
+        <a href="/#contact">Contact</a>
+      </nav>
+      <a class="head-mail" href="mailto:shuvrod564@gmail.com" data-mail data-track="Email">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square">
+          <rect x="3" y="5" width="18" height="14" />
+          <path d="M3 7l9 6 9-6" />
+        </svg>
+        <span>Email me</span>
+      </a>
+    </div>
+    <div class="tape" aria-hidden="true">
+      <div class="tape-fill" id="tapeFill"><span class="tape-read" id="tapeRead">00.0 m</span></div>
+    </div>
+  </header>
+
+  <script>
+    (function () {
+      var btn  = document.getElementById('menuBtn');
+      var menu = document.getElementById('menu_list');
+
+      window.toggleMenu = function (force) {
+        var open = typeof force === 'boolean' ? force : !menu.classList.contains('show');
+        menu.classList.toggle('show', open);
+        btn.classList.toggle('open', open);
+        btn.setAttribute('aria-expanded', open);
+        btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+        document.body.classList.toggle('menu-open', open);
+      };
+
+      /* close after tapping a link */
+      menu.addEventListener('click', function (e) {
+        if (e.target.closest('a')) toggleMenu(false);
+      });
+
+      /* close on Escape and refocus the button */
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && menu.classList.contains('show')) {
+          toggleMenu(false);
+          btn.focus();
+        }
+      });
+
+      /* close on tap outside the header */
+      document.addEventListener('click', function (e) {
+        if (menu.classList.contains('show') && !e.target.closest('.site-head')) toggleMenu(false);
+      });
+
+      /* reset if rotated/resized back to desktop */
+      window.addEventListener('resize', function () {
+        if (window.innerWidth > 900 && menu.classList.contains('show')) toggleMenu(false);
+      });
+    })();
+    </script>
 
 <main>
 <!-- ============================================================
