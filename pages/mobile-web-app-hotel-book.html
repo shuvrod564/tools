@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#171310" />
+    <title>Harbour House — In-House</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Instrument+Sans:wght@400..700&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        paper: '#F4EFE6', cream: '#F9F5EA', ink: '#211D16',
+                        house: '#1E4636', housed: '#173A2C', brass: '#B08A3E', brassd: '#8F6D2A',
+                        tour: '#A6501F', local: '#5B4470', line: '#E2DACB'
+                    },
+                    fontFamily: { serif: ['Fraunces', 'Georgia', 'serif'], sans: ['"Instrument Sans"', 'system-ui', 'sans-serif'] },
+                    boxShadow: { card: '0 10px 30px -18px rgba(33,29,22,.35)' }
+                }
+            }
+        }
+    </script>
+    <style>
+        ::selection {
+            background: #B08A3E;
+            color: #F9F5EA
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none
+        }
+
+        .no-scrollbar {
+            scrollbar-width: none
+        }
+
+        .img-warm {
+            filter: sepia(.16) saturate(.9) contrast(1.03)
+        }
+
+        .duo {
+            background: #173A2C
+        }
+
+        .duo img {
+            mix-blend-mode: luminosity;
+            filter: sepia(.2) contrast(1.05) brightness(.85)
+        }
+
+        .grain {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+            mix-blend-mode: multiply;
+            opacity: .06
+        }
+
+        @keyframes pulsek {
+
+            0%,
+            100% {
+                opacity: 1
+            }
+
+            50% {
+                opacity: .25
+            }
+        }
+
+        .pulse {
+            animation: pulsek 1.5s ease-in-out infinite
+        }
+
+        @keyframes pop {
+            0% {
+                transform: scale(.5);
+                opacity: 0
+            }
+
+            70% {
+                transform: scale(1.08)
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1
+            }
+        }
+
+        .checkpop {
+            animation: pop .4s cubic-bezier(.2, .8, .3, 1.2) both
+        }
+
+        @keyframes fadeup {
+            from {
+                opacity: 0;
+                transform: translateY(8px)
+            }
+
+            to {
+                opacity: 1;
+                transform: none
+            }
+        }
+
+        .fu {
+            animation: fadeup .35s ease
+        }
+
+        @keyframes flashk {
+            0% {
+                box-shadow: 0 0 0 0 rgba(176, 138, 62, 0)
+            }
+
+            25%,
+            70% {
+                box-shadow: 0 0 0 3px rgba(176, 138, 62, .9)
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(176, 138, 62, 0)
+            }
+        }
+
+        .flash {
+            animation: flashk 1.3s ease
+        }
+
+        .bmk {
+            transition: all .2s
+        }
+
+        .bmk.booked {
+            background: #B08A3E;
+            color: #211D16;
+            border-color: #B08A3E
+        }
+
+        .ups,
+        .slot {
+            transition: all .15s
+        }
+
+        .ups.on {
+            background: #1E4636;
+            border-color: #1E4636;
+            color: #F9F5EA
+        }
+
+        .ups.on .up-p {
+            color: rgba(249, 245, 234, .55)
+        }
+
+        .slot.on {
+            background: #211D16;
+            border-color: #211D16;
+            color: #F9F5EA
+        }
+
+        .slot.on .sl-s {
+            color: rgba(249, 245, 234, .6)
+        }
+
+        #toast {
+            position: absolute;
+            left: 50%;
+            bottom: 92px;
+            z-index: 60;
+            transform: translate(-50%, 14px);
+            opacity: 0;
+            pointer-events: none;
+            transition: transform .3s cubic-bezier(.2, .8, .2, 1), opacity .3s
+        }
+
+        #toast.show {
+            transform: translate(-50%, 0);
+            opacity: 1
+        }
+
+        #pill {
+            position: absolute;
+            left: 50%;
+            bottom: 16px;
+            width: calc(100% - 32px);
+            max-width: 398px;
+            z-index: 40;
+            transform: translate(-50%, 0);
+            transition: transform .35s cubic-bezier(.2, .8, .2, 1), opacity .3s
+        }
+
+        #pill.pillhide {
+            transform: translate(-50%, 150%);
+            opacity: 0;
+            pointer-events: none
+        }
+
+        .sbarsh {
+            box-shadow: 0 10px 18px -14px rgba(33, 29, 22, .4)
+        }
+    </style>
+</head>
+
+<body class="bg-[#171310] font-sans text-ink antialiased">
+
+    <!-- Desktop stage dressing -->
+    <div class="hidden md:flex fixed left-8 top-1/2 -translate-y-1/2 z-0" style="writing-mode:vertical-rl">
+        <p class="text-[10px] tracking-[0.4em] font-semibold text-[#7d7159] rotate-180">HARBOUR HOUSE · SYDNEY — THE
+            IN-ROOM GUEST COMPANION</p>
+    </div>
+    <div class="hidden md:flex fixed right-8 top-1/2 -translate-y-1/2 z-0" style="writing-mode:vertical-rl">
+        <p class="text-[10px] tracking-[0.4em] font-semibold text-[#7d7159] rotate-180">SCANNED FROM ROOM 412</p>
+    </div>
+
+    <!-- App column (phone) -->
+    <div id="app"
+        class="relative mx-auto w-full max-w-[430px] h-[100dvh] md:h-[880px] md:max-h-[94vh] md:my-[3vh] md:rounded-[2.2rem] md:ring-1 md:ring-white/10 md:shadow-2xl bg-paper overflow-hidden">
+
+        <div id="scroller" class="relative h-full overflow-y-auto overscroll-contain">
+
+            <!-- Header -->
+            <header class="px-5 pt-6 pb-4">
+                <div class="flex items-center gap-3">
+                    <div class="size-10 rounded-xl bg-house grid place-items-center"><span
+                            class="font-serif text-brass text-[17px] leading-none pt-0.5">H</span></div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-[10px] font-bold tracking-[0.24em] text-ink/80">HARBOUR HOUSE</p>
+                        <p class="text-[10.5px] text-ink/50 mt-0.5">In-House · the guest companion</p>
+                    </div>
+                    <span
+                        class="inline-flex items-center bg-ink text-cream text-[10.5px] font-bold tracking-wide pl-2.5 pr-2.5 py-1.5 rounded-full">ROOM
+                        412</span>
+                </div>
+                <div class="mt-6 flex items-end justify-between gap-4">
+                    <div class="min-w-0">
+                        <p class="text-[10px] font-bold tracking-[0.2em] text-brassd">FRIDAY 20 SEP — SYDNEY</p>
+                        <h1 id="greet" class="font-serif text-[27px] leading-[1.1] text-ink mt-1.5">Good afternoon,
+                            Sofia.</h1>
+                        <p id="greetSub" class="text-[12.5px] text-ink/55 mt-1.5"></p>
+                    </div>
+                    <div class="shrink-0 text-right pb-1">
+                        <p class="font-serif text-[22px] leading-none">22°</p>
+                        <p class="text-[10px] text-ink/50 mt-1 leading-tight">Clear —<br />rooftop weather</p>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Flagship billboard -->
+            <section id="heroSec" class="px-5 pt-1 pb-5"></section>
+
+            <!-- Command bar: day / hour-rail / filters -->
+            <div id="sbar" class="sticky top-0 z-30 bg-paper/95 backdrop-blur border-y border-line transition-shadow">
+                <div id="tabs" class="px-5 pt-2.5 flex gap-2 overflow-x-auto no-scrollbar"></div>
+                <div id="rail" class="mt-2 px-5 flex gap-1.5 overflow-x-auto no-scrollbar"></div>
+                <div id="filters" class="px-5 py-2.5 flex gap-2 overflow-x-auto no-scrollbar"></div>
+            </div>
+
+            <main id="feed" class="px-5 pb-36"></main>
+        </div>
+
+        <!-- Overlays -->
+        <div id="scrim"
+            class="absolute inset-0 z-40 bg-ink/50 opacity-0 pointer-events-none transition-opacity duration-300 backdrop-blur-[2px]">
+        </div>
+        <div id="sheet"
+            class="absolute inset-x-0 bottom-0 z-50 max-h-[93%] translate-y-full transition-transform duration-[340ms] bg-paper rounded-t-[1.5rem] ring-1 ring-ink/10 shadow-2xl flex"
+            style="transition-timing-function:cubic-bezier(.32,.72,0,1)">
+            <div id="sheetInner" class="flex flex-col w-full min-h-0 max-h-full"></div>
+        </div>
+
+        <div id="toast"
+            class="flex items-center gap-2 bg-ink text-cream text-[12px] font-medium pl-3 pr-4 py-2.5 rounded-full shadow-xl whitespace-nowrap">
+            <span class="text-brass" id="toastIc"></span><span id="toastTx"></span>
+        </div>
+
+        <div id="pill" class="pillhide">
+            <button data-act="myday"
+                class="w-full rounded-2xl bg-ink text-cream pl-3 pr-4 py-2.5 flex items-center gap-3 shadow-[0_16px_32px_-12px_rgba(20,16,10,.55)] active:scale-[.98] transition">
+                <span class="relative size-9 rounded-xl bg-cream/10 grid place-items-center text-brass">
+                    <span id="pillIc"></span>
+                    <span id="pillCount"
+                        class="absolute -top-1.5 -right-1.5 min-w-[18px] h-[18px] px-1 rounded-full bg-brass text-ink text-[10px] font-bold grid place-items-center">0</span>
+                </span>
+                <span class="flex-1 text-left">
+                    <span class="block text-[13px] font-bold leading-none">My Day</span>
+                    <span id="pillSub" class="block text-[10.5px] text-cream/55 mt-1"></span>
+                </span>
+                <span class="flex items-center gap-1 text-[10.5px] font-bold text-brass tracking-wide">VIEW<span
+                        id="pillChev"></span></span>
+            </button>
+        </div>
+
+        <div class="grain absolute inset-0 pointer-events-none z-[70]"></div>
+    </div>
+
+    <script>
+        /* ---------- tiny icon set (inline, stroke-based) ---------- */
+        const P = {
+            clock: '<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>',
+            pin: '<path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/>',
+            wine: '<path d="M8 22h8"/><path d="M7 10h10"/><path d="M12 15v7"/><path d="M12 15a5 5 0 0 0 5-5c0-2-.5-4-2-8H9c-1.5 4-2 6-2 8a5 5 0 0 0 5 5Z"/>',
+            plus: '<path d="M5 12h14"/><path d="M12 5v14"/>',
+            minus: '<path d="M5 12h14"/>',
+            check: '<path d="M20 6 9 17l-5-5"/>',
+            x: '<path d="M18 6 6 18"/><path d="m6 6 12 12"/>',
+            chevr: '<path d="m9 18 6-6-6-6"/>',
+            chevu: '<path d="m18 15-6-6-6 6"/>',
+            users: '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+            ticket: '<path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M13 5v2"/><path d="M13 17v2"/><path d="M13 11v2"/>',
+            bmk: '<path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/>',
+            trash: '<path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>',
+            arrowr: '<path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>',
+            sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/>',
+            moon: '<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>',
+            coffee: '<path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><path d="M6 2v3"/><path d="M10 2v3"/><path d="M14 2v3"/>',
+            info: '<circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/>',
+            cal: '<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M8 2v4"/><path d="M16 2v4"/><path d="M3 10h18"/>'
+        };
+        const ic = (n, c = 'w-4 h-4') => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="${c}">${P[n]}</svg>`;
+
+        /* ---------- simulated "now": 4:47 PM, ticking live ---------- */
+        let simSec = 16 * 3600 + 47 * 60;            // seconds since midnight
+        let sim = simSec / 60;                      // minutes (float)
+
+        /* ---------- data ---------- */
+        const DAYS = ['Today', 'Sat 21', 'Sun 22', 'Mon 23'];
+        const DAYL = ['TONIGHT · FRI 20', 'SATURDAY · SAT 21', 'SUNDAY · SUN 22', 'MONDAY · MON 23'];
+        const DAYFULL = ['Tonight', 'Saturday', 'Sunday', 'Monday'];
+        const FLAG = { 0: 'hh', 1: 'wine', 2: 'sessions', 3: 'trivia' };
+        const BANDS = [
+            ['Morning', '6:00 – 11:00 AM', e => e.s < 660, 'sun'],
+            ['Afternoon', '11:00 AM – 5:00 PM', e => e.s >= 660 && e.s < 1020, 'coffee'],
+            ['Evening', '5:00 PM — late', e => e.s >= 1020, 'moon']
+        ];
+        const DOT = { house: 'bg-house', tour: 'bg-tour', local: 'bg-local' };
+        const BAR = { house: 'bg-house', tour: 'bg-tour', local: 'bg-local' };
+
+        const BDESC = "The long table on the terrace — pastries from a Bathurst bakery, kingfish on rye, eggs however you like them. The coffee comes from the roaster two streets over.";
+        const ODESC = "The backstage version — scenery dock, orchestra pit, and the concert hall’s famous acoustics demo. About 75 minutes, ending at the gift shop you’ll pretend not to visit.";
+        const KDESC = "Paddle the harbour as the sun drops behind the Bridge. Guides, life jackets, and a swim stop at a cove the ferries ignore.";
+        const GDESC = "Lanterns on, phones away — two hours of the city’s darker stories, finishing conveniently at a pub.";
+        const CDESC = "A slow loop of the middle harbour with a seafood lunch on deck. Sydney throws the scenery in for nothing.";
+        const OSLOTS = [['5:30 PM', 'Today', '4 left'], ['10:00 AM', 'Sat 21', '12 left'], ['1:00 PM', 'Sat 21', '9 left']];
+        const OSLOTS2 = [['10:00 AM', 'Next day', '12 left'], ['1:00 PM', 'Next day', '9 left'], ['3:00 PM', 'Next day', '7 left']];
+        const CANC_GYG = 'Free cancellation up to 24 hours before start. Your voucher is scanned at the door — the room number is already on it.';
+        const CANC_VIA = 'Free cancellation up to 24 hours before start. Paid to Viator at checkout — we never add a markup.';
+        const CANC_GURU = 'Free to reserve — you tip your guide what the walk was worth at the end.';
+
+        const E = [];
+        const ev = o => E.push(o);
+
+        /* recurring house anchor: breakfast every morning */
+        [0, 1, 2, 3].forEach(d => ev(Object.assign({
+            id: 'bfast' + (d || ''), day: d, cat: 'house', title: 'Harbour Breakfast Buffet', venue: 'Terrace on Hickson', level: 'Ground floor',
+            host: 'Seated 7 – 11 · last seating 10:15', s: 420, e: 660, p: 39, cta: 'Pre-book', img: 'hh-buffet', desc: BDESC,
+            included: ['Table held from 8:00 AM', 'Straight to the terrace — no queue', '10% off for ordering ahead'],
+            upsells: [{ n: 'Sparkling on arrival', p: 12 }]
+        }, d === 0 ? { alt: { p: 35 } } : { spots: 'Walk-ins welcome · booked tables skip the line' })));
+
+        const mkOpera = (d, s, slots, spots) => ({ id: 'opera' + d + '_' + s, day: d, cat: 'tour', title: 'Sydney Opera House Guided Tour', venue: 'Bennelong Point, meet under the sails', s, e: s + 75, p: 63, partner: 'GetYourGuide', cancel: CANC_GYG, group: 'Small group · max 15', img: 'sy-opera', desc: ODESC, slots, spots });
+        ev(mkOpera(0, 960, OSLOTS, 'Next slot today · 5:30 PM'));
+        ev(mkOpera(1, 780, OSLOTS2, '')); ev(mkOpera(2, 660, OSLOTS2, '')); ev(mkOpera(3, 600, OSLOTS2, ''));
+
+        const mkKayak = (d, spots) => ({ id: 'kayak' + d, day: d, cat: 'tour', title: 'Sunset Harbour Kayak', venue: 'Launch: Hickson Rd steps', s: 1050, e: 1140, p: 89, partner: 'Viator', cancel: CANC_VIA, group: 'Max 12 paddlers', img: 'sy-kayak', desc: KDESC, spots });
+        ev(mkKayak(0, '3 of 12 left')); ev(mkKayak(2, '6 of 12 left')); ev(mkKayak(3, '5 of 12 left'));
+
+        const mkGhost = d => ({ id: 'ghost' + d, day: d, cat: 'tour', title: 'Dark Sydney Ghost Tour', venue: 'Meet: Sydney Town Hall', s: 1200, e: 1320, p: 39, partner: 'GuruWalk', cancel: CANC_GURU, group: 'Lantern-lit · max 20', img: 'sy-ghost', desc: GDESC, spots: 'Runs nightly' });
+        ev(mkGhost(0)); ev(mkGhost(1));
+
+        const mkCruise = d => ({ id: 'cruise' + d, day: d, cat: 'tour', title: 'Harbour Long-Lunch Cruise', venue: 'King St Wharf, pontoon 3', s: 735, e: 975, p: 110, partner: 'Viator', cancel: CANC_VIA, group: 'Berths 40', img: 'sy-cruise', desc: CDESC });
+        ev(mkCruise(0)); ev(mkCruise(1));
+
+        ev({ id: 'rocks', day: 0, cat: 'tour', title: 'The Rocks: 90-Minute History Walk', venue: 'Meet: Cadman’s Cottage', s: 570, e: 660, p: 0, partner: 'GuruWalk', cancel: CANC_GURU, group: 'Max 20 walkers', img: 'sy-rocks', desc: "A guide from the Rocks Discovery Museum walks you through the laneways — sergeants, smugglers, and the First Fleet’s worst decisions." });
+        ev({ id: 'bondi', day: 1, cat: 'tour', title: 'Bondi to Coogee Coastal Walk', venue: 'Meet: Bondi Icebergs', s: 510, e: 660, p: 0, partner: 'GuruWalk', cancel: CANC_GURU, group: 'Max 16 walkers', img: 'sy-bondi', desc: "Six kilometres of cliff path with a local who swims at Icebergs afterwards — join if you’re brave." });
+        ev({ id: 'surf', day: 1, cat: 'tour', title: 'Beginner Surf Lesson, Bondi', venue: 'South Bondi, surf school van', s: 570, e: 780, p: 95, partner: 'Viator', cancel: CANC_VIA, group: 'Max 8 surfers', img: 'sy-surf', desc: "Soft boards, warm water, and instructors who promise you’ll be standing by the third wave. Wetsuits included.", spots: '3 boards left' });
+        ev({ id: 'bluemtn', day: 2, cat: 'tour', title: 'Blue Mountains Day Trip', venue: 'Departs: lobby, 7:45 AM', s: 465, e: 1020, p: 149, partner: 'Viator', cancel: CANC_VIA, group: 'Minibus · 16 seats', img: 'sy-bluemtn', desc: "Scenic World, Echo Point, and a bushwalk the big buses skip. A long day — you’re back by five, in time for the rooftop.", spots: '4 seats left' });
+
+        /* locals */
+        ev({ id: 'vivid', day: 0, cat: 'local', title: 'Vivid Sydney — Light Walk', venue: 'Circular Quay → The Rocks', s: 1080, e: 1380, p: 0, src: 'City of Sydney', desc: "The light walk turns the quay into an open gallery. Ours is the 20-minute loop that skips the worst of the crowds.", spots: 'Best after 8 PM' });
+        ev({ id: 'gig', day: 0, cat: 'local', title: 'Peach Pit — Sydney Date', venue: 'Enmore Theatre, Newtown', s: 1200, e: 1350, p: 79, src: 'Ticketek', desc: "The Vancouver band’s only Sydney night — and the Enmore’s back gate is five minutes from our lobby.", spots: 'A few seats left' });
+        ev({ id: 'market', day: 1, cat: 'local', title: 'Carriageworks Farmers Market', venue: 'Eveleigh, Blacksmith’s Workshop', s: 480, e: 720, p: 0, src: 'Carriageworks', desc: "Growers, bakers, and the flower stall that’s sold out by nine. Bring cash for the small stands." });
+        ev({ id: 'comedy', day: 1, cat: 'local', title: 'Comedy Night: Local Heads', venue: 'Enmore Theatre, main stage', s: 1170, e: 1290, p: 45, src: 'Ticketek', desc: "Five comedians workshopping festival material. The front two rows are considered part of the show." });
+        ev({ id: 'fringe', day: 2, cat: 'local', title: 'Sydney Fringe — Alley Pop-Ups', venue: 'Newtown, twelve stages', s: 660, e: 1080, p: 0, src: 'Sydney Fringe', desc: "Pop-up stages down the alleys of Newtown. Free, slightly weird, completely Sydney." });
+        ev({ id: 'film', day: 2, cat: 'local', title: 'Open-Air Cinema: Casablanca', venue: 'Royal Botanic Gardens, lawn', s: 1200, e: 1380, p: 25, src: 'Ticketek', desc: "Deckchairs on the lawn and a classic on the screen. Picnic hampers welcome — the kitchen packs them on request." });
+        ev({ id: 'gallery', day: 3, cat: 'local', title: 'Art Gallery of NSW — Highlights Tour', venue: 'Gallery entrance, free', s: 840, e: 900, p: 0, src: 'AGNSW', desc: "A free hour with the collection’s highlights. The Aboriginal memorial gallery alone is worth the walk across the park." });
+        ev({ id: 'vivid2', day: 3, cat: 'local', title: 'Vivid — Final Night Light Walk', venue: 'Circular Quay → The Rocks', s: 1080, e: 1380, p: 0, src: 'City of Sydney', desc: "Last night of the light walk. If you’ve been meaning to go — tonight is the night.", spots: 'Final night' });
+
+        /* house one-offs */
+        ev({ id: 'tea', day: 0, cat: 'house', title: 'Afternoon Tea in the Drawing Room', venue: 'Drawing room, level 2', s: 870, e: 990, p: 28, cta: 'Reserve', img: 'hh-tea', desc: "Scones, clotted cream and the good Darjeeling, under the atrium on mismatched china." });
+        ev({ id: 'welcome', day: 0, cat: 'house', title: 'Manager’s Welcome Drinks', venue: 'The Library Bar', level: 'Mezzanine', host: 'Hosted by Marco, General Manager', s: 1080, e: 1140, p: 0, cta: 'Hold a spot', img: 'hh-welcome', desc: "Forty minutes of wine and canapés from the kitchen. Come put a face to the concierge who’s been emailing you.", included: ['A glass on arrival', 'Canapés from the kitchen', 'First hold on tonight’s tour times'] });
+        ev({ id: 'hh', day: 0, cat: 'house', title: 'Twilight Happy Hour', venue: 'Rooftop — Salt & Ember', level: 'Level 12', host: 'DJ from nine · kitchen sends flatbread', s: 1260, e: 1320, p: 0, cta: 'Reserve a spot', img: 'hh-rooftop', h1: 'Twilight', h2: 'Happy Hour', hp: '$12 COCKTAILS · $9 SPRITZES · $6 BAR SNACKS', hcta: 'Reserve a spot — free', desc: "Forty seats on the north terrace, a DJ till close, and the bar’s golden-hour pricing. The kitchen sends flatbread out while it lasts.", included: ['North-terrace table held till 10', 'A welcome spritz on arrival', '10% off tomorrow’s breakfast if you stay past 9:30'], upsells: [{ n: 'Spritz bucket (4)', p: 32 }, { n: 'Flatbread for the table', p: 12 }], spots: '22 of 40 spots held' });
+        ev({ id: 'gelato', day: 0, cat: 'house', title: 'Midnight Gelato Cart', venue: 'Lobby Lounge', level: 'Ground floor', s: 1320, e: 1439, p: 8, cta: 'Add to plan', img: 'hh-gelato', noBook: true, desc: "The cart rolls into the lobby at ten sharp. Condensed-milk caramel is the one people mention in reviews." });
+        ev({ id: 'longlunch', day: 1, cat: 'house', title: 'Long Lunch on the Terrace', venue: 'Terrace on Hickson', level: 'Ground floor', host: 'Two seatings · 12:30 & 6:30', s: 750, e: 900, p: 55, cta: 'Book a table', img: 'hh-lunch', desc: "Two courses on the terrace, a glass of sangiovese, and absolutely nowhere you need to be after.", included: ['Two courses, bread on us', 'A glass of sangiovese each', 'Papers & board games available'], upsells: [{ n: 'Bottomless spritz', p: 25 }], spots: '18 tables left' });
+        ev({ id: 'wine', day: 1, cat: 'house', title: 'Chef’s Counter Wine Dinner', venue: 'Kitchen pass', level: 'Ground floor', host: 'Hosted by Chef Ada & sommelier Rui', s: 1140, e: 1320, p: 95, cta: 'Reserve seats', img: 'hh-wine', h1: 'Chef’s Counter', h2: 'Wine Dinner', hp: '6 COURSES · 6 WINES · 6 SEATS LEFT', hcta: 'Reserve seats — $95', desc: "Six seats at the kitchen pass, six courses, six wines — the sommelier standing right there, the chef talking while you eat.", included: ['Six courses at the pass', 'Six matched wines', 'The printed menu, signed if you ask'], upsells: [{ n: 'Extra cheese course', p: 16 }, { n: 'Old-vine Riesling upgrade', p: 24 }], spots: '6 seats left' });
+        ev({ id: 'sessions', day: 2, cat: 'house', title: 'Sunday Sessions Rooftop BBQ', venue: 'Rooftop — Salt & Ember', level: 'Level 12', host: 'Vinyl by DJ Slowleaf', s: 720, e: 900, p: 45, cta: 'Book a spot', img: 'hh-bbq', h1: 'Sunday', h2: 'Sessions', hp: 'GRILL PLATE + A PINT · NOON TILL 3', hcta: 'Book a spot — $45', desc: "The rooftop grill lights at noon — churrasco plates, house lager, records on the turntable until the sun clock calls it.", included: ['Grill plate + a house lager', 'Rooftop seat, noon till 3', 'Vinyl requests taken at the deck'], upsells: [{ n: 'Second grill plate', p: 20 }], spots: '31 of 60 booked' });
+        ev({ id: 'trivia', day: 3, cat: 'house', title: 'Trivia & Pinot Night', venue: 'The Library Bar', level: 'Mezzanine', host: 'Quizmaster: Dan, concierge', s: 1140, e: 1260, p: 15, cta: 'Grab a table', img: 'hh-trivia', h1: 'Trivia &', h2: 'Pinot Night', hp: 'TEAMS OF SIX · A GLASS INCLUDED', hcta: 'Grab a table — $15', desc: "Teams of six, a glass of pinot included, and the concierge’s table is — allegedly — beatable.", included: ['A glass of pinot each', 'Nacho round on the house at half-time', 'Bragging rights'], upsells: [{ n: 'Cheese board', p: 14 }], spots: '9 tables left' });
+
+        const byId = id => E.find(e => e.id === id);
+
+        /* ---------- state ---------- */
+        const state = { day: 0, filter: 'all' };
+        const cart = new Map();
+        let cur = null;
+
+        /* ---------- time helpers ---------- */
+        const pad = n => String(n).padStart(2, '0');
+        function fmt(m) { const h = Math.floor(m / 60), mm = Math.floor(m % 60), ap = h >= 12 ? 'PM' : 'AM', h12 = ((h + 11) % 12) + 1; return `${h12}:${pad(mm)} ${ap}` }
+        function fmtR(a, b) { const f = fmt(a), t = fmt(b); return f.slice(-2) === t.slice(-2) ? `${f.slice(0, -3)} – ${t}` : `${f} – ${t}` }
+        function ago(e) { const d = Math.floor(sim - e); return d < 60 ? `${d}m ago` : `${Math.floor(d / 60)}h ago` }
+        function evState(e) { if (e.day !== 0) return { k: 'future' }; if (sim >= e.e) return { k: 'ended' }; if (sim >= e.s) return { k: 'now' }; return { k: 'soon', m: Math.round(e.s - sim) } }
+        function cdInit(s) { const d = s * 60 - simSec; if (d <= 0) return 'Underway — come up'; const h = Math.floor(d / 3600), m = Math.floor(d % 3600 / 60); return h ? `Begins in ${h}h ${m}m ${pad(d % 60)}s` : `Begins in ${m}m ${pad(d % 60)}s` }
+        const pass = e => state.filter === 'all' || e.cat === state.filter;
+        const itemTotal = (e, it) => ((e.alt ? e.alt.p : e.p) || 0) * it.qty + it.ups.reduce((s, i) => s + e.upsells[i].p, 0);
+        const mkCode = () => 'HH-' + Array.from({ length: 4 }, () => 'ABCDEFGHJKMNPQRSTUVWXYZ23456789'[Math.floor(Math.random() * 31)]).join('');
+
+        /* ---------- shared fragments ---------- */
+        const onNowChip = () => `<span class="flex items-center gap-1 bg-tour text-cream text-[8.5px] font-bold px-1.5 py-0.5 rounded-full"><span class="size-[5px] rounded-full bg-cream pulse"></span>ON NOW</span>`;
+        function bmkBtn(ev, tone) {
+            return `<button data-act="book" data-id="${ev.id}" aria-label="Add to My Day" class="bmk size-8 shrink-0 grid place-items-center rounded-full ring-1 ${tone === 'dark' ? 'ring-cream/40 text-cream' : 'ring-line text-ink/60'} active:scale-90 transition">${ic('bmk', 'w-4 h-4')}</button>`;
+        }
+        function refreshBookmarks() {
+            document.querySelectorAll('.bmk').forEach(b => { const on = cart.has(b.dataset.id); b.classList.toggle('booked', on); b.innerHTML = ic(on ? 'check' : 'bmk', 'w-4 h-4') });
+        }
+
+        /* ---------- header ---------- */
+        function renderHeader() {
+            const tod = E.filter(e => e.day === 0), free = tod.filter(e => e.cat === 'house' && !e.p).length;
+            $('#greet').textContent = (sim < 720 ? 'Good morning' : sim < 1020 ? 'Good afternoon' : 'Good evening') + ', Sofia.';
+            $('#greetSub').textContent = `${tod.length} things on today — ${free} of them on the house.`;
+        }
+
+        /* ---------- hero billboard ---------- */
+        function eveningRail() {
+            const pc = m => (4 + (m - 960) / 480 * 92).toFixed(1);
+            const stops = [[1080, '', 'Welcome drinks', 1], [1200, '', '', 0], [1260, '9P', 'Happy hour', 1]];
+            return `<div class="mt-4">
+    <div class="flex justify-between text-[8px] font-bold tracking-[0.2em] text-cream/40"><span>YOUR EVENING</span><span>4 PM — MIDNIGHT</span></div>
+    <div class="relative h-[46px] mt-1">
+      <div class="absolute left-0 right-0 top-[8px] h-px bg-cream/20"></div>
+      ${stops.map(([m, l, n, h]) => `<div class="absolute -translate-x-1/2 text-center" style="left:${pc(m)}%;top:0">
+        <div class="size-[7px] rounded-full ${h ? 'bg-brass' : 'bg-cream/35'} mx-auto mt-[5px]"></div>
+        ${l ? `<p class="text-[8px] tabular text-cream/60 mt-1">${l}</p>` : ''}
+        ${n ? `<p class="text-[8px] leading-tight ${m === 1260 ? 'text-brass font-bold' : 'text-cream/45'}">${n}</p>` : ''}
+      </div>`).join('')}
+      <div class="absolute -translate-x-1/2 text-center" style="left:${pc(sim)}%;top:0">
+        <div class="w-[2px] h-[15px] bg-cream mx-auto"></div><p class="text-[7.5px] font-bold text-cream/80 mt-[3px]">now</p>
+      </div>
+    </div></div>`;
+        }
+        function renderHero() {
+            const e = byId(FLAG[state.day]);
+            const lab = ['TONIGHT AT THE HOUSE', 'SATURDAY AT THE HOUSE', 'SUNDAY AT THE HOUSE', 'MONDAY AT THE HOUSE'][state.day];
+            const cd = state.day === 0
+                ? `<span class="size-[6px] rounded-full bg-brass pulse"></span><span class="tabular" data-cds="${e.s}">${cdInit(e.s)}</span>`
+                : `<span class="tabular">${DAYS[state.day]} · ${fmt(e.s)}</span><span class="size-[6px] rounded-full bg-cream/40"></span>`;
+            $('#heroSec').innerHTML = `
+  <div class="relative rounded-[1.4rem] bg-house text-cream overflow-hidden ring-1 ring-brass/50 shadow-[0_24px_50px_-24px_rgba(22,53,42,.7)]">
+    <div class="absolute inset-[5px] rounded-[1.05rem] ring-1 ring-brass/25 pointer-events-none z-10"></div>
+    <div class="p-5 pb-4">
+      <div class="flex items-center justify-between gap-3">
+        <span class="text-[9px] font-bold tracking-[0.24em] text-brass">${lab}</span>
+        <span class="flex items-center gap-1.5 text-[10.5px] font-semibold text-cream/85">${cd}</span>
+      </div>
+      <h2 class="font-serif text-[30px] leading-[1.04] mt-2.5">${e.h1}<br/><em class="italic text-brass">${e.h2}</em></h2>
+      <p class="mt-2.5 text-[11.5px] text-cream/65 flex items-center gap-1.5">${ic('pin', 'w-3.5 h-3.5 text-brass')}${e.venue} · ${e.level}</p>
+    </div>
+    <div class="h-[118px] duo relative"><img src="https://picsum.photos/seed/${e.img}/900/400.jpg" alt="" class="w-full h-full object-cover"/></div>
+    <div class="px-5 pt-3.5 pb-5">
+      <p class="text-[9px] font-bold tracking-[0.2em] text-brass/90">${e.hp}</p>
+      ${state.day === 0 ? eveningRail() : ''}
+      <div class="mt-4 flex items-center gap-2.5">
+        <button data-act="open" data-id="${e.id}" class="flex-1 bg-brass text-ink rounded-full py-3 text-[13px] font-bold active:scale-[.98] transition">${e.hcta}</button>
+        <button data-act="book" data-id="${e.id}" aria-label="Add to My Day" class="bmk size-11 grid place-items-center rounded-full ring-1 ring-cream/40 text-cream active:scale-90 transition">${ic('bmk', 'w-[18px] h-[18px]')}</button>
+      </div>
+    </div>
+  </div>`;
+            refreshBookmarks();
+        }
+
+        /* ---------- command bar ---------- */
+        function renderTabs() {
+            $('#tabs').innerHTML = DAYS.map((d, i) => {
+                const n = E.filter(e => e.day === i).length, on = i === state.day;
+                return `<button data-act="tab" data-i="${i}" class="shrink-0 px-3.5 py-2 rounded-full text-[12px] font-bold transition active:scale-95 ${on ? 'bg-ink text-cream' : 'border border-line text-ink/55'}">${d}${i === 0 ? '<span class="inline-block size-[5px] rounded-full bg-brass align-middle ml-1"></span>' : ''}<span class="tabular text-[10px] ml-1.5 font-semibold ${on ? 'text-cream/50' : 'text-ink/35'}">${n}</span></button>`;
+            }).join('');
+        }
+        function renderRail() {
+            const nowH = Math.floor(sim / 60); let out = '';
+            for (let h = 6; h <= 24; h++) {
+                const evs = E.filter(e => e.day === state.day && Math.floor(e.s / 60) === h && pass(e));
+                const hl = h === 24 ? '12a' : h === 12 ? '12p' : h > 12 ? (h - 12) + 'p' : h + 'a';
+                const dots = evs.length ? evs.slice(0, 3).map(e => `<i class="size-[4px] rounded-full ${DOT[e.cat]}"></i>`).join('') : `<i class="size-[4px] rounded-full bg-line"></i>`;
+                const now = state.day === 0 && h === nowH;
+                out += `<button data-act="hour" data-h="${h}" class="shrink-0 w-[37px] rounded-lg border py-[5px] flex flex-col items-center gap-[4px] transition active:scale-95 ${now ? 'border-brass text-brassd bg-brass/10' : 'border-line bg-cream/70 text-ink/70'} ${state.day === 0 && h < nowH ? 'opacity-40' : ''}">
+      <span class="text-[9.5px] font-bold tabular leading-none">${hl}</span><span class="flex items-center gap-[2.5px] h-[4px]">${dots}</span></button>`;
+            }
+            $('#rail').innerHTML = out;
+        }
+        function renderFilters() {
+            const F = [['all', 'Everything', ''], ['house', 'At the House', 'bg-house'], ['tour', 'Tours', 'bg-tour'], ['local', 'Around Town', 'bg-local']];
+            $('#filters').innerHTML = F.map(([k, l, d]) => {
+                const on = state.filter === k;
+                return `<button data-act="filter" data-k="${k}" class="shrink-0 px-3.5 py-1.5 rounded-full text-[11.5px] font-bold border transition flex items-center gap-1.5 active:scale-95 ${on ? 'bg-ink text-cream border-ink' : 'border-line text-ink/60'}">${d ? `<span class="size-[6px] rounded-full ${d}"></span>` : ''}${l}</button>`;
+            }).join('');
+        }
+
+        /* ---------- feed ---------- */
+        function pointerChip(e) {
+            return `<button data-act="gotohero" class="w-full flex items-center gap-2.5 rounded-xl border border-dashed border-brass/60 bg-brass/10 px-3.5 py-2.5 text-left active:scale-[.99] transition">
+    <span class="size-6 rounded-full bg-house text-brass grid place-items-center shrink-0">${ic('wine', 'w-3 h-3')}</span>
+    <span class="flex-1 text-[11px] font-semibold text-ink/70">${e.title} · ${fmt(e.s)} — featured up top</span>
+    <span class="text-ink/30">${ic('chevu', 'w-4 h-4')}</span></button>`;
+        }
+        function houseCard(e) {
+            const st = evState(e), ended = st.k === 'ended', now = st.k === 'now';
+            const price = e.p ? `$${e.p} <span class="text-cream/45 font-medium">${e.per || 'per guest'}</span>` : `<span class="text-brass font-bold">On the house</span>`;
+            let cta;
+            if (ended && e.alt) cta = `<button data-act="open" data-id="${e.id}" class="h-8 px-3.5 rounded-full border border-brass/70 text-brass text-[10.5px] font-bold active:scale-95 transition">Pre-book tomorrow · −10%</button>`;
+            else if (ended) cta = `<span class="text-[10.5px] font-semibold text-cream/45">Ended · ${ago(e.e)}</span>`;
+            else cta = `<button data-act="open" data-id="${e.id}" class="h-8 px-4 rounded-full bg-brass text-ink text-[11px] font-bold active:scale-95 transition">${e.cta}</button>`;
+            return `<article data-ev data-day="${e.day}" data-h="${Math.floor(e.s / 60)}" data-act="open" data-id="${e.id}" class="scroll-mt-[150px] rounded-2xl bg-house text-cream overflow-hidden shadow-card cursor-pointer active:scale-[.99] transition ${ended ? 'opacity-70' : ''}">
+    <div class="flex">
+      <div class="flex-1 min-w-0 p-4">
+        <div class="flex items-center gap-2 flex-wrap">
+          <span class="text-[8.5px] font-bold tracking-[0.2em] text-brass">AT THE HOUSE</span>
+          ${now ? `<span class="flex items-center gap-1 bg-cream/15 text-cream text-[8.5px] font-bold px-1.5 py-0.5 rounded-full"><span class="size-[5px] rounded-full bg-brass pulse"></span>ON NOW</span>` : ''}
+          ${st.k === 'soon' && st.m <= 90 ? `<span class="bg-cream/15 text-cream/90 text-[8.5px] font-bold px-1.5 py-0.5 rounded-full tabular" data-cdm="${e.s}">In ${st.m} min</span>` : ''}
+        </div>
+        <h3 class="font-serif text-[19px] leading-snug mt-1.5">${e.title}</h3>
+        <p class="text-[11px] text-cream/60 mt-1 tabular">${fmtR(e.s, e.e)} · ${e.venue}</p>
+        <p class="text-[11.5px] mt-1.5">${price}</p>
+        <div class="mt-3 flex items-center gap-2">
+          ${cta}
+          ${ended && !e.alt ? '' : bmkBtn(e, 'dark')}
+          ${e.spots ? `<span class="ml-auto text-[9.5px] font-semibold text-cream/55 tabular">${e.spots}</span>` : ''}
+        </div>
+      </div>
+      <div class="w-[100px] shrink-0 relative duo">
+        <img src="https://picsum.photos/seed/${e.img}/300/420.jpg" alt="" class="w-full h-full object-cover"/>
+        ${ended ? `<span class="absolute top-2 right-2 rotate-6 text-[7.5px] font-bold tracking-[0.18em] text-cream/90 border border-cream/60 rounded px-1 py-[1px] bg-ink/35">ENDED</span>` : ''}
+      </div>
+    </div>
+  </article>`;
+        }
+        function tourBadges(e) {
+            const st = evState(e);
+            if (st.k === 'now') return onNowChip();
+            if (st.k === 'soon' && st.m <= 90) return `<span class="bg-ink/85 text-cream text-[8.5px] font-bold px-1.5 py-0.5 rounded-full tabular" data-cdm="${e.s}">In ${st.m} min</span>`;
+            if (st.k === 'ended') return `<span class="text-[8.5px] font-bold text-ink/40 tracking-[0.14em]">ENDED · ${ago(e.e).toUpperCase()}</span>`;
+            return '';
+        }
+        function tourCard(e) {
+            const st = evState(e), ended = st.k === 'ended';
+            return `<article data-ev data-day="${e.day}" data-h="${Math.floor(e.s / 60)}" data-act="open" data-id="${e.id}" class="scroll-mt-[150px] snap-start shrink-0 w-[236px] rounded-2xl bg-cream ring-1 ring-line overflow-hidden shadow-card cursor-pointer active:scale-[.99] transition ${ended ? 'opacity-60 saturate-50' : ''}">
+    <div class="relative h-[112px] img-warm">
+      <img src="https://picsum.photos/seed/${e.img}/480/300.jpg" alt="" class="w-full h-full object-cover"/>
+      <span class="absolute top-2 left-2 flex items-center gap-1 bg-paper/95 text-[9px] font-bold px-2 py-1 rounded-full text-ink/80">${ic('ticket', 'w-3 h-3')}${e.partner}</span>
+      <span class="absolute top-2 right-2">${tourBadges(e)}</span>
+    </div>
+    <div class="p-3.5">
+      <p class="text-[9.5px] font-bold tracking-[0.16em] text-tour tabular">${fmtR(e.s, e.e)}</p>
+      <h4 class="text-[14.5px] font-semibold leading-snug mt-1">${e.title}</h4>
+      <p class="text-[11px] text-ink/50 mt-1 flex items-center gap-1 truncate">${ic('pin', 'w-3 h-3 shrink-0')}${e.venue}</p>
+      <div class="mt-2.5 flex items-baseline justify-between gap-2">
+        <p class="text-[15px] font-bold tabular leading-none">${e.p ? `<span class="text-[10px] font-medium text-ink/45">from </span>$${e.p}` : 'Free'}</p>
+        ${e.spots ? `<p class="text-[10px] font-semibold text-tour text-right leading-tight">${e.spots}</p>` : ''}
+      </div>
+      <div class="mt-2.5 flex items-center gap-2">
+        ${ended ? `<span class="flex-1 text-center text-[11px] font-semibold text-ink/35 py-2 rounded-full border border-line">Ended</span>`
+                    : `<button data-act="open" data-id="${e.id}" class="flex-1 bg-ink text-cream text-[11.5px] font-bold py-2 rounded-full active:scale-95 transition">${e.p ? 'Book' : 'Reserve free'}</button>`}
+        ${ended ? '' : bmkBtn(e, 'light')}
+      </div>
+    </div>
+  </article>`;
+        }
+        function tourWide(e) {
+            const st = evState(e), ended = st.k === 'ended';
+            return `<article data-ev data-day="${e.day}" data-h="${Math.floor(e.s / 60)}" data-act="open" data-id="${e.id}" class="scroll-mt-[150px] rounded-2xl bg-cream ring-1 ring-line overflow-hidden shadow-card cursor-pointer active:scale-[.99] transition flex ${ended ? 'opacity-60 saturate-50' : ''}">
+    <div class="w-[112px] shrink-0 relative img-warm">
+      <img src="https://picsum.photos/seed/${e.img}/300/420.jpg" alt="" class="absolute inset-0 w-full h-full object-cover"/>
+      <span class="absolute top-2 left-2 flex items-center gap-1 bg-paper/95 text-[8px] font-bold px-1.5 py-[3px] rounded-full text-ink/75">${ic('ticket', 'w-2.5 h-2.5')}${e.partner}</span>
+    </div>
+    <div class="flex-1 min-w-0 p-3.5">
+      <div class="flex items-center gap-2 flex-wrap">
+        <span class="text-[9px] font-bold tracking-[0.16em] text-tour tabular">${fmtR(e.s, e.e)}</span>
+        ${tourBadges(e)}
+      </div>
+      <h4 class="text-[14.5px] font-semibold leading-snug mt-1">${e.title}</h4>
+      <p class="text-[11px] text-ink/50 mt-0.5 flex items-center gap-1 truncate">${ic('pin', 'w-3 h-3 shrink-0')}${e.venue}</p>
+      <div class="mt-2 flex items-end justify-between gap-2">
+        <p class="text-[14px] font-bold tabular leading-none">${e.p ? `<span class="text-[9.5px] font-medium text-ink/45">from </span>$${e.p}` : 'Free'}</p>
+        ${e.spots ? `<p class="text-[9.5px] font-semibold text-tour text-right leading-tight">${e.spots}</p>` : ''}
+      </div>
+      <div class="mt-2.5 flex items-center gap-2">
+        ${ended ? `<span class="flex-1 text-center text-[11px] font-semibold text-ink/35 py-1.5 rounded-full border border-line">Ended</span>`
+                    : `<button data-act="open" data-id="${e.id}" class="flex-1 bg-ink text-cream text-[11.5px] font-bold py-2 rounded-full active:scale-95 transition">${e.p ? 'Book' : 'Reserve free'}</button>`}
+        ${ended ? '' : bmkBtn(e, 'light')}
+      </div>
+    </div>
+  </article>`;
+        }
+        function localRow(e) {
+            return `<article data-ev data-day="${e.day}" data-h="${Math.floor(e.s / 60)}" data-act="open" data-id="${e.id}" class="scroll-mt-[150px] rounded-2xl bg-cream ring-1 ring-line p-2.5 pr-3 flex items-center gap-3 cursor-pointer active:scale-[.99] transition">
+    <div class="w-[52px] h-[52px] rounded-xl overflow-hidden shrink-0 img-warm"><img src="https://picsum.photos/seed/${e.img}/120/120.jpg" alt="" class="w-full h-full object-cover"/></div>
+    <div class="flex-1 min-w-0">
+      <p class="text-[9.5px] font-bold tracking-[0.14em] text-local flex items-center gap-1.5 tabular">${fmt(e.s)}<span class="bg-local/10 text-local px-1.5 py-[1px] rounded text-[8.5px] font-bold tracking-normal uppercase">${e.src}</span></p>
+      <h4 class="text-[13px] font-semibold leading-snug mt-0.5 truncate">${e.title}</h4>
+      <p class="text-[11px] text-ink/50 truncate mt-0.5">${e.venue}</p>
+    </div>
+    <div class="text-right shrink-0">
+      <p class="text-[12px] font-bold tabular">${e.p ? `from $${e.p}` : 'Free'}</p>
+      <p class="text-ink/30 mt-1 flex justify-end">${ic('chevr', 'w-4 h-4')}</p>
+    </div>
+  </article>`;
+        }
+        const carousel = arr => `<div>
+  <div class="flex items-center gap-2 mb-2">
+    <span class="w-4 h-[2px] bg-tour"></span>
+    <p class="text-[9.5px] font-bold tracking-[0.18em] text-ink/55">TOURS & EXPERIENCES</p>
+    <p class="ml-auto text-[9.5px] text-ink/40 flex items-center gap-1">swipe ${ic('arrowr', 'w-3 h-3')}</p>
+  </div>
+  <div class="flex gap-3 overflow-x-auto no-scrollbar snap-x [scroll-padding-left:20px] -mx-5 px-5 pb-1.5">${arr.map(tourCard).join('')}</div>
+</div>`;
+
+        const interlude = () => `<section class="pt-6"><div class="rounded-2xl border border-brass/45 bg-brass/10 p-4 flex items-center gap-3.5">
+  <div class="size-10 rounded-xl bg-house text-brass grid place-items-center shrink-0">${ic('coffee', 'w-5 h-5')}</div>
+  <div class="flex-1 min-w-0">
+    <p class="text-[12.5px] font-bold leading-snug">Tomorrow, before the city wakes</p>
+    <p class="text-[11px] text-ink/55 leading-snug mt-0.5">Pre-order the Harbour Breakfast by 10 PM — 10% off, table held at 8.</p>
+  </div>
+  <button data-act="open" data-id="bfast" class="shrink-0 bg-house text-cream text-[10.5px] font-bold px-3 py-2.5 rounded-full active:scale-95 transition">Pre-order</button>
+</div></section>`;
+
+        const emptyState = () => `<div class="pt-20 text-center">
+  <div class="mx-auto size-12 rounded-full ring-1 ring-line grid place-items-center text-ink/30">${ic('cal', 'w-5 h-5')}</div>
+  <p class="font-serif text-[19px] mt-3">A quieter day.</p>
+  <p class="text-[12px] text-ink/50 mt-1">Nothing in this category — try another filter or day.</p></div>`;
+
+        const footerHTML = () => `<footer class="pt-10 text-center">
+  <div class="size-9 mx-auto rounded-full ring-1 ring-brass/50 grid place-items-center"><span class="font-serif text-brassd text-[13px]">H</span></div>
+  <p class="text-[10.5px] text-ink/45 mt-3 leading-relaxed px-8">Curated nightly by the Harbour House concierge.<br/>External tours are booked with our partners — their commissions keep house events free.<br/>Anything else? Dial <span class="font-semibold text-ink/60">ext. 9</span> from your room phone.</p>
+</footer>`;
+
+        function renderFeed() {
+            const list = E.filter(e => e.day === state.day && pass(e)).sort((a, b) => a.s - b.s);
+            const bands = [];
+            BANDS.forEach(([name, range, test, bicon]) => {
+                const items = list.filter(test); if (!items.length) { bands.push(''); return }
+                const tours = items.filter(e => e.cat === 'tour'), rest = items.filter(e => e.cat !== 'tour');
+                let inner = '';
+                if (tours.length > 1) inner += carousel(tours);
+                else if (tours.length === 1) inner += tourWide(tours[0]);
+                rest.forEach(e => { inner += e.id === FLAG[state.day] ? pointerChip(e) : e.cat === 'house' ? houseCard(e) : localRow(e) });
+                bands.push(`<section><header class="flex items-center gap-2 pt-6 pb-2.5 border-b border-line">
+      ${ic(bicon, 'w-3.5 h-3.5 text-ink/30')}
+      <h2 class="text-[10px] font-bold tracking-[0.22em] text-ink/75">${name.toUpperCase()}</h2>
+      <span class="text-[9px] text-ink/40 tabular">${range}</span>
+      <span class="ml-auto text-[9.5px] font-semibold text-ink/40 tabular">${items.length} ${items.length > 1 ? 'events' : 'event'}</span>
+    </header><div class="pt-3.5 space-y-3">${inner}</div></section>`);
+            });
+            if (state.day === 0 && bands[2]) bands.splice(2, 0, interlude());
+            $('#feed').innerHTML = (bands.join('') || emptyState()) + footerHTML();
+            const f = $('#feed'); f.classList.remove('fu'); void f.offsetWidth; f.classList.add('fu');
+            refreshBookmarks();
+        }
+
+        /* ---------- sheet ---------- */
+        const $ = s => document.querySelector(s), $$ = s => document.querySelectorAll(s);
+        function setSheet(h) { $('#sheetInner').innerHTML = h }
+        function showSheet() {
+            $('#sheet').classList.remove('translate-y-full');
+            const s = $('#scrim'); s.classList.remove('opacity-0', 'pointer-events-none'); s.classList.add('opacity-100');
+            $('#scroller').style.overflow = 'hidden';
+        }
+        function hideSheet() {
+            $('#sheet').classList.add('translate-y-full');
+            const s = $('#scrim'); s.classList.add('opacity-0', 'pointer-events-none'); s.classList.remove('opacity-100');
+            $('#scroller').style.overflow = ''; cur = null;
+        }
+        function sheetHead(e, h, duo, chip) {
+            return `<div class="relative shrink-0 ${h} ${duo ? 'duo' : 'img-warm'}">
+    <img src="https://picsum.photos/seed/${e.img}/800/440.jpg" alt="" class="w-full h-full object-cover"/>
+    <div class="absolute top-1.5 left-1/2 -translate-x-1/2 w-9 h-1 rounded-full bg-paper/80"></div>
+    <div class="absolute top-3.5 left-4 ${duo ? 'bg-house/95 text-brass' : 'bg-paper/95 text-ink/80'} px-2.5 py-1 rounded-full text-[9px] font-bold tracking-[0.14em]">${chip}</div>
+    <button data-act="close" aria-label="Close" class="absolute top-3 right-3 size-8 rounded-full bg-ink/55 text-cream grid place-items-center backdrop-blur active:scale-90 transition">${ic('x', 'w-4 h-4')}</button>
+  </div>`;
+        }
+        const inclBlock = e => `<div class="mt-4"><p class="text-[9.5px] font-bold tracking-[0.18em] text-ink/50">INCLUDED</p>
+  <ul class="mt-2 space-y-1.5">${e.included.map(x => `<li class="flex gap-2 text-[12.5px] text-ink/75">${ic('check', 'w-3.5 h-3.5 text-brass shrink-0 mt-[3px]')}${x}</li>`).join('')}</ul></div>`;
+        const upsellBlock = e => `<div class="mt-4"><p class="text-[9.5px] font-bold tracking-[0.18em] text-ink/50">ADD SOMETHING</p>
+  <div class="mt-2 flex flex-wrap gap-2">${e.upsells.map((u, i) => `<button data-act="up" data-i="${i}" class="ups flex items-center gap-1.5 rounded-full border border-line px-3 py-2 text-[11.5px] font-semibold text-ink/75">${ic('plus', 'w-3 h-3 opacity-60')}${u.n}<span class="up-p text-ink/45 font-medium">· $${u.p}</span></button>`).join('')}</div></div>`;
+        const slotBlock = e => `<div class="mt-4"><p class="text-[9.5px] font-bold tracking-[0.18em] text-ink/50">PICK A TIME</p>
+  <div class="mt-2 grid grid-cols-3 gap-2">${e.slots.map((s, i) => `<button data-act="slot" data-i="${i}" class="slot rounded-xl border border-line px-2 py-2.5 text-center bg-cream/60"><p class="text-[12px] font-bold tabular">${s[0]}</p><p class="text-[9px] text-ink/45 mt-0.5">${s[1]}</p><p class="sl-s text-[9px] font-semibold text-tour mt-0.5">${s[2]}</p></button>`).join('')}</div></div>`;
+        const stepper = () => `<div class="mt-4 flex items-center justify-between rounded-xl border border-line bg-cream/60 px-3.5 py-3">
+  <div><p class="text-[12.5px] font-semibold">Party size</p><p class="text-[10.5px] text-ink/45">1 – 8 guests</p></div>
+  <div class="flex items-center gap-3">
+    <button data-act="qty" data-d="-1" aria-label="Fewer" class="size-8 rounded-full ring-1 ring-line grid place-items-center bg-paper active:scale-90 transition">${ic('minus', 'w-3.5 h-3.5')}</button>
+    <span id="qtyVal" class="w-4 text-center text-[14px] font-bold tabular">${cur.qty}</span>
+    <button data-act="qty" data-d="1" aria-label="More" class="size-8 rounded-full ring-1 ring-line grid place-items-center bg-paper active:scale-90 transition">${ic('plus', 'w-3.5 h-3.5')}</button>
+  </div></div>`;
+        function footerBase(e, cls) {
+            const st = evState(e);
+            if (st.k === 'ended' && !e.alt) return `<div class="shrink-0 border-t border-line px-5 py-3.5 bg-paper"><button disabled class="w-full py-3.5 rounded-full bg-ink/10 text-ink/40 text-[13px] font-bold">This session has ended</button></div>`;
+            return `<div class="shrink-0 border-t border-line bg-paper px-5 py-3.5 flex items-center gap-3">
+    <div class="shrink-0"><p id="ftTotal" class="text-[17px] font-bold tabular leading-none"></p><p id="ftSub" class="text-[9.5px] text-ink/50 mt-1"></p></div>
+    <button id="ftBtn" data-act="confirm" class="flex-1 ${cls} rounded-full py-3.5 text-[13.5px] font-bold flex items-center justify-center gap-2 active:scale-[.98] transition"></button>
+  </div>`;
+        }
+        function priceBlockHouse(e) {
+            if (e.alt) return `<div class="mt-3.5 flex items-center gap-2 rounded-xl border border-brass/40 bg-brass/10 px-3.5 py-3">
+    <p class="text-[12px] font-semibold tabular"><span class="text-ink/40 line-through">$39</span> <span class="text-[15px] font-bold">$${e.alt.p}</span></p>
+    <p class="ml-auto text-[8.5px] font-bold tracking-[0.18em] text-brassd">PRE-ORDER · −10%</p></div>`;
+            if (e.p) return `<p class="mt-3.5 text-[13px] font-bold tabular">$${e.p} <span class="text-[11px] font-medium text-ink/45">${e.per || 'per guest'}</span></p>`;
+            return `<p class="mt-3.5 text-[11px] font-bold text-brassd tracking-[0.08em]">ON THE HOUSE · COMPLIMENTARY FOR GUESTS</p>`;
+        }
+        function sheetHouse(e) {
+            const dayLab = e.alt ? 'TOMORROW · SAT 21' : DAYL[e.day];
+            return sheetHead(e, 'h-40', true, 'AT THE HOUSE') + `
+  <div class="flex-1 overflow-y-auto px-5 pt-4 pb-6 min-h-0">
+    <p class="text-[9.5px] font-bold tracking-[0.2em] text-brassd tabular">${dayLab} · ${fmtR(e.s, e.e)}</p>
+    <h2 class="font-serif text-[24px] leading-tight mt-1.5">${e.title}</h2>
+    <p class="text-[12px] text-ink/55 mt-1.5 flex items-center gap-1.5">${ic('pin', 'w-3.5 h-3.5 text-brassd')}${e.venue}${e.level ? ` · ${e.level}` : ''}</p>
+    ${e.host ? `<p class="text-[12px] text-ink/55 mt-1 flex items-center gap-1.5">${ic('users', 'w-3.5 h-3.5 text-brassd')}${e.host}</p>` : ''}
+    <p class="text-[13px] leading-relaxed text-ink/75 mt-3.5">${e.desc}</p>
+    ${priceBlockHouse(e)}
+    ${e.included ? inclBlock(e) : ''}
+    ${e.upsells ? upsellBlock(e) : ''}
+    ${e.spots && !e.alt ? `<p class="mt-3 text-[11px] font-semibold text-tour flex items-center gap-1.5">${ic('info', 'w-3.5 h-3.5')}${e.spots}</p>` : ''}
+    ${evState(e).k === 'ended' && !e.alt ? '' : stepper()}
+  </div>
+  ${footerBase(e, 'bg-house text-cream')}`;
+        }
+        function sheetTour(e) {
+            const st = evState(e);
+            const stat = st.k === 'now' ? onNowChip() : st.k === 'soon' ? `<span class="bg-ink/85 text-cream text-[9px] font-bold px-2 py-1 rounded-full tabular" data-cdm="${e.s}">In ${st.m} min</span>` : '';
+            return sheetHead(e, 'h-44', false, `<span class="flex items-center gap-1.5">${ic('ticket', 'w-3 h-3')}<span class="text-ink">${e.partner.toUpperCase()}</span></span>`) + `
+  <div class="flex-1 overflow-y-auto px-5 pt-4 pb-6 min-h-0">
+    <div class="flex items-center gap-2 flex-wrap">
+      <p class="text-[9.5px] font-bold tracking-[0.2em] text-tour">TOUR · ${e.partner.toUpperCase()}</p>${stat}
+    </div>
+    <h2 class="font-serif text-[23px] leading-tight mt-1.5">${e.title}</h2>
+    <div class="mt-2 space-y-1">
+      <p class="text-[12px] text-ink/55 flex items-center gap-1.5">${ic('clock', 'w-3.5 h-3.5 text-tour')}<span class="tabular">${fmtR(e.s, e.e)}</span></p>
+      <p class="text-[12px] text-ink/55 flex items-center gap-1.5">${ic('pin', 'w-3.5 h-3.5 text-tour')}${e.venue}</p>
+      ${e.group ? `<p class="text-[12px] text-ink/55 flex items-center gap-1.5">${ic('users', 'w-3.5 h-3.5 text-tour')}${e.group}</p>` : ''}
+    </div>
+    <p class="text-[13px] leading-relaxed text-ink/75 mt-3.5">${e.desc}</p>
+    ${e.spots ? `<p class="mt-3 text-[11px] font-semibold text-tour flex items-center gap-1.5">${ic('info', 'w-3.5 h-3.5')}${e.spots}</p>` : ''}
+    ${e.slots ? slotBlock(e) : ''}
+    ${stepper()}
+    <p class="mt-3.5 flex gap-2 text-[11px] leading-snug text-ink/55">${ic('info', 'w-3.5 h-3.5 text-tour shrink-0 mt-[1px]')}${e.cancel}</p>
+  </div>
+  ${footerBase(e, 'bg-ink text-cream')}`;
+        }
+        function sheetLocal(e) {
+            const chip = `<span class="flex items-center gap-1.5"><span class="size-[6px] rounded-full bg-local"></span>${e.src.toUpperCase()}</span>`;
+            return sheetHead(e, 'h-36', false, chip) + `
+  <div class="flex-1 overflow-y-auto px-5 pt-4 pb-6 min-h-0">
+    <p class="text-[9.5px] font-bold tracking-[0.2em] text-local">AROUND TOWN · ${e.src.toUpperCase()}</p>
+    <h2 class="font-serif text-[23px] leading-tight mt-1.5">${e.title}</h2>
+    <div class="mt-2 space-y-1">
+      <p class="text-[12px] text-ink/55 flex items-center gap-1.5">${ic('clock', 'w-3.5 h-3.5 text-local')}<span class="tabular">${fmtR(e.s, e.e)}</span></p>
+      <p class="text-[12px] text-ink/55 flex items-center gap-1.5">${ic('pin', 'w-3.5 h-3.5 text-local')}${e.venue}</p>
+    </div>
+    <p class="text-[13px] leading-relaxed text-ink/75 mt-3.5">${e.desc}</p>
+    ${e.p ? `<div class="mt-3.5 flex items-center justify-between gap-3 rounded-xl border border-line bg-cream/60 px-3.5 py-3">
+        <p class="text-[12.5px] font-semibold">Tickets from <span class="tabular font-bold">$${e.p}</span></p>
+        <p class="text-[9.5px] text-ink/45 text-right">final price set<br/>by ${e.src}</p></div>`
+                    : `<p class="mt-3.5 text-[12px] font-bold text-local">Free entry</p>`}
+    ${e.spots ? `<p class="mt-3 text-[11px] font-semibold text-local flex items-center gap-1.5">${ic('info', 'w-3.5 h-3.5')}${e.spots}</p>` : ''}
+    ${e.p ? stepper() : ''}
+  </div>
+  ${footerBase(e, 'bg-ink text-cream')}`;
+        }
+        function openSheet(id) {
+            const e = byId(id);
+            cur = { e, qty: 2, ups: new Set(), slot: 0 };
+            setSheet(e.cat === 'house' ? sheetHouse(e) : e.cat === 'tour' ? sheetTour(e) : sheetLocal(e));
+            showSheet(); updateNumbers();
+        }
+        function primaryLabel(e, tot) {
+            if (e.alt) return 'Pre-order breakfast';
+            if (e.noBook) return 'Add to My Day';
+            if (e.cat === 'house') return e.p ? 'Reserve' : `Hold ${cur.qty} spots${tot ? '' : ' — free'}`;
+            if (e.cat === 'tour') return e.p ? `Book ${cur.qty} ${cur.qty > 1 ? 'guests' : 'guest'}` : 'Reserve — free';
+            return e.p ? 'Get tickets' : 'Add to My Day';
+        }
+        function subLine(e, tot) {
+            if (e.alt) return 'Tomorrow 8 AM · Room 412 · charged at checkout';
+            if (e.cat === 'house') return (e.p || tot) && !e.noBook ? `${cur.qty} guest${cur.qty > 1 ? 's' : ''} · Room 412, at checkout` : 'Nothing charged now';
+            if (e.cat === 'tour') return `${cur.qty} guest${cur.qty > 1 ? 's' : ''} · pay ${e.partner} directly`;
+            return e.p ? `${cur.qty} ticket${cur.qty > 1 ? 's' : ''} · price set by ${e.src}` : 'Free entry · nothing charged';
+        }
+        function updateNumbers() {
+            const q = $('#qtyVal'); if (q) q.textContent = cur.qty;
+            $$('.ups').forEach(b => b.classList.toggle('on', cur.ups.has(+b.dataset.i)));
+            $$('.slot').forEach(b => b.classList.toggle('on', +b.dataset.i === cur.slot));
+            const ft = $('#ftTotal'); if (!ft) return;
+            const e = cur.e;
+            const base = (e.alt ? e.alt.p : e.p) || 0;
+            const tot = base * cur.qty + [...cur.ups].reduce((s, i) => s + e.upsells[i].p, 0);
+            ft.textContent = tot ? '$' + tot : 'Free';
+            $('#ftBtn').innerHTML = `${primaryLabel(e, tot)}${tot ? ` · $${tot}` : ''} ${ic('arrowr', 'w-4 h-4')}`;
+            $('#ftSub').textContent = subLine(e, tot);
+        }
+        function confirmPrimary(btn) {
+            if (!cur) return;
+            const e = cur.e;
+            if (e.cat === 'local' && e.p) {
+                btn.disabled = true; btn.classList.add('opacity-70');
+                btn.innerHTML = `Opening ${e.src}…`;
+                setTimeout(() => finalize(e), 900);
+            } else finalize(e);
+        }
+        function finalize(e) {
+            const item = { qty: cur.qty, ups: [...cur.ups], slot: e.slots ? e.slots[cur.slot][0] : null, booked: true, code: mkCode() };
+            cart.set(e.id, item);
+            toast(e.cat === 'tour' ? `Booked — ${e.title}`
+                : e.cat === 'local' && e.p ? `Handed off — ${e.src} holds your cart`
+                    : `${e.title} — you’re in`);
+            renderPill(); refreshBookmarks(); renderSuccess(e, item);
+        }
+        function renderSuccess(e, item) {
+            const tot = itemTotal(e, item);
+            const row = (l, v) => `<div class="flex items-center justify-between px-3.5 py-2.5"><p class="text-[10px] font-bold tracking-[0.14em] text-ink/45">${l}</p><p class="text-[12px] font-semibold tabular text-right">${v}</p></div>`;
+            $('#sheetInner').innerHTML = `<div class="flex-1 overflow-y-auto px-6 py-8 text-center min-h-0">
+    <div class="mx-auto size-16 rounded-full bg-house text-cream grid place-items-center checkpop">
+      <svg viewBox="0 0 24 24" class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+    </div>
+    <h2 class="font-serif text-[24px] mt-4">You’re in, Sofia.</h2>
+    <p class="text-[12.5px] text-ink/55 mt-1">${e.title} · ${DAYFULL[e.day]}</p>
+    <div class="mt-5 rounded-2xl border border-line bg-cream/70 divide-y divide-line/70 text-left">
+      ${row('WHEN', `${DAYFULL[e.day].toUpperCase()} · ${fmtR(e.s, e.e)}`)}
+      ${item.slot ? row('TIME SLOT', item.slot) : ''}
+      ${row('WHERE', e.venue)}
+      ${row('PARTY', `${item.qty} guest${item.qty > 1 ? 's' : ''}`)}
+      ${row(item.cat === 'tour' ? 'PAYABLE' : 'TOTAL', tot ? `$${tot} · ${e.cat === 'tour' ? e.partner : 'Room 412'}` : 'Free')}
+    </div>
+    <div class="mt-4 rounded-xl border border-dashed border-brass/60 bg-brass/10 px-4 py-3">
+      <p class="text-[9px] font-bold tracking-[0.22em] text-brassd">${e.cat === 'tour' ? 'VOUCHER' : e.cat === 'local' ? 'BOOKING REF' : 'SHOW AT THE DOOR'}</p>
+      <p class="font-serif text-[22px] tracking-[0.08em] mt-0.5">${item.code}</p>
+    </div>
+    <p class="text-[10.5px] text-ink/45 mt-3 leading-relaxed">${e.cat === 'house' ? 'We’ll nudge your room phone fifteen minutes before.' : e.cat === 'tour' ? `${e.partner} handles payment — free cancellation up to 24 h before.` : 'Finish in Ticketek and show your key card at will-call.'}</p>
+    <div class="mt-5 grid gap-1">
+      <button data-act="myday" class="w-full bg-ink text-cream rounded-full py-3.5 text-[13.5px] font-bold active:scale-[.98] transition">View My Day</button>
+      <button data-act="close" class="w-full py-3 text-[12.5px] font-semibold text-ink/55">Done</button>
+    </div>
+  </div>`;
+        }
+
+        /* ---------- My Day ---------- */
+        function suggestion(items) {
+            if (!items.length || items.some(x => x.ev.cat === 'house' && x.ev.day === state.day)) return '';
+            const c = E.find(e => e.day === state.day && e.cat === 'house' && !cart.has(e.id) && evState(e).k !== 'ended');
+            if (!c) return '';
+            return `<div class="mt-4 rounded-xl border border-house/25 bg-house/[.07] p-3.5">
+    <p class="text-[8.5px] font-bold tracking-[0.22em] text-brassd">BALANCE THE DAY — HOUSE PICK</p>
+    <p class="text-[13px] font-semibold mt-1">${c.title} · ${fmt(c.s)}</p>
+    <p class="text-[11px] text-ink/55 mt-0.5 leading-snug">${c.p ? `$${c.p} per guest` : (c.spots || 'On the house')}</p>
+    <button data-act="sugadd" data-id="${c.id}" class="mt-2 text-[11.5px] font-bold text-house underline underline-offset-4 decoration-house/40">Add to My Day</button></div>`;
+        }
+        function openMyDay() {
+            const items = [...cart.entries()].map(([id, it]) => ({ ev: byId(id), it })).sort((a, b) => (a.ev.day - b.ev.day) || (a.ev.s - b.ev.s));
+            const total = items.reduce((s, x) => s + itemTotal(x.ev, x.it), 0);
+            const un = items.filter(x => !x.it.booked);
+            const head = `<div class="shrink-0 px-5 pt-4 pb-3 border-b border-line flex items-start">
+    <div class="flex-1">
+      <p class="text-[9px] font-bold tracking-[0.22em] text-brassd">ROOM 412 · SOFIA</p>
+      <h2 class="font-serif text-[24px] leading-tight mt-1">My Day</h2>
+      <p class="text-[11px] text-ink/50 mt-0.5">${DAYS[state.day]} — ${items.length} ${items.length === 1 ? 'stop' : 'stops'}</p>
+    </div>
+    <button data-act="close" aria-label="Close" class="size-8 rounded-full ring-1 ring-line grid place-items-center text-ink/60 active:scale-90 transition">${ic('x', 'w-4 h-4')}</button>
+  </div>`;
+            if (!items.length) {
+                setSheet(head + `<div class="flex-1 overflow-y-auto px-6 py-12 text-center min-h-0">
+      <div class="mx-auto size-14 rounded-full bg-house/10 text-house grid place-items-center">${ic('bmk', 'w-6 h-6')}</div>
+      <p class="font-serif text-[20px] mt-4">Nothing saved yet.</p>
+      <p class="text-[12px] text-ink/50 mt-1.5 leading-relaxed">Tap the ribbon on anything you like —<br/>happy hour at nine is a good start.</p>
+      <button data-act="close" class="mt-5 bg-ink text-cream rounded-full px-6 py-3 text-[12.5px] font-bold active:scale-95 transition">Browse today</button>
+    </div>`);
+                showSheet(); return;
+            }
+            const rows = items.map(({ ev: e, it }) => {
+                const tot = itemTotal(e, it), t = fmt(e.s);
+                const meta = [e.venue, it.qty > 1 ? `×${it.qty}` : '', it.slot || '', it.ups.map(i => e.upsells[i].n).join(', ')].filter(Boolean).join(' · ');
+                return `<div class="flex items-start gap-3 py-3.5 border-b border-line/60">
+      <div class="w-10 shrink-0 text-right pt-[1px]"><p class="text-[11.5px] font-bold tabular leading-none">${t.replace(/ (AM|PM)/, '')}</p><p class="text-[8.5px] font-semibold text-ink/40 mt-0.5">${t.slice(-2)}</p></div>
+      <div class="w-[3px] rounded-full self-stretch ${BAR[e.cat]}"></div>
+      <div class="flex-1 min-w-0">
+        <p class="text-[13px] font-semibold leading-snug">${e.title}</p>
+        <p class="text-[10.5px] text-ink/50 mt-0.5">${meta}</p>
+        ${it.booked ? `<span class="mt-1.5 inline-flex items-center gap-1 text-[9px] font-bold text-house bg-house/10 px-1.5 py-[3px] rounded">${ic('check', 'w-3 h-3')}${it.code} · CONFIRMED</span>` : ''}
+      </div>
+      <div class="shrink-0 flex flex-col items-end gap-1.5">
+        <p class="text-[12px] font-bold tabular">${tot ? `$${tot}` : 'Free'}</p>
+        ${it.booked ? '' : `<button data-act="remove" data-id="${e.id}" aria-label="Remove" class="text-ink/25 active:text-tour transition">${ic('trash', 'w-4 h-4')}</button>`}
+      </div></div>`;
+            }).join('');
+            setSheet(head + `<div class="flex-1 overflow-y-auto px-5 pb-2 min-h-0">${rows}${suggestion(items)}
+    <div class="flex items-center justify-between pt-4 pb-3">
+      <p class="text-[11px] text-ink/50">${un.length ? `${un.length} to confirm` : 'All confirmed'}</p>
+      <p class="text-[15px] font-bold tabular">$${total}</p>
+    </div></div>
+  <div class="shrink-0 border-t border-line bg-paper px-5 pt-3.5 pb-5">
+    ${un.length ? `<button data-act="confirmall" class="w-full bg-ink text-cream rounded-full py-3.5 text-[13.5px] font-bold flex items-center justify-center gap-2 active:scale-[.98] transition">Confirm ${un.length} · charge Room 412 ${ic('arrowr', 'w-4 h-4')}</button>
+    <p class="text-[9.5px] text-ink/45 text-center mt-2">House events post to your room account · tours are paid to their partners</p>`
+                    : `<button data-act="close" class="w-full bg-house text-cream rounded-full py-3.5 text-[13.5px] font-bold active:scale-[.98] transition">All set — done</button>`}
+  </div>`);
+            showSheet();
+        }
+        function confirmAll() {
+            cart.forEach(it => { if (!it.booked) { it.booked = true; it.code = mkCode() } });
+            toast('All confirmed — see you down there.');
+            renderPill(); refreshBookmarks(); openMyDay();
+        }
+
+        /* ---------- pill & toast ---------- */
+        function renderPill() {
+            const p = $('#pill'), n = cart.size;
+            $('#pillIc').innerHTML = ic('bmk', 'w-[18px] h-[18px]');
+            $('#pillChev').innerHTML = ic('chevr', 'w-3.5 h-3.5');
+            if (!n) { p.classList.add('pillhide'); return }
+            p.classList.remove('pillhide');
+            const items = [...cart.entries()];
+            const tot = items.reduce((s, [id, it]) => s + itemTotal(byId(id), it), 0);
+            const all = items.every(([, it]) => it.booked);
+            $('#pillCount').textContent = n;
+            $('#pillSub').textContent = all ? `${n} confirmed · $${tot}` : `${n} planned${tot ? ` · $${tot}` : ''}`;
+        }
+        let toastT;
+        function toast(msg) {
+            $('#toastIc').innerHTML = ic('check', 'w-3.5 h-3.5');
+            $('#toastTx').textContent = msg;
+            const t = $('#toast'); t.classList.add('show');
+            clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('show'), 2600);
+        }
+
+        /* ---------- actions ---------- */
+        function toggleBook(id) {
+            const e = byId(id);
+            if (cart.has(id)) { cart.delete(id); toast('Removed from My Day') }
+            else { cart.set(id, { qty: 2, ups: [], slot: null, booked: false, code: null }); toast(`Added — ${e.title}, ${fmt(e.s)}`) }
+            renderPill(); refreshBookmarks();
+        }
+        function addSoft(id) {
+            cart.set(id, { qty: 2, ups: [], slot: null, booked: false, code: null });
+            toast(`Added — ${byId(id).title}`);
+            renderPill(); refreshBookmarks(); openMyDay();
+        }
+        document.addEventListener('click', e => {
+            const t = e.target.closest('[data-act]'); if (!t) return;
+            switch (t.dataset.act) {
+                case 'tab':
+                    state.day = +t.dataset.i;
+                    renderTabs(); renderHero(); renderRail(); renderFeed();
+                    $('#scroller').scrollTo({ top: Math.max(0, $('#sbar').offsetTop - 10), behavior: 'smooth' });
+                    break;
+                case 'filter': state.filter = t.dataset.k; renderFilters(); renderRail(); renderFeed(); break;
+                case 'hour': {
+                    const h = +t.dataset.h;
+                    const el = [...$$('#feed [data-ev]')].find(n => +n.dataset.h >= h && n.dataset.day === String(state.day));
+                    if (el) { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); el.classList.add('flash'); setTimeout(() => el.classList.remove('flash'), 1400) }
+                    else toast('Nothing after that — try another day.');
+                    break;
+                }
+                case 'open': openSheet(t.dataset.id); break;
+                case 'book': toggleBook(t.dataset.id); break;
+                case 'gotohero': $('#heroSec').scrollIntoView({ behavior: 'smooth' }); break;
+                case 'close': hideSheet(); break;
+                case 'myday': case 'pill': openMyDay(); break;
+                case 'qty': if (cur) { cur.qty = Math.min(8, Math.max(1, cur.qty + +t.dataset.d)); updateNumbers() } break;
+                case 'up': if (cur) { const i = +t.dataset.i; cur.ups.has(i) ? cur.ups.delete(i) : cur.ups.add(i); updateNumbers() } break;
+                case 'slot': if (cur) { cur.slot = +t.dataset.i; updateNumbers() } break;
+                case 'confirm': confirmPrimary(t); break;
+                case 'confirmall': confirmAll(); break;
+                case 'remove': cart.delete(t.dataset.id); renderPill(); refreshBookmarks(); openMyDay(); break;
+                case 'sugadd': addSoft(t.dataset.id); break;
+            }
+        });
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') hideSheet() });
+        $('#scroller').addEventListener('scroll', () => { $('#sbar').classList.toggle('sbarsh', $('#scroller').scrollTop > 12) }, { passive: true });
+
+        /* ---------- live clock ---------- */
+        setInterval(() => {
+            simSec++; sim = simSec / 60;
+            $$('[data-cds]').forEach(el => {
+                const d = +el.dataset.cds * 60 - simSec;
+                if (d <= 0) { el.textContent = 'Underway — come up'; return }
+                const h = Math.floor(d / 3600), m = Math.floor(d % 3600 / 60);
+                el.textContent = h ? `Begins in ${h}h ${m}m ${pad(d % 60)}s` : `Begins in ${m}m ${pad(d % 60)}s`;
+            });
+            $$('[data-cdm]').forEach(el => {
+                const m = Math.round(+el.dataset.cdm - sim);
+                el.textContent = m <= 0 ? 'Starting now' : m < 60 ? `In ${m} min` : `In ${Math.floor(m / 60)}h ${m % 60}m`;
+            });
+        }, 1000);
+
+        /* ---------- init ---------- */
+        renderHeader(); renderTabs(); renderFilters(); renderHero(); renderRail(); renderFeed(); renderPill();
+    </script>
+</body>
+
+</html>
