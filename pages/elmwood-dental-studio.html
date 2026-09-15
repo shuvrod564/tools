@@ -1,0 +1,1207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Elmwood Dental Studio — Calm, modern dentistry in the Fern District</title>
+<meta name="description" content="Elmwood Dental Studio: gentle, modern dental care in the Fern District. Routine hygiene, cosmetic dentistry, clear aligners, implants — and a calm approach anxious patients swear by." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          pine: { 950:'#0B211E', 900:'#0E2A26', 800:'#12332F', 700:'#1B4A42', 600:'#2A5F54', 100:'#DCE8E1', 50:'#EEF4EF' },
+          sage: '#9CBBA9',
+          bone: { DEFAULT:'#F7F3EC', dark:'#EFE8DC' },
+          clay: { DEFAULT:'#C0532B', dark:'#9C3F1D', tint:'#F3E1D6' },
+          ink: '#182420',
+        },
+        fontFamily: {
+          display: ['Fraunces','Georgia','serif'],
+          sans: ['"Instrument Sans"','system-ui','sans-serif'],
+        },
+        boxShadow: {
+          card: '0 1px 2px rgba(14,42,38,.06), 0 12px 32px -12px rgba(14,42,38,.18)',
+          lift: '0 2px 4px rgba(14,42,38,.08), 0 24px 48px -16px rgba(14,42,38,.28)',
+        },
+      }
+    }
+  }
+</script>
+
+<style>
+  /* ---------- Base ---------- */
+  html { color-scheme: light; }
+  @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+  [id] { scroll-margin-top: 92px; }
+  ::selection { background:#C0532B; color:#F7F3EC; }
+  body { -webkit-font-smoothing: antialiased; }
+  .font-display, .h2 { font-optical-sizing: auto; }
+  :focus-visible { outline: 2px solid #C0532B; outline-offset: 2px; }
+
+  /* ---------- Type helpers ---------- */
+  .h2 {
+    font-family:'Fraunces',Georgia,serif; font-weight:500; letter-spacing:-0.02em;
+    font-size: clamp(1.9rem, 1.4rem + 2vw, 2.75rem); line-height:1.12; color:#12332F;
+  }
+  .h2-light { color:#F7F3EC; }
+  .eyebrow { font-size:.72rem; font-weight:700; letter-spacing:.22em; text-transform:uppercase; color:#C0532B; }
+  .eyebrow-light { color:#EFC7B2; }
+
+  /* ---------- Buttons ---------- */
+  .btn-clay {
+    display:inline-flex; align-items:center; gap:.5rem; background:#C0532B; color:#fff;
+    font-weight:600; border-radius:9999px; padding:.8rem 1.5rem; font-size:.95rem;
+    box-shadow:0 10px 22px -10px rgba(192,83,43,.55);
+    transition: background .2s ease, transform .15s ease;
+  }
+  .btn-clay:hover { background:#9C3F1D; transform:translateY(-1px); }
+  .btn-clay:active { transform:translateY(0); }
+  .btn-outline {
+    display:inline-flex; align-items:center; gap:.5rem; border:1px solid rgba(14,42,38,.28);
+    color:#12332F; font-weight:600; border-radius:9999px; padding:.8rem 1.5rem; font-size:.95rem; transition:.2s ease;
+  }
+  .btn-outline:hover { border-color:#12332F; background:#fff; }
+  .btn-ghost {
+    display:inline-flex; align-items:center; gap:.5rem; color:#12332F; font-weight:600;
+    border-radius:9999px; padding:.8rem 1.2rem; font-size:.95rem; transition:.2s ease;
+  }
+  .btn-ghost:hover { background:#fff; }
+  .btn-sm { padding:.55rem 1.15rem; font-size:.875rem; }
+
+  /* ---------- Form fields (on the pine booking card) ---------- */
+  .f-label { display:block; font-size:.8125rem; font-weight:600; color:rgba(247,243,236,.85); margin-bottom:.4rem; }
+  .f-input {
+    width:100%; border-radius:.75rem; background:#fff; border:1px solid transparent;
+    padding:.72rem 1rem; font:inherit; font-size:.925rem; color:#182420;
+    transition: border-color .2s, box-shadow .2s;
+  }
+  .f-input::placeholder { color:rgba(24,36,32,.35); }
+  .f-input:focus { outline:none; border-color:#C0532B; box-shadow:0 0 0 3px rgba(192,83,43,.22); }
+  .f-input[aria-invalid="true"] { border-color:#E8835B; box-shadow:0 0 0 3px rgba(232,131,91,.25); }
+  .f-err { display:none; margin-top:.4rem; font-size:.75rem; color:#FFC9AC; }
+  .f-err.show { display:block; }
+
+  /* ---------- Header states ---------- */
+  #site-header.is-scrolled { border-color:rgba(14,42,38,.1); box-shadow:0 10px 26px -22px rgba(14,42,38,.45); }
+
+  /* ---------- Scroll reveal ---------- */
+  .js .reveal { opacity:0; transform:translateY(18px); transition:opacity .7s ease, transform .7s cubic-bezier(.22,.61,.36,1); }
+  .js .reveal.is-in { opacity:1; transform:none; }
+
+  /* ---------- Line-draw animation (continuous-line illustration) ---------- */
+  .js .draw path { stroke-dasharray:1; stroke-dashoffset:1; }
+  .js .draw.go path { stroke-dashoffset:0; transition:stroke-dashoffset 1.3s cubic-bezier(.4,0,.2,1) .25s; }
+  .js .draw.go path:nth-child(2) { transition-delay:.7s; }
+  .js .draw.go path:nth-child(3) { transition-delay:1s; }
+  .js .draw.go path:nth-child(4) { transition-delay:1.25s; }
+
+  /* ---------- Accordion ---------- */
+  .acc-panel { max-height:0; overflow:hidden; transition:max-height .45s cubic-bezier(.22,.61,.36,1); }
+  .acc-btn[aria-expanded="true"] .acc-icon { transform:rotate(45deg); background:#12332F; border-color:#12332F; }
+  .acc-btn[aria-expanded="true"] .acc-icon svg { color:#F7F3EC; }
+  .acc-btn:hover .acc-icon { border-color:#12332F; }
+
+  /* ---------- Carousel / rotator content swaps ---------- */
+  #q-body, #sp-body { transition:opacity .22s ease, transform .22s ease; }
+  .swap-fading { opacity:0 !important; transform:translateY(8px); }
+
+  /* ---------- Reduced motion ---------- */
+  @media (prefers-reduced-motion: reduce) {
+    .js .reveal { opacity:1; transform:none; transition:none; }
+    .js .draw path { stroke-dasharray:none; stroke-dashoffset:0; transition:none; }
+    .acc-panel { transition:none; }
+    #q-body, #sp-body { transition:none; }
+  }
+</style>
+</head>
+
+<body class="bg-bone font-sans text-ink">
+<script>document.body.classList.add('js');</script>
+
+<a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-[80] focus:rounded-lg focus:bg-pine-800 focus:px-4 focus:py-2 focus:text-bone">Skip to content</a>
+
+<!-- ================= HEADER ================= -->
+<header id="site-header" class="sticky top-0 z-50 border-b border-transparent bg-bone/85 backdrop-blur transition-all">
+  <div class="mx-auto flex h-[72px] max-w-7xl items-center justify-between gap-6 px-5 lg:px-8">
+    <a href="#main" class="flex items-center gap-2.5" aria-label="Elmwood Dental Studio — home">
+      <!-- Line-art tooth mark. Swap for your logo assets when supplied. -->
+      <svg viewBox="0 0 160 170" class="h-7 w-7 shrink-0 text-clay" fill="none" stroke="currentColor" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M52 18 C30 18 20 44 26 72 C30 90 40 116 48 132 C52 141 62 140 64 130 L71 98 C73 89 85 89 87 98 L94 130 C96 140 106 141 110 132 C118 116 128 90 132 72 C138 44 128 18 106 18 C94 18 88 26 79 26 C70 26 64 18 52 18 Z"/>
+      </svg>
+      <span class="leading-none">
+        <span class="block font-display text-[1.3rem] font-semibold text-pine-800">Elmwood</span>
+        <span class="mt-0.5 block text-[9px] font-semibold uppercase tracking-[0.3em] text-ink/45">Dental Studio</span>
+      </span>
+    </a>
+
+    <nav class="hidden items-center gap-8 text-sm font-medium text-pine-800/75 lg:flex" aria-label="Primary">
+      <a class="decoration-2 underline-offset-8 transition hover:text-pine-800 hover:underline decoration-clay" href="#treatments">Treatments</a>
+      <a class="decoration-2 underline-offset-8 transition hover:text-pine-800 hover:underline decoration-clay" href="#approach">Our approach</a>
+      <a class="decoration-2 underline-offset-8 transition hover:text-pine-800 hover:underline decoration-clay" href="#reviews">Reviews</a>
+      <a class="decoration-2 underline-offset-8 transition hover:text-pine-800 hover:underline decoration-clay" href="#specials">Specials</a>
+      <a class="decoration-2 underline-offset-8 transition hover:text-pine-800 hover:underline decoration-clay" href="#contact">Visit us</a>
+    </nav>
+
+    <div class="flex items-center gap-3">
+      <a href="tel:+15550142210" class="hidden items-center gap-2 text-sm font-semibold text-pine-800 md:flex">
+        <i data-lucide="phone" class="h-4 w-4 text-clay"></i>(555) 014-2210
+      </a>
+      <a href="#booking" class="btn-clay btn-sm hidden sm:inline-flex">Book a visit</a>
+      <button id="menu-btn" class="grid h-10 w-10 place-items-center rounded-full border border-pine-900/15 text-pine-800 lg:hidden" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">
+        <i data-lucide="menu" class="menu-open h-5 w-5"></i>
+        <i data-lucide="x" class="menu-close hidden h-5 w-5"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile drawer -->
+  <div id="mobile-menu" class="hidden border-t border-pine-900/10 bg-bone lg:hidden">
+    <nav class="mx-auto flex max-w-7xl flex-col px-5 py-3 text-[15px] font-medium text-pine-800" aria-label="Mobile">
+      <a class="m-link border-b border-pine-900/5 py-3.5" href="#treatments">Treatments</a>
+      <a class="m-link border-b border-pine-900/5 py-3.5" href="#approach">Our approach</a>
+      <a class="m-link border-b border-pine-900/5 py-3.5" href="#reviews">Reviews</a>
+      <a class="m-link border-b border-pine-900/5 py-3.5" href="#specials">Specials</a>
+      <a class="m-link border-b border-pine-900/5 py-3.5" href="#contact">Visit us</a>
+      <a class="m-link py-3.5 font-semibold text-clay" href="#booking">Book a visit</a>
+      <a class="flex items-center gap-2 pb-4 pt-1 text-pine-800/70" href="tel:+15550142210"><i data-lucide="phone" class="h-4 w-4"></i>(555) 014-2210</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ================= HERO + BOOKING (above the fold) ================= -->
+  <section class="relative overflow-hidden">
+    <!-- Continuous-line tooth illustration: draws itself in. Sage on bone, quiet by design. -->
+    <svg class="draw pointer-events-none absolute -left-10 -top-12 z-0 hidden w-[300px] select-none text-sage/60 md:block lg:w-[380px]" viewBox="0 0 160 170" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path pathLength="1" d="M52 18 C30 18 20 44 26 72 C30 90 40 116 48 132 C52 141 62 140 64 130 L71 98 C73 89 85 89 87 98 L94 130 C96 140 106 141 110 132 C118 116 128 90 132 72 C138 44 128 18 106 18 C94 18 88 26 79 26 C70 26 64 18 52 18 Z"/>
+      <path pathLength="1" d="M18 150 C30 138 44 132 60 130"/>
+      <path pathLength="1" d="M34 141 C29 133 31 124 40 119 C45 128 42 137 34 141"/>
+      <path pathLength="1" d="M50 133 C47 125 50 117 58 113 C62 121 58 129 50 133"/>
+    </svg>
+
+    <div class="relative mx-auto max-w-7xl px-5 pb-12 pt-9 lg:px-8 lg:pb-16 lg:pt-14">
+      <div class="grid items-center gap-10 lg:grid-cols-12 lg:gap-12">
+
+        <!-- Copy -->
+        <div class="reveal relative z-10 lg:col-span-7">
+          <span class="inline-flex items-center gap-2 rounded-full border border-pine-900/15 bg-white/70 px-3.5 py-1.5 text-xs font-semibold text-pine-700">
+            <span class="relative flex h-2 w-2">
+              <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-sage opacity-75 motion-reduce:hidden"></span>
+              <span class="relative inline-flex h-2 w-2 rounded-full bg-pine-600"></span>
+            </span>
+            Now welcoming new patients
+          </span>
+
+          <h1 class="mt-6 max-w-xl font-display text-[2.5rem] font-medium leading-[1.05] tracking-tight text-pine-800 sm:text-6xl lg:text-[4rem]">
+            Dentistry, <em class="font-normal italic text-pine-700">minus the</em>
+            <span class="relative inline-block">dread.<svg class="draw absolute -bottom-2 left-0 h-3 w-full text-clay" viewBox="0 0 100 10" preserveAspectRatio="none" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path pathLength="1" d="M2 7 C 18 3 34 9 50 6 C 66 3 84 8 98 5"/></svg></span>
+          </h1>
+
+          <p class="mt-6 max-w-lg text-lg leading-relaxed text-ink/70">
+            Elmwood is a calm, modern practice in the Fern District — gentle hands, printed
+            pricing, and honest advice. Routine care to full smile restoration, we take the
+            time to do it properly.
+          </p>
+
+          <div class="mt-8 flex flex-wrap gap-3">
+            <a href="#booking" class="btn-clay">Book an appointment<i data-lucide="arrow-right" class="h-4 w-4"></i></a>
+            <a href="tel:+15550142210" class="btn-outline"><i data-lucide="phone" class="h-4 w-4"></i>(555) 014-2210</a>
+          </div>
+
+          <ul class="mt-9 flex flex-wrap gap-x-7 gap-y-2.5 text-sm text-ink/65">
+            <li class="flex items-center gap-2">
+              <i data-lucide="star" class="h-4 w-4 fill-clay text-clay"></i>4.9 · 312 Google reviews
+            </li>
+            <li class="flex items-center gap-2">
+              <i data-lucide="clock" class="h-4 w-4 text-pine-600"></i>Evening &amp; Saturday hours
+            </li>
+            <li class="flex items-center gap-2">
+              <i data-lucide="shield-check" class="h-4 w-4 text-pine-600"></i>Most PPO insurance accepted
+            </li>
+          </ul>
+        </div>
+
+        <!-- Booking form card -->
+        <div class="reveal lg:col-span-5" style="transition-delay:.12s">
+          <div id="booking" class="rounded-3xl bg-pine-800 p-6 text-bone shadow-lift sm:p-8">
+            <div class="flex items-start justify-between gap-4">
+              <div>
+                <h2 class="font-display text-2xl font-medium">Request an appointment</h2>
+                <p class="mt-1 text-sm text-bone/65">We confirm by text within one business hour.</p>
+              </div>
+              <span class="mt-1 inline-flex shrink-0 items-center gap-1.5 rounded-full border border-bone/20 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-bone/70">
+                <i data-lucide="timer" class="h-3.5 w-3.5 text-sage"></i>30 sec
+              </span>
+            </div>
+
+            <form id="booking-form" class="mt-6" novalidate>
+              <div class="grid gap-4 sm:grid-cols-2">
+                <div>
+                  <label for="bf-name" class="f-label">Full name</label>
+                  <input id="bf-name" name="name" type="text" autocomplete="name" placeholder="Alex Rivera" class="f-input" />
+                  <p class="f-err" data-err>Please tell us your name.</p>
+                </div>
+                <div>
+                  <label for="bf-phone" class="f-label">Phone</label>
+                  <input id="bf-phone" name="phone" type="tel" autocomplete="tel" placeholder="(555) 000-0000" class="f-input" />
+                  <p class="f-err" data-err>That phone number looks off — mind checking it?</p>
+                </div>
+                <div>
+                  <label for="bf-service" class="f-label">Treatment</label>
+                  <div class="relative">
+                    <select id="bf-service" name="service" class="f-input appearance-none pr-10">
+                      <option value="" selected>Choose a treatment</option>
+                      <option>Check-up &amp; hygiene</option>
+                      <option>Cosmetic whitening</option>
+                      <option>Clear aligners</option>
+                      <option>Implants &amp; crowns</option>
+                      <option>Emergency visit</option>
+                      <option>Kids &amp; family</option>
+                      <option>Not sure yet</option>
+                    </select>
+                    <i data-lucide="chevron-down" class="pointer-events-none absolute right-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-pine-700"></i>
+                  </div>
+                  <p class="f-err" data-err>Pick the closest fit — “Not sure yet” works too.</p>
+                </div>
+                <div>
+                  <label for="bf-date" class="f-label">Preferred date</label>
+                  <input id="bf-date" name="date" type="date" class="f-input" />
+                  <p class="f-err" data-err>Choose today or a future date.</p>
+                </div>
+              </div>
+
+              <fieldset class="mt-4">
+                <legend class="f-label">Preferred time</legend>
+                <div class="grid grid-cols-3 gap-2">
+                  <label class="cursor-pointer">
+                    <input type="radio" name="time" value="Morning" class="peer sr-only" checked />
+                    <span class="block rounded-full border border-bone/30 px-3 py-2 text-center text-sm font-medium text-bone/80 transition peer-checked:border-bone peer-checked:bg-bone peer-checked:text-pine-800 peer-focus-visible:ring-2 peer-focus-visible:ring-clay">Morning</span>
+                  </label>
+                  <label class="cursor-pointer">
+                    <input type="radio" name="time" value="Afternoon" class="peer sr-only" />
+                    <span class="block rounded-full border border-bone/30 px-3 py-2 text-center text-sm font-medium text-bone/80 transition peer-checked:border-bone peer-checked:bg-bone peer-checked:text-pine-800 peer-focus-visible:ring-2 peer-focus-visible:ring-clay">Afternoon</span>
+                  </label>
+                  <label class="cursor-pointer">
+                    <input type="radio" name="time" value="Evening" class="peer sr-only" />
+                    <span class="block rounded-full border border-bone/30 px-3 py-2 text-center text-sm font-medium text-bone/80 transition peer-checked:border-bone peer-checked:bg-bone peer-checked:text-pine-800 peer-focus-visible:ring-2 peer-focus-visible:ring-clay">Evening</span>
+                  </label>
+                </div>
+              </fieldset>
+
+              <button type="submit" class="btn-clay mt-5 w-full justify-center">Request appointment<i data-lucide="arrow-right" class="h-4 w-4"></i></button>
+              <p class="mt-3.5 flex items-center justify-center gap-1.5 text-center text-xs text-bone/50">
+                <i data-lucide="lock" class="h-3 w-3"></i>No payment now · free to reschedule · your details stay with us
+              </p>
+            </form>
+
+            <!-- Success state (swapped in by JS) -->
+            <div id="booking-success" class="hidden py-6 text-center" role="status">
+              <span class="mx-auto mb-4 grid h-14 w-14 place-items-center rounded-full bg-bone/10">
+                <i data-lucide="calendar-check" class="h-7 w-7 text-sage"></i>
+              </span>
+              <h3 class="font-display text-2xl text-bone">Request received</h3>
+              <p id="booking-summary" class="mt-2 text-sm text-bone/70"></p>
+              <p class="mt-1 text-sm text-bone/70">We’ll text you within one business hour to confirm.</p>
+              <button id="booking-again" type="button" class="mt-5 text-sm font-semibold text-[#EFC7B2] underline underline-offset-4 transition hover:text-bone">Make another request</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SERVICES SNAPSHOT (above the fold) ================= -->
+  <section aria-label="Our services at a glance" class="border-y border-pine-900/10 bg-bone/70">
+    <div class="mx-auto flex max-w-7xl flex-wrap items-center gap-x-6 gap-y-3 px-5 py-5 lg:px-8">
+      <span class="font-display text-lg italic text-pine-700">What we do —</span>
+
+      <a href="#treatments" class="group inline-flex items-center gap-2 text-sm font-semibold text-pine-800 transition hover:text-clay">
+        <i data-lucide="shield-check" class="h-4 w-4 text-clay"></i>Preventive care
+        <i data-lucide="arrow-up-right" class="h-3.5 w-3.5 opacity-0 transition group-hover:opacity-100"></i>
+      </a>
+      <span class="hidden h-1 w-1 rounded-full bg-sage sm:block" aria-hidden="true"></span>
+      <a href="#treatments" class="group inline-flex items-center gap-2 text-sm font-semibold text-pine-800 transition hover:text-clay">
+        <i data-lucide="sparkles" class="h-4 w-4 text-clay"></i>Cosmetic
+        <i data-lucide="arrow-up-right" class="h-3.5 w-3.5 opacity-0 transition group-hover:opacity-100"></i>
+      </a>
+      <span class="hidden h-1 w-1 rounded-full bg-sage sm:block" aria-hidden="true"></span>
+      <a href="#treatments" class="group inline-flex items-center gap-2 text-sm font-semibold text-pine-800 transition hover:text-clay">
+        <i data-lucide="chevrons-left-right" class="h-4 w-4 text-clay"></i>Clear aligners
+        <i data-lucide="arrow-up-right" class="h-3.5 w-3.5 opacity-0 transition group-hover:opacity-100"></i>
+      </a>
+      <span class="hidden h-1 w-1 rounded-full bg-sage sm:block" aria-hidden="true"></span>
+      <a href="#treatments" class="group inline-flex items-center gap-2 text-sm font-semibold text-pine-800 transition hover:text-clay">
+        <i data-lucide="anchor" class="h-4 w-4 text-clay"></i>Implants
+        <i data-lucide="arrow-up-right" class="h-3.5 w-3.5 opacity-0 transition group-hover:opacity-100"></i>
+      </a>
+      <span class="hidden h-1 w-1 rounded-full bg-sage sm:block" aria-hidden="true"></span>
+      <a href="#treatments" class="group inline-flex items-center gap-2 text-sm font-semibold text-pine-800 transition hover:text-clay">
+        <i data-lucide="siren" class="h-4 w-4 text-clay"></i>Emergencies
+        <i data-lucide="arrow-up-right" class="h-3.5 w-3.5 opacity-0 transition group-hover:opacity-100"></i>
+      </a>
+      <span class="hidden h-1 w-1 rounded-full bg-sage sm:block" aria-hidden="true"></span>
+      <a href="#treatments" class="group inline-flex items-center gap-2 text-sm font-semibold text-pine-800 transition hover:text-clay">
+        <i data-lucide="baby" class="h-4 w-4 text-clay"></i>Kids &amp; family
+        <i data-lucide="arrow-up-right" class="h-3.5 w-3.5 opacity-0 transition group-hover:opacity-100"></i>
+      </a>
+    </div>
+  </section>
+
+  <!-- ================= APPROACH ================= -->
+  <section id="approach" class="py-20 lg:py-28">
+    <div class="mx-auto grid max-w-7xl items-center gap-14 px-5 lg:grid-cols-12 lg:px-8">
+      <div class="reveal relative lg:col-span-5">
+        <!-- Placeholder — replace with a real practice photo (portrait, ≥1200px wide) -->
+        <img src="https://picsum.photos/seed/elmwood-studio/840/1050.jpg" alt="The reception area at Elmwood Dental Studio" width="840" height="1050" loading="lazy" class="aspect-[4/5] w-full rounded-3xl object-cover" />
+        <div class="absolute -bottom-6 left-5 rounded-2xl bg-white p-5 shadow-card sm:left-8">
+          <p class="font-display text-3xl font-medium text-pine-800">12 yrs</p>
+          <p class="mt-0.5 max-w-[180px] text-xs leading-relaxed text-ink/55">on Alder Street — independent &amp; locally owned</p>
+        </div>
+      </div>
+
+      <div class="reveal lg:col-span-6 lg:col-start-7">
+        <p class="eyebrow">Why Elmwood</p>
+        <h2 class="h2 mt-3">Slow dentistry, done properly.</h2>
+        <p class="mt-5 max-w-xl leading-relaxed text-ink/70">
+          Most dental problems start as small ones nobody had time to explain. So we flipped
+          the usual rush: longer first visits, plain language, and a plan you approve before
+          anything happens in your mouth.
+        </p>
+
+        <ol class="mt-9 border-t border-pine-900/10">
+          <li class="flex gap-5 border-b border-pine-900/10 py-5">
+            <span class="w-8 shrink-0 font-display text-lg text-clay">01</span>
+            <div>
+              <h3 class="font-semibold text-pine-800">Listen first</h3>
+              <p class="mt-1 text-sm leading-relaxed text-ink/65">Your first visit is a 50-minute conversation — history, worries, goals. No chair time unless you want it.</p>
+            </div>
+          </li>
+          <li class="flex gap-5 border-b border-pine-900/10 py-5">
+            <span class="w-8 shrink-0 font-display text-lg text-clay">02</span>
+            <div>
+              <h3 class="font-semibold text-pine-800">Show, then tell</h3>
+              <p class="mt-1 text-sm leading-relaxed text-ink/65">An intraoral camera puts what we see on a screen, and you leave with printed options and prices — not a surprise.</p>
+            </div>
+          </li>
+          <li class="flex gap-5 border-b border-pine-900/10 py-5">
+            <span class="w-8 shrink-0 font-display text-lg text-clay">03</span>
+            <div>
+              <h3 class="font-semibold text-pine-800">Treat gently</h3>
+              <p class="mt-1 text-sm leading-relaxed text-ink/65">Numbing that actually numbs, sedation for the white-knucklers, and breaks whenever you raise a hand.</p>
+            </div>
+          </li>
+        </ol>
+
+        <p class="mt-6 max-w-md font-display text-lg italic leading-relaxed text-pine-700">
+          Nervous patients are our speciality — the first visit can be a chat in the lounge, no chair required.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TREATMENTS INDEX ================= -->
+  <section id="treatments" class="bg-bone-dark py-20 lg:py-28">
+    <div class="mx-auto max-w-7xl px-5 lg:px-8">
+      <div class="reveal mb-10 flex flex-wrap items-end justify-between gap-6">
+        <div>
+          <p class="eyebrow">Treatments</p>
+          <h2 class="h2 mt-3 max-w-xl">From a scale-and-polish to a full rebuild.</h2>
+        </div>
+        <p class="hidden max-w-xs text-sm leading-relaxed text-ink/55 md:block">Prices are honest ranges, not bait. You’ll always get a printed quote before anything begins.</p>
+      </div>
+
+      <div class="reveal border-t border-pine-900/15">
+
+        <!-- 01 -->
+        <div class="border-b border-pine-900/15">
+          <button class="acc-btn group flex w-full items-center gap-4 py-6 text-left lg:gap-8" aria-expanded="false" aria-controls="panel-1" id="acc-1">
+            <span class="w-8 shrink-0 font-display text-lg text-sage">01</span>
+            <span class="flex-1">
+              <span class="block font-display text-xl text-pine-800 transition-colors group-hover:text-clay lg:text-2xl">Preventive care</span>
+              <span class="mt-1 block text-sm text-ink/55">Hygiene visits, exams, digital X-rays, oral-cancer screening</span>
+            </span>
+            <span class="hidden whitespace-nowrap text-sm text-ink/50 sm:block">from $120</span>
+            <span class="acc-icon grid h-9 w-9 shrink-0 place-items-center rounded-full border border-pine-900/20 transition-all duration-300">
+              <i data-lucide="plus" class="h-4 w-4 text-pine-700"></i>
+            </span>
+          </button>
+          <div class="acc-panel" id="panel-1" role="region" aria-labelledby="acc-1">
+            <div class="grid gap-8 pb-8 pl-12 md:grid-cols-[1fr,230px] lg:pl-16">
+              <p class="max-w-xl leading-relaxed text-ink/75">The unglamorous work that keeps everything else cheap. Our hygienists are gentle, thorough, and genuinely chatty if you want company — silent if you don’t. Every exam includes low-dose digital X-rays and an oral-cancer screening.</p>
+              <div>
+                <ul class="space-y-2 text-sm text-ink/70">
+                  <li class="flex items-start gap-2"><i data-lucide="check" class="mt-0.5 h-4 w-4 shrink-0 text-clay"></i>45-minute hygiene visit</li>
+                  <li class="flex items-start gap-2"><i data-lucide="check" class="mt-0.5 h-4 w-4 shrink-0 text-clay"></i>Digital X-rays &amp; photos</li>
+                  <li class="flex items-start gap-2"><i data-lucide="check" class="mt-0.5 h-4 w-4 shrink-0 text-clay"></i>Printed home-care plan</li>
+                </ul>
+                <a href="#booking" data-book="Check-up &amp; hygiene" class="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-clay underline-offset-4 hover:underline">Book this treatment<i data-lucide="arrow-right" class="h-4 w-4"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 02 -->
+        <div class="border-b border-pine-900/15">
+          <button class="acc-btn group flex w-full items-center gap-4 py-6 text-left lg:gap-8" aria-expanded="false" aria-controls="panel-2" id="acc-2">
+            <span class="w-8 shrink-0 font-display text-lg text-sage">02</span>
+            <span class="flex-1">
+              <span class="block font-display text-xl text-pine-800 transition-colors group-hover:text-clay lg:text-2xl">Cosmetic dentistry</span>
+              <span class="mt-1 block text-sm text-ink/55">Whitening, veneers, composite bonding</span>
+            </span>
+            <span class="hidden whitespace-nowrap text-sm text-ink/50 sm:block">from $290</span>
+            <span class="acc-icon grid h-9 w-9 shrink-0 place-items-center rounded-full border border-pine-900/20 transition-all duration-300">
+              <i data-lucide="plus" class="h-4 w-4 text-pine-700"></i>
+            </span>
+          </button>
+          <div class="acc-panel" id="panel-2" role="region" aria-labelledby="acc-2">
+            <div class="grid gap-8 pb-8 pl-12 md:grid-cols-[1fr,230px] lg:pl-16">
+              <p class="max-w-xl leading-relaxed text-ink/75">We aim for “rested and healthy”, not “TV white”. Whitening starts with a gum-protected in-chair session or a custom take-home kit; bonding and veneers are hand-layered and shade-matched by Dr. Osei, who is famously fussy about this.</p>
+              <div>
+                <ul class="space-y-2 text-sm text-ink/70">
+                  <li class="flex items-start gap-2"><i data-lucide="check" class="mt-0.5 h-4 w-4 shrink-0 text-clay"></i>In-chair or take-home whitening</li>
+                  <li class="flex items-start gap-2"><i data-lucide="check" class="mt-0.5 h-4 w-4 shrink-0 text-clay"></i>Hand-finished bonding &amp; veneers</li>
+                  <li class="flex items-start gap-2"><i data-lucide="check" class="mt-0.5 h-4 w-4 shrink-0 text-clay"></i>Full smile preview before we start</li>
+                </ul>
+                <a href="#booking" data-book="Cosmetic whitening" class="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-clay underline-offset-4 hover:underline">Book this treatment<i data-lucide="arrow-right" class="h-4 w-4"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 03 -->
+        <div class="border-b border-pine-900/15">
+          <button class="acc-btn group flex w-full items-center gap-4 py-6 text-left lg:gap-8" aria-expanded="false" aria-controls="panel-3" id="acc-3">
+            <span class="w-8 shrink-0 font-display text-lg text-sage">03</span>
+            <span class="flex-1">
+              <span class="block font-display text-xl text-pine-800 transition-colors group-hover:text-clay lg:text-2xl">Clear aligners</span>
+              <span class="mt-1 block text-sm text-ink/55">Invisalign® &amp; retainers, with a free 3D preview</span>
+            </span>
+            <span class="hidden whitespace-nowrap text-sm text-ink/50 sm:block">free consult</span>
+            <span class="acc-icon grid h-9 w-9 shrink-0 place-items-center rounded-full border border-pine-900/20 transition-all duration-300">
+              <i data-lucide="plus" class="h-4 w-4 text-pine-700"></i>
+            </span>
+          </button>
+          <div class="acc-panel" id="panel-3" role="region" aria-labelledby="acc-3">
+            <div class="grid gap-8 pb-8 pl-12 md:grid-cols-[1fr,230px] lg:pl-16">
+              <p class="max-w-xl leading-relaxed text-ink/75">A 3D scan shows your end result before you spend a cent. Most adult cases run 6–14 months, with check-ins every six weeks — remote where possible, so your calendar stays mostly intact.</p>
+              <div>
+                <ul class="space-y-2 text-sm text-ink/70">
+                  <li class="flex items-start gap-2"><i data-lucide="check" class="mt-0.5 h-4 w-4 shrink-0 text-clay"></i>3D smile simulation</li>
+                  <li class="flex items-start gap-2"><i data-lucide="check" class="mt-0.5 h-4 w-4 shrink-0 text-clay"></i>6–14 month typical plans</li>
+                  <li class="flex items-start gap-2"><i data-lucide="check" class="mt-0.5 h-4 w-4 shrink-0 text-clay"></i>Retainers included</li>
+                </ul>
+                <a href="#booking" data-book="Clear aligners" class="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-clay underline-offset-4 hover:underline">Book this treatment<i data-lucide="arrow-right" class="h-4 w-4"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 04 -->
+        <div class="border-b border-pine-900/15">
+          <button class="acc-btn group flex w-full items-center gap-4 py-6 text-left lg:gap-8" aria-expanded="false" aria-controls="panel-4" id="acc-4">
+            <span class="w-8 shrink-0 font-display text-lg text-sage">04</span>
+            <span class="flex-1">
+              <span class="block font-display text-xl text-pine-800 transition-colors group-hover:text-clay lg:text-2xl">Implants &amp; restoration</span>
+              <span class="mt-1 block text-sm text-ink/55">Crowns, bridges, single and full-arch implants</span>
+            </span>
+            <span class="hidden whitespace-nowrap text-sm text-ink/50 sm:block">from $1,850</span>
+            <span class="acc-icon grid h-9 w-9 shrink-0 place-items-center rounded-full border border-pine-900/20 transition-all duration-300">
+              <i data-lucide="plus" class="h-4 w-4 text-pine-700"></i>
+            </span>
+          </button>
+          <div class="acc-panel" id="panel-4" role="region" aria-labelledby="acc-4">
+            <div class="grid gap-8 pb-8 pl-12 md:grid-cols-[1fr,230px] lg:pl-16">
+              <p class="max-w-xl leading-relaxed text-ink/75">From one chipped crown to full-arch implant work, planned with our in-house cone-beam scanner so there are no surprises — surgical guides are printed on-site the same week as your plan.</p>
+              <div>
+                <ul class="space-y-2 text-sm text-ink/70">
+                  <li class="flex items-start gap-2"><i data-lucide="check" class="mt-0.5 h-4 w-4 shrink-0 text-clay"></i>3D cone-beam planning</li>
+                  <li class="flex items-start gap-2"><i data-lucide="check" class="mt-0.5 h-4 w-4 shrink-0 text-clay"></i>Same-week surgical guides</li>
+                  <li class="flex items-start gap-2"><i data-lucide="check" class="mt-0.5 h-4 w-4 shrink-0 text-clay"></i>10-year implant warranty</li>
+                </ul>
+                <a href="#booking" data-book="Implants &amp; crowns" class="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-clay underline-offset-4 hover:underline">Book this treatment<i data-lucide="arrow-right" class="h-4 w-4"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 05 -->
+        <div class="border-b border-pine-900/15">
+          <button class="acc-btn group flex w-full items-center gap-4 py-6 text-left lg:gap-8" aria-expanded="false" aria-controls="panel-5" id="acc-5">
+            <span class="w-8 shrink-0 font-display text-lg text-sage">05</span>
+            <span class="flex-1">
+              <span class="block font-display text-xl text-pine-800 transition-colors group-hover:text-clay lg:text-2xl">Kids &amp; family</span>
+              <span class="mt-1 block text-sm text-ink/55">Ages 3+, deliberately gentle first visits</span>
+            </span>
+            <span class="hidden whitespace-nowrap text-sm text-ink/50 sm:block">from $95</span>
+            <span class="acc-icon grid h-9 w-9 shrink-0 place-items-center rounded-full border border-pine-900/20 transition-all duration-300">
+              <i data-lucide="plus" class="h-4 w-4 text-pine-700"></i>
+            </span>
+          </button>
+          <div class="acc-panel" id="panel-5" role="region" aria-labelledby="acc-5">
+            <div class="grid gap-8 pb-8 pl-12 md:grid-cols-[1fr,230px] lg:pl-16">
+              <p class="max-w-xl leading-relaxed text-ink/75">First visits are boring on purpose: a ride in the chair, a tooth count, maybe a sticker. We book siblings back-to-back, and the toy box in the corner has seen things.</p>
+              <div>
+                <ul class="space-y-2 text-sm text-ink/70">
+                  <li class="flex items-start gap-2"><i data-lucide="check" class="mt-0.5 h-4 w-4 shrink-0 text-clay"></i>No-rush first visits</li>
+                  <li class="flex items-start gap-2"><i data-lucide="check" class="mt-0.5 h-4 w-4 shrink-0 text-clay"></i>Back-to-back sibling slots</li>
+                  <li class="flex items-start gap-2"><i data-lucide="check" class="mt-0.5 h-4 w-4 shrink-0 text-clay"></i>Fluoride &amp; fissure sealants</li>
+                </ul>
+                <a href="#booking" data-book="Kids &amp; family" class="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-clay underline-offset-4 hover:underline">Book this treatment<i data-lucide="arrow-right" class="h-4 w-4"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= REVIEWS ================= -->
+  <section id="reviews" class="py-20 lg:py-28">
+    <div class="mx-auto grid max-w-7xl gap-12 px-5 lg:grid-cols-12 lg:px-8">
+      <div class="reveal lg:col-span-4">
+        <p class="eyebrow">Patient stories</p>
+        <h2 class="h2 mt-3">Kind words, unedited.</h2>
+        <div class="mt-6 flex items-center gap-2.5">
+          <span class="flex gap-0.5">
+            <i data-lucide="star" class="h-4 w-4 fill-clay text-clay"></i><i data-lucide="star" class="h-4 w-4 fill-clay text-clay"></i><i data-lucide="star" class="h-4 w-4 fill-clay text-clay"></i><i data-lucide="star" class="h-4 w-4 fill-clay text-clay"></i><i data-lucide="star" class="h-4 w-4 fill-clay text-clay"></i>
+          </span>
+          <span class="text-sm text-ink/60">4.9 average · 312 reviews</span>
+        </div>
+        <a class="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-pine-800 underline-offset-4 hover:underline" href="https://www.google.com/maps/search/?api=1&query=Elmwood+Dental+Studio" target="_blank" rel="noopener">
+          Read them all on Google<i data-lucide="arrow-up-right" class="h-4 w-4"></i>
+        </a>
+      </div>
+
+      <div class="reveal lg:col-span-7 lg:col-start-6">
+        <div aria-live="polite">
+          <div id="q-body">
+            <span aria-hidden="true" class="block select-none font-display text-7xl leading-[0.6] text-clay/50">“</span>
+            <blockquote id="q-text" class="mt-5 font-display text-2xl leading-snug text-pine-800 sm:text-[1.7rem]"></blockquote>
+            <div class="mt-8 flex items-center gap-4">
+              <span id="q-initial" class="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-pine-50 font-display text-lg text-pine-700"></span>
+              <div class="min-w-0">
+                <p id="q-name" class="font-semibold text-pine-800"></p>
+                <p id="q-meta" class="truncate text-sm text-ink/55"></p>
+              </div>
+              <span class="ml-auto hidden shrink-0 gap-0.5 sm:flex" aria-hidden="true">
+                <i data-lucide="star" class="h-4 w-4 fill-clay text-clay"></i><i data-lucide="star" class="h-4 w-4 fill-clay text-clay"></i><i data-lucide="star" class="h-4 w-4 fill-clay text-clay"></i><i data-lucide="star" class="h-4 w-4 fill-clay text-clay"></i><i data-lucide="star" class="h-4 w-4 fill-clay text-clay"></i>
+              </span>
+            </div>
+          </div>
+
+          <div class="mt-9 flex items-center gap-5 border-t border-pine-900/10 pt-6">
+            <div class="flex gap-2">
+              <button id="q-prev" class="grid h-10 w-10 place-items-center rounded-full border border-pine-900/20 text-pine-700 transition hover:border-pine-800 hover:bg-pine-800 hover:text-bone" aria-label="Previous story"><i data-lucide="chevron-left" class="h-4 w-4"></i></button>
+              <button id="q-next" class="grid h-10 w-10 place-items-center rounded-full border border-pine-900/20 text-pine-700 transition hover:border-pine-800 hover:bg-pine-800 hover:text-bone" aria-label="Next story"><i data-lucide="chevron-right" class="h-4 w-4"></i></button>
+            </div>
+            <div id="q-dots" class="flex gap-2"></div>
+            <span id="q-count" class="ml-auto text-sm tabular-nums text-ink/50"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SPECIALS (rotating) ================= -->
+  <section id="specials" class="bg-pine-800 py-20 text-bone lg:py-28">
+    <div class="mx-auto grid max-w-7xl items-center gap-12 px-5 lg:grid-cols-12 lg:px-8">
+      <div class="reveal lg:col-span-5">
+        <p class="eyebrow eyebrow-light">Patient specials</p>
+        <h2 class="h2 h2-light mt-3">Good news, monthly.</h2>
+        <p class="mt-5 max-w-md leading-relaxed text-bone/70">
+          Real offers on real treatments — no fine-print traps. One redemption per patient,
+          and you can claim any of them right here on this page.
+        </p>
+
+        <div class="mt-9 flex items-center gap-5">
+          <div class="flex gap-2">
+            <button id="sp-prev" class="grid h-10 w-10 place-items-center rounded-full border border-bone/25 text-bone transition hover:border-bone hover:bg-bone hover:text-pine-800" aria-label="Previous special"><i data-lucide="chevron-left" class="h-4 w-4"></i></button>
+            <button id="sp-next" class="grid h-10 w-10 place-items-center rounded-full border border-bone/25 text-bone transition hover:border-bone hover:bg-bone hover:text-pine-800" aria-label="Next special"><i data-lucide="chevron-right" class="h-4 w-4"></i></button>
+          </div>
+          <div id="sp-dots" class="flex gap-2"></div>
+          <span id="sp-count" class="ml-1 text-sm tabular-nums text-bone/50"></span>
+        </div>
+
+        <p class="mt-7 max-w-sm text-xs leading-relaxed text-bone/45">
+          Offers can’t be combined with insurance claims. Ask us which route saves you more — we’ll tell you honestly.
+        </p>
+      </div>
+
+      <div class="reveal lg:col-span-7">
+        <div id="sp-stage" class="relative min-h-[400px] overflow-hidden rounded-3xl border border-bone/10 bg-pine-700 p-7 sm:p-10 lg:min-h-[370px]">
+          <!-- Auto-advance progress -->
+          <div class="absolute inset-x-0 top-0 h-[3px] bg-bone/10" aria-hidden="true">
+            <div id="sp-bar" class="h-full w-full origin-left scale-x-0 bg-clay"></div>
+          </div>
+
+          <div id="sp-body" aria-live="polite">
+            <p id="sp-tag" class="text-xs font-bold uppercase tracking-[0.22em] text-sage"></p>
+            <h3 id="sp-title" class="mt-3 font-display text-3xl font-medium sm:text-4xl"></h3>
+            <p id="sp-desc" class="mt-4 max-w-lg leading-relaxed text-bone/75"></p>
+            <div class="mt-6 flex flex-wrap items-baseline gap-3">
+              <span id="sp-price" class="font-display text-5xl text-[#EFC7B2]"></span>
+              <span id="sp-reg" class="text-sm text-bone/50"></span>
+            </div>
+            <p id="sp-terms" class="mt-5 max-w-lg text-xs leading-relaxed text-bone/55"></p>
+            <div class="mt-8 flex flex-wrap items-center gap-4">
+              <span class="inline-flex items-center gap-2 rounded-full border border-bone/20 px-3.5 py-1.5 text-xs text-bone/75">
+                <i data-lucide="calendar-days" class="h-3.5 w-3.5 text-sage"></i><span id="sp-valid"></span>
+              </span>
+              <button id="sp-claim" class="btn-clay btn-sm">Claim this offer</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= VISIT / CONTACT ================= -->
+  <section id="contact" class="py-20 lg:py-28">
+    <div class="mx-auto grid max-w-7xl gap-12 px-5 lg:grid-cols-2 lg:px-8">
+      <div class="reveal">
+        <p class="eyebrow">Visit us</p>
+        <h2 class="h2 mt-3">Come say hi.</h2>
+
+        <ul class="mt-8 space-y-4 text-[15px]">
+          <li class="flex items-start gap-3">
+            <i data-lucide="map-pin" class="mt-0.5 h-5 w-5 shrink-0 text-clay"></i>
+            <span class="text-ink/80">214 Alder Street, Suite 3<br />Fern District, Portland, OR</span>
+          </li>
+          <li class="flex items-center gap-3">
+            <i data-lucide="phone" class="h-5 w-5 shrink-0 text-clay"></i>
+            <a href="tel:+15550142210" class="font-semibold text-pine-800 underline-offset-4 hover:underline">(555) 014-2210</a>
+          </li>
+          <li class="flex items-center gap-3">
+            <i data-lucide="mail" class="h-5 w-5 shrink-0 text-clay"></i>
+            <a href="mailto:hello@elmwooddental.com" class="text-pine-800 underline-offset-4 hover:underline">hello@elmwooddental.com</a>
+          </li>
+        </ul>
+
+        <a class="btn-outline mt-7" href="https://www.google.com/maps/search/?api=1&query=214+Alder+Street+Portland+OR" target="_blank" rel="noopener">
+          Get directions<i data-lucide="arrow-up-right" class="h-4 w-4"></i>
+        </a>
+
+        <div class="mt-9 flex items-start gap-3 rounded-2xl border border-pine-900/15 bg-white/60 p-5 text-sm leading-relaxed text-ink/70">
+          <i data-lucide="shield-check" class="mt-0.5 h-5 w-5 shrink-0 text-pine-600"></i>
+          <p>In-network with most PPO plans — Delta, Cigna, Aetna, MetLife. No insurance? Our membership plan covers two visits a year for $29/month. Ask at the desk.</p>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <div class="rounded-3xl bg-white p-6 shadow-card sm:p-8">
+          <div class="flex flex-wrap items-center justify-between gap-3">
+            <h3 class="font-display text-2xl text-pine-800">Hours</h3>
+            <span id="open-pill" class="inline-flex items-center gap-2 rounded-full bg-pine-50 px-3 py-1.5 text-xs font-semibold text-pine-700">
+              <span id="open-dot" class="h-2 w-2 rounded-full bg-pine-600"></span>
+              <span id="open-text">…</span>
+            </span>
+          </div>
+          <dl id="hours-list" class="mt-5"></dl>
+
+          <div class="mt-7 flex items-start gap-3 rounded-2xl bg-clay-tint p-4 text-sm leading-relaxed text-ink/80">
+            <i data-lucide="siren" class="mt-0.5 h-5 w-5 shrink-0 text-clay"></i>
+            <p><strong class="font-semibold text-pine-800">Dental emergency?</strong> Call the number above any time — after-hours guidance is on our voicemail, and we keep same-day slots for urgent cases.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= STYLE GUIDE APPENDIX (remove before launch) ================= -->
+  <section id="style-guide" class="border-t border-pine-900/10 bg-bone-dark py-16 lg:py-24 hidden">
+    <div class="mx-auto max-w-7xl px-5 lg:px-8">
+      <div class="flex flex-wrap items-start justify-between gap-6">
+        <div class="max-w-xl">
+          <p class="eyebrow">Appendix — for your team</p>
+          <h2 class="h2 mt-3">Style guide</h2>
+          <p class="mt-4 text-sm leading-relaxed text-ink/60">
+            Every colour, type style and component on this page, documented. Delete this
+            whole section before launch — nothing above it depends on it.
+          </p>
+        </div>
+        <button id="sg-toggle" class="btn-outline btn-sm" aria-expanded="true" aria-controls="sg-body">
+          <span id="sg-toggle-label">Hide</span><i data-lucide="chevron-up" class="h-4 w-4 transition-transform" id="sg-chevron"></i>
+        </button>
+      </div>
+
+      <div id="sg-body" class="mt-12 space-y-14">
+
+        <!-- Colour -->
+        <div>
+          <h3 class="text-xs font-bold uppercase tracking-[0.22em] text-ink/50">01 · Colour</h3>
+          <div class="mt-5 grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4">
+            <div><div class="h-20 rounded-2xl border border-pine-900/10" style="background:#12332F"></div><p class="mt-2 text-sm font-semibold text-pine-800">Pine 800</p><p class="font-mono text-xs text-ink/50">#12332F · primary surfaces</p></div>
+            <div><div class="h-20 rounded-2xl border border-pine-900/10" style="background:#2A5F54"></div><p class="mt-2 text-sm font-semibold text-pine-800">Pine 600</p><p class="font-mono text-xs text-ink/50">#2A5F54 · links, hover states</p></div>
+            <div><div class="h-20 rounded-2xl border border-pine-900/10" style="background:#9CBBA9"></div><p class="mt-2 text-sm font-semibold text-pine-800">Sage</p><p class="font-mono text-xs text-ink/50">#9CBBA9 · illustration line, accents</p></div>
+            <div><div class="h-20 rounded-2xl border border-pine-900/10" style="background:#F7F3EC"></div><p class="mt-2 text-sm font-semibold text-pine-800">Bone</p><p class="font-mono text-xs text-ink/50">#F7F3EC · page background</p></div>
+            <div><div class="h-20 rounded-2xl border border-pine-900/10" style="background:#C0532B"></div><p class="mt-2 text-sm font-semibold text-pine-800">Clay</p><p class="font-mono text-xs text-ink/50">#C0532B · actions &amp; highlights</p></div>
+            <div><div class="h-20 rounded-2xl border border-pine-900/10" style="background:#F3E1D6"></div><p class="mt-2 text-sm font-semibold text-pine-800">Clay tint</p><p class="font-mono text-xs text-ink/50">#F3E1D6 · chips, callouts</p></div>
+            <div><div class="h-20 rounded-2xl border border-pine-900/10" style="background:#182420"></div><p class="mt-2 text-sm font-semibold text-pine-800">Ink</p><p class="font-mono text-xs text-ink/50">#182420 · body text</p></div>
+          </div>
+        </div>
+
+        <!-- Typography -->
+        <div>
+          <h3 class="text-xs font-bold uppercase tracking-[0.22em] text-ink/50">02 · Typography</h3>
+          <div class="mt-5 grid gap-5 lg:grid-cols-2">
+            <div class="rounded-2xl bg-white p-8">
+              <div class="flex items-baseline gap-5">
+                <span class="font-display text-6xl font-medium text-pine-800">Ag</span>
+                <div>
+                  <p class="font-display text-lg font-semibold text-pine-800">Fraunces</p>
+                  <p class="text-sm text-ink/55">Display · weights 500–600 · italic for warmth</p>
+                </div>
+              </div>
+              <p class="mt-5 font-display text-2xl text-pine-800">“Dentistry, minus the dread.”</p>
+              <ul class="mt-4 space-y-1 text-xs text-ink/55">
+                <li>H1 clamp(40 → 64px) · H2 clamp(30 → 44px) · H3 18–20px semibold</li>
+                <li>Quotes &amp; pull-lines in italic; numerals tabular where they count</li>
+              </ul>
+            </div>
+            <div class="rounded-2xl bg-white p-8">
+              <div class="flex items-baseline gap-5">
+                <span class="text-6xl font-semibold text-pine-800">Ag</span>
+                <div>
+                  <p class="text-lg font-semibold text-pine-800">Instrument Sans</p>
+                  <p class="text-sm text-ink/55">Body &amp; UI · 400 / 500 / 600</p>
+                </div>
+              </div>
+              <p class="mt-5 text-[15px] leading-relaxed text-ink/70">Body copy runs 15–18px at 1.6–1.65 line height. UI labels are 14px semibold; eyebrows are 11px caps with wide tracking.</p>
+              <ul class="mt-4 space-y-1 text-xs text-ink/55">
+                <li>Never underline body copy — underlines are reserved for links</li>
+                <li>Line length capped near 65 characters</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Iconography -->
+        <div>
+          <h3 class="text-xs font-bold uppercase tracking-[0.22em] text-ink/50">03 · Iconography</h3>
+          <div class="mt-5 flex flex-wrap gap-3">
+            <span class="grid h-12 w-12 place-items-center rounded-xl border border-pine-900/10 bg-white text-pine-700"><i data-lucide="shield-check" class="h-5 w-5"></i></span>
+            <span class="grid h-12 w-12 place-items-center rounded-xl border border-pine-900/10 bg-white text-pine-700"><i data-lucide="sparkles" class="h-5 w-5"></i></span>
+            <span class="grid h-12 w-12 place-items-center rounded-xl border border-pine-900/10 bg-white text-pine-700"><i data-lucide="calendar-check" class="h-5 w-5"></i></span>
+            <span class="grid h-12 w-12 place-items-center rounded-xl border border-pine-900/10 bg-white text-pine-700"><i data-lucide="phone" class="h-5 w-5"></i></span>
+            <span class="grid h-12 w-12 place-items-center rounded-xl border border-pine-900/10 bg-white text-pine-700"><i data-lucide="map-pin" class="h-5 w-5"></i></span>
+            <span class="grid h-12 w-12 place-items-center rounded-xl border border-pine-900/10 bg-white text-pine-700"><i data-lucide="clock" class="h-5 w-5"></i></span>
+            <span class="grid h-12 w-12 place-items-center rounded-xl border border-pine-900/10 bg-white text-pine-700"><i data-lucide="anchor" class="h-5 w-5"></i></span>
+            <span class="grid h-12 w-12 place-items-center rounded-xl border border-pine-900/10 bg-white text-pine-700"><i data-lucide="heart-pulse" class="h-5 w-5"></i></span>
+          </div>
+          <p class="mt-4 max-w-xl text-sm leading-relaxed text-ink/60">
+            Lucide set, 1.5px stroke. 16–20px inline in UI, 24px+ for feature moments. Clay when
+            accenting an action, pine when labelling. The only filled icon is the review star.
+          </p>
+        </div>
+
+        <!-- Imagery -->
+        <div>
+          <h3 class="text-xs font-bold uppercase tracking-[0.22em] text-ink/50">04 · Imagery</h3>
+          <ul class="mt-5 grid gap-3 text-sm leading-relaxed text-ink/70 md:grid-cols-2">
+            <li class="flex items-start gap-2.5"><i data-lucide="check" class="mt-0.5 h-4 w-4 shrink-0 text-clay"></i>Use your real rooms, team and instruments — warm daylight, candid over posed.</li>
+            <li class="flex items-start gap-2.5"><i data-lucide="check" class="mt-0.5 h-4 w-4 shrink-0 text-clay"></i>People mid-moment (laughing with the hygienist), never gurning stock smiles.</li>
+            <li class="flex items-start gap-2.5"><i data-lucide="check" class="mt-0.5 h-4 w-4 shrink-0 text-clay"></i>Illustration = single-weight continuous line, sage on bone. One motif per view.</li>
+            <li class="flex items-start gap-2.5"><i data-lucide="x" class="mt-0.5 h-4 w-4 shrink-0 text-clay"></i>Never: blue clinical gradients, glossy 3-D teeth, or models who clearly don’t floss.</li>
+          </ul>
+        </div>
+
+        <!-- Components -->
+        <div>
+          <h3 class="text-xs font-bold uppercase tracking-[0.22em] text-ink/50">05 · Components &amp; tokens</h3>
+          <div class="mt-5 grid gap-5 lg:grid-cols-2">
+            <div class="rounded-2xl bg-white p-8">
+              <p class="text-xs font-bold uppercase tracking-widest text-ink/40">Buttons</p>
+              <div class="mt-4 flex flex-wrap items-center gap-3">
+                <span class="btn-clay btn-sm">Primary</span>
+                <span class="btn-outline btn-sm">Secondary</span>
+                <span class="btn-ghost btn-sm">Quiet</span>
+              </div>
+              <p class="mt-4 text-xs leading-relaxed text-ink/55">Fully rounded pills. Clay only ever marks the primary action on a view — one per screen region.</p>
+            </div>
+            <div class="rounded-2xl bg-white p-8">
+              <p class="text-xs font-bold uppercase tracking-widest text-ink/40">Inputs &amp; pills</p>
+              <label class="mt-4 block text-xs font-semibold text-ink/60">Sample input</label>
+              <input type="text" placeholder="Type here…" class="mt-1.5 w-full rounded-xl border border-pine-900/15 bg-white px-4 py-2.5 text-sm outline-none transition focus:border-clay focus:ring-2 focus:ring-clay/25" />
+              <div class="mt-4 flex gap-2">
+                <span class="rounded-full border border-pine-900/20 bg-pine-50 px-4 py-1.5 text-xs font-semibold text-pine-700">Selected pill</span>
+                <span class="rounded-full border border-pine-900/15 px-4 py-1.5 text-xs font-medium text-ink/60">Unselected pill</span>
+              </div>
+            </div>
+          </div>
+          <div class="mt-5 grid gap-4 sm:grid-cols-3">
+            <div class="rounded-2xl border border-pine-900/10 bg-white p-5"><p class="text-xs font-bold uppercase tracking-widest text-ink/40">Radius</p><p class="mt-2 text-sm text-ink/65">Inputs 12 · Cards 24 · Pills full</p></div>
+            <div class="rounded-2xl border border-pine-900/10 bg-white p-5"><p class="text-xs font-bold uppercase tracking-widest text-ink/40">Elevation</p><p class="mt-2 text-sm text-ink/65">card / lift tokens only — no harsh drop shadows</p></div>
+            <div class="rounded-2xl border border-pine-900/10 bg-white p-5"><p class="text-xs font-bold uppercase tracking-widest text-ink/40">Rhythm</p><p class="mt-2 text-sm text-ink/65">8-pt spacing grid · sections py-20 / py-28</p></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer class="bg-pine-950 pb-10 pt-16 text-bone/65">
+  <div class="mx-auto max-w-7xl px-5 lg:px-8">
+    <div class="grid gap-12 md:grid-cols-12">
+      <div class="md:col-span-5">
+        <a href="#main" class="flex items-center gap-2.5" aria-label="Elmwood Dental Studio — back to top">
+          <svg viewBox="0 0 160 170" class="h-7 w-7 shrink-0 text-clay" fill="none" stroke="currentColor" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M52 18 C30 18 20 44 26 72 C30 90 40 116 48 132 C52 141 62 140 64 130 L71 98 C73 89 85 89 87 98 L94 130 C96 140 106 141 110 132 C118 116 128 90 132 72 C138 44 128 18 106 18 C94 18 88 26 79 26 C70 26 64 18 52 18 Z"/>
+          </svg>
+          <span class="leading-none">
+            <span class="block font-display text-[1.3rem] font-semibold text-bone">Elmwood</span>
+            <span class="mt-0.5 block text-[9px] font-semibold uppercase tracking-[0.3em] text-bone/40">Dental Studio</span>
+          </span>
+        </a>
+        <p class="mt-5 max-w-xs text-sm leading-relaxed text-bone/55">
+          Calm, considered dentistry for the Fern District — and anyone who’d rather be anywhere else.
+        </p>
+      </div>
+
+      <nav class="md:col-span-2" aria-label="Footer — explore">
+        <h4 class="text-xs font-bold uppercase tracking-[0.2em] text-bone/40">Explore</h4>
+        <ul class="mt-4 space-y-2.5 text-sm">
+          <li><a class="transition hover:text-bone" href="#approach">Our approach</a></li>
+          <li><a class="transition hover:text-bone" href="#reviews">Reviews</a></li>
+          <li><a class="transition hover:text-bone" href="#specials">Specials</a></li>
+          <li><a class="transition hover:text-bone" href="#contact">Visit us</a></li>
+        </ul>
+      </nav>
+
+      <nav class="md:col-span-2" aria-label="Footer — treatments">
+        <h4 class="text-xs font-bold uppercase tracking-[0.2em] text-bone/40">Treatments</h4>
+        <ul class="mt-4 space-y-2.5 text-sm">
+          <li><a class="transition hover:text-bone" href="#treatments">Preventive care</a></li>
+          <li><a class="transition hover:text-bone" href="#treatments">Cosmetic</a></li>
+          <li><a class="transition hover:text-bone" href="#treatments">Clear aligners</a></li>
+          <li><a class="transition hover:text-bone" href="#treatments">Implants</a></li>
+          <li><a class="transition hover:text-bone" href="#treatments">Kids &amp; family</a></li>
+        </ul>
+      </nav>
+
+      <div class="md:col-span-3">
+        <h4 class="text-xs font-bold uppercase tracking-[0.2em] text-bone/40">Contact</h4>
+        <ul class="mt-4 space-y-2.5 text-sm">
+          <li>214 Alder Street, Suite 3, Portland OR</li>
+          <li><a class="transition hover:text-bone" href="tel:+15550142210">(555) 014-2210</a></li>
+          <li><a class="transition hover:text-bone" href="mailto:hello@elmwooddental.com">hello@elmwooddental.com</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mt-14 flex flex-wrap items-center justify-between gap-4 border-t border-bone/10 pt-6 text-xs text-bone/40">
+      <p>© 2025 Elmwood Dental Studio. Designed to feel like a deep breath.</p>
+      <div class="flex items-center gap-5">
+        <a href="#style-guide" class="transition hover:text-bone">Style guide (appendix)</a>
+        <a href="#main" class="inline-flex items-center gap-1.5 transition hover:text-bone">Back to top<i data-lucide="arrow-up" class="h-3.5 w-3.5"></i></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ================= TOAST ================= -->
+<div id="toast" class="pointer-events-none fixed bottom-5 left-1/2 z-[70] -translate-x-1/2" role="status" aria-live="polite">
+  <div id="toast-card" class="flex translate-y-3 items-center gap-3 rounded-full bg-pine-900 py-3 pl-4 pr-5 text-sm text-bone opacity-0 shadow-lift transition-all duration-300">
+    <i data-lucide="circle-check" class="h-4 w-4 shrink-0 text-sage"></i>
+    <span id="toast-msg"></span>
+  </div>
+</div>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  lucide.createIcons();
+
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- Toast ---------- */
+  const toastCard = document.getElementById('toast-card');
+  const toastMsg  = document.getElementById('toast-msg');
+  let toastTimer = null;
+  function showToast(msg) {
+    toastMsg.textContent = msg;
+    toastCard.classList.remove('opacity-0', 'translate-y-3');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toastCard.classList.add('opacity-0', 'translate-y-3'), 3800);
+  }
+
+  /* ---------- Header scroll state ---------- */
+  const header = document.getElementById('site-header');
+  const onScroll = () => header.classList.toggle('is-scrolled', window.scrollY > 8);
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  /* ---------- Mobile menu ---------- */
+  const menuBtn = document.getElementById('menu-btn');
+  const menu = document.getElementById('mobile-menu');
+  function setMenu(open) {
+    menu.classList.toggle('hidden', !open);
+    menuBtn.setAttribute('aria-expanded', open);
+    menuBtn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    menuBtn.querySelector('.menu-open').classList.toggle('hidden', open);
+    menuBtn.querySelector('.menu-close').classList.toggle('hidden', !open);
+  }
+  menuBtn.addEventListener('click', () => setMenu(menu.classList.contains('hidden')));
+  document.querySelectorAll('.m-link').forEach(a => a.addEventListener('click', () => setMenu(false)));
+
+  /* ---------- Scroll reveal ---------- */
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  /* ---------- Line-draw trigger ---------- */
+  setTimeout(() => document.querySelectorAll('.draw').forEach(el => el.classList.add('go')), 350);
+
+  /* ---------- Booking form ---------- */
+  const form = document.getElementById('booking-form');
+  const success = document.getElementById('booking-success');
+  const bookingCard = document.getElementById('booking');
+  const nameIn = document.getElementById('bf-name');
+  const phoneIn = document.getElementById('bf-phone');
+  const svcIn = document.getElementById('bf-service');
+  const dateIn = document.getElementById('bf-date');
+
+  // Date can't be in the past
+  const now = new Date();
+  dateIn.min = new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+
+  function setErr(input, bad, msg) {
+    input.setAttribute('aria-invalid', bad);
+    const err = input.closest('div').querySelector('[data-err]');
+    if (msg) err.textContent = msg;
+    err.classList.toggle('show', bad);
+    return !bad;
+  }
+  [nameIn, phoneIn, svcIn, dateIn].forEach(i =>
+    i.addEventListener('input', () => { i.removeAttribute('aria-invalid'); i.closest('div').querySelector('[data-err]').classList.remove('show'); })
+  );
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const okName  = setErr(nameIn,  nameIn.value.trim().length < 2);
+    const okPhone = setErr(phoneIn, !(phoneIn.value.replace(/\D/g, '').length >= 7 && /^[+()\-.\s\d]+$/.test(phoneIn.value.trim())));
+    const okSvc   = setErr(svcIn,   svcIn.value === '');
+    const okDate  = setErr(dateIn,  !dateIn.value || dateIn.value < dateIn.min);
+    if (!(okName && okPhone && okSvc && okDate)) {
+      [nameIn, phoneIn, svcIn, dateIn].find(i => i.getAttribute('aria-invalid') === 'true').focus();
+      return;
+    }
+    const d = new Date(dateIn.value + 'T00:00:00');
+    const dateStr = d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+    const time = form.querySelector('input[name="time"]:checked').value;
+    document.getElementById('booking-summary').textContent =
+      `${nameIn.value.trim().split(' ')[0]}, we’ve got your request for ${svcIn.value} on ${dateStr} (${time.toLowerCase()}).`;
+    form.classList.add('hidden');
+    success.classList.remove('hidden');
+    showToast('Appointment request sent — talk soon.');
+  });
+
+  document.getElementById('booking-again').addEventListener('click', () => {
+    form.reset(); form.classList.remove('hidden'); success.classList.add('hidden'); nameIn.focus();
+  });
+
+  // Pre-fill the booking form from "Book this" links & special claims
+  function pulseBooking() {
+    bookingCard.classList.add('ring-2', 'ring-clay', 'ring-offset-4', 'ring-offset-bone');
+    setTimeout(() => bookingCard.classList.remove('ring-2', 'ring-clay', 'ring-offset-4', 'ring-offset-bone'), 1800);
+  }
+  document.querySelectorAll('[data-book]').forEach(a =>
+    a.addEventListener('click', () => {
+      const v = a.dataset.book.replace(/&amp;/g, '&');
+      svcIn.value = v;
+      showToast(`Noted — we’ve pencilled in “${v}”. Pick a time that suits.`);
+      pulseBooking();
+    })
+  );
+
+  /* ---------- Treatments accordion ---------- */
+  const accBtns = document.querySelectorAll('.acc-btn');
+  function setOpen(btn, open) {
+    btn.setAttribute('aria-expanded', open);
+    document.getElementById(btn.getAttribute('aria-controls')).style.maxHeight =
+      open ? document.getElementById(btn.getAttribute('aria-controls')).scrollHeight + 'px' : '0px';
+  }
+  accBtns.forEach(btn => btn.addEventListener('click', () =>
+    setOpen(btn, btn.getAttribute('aria-expanded') !== 'true')
+  ));
+  setOpen(accBtns[0], true); // first row open as an affordance
+  window.addEventListener('resize', () =>
+    document.querySelectorAll('.acc-btn[aria-expanded="true"]').forEach(b => setOpen(b, true))
+  );
+
+  /* ---------- Generic helpers for carousels ---------- */
+  function paintDots(container, active, activeCls, inactiveCls) {
+    [...container.children].forEach((b, i) => {
+      b.className = 'h-2 rounded-full transition-all duration-300 ' + (i === active ? activeCls : inactiveCls);
+    });
+  }
+  function buildDots(container, count, onPick) {
+    container.innerHTML = '';
+    for (let i = 0; i < count; i++) {
+      const b = document.createElement('button');
+      b.setAttribute('aria-label', 'Show item ' + (i + 1));
+      b.addEventListener('click', () => onPick(i));
+      container.appendChild(b);
+    }
+  }
+  const pad = n => String(n + 1).padStart(2, '0');
+
+  /* ---------- Testimonials ---------- */
+  const quotes = [
+    { text: 'I hadn’t seen a dentist in six years because of anxiety. Dr. Osei walked me through every single step before touching anything — I booked my next cleaning before I left the chair.', name: 'Priya S.', meta: 'Check-up & cleaning · patient since 2021', initial: 'P' },
+    { text: 'The whitening looks like me on a good week, not like a toothpaste ad. Two colleagues asked if I’d been on holiday.', name: 'Marcus T.', meta: 'Cosmetic whitening · March 2025', initial: 'M' },
+    { text: 'Chipped a crown on a Friday evening. They saw me at 8:40 Saturday morning, and I was at my kid’s football match by lunch.', name: 'Elena R.', meta: 'Emergency repair · February 2025', initial: 'E' },
+    { text: 'My daughter used to cry in the car park. Last visit she asked whether today was “tooth day” and fist-bumped the hygienist.', name: 'Daniel K.', meta: 'Kids & family · patient family since 2019', initial: 'D' },
+  ];
+  const qBody = document.getElementById('q-body');
+  const qText = document.getElementById('q-text'), qName = document.getElementById('q-name'),
+        qMeta = document.getElementById('q-meta'), qInit = document.getElementById('q-initial'),
+        qCount = document.getElementById('q-count'), qDots = document.getElementById('q-dots');
+  let qi = 0;
+  function applyQuote() {
+    const q = quotes[qi];
+    qText.textContent = q.text; qName.textContent = q.name; qMeta.textContent = q.meta; qInit.textContent = q.initial;
+    qCount.textContent = `${pad(qi)} / ${pad(quotes.length - 1)}`;
+    paintDots(qDots, qi, 'w-6 bg-pine-800', 'w-2 bg-pine-800/25 hover:bg-pine-800/50');
+  }
+  function showQuote(i) {
+    qi = (i + quotes.length) % quotes.length;
+    if (reduced) { applyQuote(); return; }
+    qBody.classList.add('swap-fading');
+    setTimeout(() => { applyQuote(); qBody.classList.remove('swap-fading'); }, 220);
+  }
+  buildDots(qDots, quotes.length, showQuote);
+  document.getElementById('q-prev').addEventListener('click', () => showQuote(qi - 1));
+  document.getElementById('q-next').addEventListener('click', () => showQuote(qi + 1));
+  applyQuote();
+
+  /* ---------- Specials rotator ---------- */
+  const specials = [
+    { tag: 'New patients', title: 'The Full Welcome', price: '$89', reg: 'regularly $240',
+      desc: 'A 60-minute new-patient visit — exam, digital X-rays and a full hygiene clean — for less than the cost of a dinner out.',
+      terms: 'New patients only. One per person. Mention “Welcome” when we confirm your visit.',
+      valid: 'Valid through March 31', service: 'Check-up & hygiene' },
+    { tag: 'This quarter', title: 'Bright, Naturally', price: 'Free', reg: '$180 value',
+      desc: 'Book any hygiene visit this quarter and take home our custom whitening kit — the gradual kind that looks like you, only rested.',
+      terms: 'With any completed hygiene visit. Take-home kit; in-chair upgrade available at the desk.',
+      valid: 'While kits last', service: 'Cosmetic whitening' },
+    { tag: 'Aligners', title: 'Straight Talk', price: '–$250', reg: 'plus a free consult',
+      desc: 'Start clear-aligner treatment this season and we’ll take $250 off — and the consultation with a 3D smile preview is on us.',
+      terms: '18–30 month plans. 0% payment options available; ask for details at your consult.',
+      valid: 'Start treatment by April 15', service: 'Clear aligners' },
+  ];
+  const spBody = document.getElementById('sp-body'), spBar = document.getElementById('sp-bar'),
+        spDots = document.getElementById('sp-dots'), spCount = document.getElementById('sp-count'),
+        spStage = document.getElementById('sp-stage');
+  const DUR = 6500;
+  let si = 0, spTimer = null, spAnim = null;
+
+  function applySpecial() {
+    const s = specials[si];
+    document.getElementById('sp-tag').textContent = s.tag;
+    document.getElementById('sp-title').textContent = s.title;
+    document.getElementById('sp-desc').textContent = s.desc;
+    document.getElementById('sp-price').textContent = s.price;
+    document.getElementById('sp-reg').textContent = s.reg;
+    document.getElementById('sp-terms').textContent = s.terms;
+    document.getElementById('sp-valid').textContent = s.valid;
+    spCount.textContent = `${pad(si)} — ${pad(specials.length - 1)}`;
+    paintDots(spDots, si, 'w-6 bg-clay', 'w-2 bg-bone/25 hover:bg-bone/50');
+  }
+  function showSpecial(i) {
+    si = (i + specials.length) % specials.length;
+    if (reduced) { applySpecial(); return; }
+    spBody.classList.add('swap-fading');
+    setTimeout(() => { applySpecial(); spBody.classList.remove('swap-fading'); }, 220);
+  }
+  function scheduleSpecial() {
+    clearTimeout(spTimer);
+    if (spAnim) spAnim.cancel();
+    if (reduced) { spTimer = setTimeout(() => { showSpecial(si + 1); scheduleSpecial(); }, DUR); return; }
+    spAnim = spBar.animate(
+      [{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }],
+      { duration: DUR, easing: 'linear', fill: 'forwards' }
+    );
+    spAnim.onfinish = () => { showSpecial(si + 1); scheduleSpecial(); };
+  }
+  function pauseSpecials() { clearTimeout(spTimer); if (spAnim) spAnim.cancel(); }
+  buildDots(spDots, specials.length, i => { showSpecial(i); scheduleSpecial(); });
+  document.getElementById('sp-prev').addEventListener('click', () => { showSpecial(si - 1); scheduleSpecial(); });
+  document.getElementById('sp-next').addEventListener('click', () => { showSpecial(si + 1); scheduleSpecial(); });
+  applySpecial(); scheduleSpecial();
+
+  const spSection = document.getElementById('specials');
+  spSection.addEventListener('mouseenter', pauseSpecials);
+  spSection.addEventListener('mouseleave', scheduleSpecial);
+  spSection.addEventListener('focusin', pauseSpecials);
+  spSection.addEventListener('focusout', scheduleSpecial);
+  document.addEventListener('visibilitychange', () => document.hidden ? pauseSpecials() : scheduleSpecial());
+
+  document.getElementById('sp-claim').addEventListener('click', () => {
+    const s = specials[si];
+    svcIn.value = s.service;
+    document.getElementById('booking').scrollIntoView();
+    pulseBooking();
+    showToast(`“${s.title}” noted — we’ll apply it when we confirm your visit.`);
+  });
+
+  /* ---------- Hours + open-now pill ---------- */
+  const sched = { 0: null, 1: [8, 18], 2: [8, 18], 3: [8, 18], 4: [8, 18], 5: [8, 16], 6: [9, 14] };
+  const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  const fmt = h => h === 12 ? '12 pm' : h < 12 ? h + ' am' : (h - 12) + ' pm';
+  const list = document.getElementById('hours-list');
+  const today = new Date().getDay();
+  [1, 2, 3, 4, 5, 6, 0].forEach(d => {
+    const s = sched[d];
+    const row = document.createElement('div');
+    row.className = 'flex items-baseline justify-between border-b border-pine-900/10 py-2.5 text-sm last:border-0' + (d === today ? ' font-semibold text-pine-800' : ' text-ink/70');
+    row.innerHTML = `<dt>${dayNames[d]}${d === today ? ' <span class="ml-1 rounded-full bg-pine-50 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-pine-600">Today</span>' : ''}</dt>
+                     <dd>${s ? `${fmt(s[0])} – ${fmt(s[1])}` : 'Closed'}</dd>`;
+    list.appendChild(row);
+  });
+
+  const hr = new Date().getHours() + new Date().getMinutes() / 60;
+  const openText = document.getElementById('open-text'), openDot = document.getElementById('open-dot'), openPill = document.getElementById('open-pill');
+  const t = sched[today];
+  if (t && hr >= t[0] && hr < t[1]) {
+    openText.textContent = `Open now · closes ${fmt(t[1])}`;
+  } else {
+    let label = 'Closed';
+    for (let i = 0; i < 8; i++) {
+      const d = (today + i) % 7, s = sched[d];
+      if (s && (i > 0 || hr < s[0])) { label = `Closed · opens ${i === 0 ? 'today' : dayNames[d]} ${fmt(s[0])}`; break; }
+    }
+    openText.textContent = label;
+    openPill.classList.remove('bg-pine-50', 'text-pine-700');
+    openPill.classList.add('bg-clay-tint', 'text-clay-dark');
+    openDot.classList.remove('bg-pine-600');
+    openDot.classList.add('bg-clay');
+  }
+
+  /* ---------- Style guide toggle ---------- */
+  const sgToggle = document.getElementById('sg-toggle');
+  const sgBody = document.getElementById('sg-body');
+  sgToggle.addEventListener('click', () => {
+    const open = sgToggle.getAttribute('aria-expanded') === 'true';
+    sgToggle.setAttribute('aria-expanded', !open);
+    sgBody.classList.toggle('hidden', open);
+    document.getElementById('sg-toggle-label').textContent = open ? 'Show' : 'Hide';
+    document.getElementById('sg-chevron').style.transform = open ? 'rotate(180deg)' : '';
+  });
+
+  lucide.createIcons();
+});
+</script>
+</body>
+</html>
