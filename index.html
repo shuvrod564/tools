@@ -1389,6 +1389,7 @@ const revIO = new IntersectionObserver(entries => entries.forEach(en => {
 }), { threshold: 0.12 });
 document.querySelectorAll(".reveal").forEach(el => revIO.observe(el));
 
+
 /* ---------- method: draw the schematic, light the steps ---------- */
 const fig = document.getElementById("fig");
 const figPaths = fig.querySelectorAll("[data-i]");
@@ -1415,8 +1416,7 @@ if (REDUCED) document.querySelectorAll("#steps li").forEach(li => li.classList.a
 
 /* ---------- lead form: validation, optional endpoint POST, success panel ---------- */
  
- 
-/* ---------- lead form JS (frontend execution) ---------- */
+ /* ---------- lead form: validation, Netlify Function POST, success panel ---------- */
 const form = document.getElementById("leadForm");
 const alertBox = document.getElementById("formAlert");
 const successPanel = document.getElementById("successPanel");
@@ -1454,12 +1454,10 @@ form.addEventListener("submit", async e => {
   btnLabel.textContent = "Sending…";
 
   try {
-    // Calls the Vercel API endpoint route securely without exposing key
-    const res = await fetch("/api/send-email", {
+    // Calls Netlify Function endpoint
+    const res = await fetch("/.netlify/functions/send-email", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload)
     });
 
@@ -1469,7 +1467,7 @@ form.addEventListener("submit", async e => {
       throw new Error(data.error || "Send failed");
     }
   } catch (err) {
-    console.error("Form Submission Error:", err);
+    console.error("Netlify Function Error:", err);
     alertBox.classList.add("show");
     btn.disabled = false; 
     btn.style.opacity = ""; 
