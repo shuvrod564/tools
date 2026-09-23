@@ -46,7 +46,7 @@ exports.handler = async (event) => {
         from: "Acme <onboarding@resend.dev>", // Replace with your verified custom domain in production
         to: ["shuvrod564@gmail.com"],         // Must match your registered Resend account email during testing
         reply_to: email,
-        subject: `New Lead: ${esc(name)} (${esc(type) || "General Inquiry"})`,
+        subject: `Suvop Site Lead: ${esc(name)} (${esc(type) || "General Inquiry"})`,
         html: `
           <h2>New Lead Form Submission</h2>
           <p><strong>Name:</strong> ${esc(name)}</p>
