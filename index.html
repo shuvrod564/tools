@@ -792,8 +792,8 @@ h1{font-size:clamp(2.6rem,6.2vw,4.8rem);font-weight:800;letter-spacing:-.028em;l
     <div id="workSheets"></div>
 
     <div class="more-link reveal">
-      <a class="case-btn" href="https://github.com/shuvrod564" data-gh data-track="GitHub" target="_blank" rel="noopener">
-        More on GitHub
+      <a class="case-btn" href="./projects.html" rel="noopener" aria-label="View All Projects">
+        View All Projects
         <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="square"><path d="M7 17L17 7M8 7h9v9"/></svg>
       </a>
     </div>
@@ -807,8 +807,8 @@ h1{font-size:clamp(2.6rem,6.2vw,4.8rem);font-weight:800;letter-spacing:-.028em;l
   <div class="wrap">
     <div class="reveal">
       <p class="sec-label">SECTION 02 — STACK &amp; TOOLING</p>
-      <h2 class="h2">Schedule of materials.</h2>
-      <p class="lead">Every trade listed, every tool accounted for. This is the daily kit — nothing decorative.</p>
+      <h2 class="h2">Stack & Skills</h2>
+      <p class="lead">Tools and technologies I use daily to bring ideas to life </p>
     </div>
     <div class="legend reveal" id="legendGrid" style="--d:.1s"></div>
   </div>
@@ -821,7 +821,8 @@ h1{font-size:clamp(2.6rem,6.2vw,4.8rem);font-weight:800;letter-spacing:-.028em;l
   <div class="wrap">
     <div class="reveal" style="margin-bottom:46px">
       <p class="sec-label">SECTION 03 — METHOD</p>
-      <h2 class="h2">How the work<br>gets built.</h2>
+      <h2 class="h2">How systems are delivered.</h2>
+      <p>End-to-end full-stack engineering, turning complex application requirements into lightweight, high-performance web software.</p>
     </div>
     <div class="appr-grid">
       <figure class="fig reveal" id="fig">
@@ -869,10 +870,10 @@ h1{font-size:clamp(2.6rem,6.2vw,4.8rem);font-weight:800;letter-spacing:-.028em;l
       </figure>
 
       <ol class="steps reveal" id="steps">
-        <li><h3>Scope</h3><p>Cut scope before it cuts you. What's the smallest shippable core, and what does "done" mean? Written down, agreed.</p></li>
-        <li><h3>Architect</h3><p>Data model, interfaces and infrastructure designed before the first commit — the cheapest place to fix mistakes is on paper.</p></li>
-        <li><h3>Build</h3><p>Short cycles, reviewed pull requests, tests riding along. You see progress weekly, not surprises monthly.</p></li>
-        <li><h3>Ship &amp; own</h3><p>Pipelines, monitoring, docs, handover. I don't disappear at launch — software that stays shipped is the deliverable.</p></li>
+        <li><h3>SCOPE & PLAN</h3><p>Define strict requirements, data architecture, and clear milestones. Establishing what gets built first ensures rapid delivery and zero wasted effort.</p></li>
+        <li><h3>Architect</h3><p>Design database schemas, OOP class structures, and clean API endpoints before writing production code — solid foundations prevent expensive refactoring.</p></li>
+        <li><h3>BUILD & OPTIMIZE</h3><p>Develop modular code using strict typing, custom plugin/MVC structures, and responsive UI components focused on high performance and speed.</p></li>
+        <li><h3>SHIP & MAINTAIN</h3><p>Deploy via automated CI/CD pipelines, configure Nginx/hosting environments, and deliver clean, maintainable code built for production stability.</p></li>
       </ol>
     </div>
   </div>
@@ -885,8 +886,8 @@ h1{font-size:clamp(2.6rem,6.2vw,4.8rem);font-weight:800;letter-spacing:-.028em;l
   <div class="wrap">
     <div class="reveal">
       <p class="sec-label">SECTION 04 — TRACK RECORD</p>
-      <h2 class="h2">Six years on the tools.</h2>
-      <p class="lead">A programme chart of the roles so far — each bar drawn to the months it actually spans.</p>
+      <h2 class="h2">Career timeline & history.</h2>
+      <p class="lead">An accurate schedule of active roles and engineering milestones delivered across clients, platforms, and web systems.</p>
     </div>
     <div class="gantt reveal" id="gantt" style="--d:.1s">
       <div class="g-head"><span></span><div class="g-years" id="gYears"></div></div>
@@ -1272,10 +1273,10 @@ const PROJECTS = [
 
 /* ---- STACK: four legend groups ---- */
 const STACK = [
-  { group: "Frontend", items: ["TypeScript", "React / Next.js", "Vue 3", "Tailwind CSS", "Vite", "Web performance"] },
-  { group: "Backend",  items: ["Node.js", "Express / Fastify", "REST & GraphQL", "WebSockets", "Python", "Auth & payments"] },
-  { group: "Data",     items: ["PostgreSQL", "Redis", "Prisma / Drizzle", "MongoDB", "Elasticsearch", "Data modelling"] },
-  { group: "Infra & tools", items: ["Docker", "AWS / Vercel", "CI/CD — Actions", "Vitest / Playwright", "Grafana", "Linux / Nginx"] }
+  { group: "Frontend", items: ["React / Next.js", "TypeScript", "Javascript (ES6+)", "HTML5", "CSS3",  "Tailwind CSS", "Bootstrapp", "Vite", "Web performance", "Responsive Web Design" ] },
+  { group: "Backend",  items: ["Node.js", "Express / Fastify", "REST & GraphQL", "PHP", "Laravel", "Wordpress", "Data Validation", "Error Handling"] },
+  { group: "Data",     items: ["Mysql", "MongoDB", "PostgreSQL", "Redis", "Prisma / Drizzle", "MongoDB", "Elasticsearch", "Data modelling"] },
+  { group: "Product Development", items: ["Product Development", "Requirements Analysis", "Technical Planning", "System Design", "Product Architecture", "Third-Party Integrations", "Application Maintenance", "Technical Documentation", ] }
 ];
 
 /* ---- EXPERIENCE: fractional years ok (2022.6 ≈ mid-2022); end omitted = current ---- */
@@ -1413,9 +1414,13 @@ if (REDUCED) {
 if (REDUCED) document.querySelectorAll("#steps li").forEach(li => li.classList.add("active"));
 
 /* ---------- lead form: validation, optional endpoint POST, success panel ---------- */
+ 
+ 
+/* ---------- lead form JS (frontend execution) ---------- */
 const form = document.getElementById("leadForm");
 const alertBox = document.getElementById("formAlert");
 const successPanel = document.getElementById("successPanel");
+
 form.addEventListener("submit", async e => {
   e.preventDefault();
   alertBox.classList.remove("show");
@@ -1435,27 +1440,40 @@ form.addEventListener("submit", async e => {
   if (firstBad) { firstBad.querySelector("input").focus(); return; }
 
   const payload = {
-    name, email,
-    type: val("type"), budget: val("budget"), message: val("message")
+    name,
+    email,
+    type: val("type"),
+    budget: val("budget"),
+    message: val("message")
   };
 
   const btn = document.getElementById("submitBtn");
   const btnLabel = btn.querySelector(".s-label");
-  btn.disabled = true; btn.style.opacity = ".6"; btnLabel.textContent = "Sending…";
+  btn.disabled = true; 
+  btn.style.opacity = ".6"; 
+  btnLabel.textContent = "Sending…";
+
   try {
-    if (CONFIG.formEndpoint) {
-      const res = await fetch(CONFIG.formEndpoint, {
-        method: "POST",
-        headers: { "Accept": "application/json", "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
-      });
-      if (!res.ok) throw new Error("send failed");
-    } else {
-      await new Promise(r => setTimeout(r, 700)); /* local demo: paste your endpoint for real sends */
+    // Calls the Vercel API endpoint route securely without exposing key
+    const res = await fetch("/api/send-email", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(payload)
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      throw new Error(data.error || "Send failed");
     }
   } catch (err) {
+    console.error("Form Submission Error:", err);
     alertBox.classList.add("show");
-    btn.disabled = false; btn.style.opacity = ""; btnLabel.textContent = "Send message";
+    btn.disabled = false; 
+    btn.style.opacity = ""; 
+    btnLabel.textContent = "Send message";
     return;
   }
 
@@ -1467,11 +1485,22 @@ form.addEventListener("submit", async e => {
     `REF: PRJ-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
   form.hidden = true;
   successPanel.classList.add("show");
-  successPanel.scrollIntoView({ behavior: REDUCED ? "auto" : "smooth", block: "center" });
-  trackEvent("lead", { type: payload.type, budget: payload.budget });
+
+  if (typeof REDUCED !== "undefined") {
+    successPanel.scrollIntoView({ behavior: REDUCED ? "auto" : "smooth", block: "center" });
+  } else {
+    successPanel.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+
+  if (typeof trackEvent === "function") {
+    trackEvent("lead", { type: payload.type, budget: payload.budget });
+  }
 });
+
 form.querySelectorAll("input").forEach(i =>
   i.addEventListener("input", () => i.closest(".field")?.classList.remove("err")));
+
+
 
 /* ---------- hide sticky mobile bar while the form is on screen ---------- */
 const mobBar = document.getElementById("mobBar");
