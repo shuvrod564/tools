@@ -1,0 +1,1312 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Set theme BEFORE first paint to avoid flash of wrong theme -->
+<script>
+(function(){
+  var t = 'dark';
+  try{
+    var s = localStorage.getItem('ar-theme');
+    t = s || (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+  }catch(e){}
+  document.documentElement.setAttribute('data-theme', t);
+})();
+</script>
+
+<!-- ================= SEO ================= -->
+<title>Alex Rivera — Social Media Manager & E-Commerce Growth Strategist</title>
+<meta name="description" content="Portfolio of Alex Rivera — social media manager specializing in content creation, content strategy, organic growth, community engagement, Shopify management, Etsy Seller Central and Amazon FBA.">
+<meta name="keywords" content="social media manager, content creation, content calendar, content strategy, organic growth, community engagement, e-commerce management, Etsy seller central, Amazon FBA, AI fluent">
+<meta name="author" content="Alex Rivera">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://suvop.netlify.app/pages/smm-portfolio.html">
+<meta name="theme-color" content="#090D16">
+<meta name="color-scheme" content="dark light">
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://suvop.netlify.app/pages/smm-portfolio.html">
+<meta property="og:title" content="Alex Rivera — Social Media Manager & E-Commerce Growth Strategist">
+<meta property="og:description" content="Good content gets liked. Great content gets bought. Content engines that grow audiences and drive revenue on Meta, TikTok, Etsy & Amazon.">
+<meta property="og:image" content="https://picsum.photos/seed/ar-og-card/1200/630.jpg">
+<meta property="og:site_name" content="Alex Rivera Portfolio">
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Alex Rivera — Social Media Manager & E-Commerce Growth">
+<meta name="twitter:description" content="Scroll-stopping content. Sales you can measure.">
+<meta name="twitter:image" content="https://picsum.photos/seed/ar-og-card/1200/630.jpg">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%2300F5D4' d='M12 2l2.1 7.9L22 12l-7.9 2.1L12 22l-2.1-7.9L2 12l7.9-2.1z'/%3E%3C/svg%3E">
+
+<!-- Structured data -->
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Person","name":"Alex Rivera","jobTitle":"Social Media Manager & E-Commerce Growth Strategist","url":"https://suvop.netlify.app/pages/smm-portfolio.html","email":"mailto:hello@alexrivera.co","sameAs":["https://instagram.com/alexrivera","https://linkedin.com/in/alexrivera","https://x.com/alexrivera"],"knowsAbout":["Content Creation","Content Calendar Management","Content Strategy","Organic Growth","Community Engagement","E-commerce Website Management","Etsy Seller Central","Amazon FBA","AI Workflows"]}
+</script>
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
+
+<!-- DaisyUI (light component layer: badges etc.) + Tailwind -->
+<link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.24/dist/full.min.css" rel="stylesheet" type="text/css">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        /* All tokens resolve to CSS variables -> they swap with the theme */
+        obsidian: 'rgb(var(--c-bg) / <alpha-value>)',
+        surface:  'rgb(var(--c-surface) / <alpha-value>)',
+        mint:     'rgb(var(--c-mint) / <alpha-value>)',
+        neon:     'rgb(var(--c-neon) / <alpha-value>)',
+        gold:     'rgb(var(--c-gold) / <alpha-value>)',
+        ink:      'rgb(var(--c-ink) / <alpha-value>)',
+        muted:    'rgb(var(--c-muted) / <alpha-value>)',
+        onaccent: 'rgb(var(--c-onaccent) / <alpha-value>)',
+        pop:      'var(--c-pop)',
+        line:     'var(--c-line)'
+      },
+      fontFamily: {
+        sans:    ['"Space Grotesk"','ui-sans-serif','system-ui','sans-serif'],
+        display: ['"Bricolage Grotesque"','sans-serif'],
+        serif:   ['"Instrument Serif"','Georgia','serif'],
+        mono:    ['"JetBrains Mono"','ui-monospace','monospace']
+      }
+    }
+  }
+}
+</script>
+
+<style>
+  /* ============================================================
+     THEME TOKENS
+     Dark (default) — the original palette, untouched.
+     Light — same brand, remapped for daylight:
+       mint  #00F5D4 -> #087A64 deep emerald (AA contrast on paper)
+       gold  #FFD166 -> #A16207 amber ink
+       ink   #F8FAFC -> #0F172A slate ink
+       muted #94A3B8 -> #64748B slate-500
+       bg    #090D16 -> #F6F7F9 cool paper
+       card  #131B2E -> #FFFFFF frosted white
+     ============================================================ */
+  :root, [data-theme="dark"]{
+    color-scheme: dark;
+    --c-bg: 9 13 22;
+    --c-surface: 19 27 46;
+    --c-mint: 0 245 212;
+    --c-neon: 112 0 255;
+    --c-gold: 255 209 102;
+    --c-ink: 248 250 252;
+    --c-muted: 148 163 184;
+    --c-onaccent: 4 33 27;              /* text on mint buttons */
+    --c-line: rgba(248,250,252,.08);
+    --c-pop: #0C1322;                    /* tooltips, modals */
+    --c-grid: rgba(248,250,252,.032);    /* blueprint grid */
+    --c-nav: rgba(9,13,22,.82);
+    --c-backdrop: rgba(4,7,14,.72);
+    --c-thumb: #1C2740;                  /* scrollbar */
+    --c-shadow: rgba(0,0,0,.55);
+    --c-glow: rgba(0,245,212,.55);       /* CTA hover glow */
+    --c-ghost: rgba(248,250,252,.15);
+    --c-ghost-hover: rgba(0,245,212,.6);
+    --c-outline: rgba(248,250,252,.3);   /* tool ticker stroke */
+    --c-outline-hover: rgba(0,245,212,.55);
+    --c-chart-grid: rgba(248,250,252,.06);
+    --c-chart-label: rgba(148,163,184,.55);
+    --c-cross: rgba(248,250,252,.25);
+    --c-sel-ink: #05231D;                /* text on ::selection */
+    --noise-op: .045;
+  }
+  [data-theme="light"]{
+    color-scheme: light;
+    --c-bg: 246 247 249;
+    --c-surface: 255 255 255;
+    --c-mint: 8 122 100;
+    --c-neon: 112 0 255;
+    --c-gold: 161 98 7;
+    --c-ink: 15 23 42;
+    --c-muted: 100 116 139;
+    --c-onaccent: 244 251 248;
+    --c-line: rgba(15,23,42,.12);
+    --c-pop: #FFFFFF;
+    --c-grid: rgba(15,23,42,.05);
+    --c-nav: rgba(246,247,249,.86);
+    --c-backdrop: rgba(15,23,42,.35);
+    --c-thumb: #D7DCE4;
+    --c-shadow: rgba(15,23,42,.16);
+    --c-glow: rgba(8,122,100,.42);
+    --c-ghost: rgba(15,23,42,.16);
+    --c-ghost-hover: rgba(8,122,100,.65);
+    --c-outline: rgba(15,23,42,.35);
+    --c-outline-hover: rgba(8,122,100,.7);
+    --c-chart-grid: rgba(15,23,42,.08);
+    --c-chart-label: rgba(71,85,105,.75);
+    --c-cross: rgba(15,23,42,.3);
+    --c-sel-ink: #F2FBF8;
+    --noise-op: .03;
+  }
+
+  /* smooth cross-fade while switching (added for ~600ms by JS) */
+  html.theming, html.theming *, html.theming *::before, html.theming *::after{
+    transition: background-color .5s ease, color .5s ease, border-color .5s ease,
+                fill .5s ease, stroke .5s ease, box-shadow .5s ease,
+                opacity .5s ease, transform .5s ease !important;
+  }
+
+  html{ scroll-behavior:smooth; scroll-padding-top:5.5rem; background:rgb(var(--c-bg)); }
+  body{
+    font-family:'Space Grotesk',ui-sans-serif,system-ui,sans-serif;
+    background-color:rgb(var(--c-bg)); color:rgb(var(--c-ink)); overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+    background-image:
+      linear-gradient(var(--c-grid) 1px,transparent 1px),
+      linear-gradient(90deg,var(--c-grid) 1px,transparent 1px);
+    background-size:72px 72px;
+  }
+  ::selection{ background:rgb(var(--c-mint)); color:var(--c-sel-ink); }
+  ::-webkit-scrollbar{ width:10px }
+  ::-webkit-scrollbar-track{ background:rgb(var(--c-bg)) }
+  ::-webkit-scrollbar-thumb{ background:var(--c-thumb); border-radius:99px; border:2px solid rgb(var(--c-bg)) }
+  :focus-visible{ outline:2px solid rgb(var(--c-mint)); outline-offset:3px }
+
+  /* film grain */
+  .noise{ position:fixed; inset:0; z-index:70; pointer-events:none; opacity:var(--noise-op);
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E"); }
+
+  /* shared shadow / glow utilities (theme-aware) */
+  .sh-card{ box-shadow: 0 24px 60px -24px var(--c-shadow); }
+  .glow{ transition: transform .35s cubic-bezier(.16,1,.3,1), box-shadow .35s ease; }
+  .glow:hover{ box-shadow: 0 14px 40px -16px var(--c-glow); }
+
+  /* ---- scroll reveal ---- */
+  [data-reveal]:not([data-reveal="lines"]){ opacity:0; transform:translateY(28px);
+    transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1);
+    transition-delay:var(--d,0s); will-change:opacity,transform; }
+  [data-reveal].in{ opacity:1; transform:translateY(0); }
+  [data-reveal="lines"] .line{ display:block; overflow:hidden; padding-bottom:.12em; margin-bottom:-.12em; }
+  [data-reveal="lines"] .line>span{ display:inline-block; transform:translateY(115%);
+    transition:transform 1.1s cubic-bezier(.16,1,.3,1); transition-delay:var(--d,0s); }
+  [data-reveal="lines"].in .line>span{ transform:translateY(0); }
+
+  /* ---- header ---- */
+  #nav.scrolled{ background:var(--c-nav); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); border-bottom:1px solid var(--c-line); }
+  .nav-link{ position:relative; }
+  .nav-link::after{ content:""; position:absolute; left:0; bottom:-6px; height:1px; width:100%;
+    background:rgb(var(--c-mint)); transform:scaleX(0); transform-origin:right; transition:transform .35s cubic-bezier(.4,0,.2,1); }
+  .nav-link:hover::after,.nav-link:focus-visible::after{ transform:scaleX(1); transform-origin:left; }
+
+  /* ---- theme toggle icons (sun shows in dark = "go light", moon in light) ---- */
+  #themeToggle{ overflow:hidden; }
+  #themeToggle .i-sun, #themeToggle .i-moon{
+    position:absolute; inset:0; margin:auto;
+    transition:opacity .4s ease, transform .55s cubic-bezier(.16,1,.3,1);
+  }
+  #themeToggle .i-sun{ opacity:1; transform:rotate(0deg) scale(1); }
+  #themeToggle .i-moon{ opacity:0; transform:rotate(-90deg) scale(.4); }
+  [data-theme="light"] #themeToggle .i-sun{ opacity:0; transform:rotate(90deg) scale(.4); }
+  [data-theme="light"] #themeToggle .i-moon{ opacity:1; transform:rotate(0deg) scale(1); }
+
+  /* ---- marquees ---- */
+  @keyframes marquee{ to{ transform:translateX(-50%) } }
+  .marquee-track{ display:flex; width:max-content; animation:marquee 32s linear infinite; }
+  .marquee-track.rev{ animation-direction:reverse; animation-duration:40s; }
+  .marquee:hover .marquee-track{ animation-play-state:paused; }
+  .tools-outline{ color:transparent; -webkit-text-stroke:1px var(--c-outline); transition:-webkit-text-stroke-color .4s; }
+  .marquee:hover .tools-outline{ -webkit-text-stroke-color:var(--c-outline-hover); }
+
+  /* ---- ghost numerals (process) ---- */
+  .ghost-num{ color:transparent; -webkit-text-stroke:1.5px var(--c-ghost); transition:-webkit-text-stroke-color .4s; }
+  .group:hover .ghost-num{ -webkit-text-stroke-color:var(--c-ghost-hover); }
+
+  @keyframes floaty{ 0%,100%{ transform:translateY(0) } 50%{ transform:translateY(-8px) } }
+
+  /* ---- skill hover preview ---- */
+  #skillPreview{ transition:opacity .3s ease; opacity:0; }
+  #skillPreview.on{ opacity:1; }
+  #skillPreview .inner{ transform:scale(.88); transition:transform .35s cubic-bezier(.16,1,.3,1); }
+  #skillPreview.on .inner{ transform:scale(1); }
+
+  /* ---- mobile menu ---- */
+  #mobileMenu{ opacity:0; pointer-events:none; visibility:hidden; transition:opacity .35s ease,visibility .35s; }
+  #mobileMenu.open{ opacity:1; pointer-events:auto; visibility:visible; }
+  #mobileMenu .m-item{ opacity:0; transform:translateY(16px);
+    transition:opacity .5s cubic-bezier(.16,1,.3,1),transform .5s cubic-bezier(.16,1,.3,1); transition-delay:var(--d,0s); }
+  #mobileMenu.open .m-item{ opacity:1; transform:none; }
+
+  /* ---- dialog ---- */
+  dialog#caseModal{ margin:auto; border:1px solid var(--c-line); padding:0; color:rgb(var(--c-ink)); }
+  dialog#caseModal::backdrop{ background:var(--c-backdrop); backdrop-filter:blur(6px); }
+  dialog#caseModal[open]{ animation:modalIn .5s cubic-bezier(.16,1,.3,1); }
+  @keyframes modalIn{ from{ opacity:0; transform:translateY(26px) scale(.96) } to{ opacity:1; transform:none } }
+
+  /* ---- toast ---- */
+  #toast{ opacity:0; transform:translate(-50%,16px); transition:opacity .3s,transform .3s; pointer-events:none; }
+  #toast.show{ opacity:1; transform:translate(-50%,0); }
+
+  .img-dim{ filter:saturate(.82) contrast(1.05); }
+
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{ animation-duration:.01ms!important; animation-iteration-count:1!important; transition-duration:.01ms!important; }
+    html{ scroll-behavior:auto }
+    [data-reveal]:not([data-reveal="lines"]){ opacity:1; transform:none }
+    [data-reveal="lines"] .line>span{ transform:none }
+  }
+</style>
+</head>
+
+<body id="top" class="font-sans text-ink">
+
+<a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:bg-mint focus:text-onaccent focus:px-4 focus:py-2 focus:rounded-full font-mono text-xs">Skip to content</a>
+
+<!-- scroll progress + grain -->
+<div id="progress" class="fixed top-0 left-0 right-0 h-[2px] z-[75] bg-mint origin-left" style="transform:scaleX(0)"></div>
+<div class="noise" aria-hidden="true"></div>
+
+<!-- ================= MOBILE MENU ================= -->
+<div id="mobileMenu" class="fixed inset-0 z-[60] bg-obsidian/95 backdrop-blur-xl lg:hidden">
+  <div class="h-full flex flex-col px-6 py-5">
+    <div class="flex items-center justify-between">
+      <span class="font-display font-extrabold text-lg">AR<span class="text-mint">.</span></span>
+      <button id="menuCloseBtn" aria-label="Close menu" class="w-10 h-10 rounded-full border border-line flex items-center justify-center hover:border-mint hover:text-mint transition-colors">
+        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <nav class="flex-1 flex flex-col justify-center gap-2">
+      <a data-close href="#results"     class="m-item group flex items-baseline gap-4 py-2 font-display text-4xl font-extrabold tracking-tight" style="--d:.05s"><span class="font-mono text-[10px] tracking-[0.3em] text-mint">01</span>Results</a>
+      <a data-close href="#work"        class="m-item group flex items-baseline gap-4 py-2 font-display text-4xl font-extrabold tracking-tight" style="--d:.12s"><span class="font-mono text-[10px] tracking-[0.3em] text-mint">02</span>Work</a>
+      <a data-close href="#skills"      class="m-item group flex items-baseline gap-4 py-2 font-display text-4xl font-extrabold tracking-tight" style="--d:.19s"><span class="font-mono text-[10px] tracking-[0.3em] text-mint">03</span>Capabilities</a>
+      <a data-close href="#process"     class="m-item group flex items-baseline gap-4 py-2 font-display text-4xl font-extrabold tracking-tight" style="--d:.26s"><span class="font-mono text-[10px] tracking-[0.3em] text-mint">04</span>Process</a>
+      <a data-close href="#contact"     class="m-item group flex items-baseline gap-4 py-2 font-display text-4xl font-extrabold tracking-tight" style="--d:.33s"><span class="font-mono text-[10px] tracking-[0.3em] text-mint">05</span>Contact</a>
+    </nav>
+    <a data-close href="mailto:hello@alexrivera.co" class="m-item font-mono text-xs tracking-[0.2em] text-muted hover:text-mint transition-colors" style="--d:.4s">HELLO@ALEXRIVERA.CO</a>
+  </div>
+</div>
+
+<!-- ================= HEADER ================= -->
+<header id="nav" class="fixed top-0 inset-x-0 z-50 transition-all duration-300">
+  <nav class="max-w-7xl mx-auto px-6 h-[72px] flex items-center justify-between" aria-label="Main navigation">
+    <a href="#top" class="font-display font-extrabold text-lg tracking-tight">
+      AR<span class="text-mint">.</span>
+      <span class="hidden sm:inline font-mono text-[9px] tracking-[0.3em] text-muted ml-3 align-middle">SOCIAL × COMMERCE</span>
+    </a>
+    <ul class="hidden lg:flex items-center gap-9 font-mono text-[10px] tracking-[0.25em] text-muted">
+      <li><a class="nav-link hover:text-ink transition-colors" href="#results">RESULTS</a></li>
+      <li><a class="nav-link hover:text-ink transition-colors" href="#work">WORK</a></li>
+      <li><a class="nav-link hover:text-ink transition-colors" href="#skills">CAPABILITIES</a></li>
+      <li><a class="nav-link hover:text-ink transition-colors" href="#process">PROCESS</a></li>
+    </ul>
+    <div class="flex items-center gap-3 md:gap-5">
+      <!-- THEME TOGGLE -->
+      <button id="themeToggle" type="button" aria-label="Switch to light theme" title="Toggle theme"
+              class="relative w-10 h-10 rounded-full border border-line flex items-center justify-center text-muted hover:text-mint hover:border-mint/60 transition-colors">
+        <svg class="i-sun w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/>
+        </svg>
+        <svg class="i-moon w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+        </svg>
+      </button>
+      <span class="hidden md:flex items-center gap-2.5 font-mono text-[9px] tracking-[0.25em] text-muted">
+        <span class="relative flex h-2 w-2">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-mint opacity-60"></span>
+          <span class="relative inline-flex rounded-full h-2 w-2 bg-mint"></span>
+        </span>
+        AVAILABLE FOR Q3
+      </span>
+      <a href="#contact" class="hidden sm:inline-flex border border-line rounded-full px-5 py-2 font-mono text-[10px] tracking-[0.25em] hover:border-mint hover:text-mint transition-colors">HIRE ME</a>
+      <button id="menuBtn" class="lg:hidden w-10 h-10 rounded-full border border-line flex items-center justify-center" aria-label="Open menu" aria-expanded="false">
+        <svg id="iconMenu" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        <svg id="iconClose" class="w-5 h-5 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<main id="main">
+
+  <!-- ================= HERO ================= -->
+  <section class="max-w-7xl mx-auto px-6 pt-32 md:pt-44 pb-16 md:pb-24">
+    <div class="grid lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+
+      <div class="lg:col-span-6">
+        <p class="font-mono text-[10px] md:text-[11px] tracking-[0.35em] text-muted" data-reveal>
+          <span class="text-mint">//</span> ALEX RIVERA — SOCIAL MEDIA MANAGER &amp; E-COMMERCE GROWTH
+        </p>
+        <h1 class="mt-6 font-display font-extrabold tracking-tight leading-[0.98] text-[clamp(2.75rem,7.2vw,5.6rem)]" data-reveal="lines">
+          <span class="line"><span style="--d:.05s">Good content</span></span>
+          <span class="line"><span style="--d:.13s">gets liked.</span></span>
+          <span class="line"><span style="--d:.21s">Great content</span></span>
+          <span class="line"><span style="--d:.29s">gets <em class="font-serif italic font-normal text-mint text-[1.06em]">bought</em><span class="text-mint">.</span></span></span>
+        </h1>
+        <p class="mt-7 text-muted text-base md:text-lg leading-relaxed max-w-lg" data-reveal style="--d:.45s">
+          I build content engines that grow audiences organically — then wire them straight into your
+          storefront, so attention turns into revenue on Meta, TikTok, Etsy and Amazon.
+        </p>
+        <div class="mt-9 flex flex-wrap items-center gap-4" data-reveal style="--d:.55s">
+          <a href="#work" class="group inline-flex items-center gap-2.5 bg-mint text-onaccent font-semibold text-sm px-7 py-3.5 rounded-full glow hover:-translate-y-0.5">
+            SEE THE WORK
+            <svg class="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+          </a>
+          <button class="copy-email inline-flex items-center gap-2.5 border border-line text-muted hover:text-mint hover:border-mint/60 font-mono text-[11px] tracking-[0.18em] px-6 py-3.5 rounded-full transition-colors">
+            <svg class="copy-ic w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            <svg class="check-ic w-3.5 h-3.5 text-mint hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+            COPY EMAIL
+          </button>
+        </div>
+        <div class="mt-12 pt-6 border-t border-line flex flex-wrap items-center gap-x-5 gap-y-2" data-reveal style="--d:.65s">
+          <span class="font-mono text-[9px] tracking-[0.3em] text-muted">CONTENT FOR</span>
+          <span class="font-display font-bold text-sm tracking-wide text-ink/70">LUMEN SKINCARE</span><span class="text-muted">·</span>
+          <span class="font-display font-bold text-sm tracking-wide text-ink/70">NORDVINE</span><span class="text-muted">·</span>
+          <span class="font-display font-bold text-sm tracking-wide text-ink/70">BLOOM &amp; CO</span><span class="text-muted">·</span>
+          <span class="font-display font-bold text-sm tracking-wide text-ink/70">ATLAS FIT</span>
+        </div>
+      </div>
+
+      <!-- Growth console -->
+      <div class="lg:col-span-6">
+        <div id="chartCard" data-reveal style="--d:.3s" class="relative w-full max-w-xl mx-auto lg:ml-auto rounded-2xl border border-line bg-surface/65 backdrop-blur-md p-5 md:p-6 sh-card">
+          <div class="flex items-center justify-between mb-5">
+            <p class="font-mono text-[9px] tracking-[0.3em] text-muted">AUDIENCE GROWTH — TRAILING 12 MO</p>
+            <span class="flex items-center gap-1.5 font-mono text-[9px] tracking-[0.2em] text-mint">
+              <span class="relative flex h-1.5 w-1.5">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-mint opacity-60"></span>
+                <span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-mint"></span>
+              </span>LIVE
+            </span>
+          </div>
+          <div class="flex items-end justify-between mb-3 gap-4">
+            <p class="font-display text-5xl md:text-6xl font-extrabold tracking-tight"><span id="growthCount" data-target="393" data-prefix="+" data-suffix="%">+0%</span></p>
+            <p class="font-mono text-[9px] tracking-[0.15em] text-muted text-right leading-relaxed shrink-0">12.4K → 61.2K<br>CROSS-PLATFORM</p>
+          </div>
+          <div class="relative">
+            <svg id="growthSvg" viewBox="0 0 560 280" class="w-full h-auto block" role="img" aria-label="Line chart: followers grew from 12.4K to 61.2K over twelve months, versus a flat previous year"></svg>
+            <div id="chartTip" class="absolute z-10 pointer-events-none whitespace-nowrap bg-pop border border-line rounded-md px-2.5 py-1.5 font-mono text-[10px] text-ink opacity-0 transition-opacity duration-150" style="transform:translate(-50%,-135%)"></div>
+          </div>
+          <div class="mt-4 pt-4 border-t border-line flex items-center justify-between gap-3">
+            <div class="flex items-center gap-4 font-mono text-[9px] tracking-[0.2em] text-muted">
+              <span class="flex items-center gap-1.5"><i class="w-2 h-2 rounded-full bg-mint inline-block"></i>THIS YEAR</span>
+              <span class="flex items-center gap-1.5"><i class="w-2.5 h-[2px] bg-neon inline-block"></i>LAST YEAR</span>
+            </div>
+            <span class="font-mono text-[9px] tracking-[0.2em] text-muted">ENG. RATE <b class="text-gold font-medium">7.4%</b></span>
+          </div>
+          <div class="hidden md:flex absolute -left-7 -bottom-6 items-center gap-2.5 bg-surface/90 backdrop-blur border border-line rounded-full pl-3 pr-5 py-2.5 sh-card animate-[floaty_6s_ease-in-out_infinite]">
+            <span class="w-7 h-7 rounded-full bg-mint/10 text-mint flex items-center justify-center">
+              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+            </span>
+            <span class="font-mono text-[9px] tracking-[0.2em] text-muted">48.8K NET NEW FOLLOWERS</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= SKILL TICKER ================= -->
+  <div class="marquee border-b border-line py-5 overflow-hidden select-none" aria-hidden="true">
+    <div class="marquee-track items-center" id="skillTicker">
+      <span class="flex items-center gap-8 pr-8">
+        <span class="font-mono text-xs tracking-[0.35em] text-muted whitespace-nowrap">CONTENT CREATION</span>
+        <svg class="w-3 h-3 text-mint shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.1 7.9L22 12l-7.9 2.1L12 22l-2.1-7.9L2 12l7.9-2.1z"/></svg>
+        <span class="font-mono text-xs tracking-[0.35em] text-muted whitespace-nowrap">CALENDAR MANAGEMENT</span>
+        <svg class="w-3 h-3 text-mint shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.1 7.9L22 12l-7.9 2.1L12 22l-2.1-7.9L2 12l7.9-2.1z"/></svg>
+        <span class="font-mono text-xs tracking-[0.35em] text-muted whitespace-nowrap">CONTENT STRATEGY</span>
+        <svg class="w-3 h-3 text-mint shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.1 7.9L22 12l-7.9 2.1L12 22l-2.1-7.9L2 12l7.9-2.1z"/></svg>
+        <span class="font-mono text-xs tracking-[0.35em] text-muted whitespace-nowrap">ORGANIC GROWTH</span>
+        <svg class="w-3 h-3 text-mint shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.1 7.9L22 12l-7.9 2.1L12 22l-2.1-7.9L2 12l7.9-2.1z"/></svg>
+        <span class="font-mono text-xs tracking-[0.35em] text-muted whitespace-nowrap">COMMUNITY ENGAGEMENT</span>
+        <svg class="w-3 h-3 text-mint shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.1 7.9L22 12l-7.9 2.1L12 22l-2.1-7.9L2 12l7.9-2.1z"/></svg>
+        <span class="font-mono text-xs tracking-[0.35em] text-muted whitespace-nowrap">PAGE SETUP</span>
+        <svg class="w-3 h-3 text-mint shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.1 7.9L22 12l-7.9 2.1L12 22l-2.1-7.9L2 12l7.9-2.1z"/></svg>
+        <span class="font-mono text-xs tracking-[0.35em] text-muted whitespace-nowrap">AI WORKFLOWS</span>
+        <svg class="w-3 h-3 text-mint shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.1 7.9L22 12l-7.9 2.1L12 22l-2.1-7.9L2 12l7.9-2.1z"/></svg>
+        <span class="font-mono text-xs tracking-[0.35em] text-muted whitespace-nowrap">E-COMMERCE</span>
+        <svg class="w-3 h-3 text-mint shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.1 7.9L22 12l-7.9 2.1L12 22l-2.1-7.9L2 12l7.9-2.1z"/></svg>
+        <span class="font-mono text-xs tracking-[0.35em] text-muted whitespace-nowrap">ETSY</span>
+        <svg class="w-3 h-3 text-mint shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.1 7.9L22 12l-7.9 2.1L12 22l-2.1-7.9L2 12l7.9-2.1z"/></svg>
+        <span class="font-mono text-xs tracking-[0.35em] text-muted whitespace-nowrap">AMAZON FBA</span>
+        <svg class="w-3 h-3 text-mint shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.1 7.9L22 12l-7.9 2.1L12 22l-2.1-7.9L2 12l7.9-2.1z"/></svg>
+      </span>
+    </div>
+  </div>
+
+  <!-- ================= RESULTS BAND ================= -->
+  <section id="results" data-count-group class="border-b border-line">
+    <div class="max-w-7xl mx-auto grid grid-cols-2 lg:grid-cols-4 gap-px bg-line">
+      <div class="bg-obsidian px-6 md:px-10 py-10 md:py-14">
+        <p class="font-display text-4xl md:text-5xl font-extrabold tracking-tight"><span data-target="6" data-suffix="+">0+</span></p>
+        <p class="font-mono text-[9px] md:text-[10px] tracking-[0.25em] text-muted mt-2.5">YEARS RUNNING SOCIAL</p>
+      </div>
+      <div class="bg-obsidian px-6 md:px-10 py-10 md:py-14">
+        <p class="font-display text-4xl md:text-5xl font-extrabold tracking-tight"><span data-target="120" data-suffix="+">0+</span></p>
+        <p class="font-mono text-[9px] md:text-[10px] tracking-[0.25em] text-muted mt-2.5">CAMPAIGNS SHIPPED</p>
+      </div>
+      <div class="bg-obsidian px-6 md:px-10 py-10 md:py-14">
+        <p class="font-display text-4xl md:text-5xl font-extrabold tracking-tight"><span data-target="48" data-suffix="M+">0M+</span></p>
+        <p class="font-mono text-[9px] md:text-[10px] tracking-[0.25em] text-muted mt-2.5">ORGANIC IMPRESSIONS</p>
+      </div>
+      <div class="bg-obsidian px-6 md:px-10 py-10 md:py-14">
+        <p class="font-display text-4xl md:text-5xl font-extrabold tracking-tight text-gold"><span data-target="4.2" data-prefix="$" data-suffix="M" data-decimals="1">$0.0M</span></p>
+        <p class="font-mono text-[9px] md:text-[10px] tracking-[0.25em] text-muted mt-2.5">ATTRIBUTED REVENUE</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SELECTED WORK ================= -->
+  <section id="work" class="max-w-7xl mx-auto px-6 py-24 md:py-32">
+    <div class="flex flex-wrap items-end justify-between gap-6 mb-14 md:mb-20" data-reveal>
+      <div>
+        <p class="font-mono text-[10px] tracking-[0.35em] text-mint mb-4">01 / SELECTED WORK</p>
+        <h2 class="font-display text-4xl md:text-5xl font-extrabold tracking-tight">Proof, not promises<span class="text-mint">.</span></h2>
+      </div>
+      <p class="hidden md:block font-mono text-[10px] tracking-[0.15em] text-muted max-w-[240px] text-right leading-relaxed">THREE RECENT BUILDS — NUMBERS PULLED FROM LIVE PLATFORM DASHBOARDS.</p>
+    </div>
+
+    <div class="grid md:grid-cols-12 gap-x-8 gap-y-14 items-start">
+
+      <!-- Case 01 -->
+       <div class="md:col-span-7"> 
+           <article class="group " data-reveal>
+             <figure class="relative overflow-hidden rounded-xl border border-line aspect-[16/7]">
+               <img src="https://res.cloudinary.com/disivcuqr/image/upload/v1790355227/snippets-assets/v_3ww9.jpg" alt="Lumen Skincare — product flat-lay from the reel-first content engine" loading="lazy" decoding="async" class="img-dim w-full h-full object-cover transition-transform duration-[900ms] ease-[cubic-bezier(.16,1,.3,1)] group-hover:scale-[1.04]">
+               <span class="absolute top-4 right-4 w-10 h-10 rounded-full bg-obsidian/70 backdrop-blur border border-line flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                 <svg class="w-4 h-4 text-mint" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+               </span>
+             </figure>
+             <div class="mt-5 flex items-start justify-between gap-4">
+               <div>
+                 <h3 class="font-display text-xl md:text-2xl font-bold tracking-tight">Lumen Skincare</h3>
+                 <p class="font-mono text-[10px] tracking-[0.25em] text-muted mt-1.5">ETSY · DTC SKINCARE — 2024</p>
+               </div>
+               <div class="text-right shrink-0">
+                 <p class="font-display text-2xl font-bold text-mint">+212%</p>
+                 <p class="font-mono text-[9px] tracking-[0.2em] text-muted mt-0.5">ORGANIC REACH</p>
+               </div>
+             </div>
+             <p class="mt-3 text-muted text-sm md:text-[15px] leading-relaxed max-w-lg">From 400 to 41K monthly Etsy visits with a reel-first content engine — ingredient breakdowns, founder arcs, and a weekly drop ritual.</p>
+             <button data-case="lumen" class="mt-4 inline-flex items-center gap-2 font-mono text-[10px] tracking-[0.25em] text-ink hover:text-mint transition-colors">
+               READ CASE STUDY
+               <svg class="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+             </button>
+           </article>
+           <!-- Case 03 -->
+            <article class="group mt-8" data-reveal style="--d:.1s">
+                <figure class="relative overflow-hidden rounded-xl border border-line aspect-[16/7]">
+                <img src="https://res.cloudinary.com/disivcuqr/image/upload/v1790356038/snippets-assets/v_nrny.jpg" alt="Bloom & Co — behind-the-scenes frame from an organic TikTok series" loading="lazy" decoding="async" class="img-dim w-full h-full object-cover transition-transform duration-[900ms] ease-[cubic-bezier(.16,1,.3,1)] group-hover:scale-[1.04]">
+                <span class="absolute top-4 right-4 w-10 h-10 rounded-full bg-obsidian/70 backdrop-blur border border-line flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                    <svg class="w-4 h-4 text-mint" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+                </span>
+                </figure>
+                <div class="mt-5 flex items-start justify-between gap-4">
+                <div>
+                    <h3 class="font-display text-xl md:text-2xl font-bold tracking-tight">Bloom &amp; Co</h3>
+                    <p class="font-mono text-[10px] tracking-[0.25em] text-muted mt-1.5">TIKTOK · COMMUNITY — 11 MONTHS</p>
+                </div>
+                <div class="text-right shrink-0">
+                    <p class="font-display text-2xl font-bold text-mint">0 → 80K</p>
+                    <p class="font-mono text-[9px] tracking-[0.2em] text-muted mt-0.5">FOLLOWERS, NO ADS</p>
+                </div>
+                </div>
+                <p class="mt-3 text-muted text-sm md:text-[15px] leading-relaxed max-w-lg">A strict format mix — education, behind-the-scenes, customer stories — on a cadence the team could actually sustain.</p>
+                <button data-case="bloomco" class="mt-4 inline-flex items-center gap-2 font-mono text-[10px] tracking-[0.25em] text-ink hover:text-mint transition-colors">
+                READ CASE STUDY
+                <svg class="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                </button>
+            </article>
+       </div>
+
+      <!-- Case 02 -->
+      <article class="group md:col-span-5 md:mt-16" data-reveal style="--d:.1s">
+        <figure class="relative overflow-hidden rounded-xl border border-line aspect-[4/5]">
+          <img src="https://res.cloudinary.com/disivcuqr/image/upload/v1790355658/snippets-assets/v_8iyc.jpg" alt="Nordvine — creator-seeded launch content for a supplement brand" loading="lazy" decoding="async" class="img-di w-full h-full object-cover transition-transform duration-[900ms] ease-[cubic-bezier(.16,1,.3,1)] group-hover:scale-[1.04] grayscale">
+          <span class="absolute top-4 right-4 w-10 h-10 rounded-full bg-obsidian/70 backdrop-blur border border-line flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+            <svg class="w-4 h-4 text-mint" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+          </span>
+        </figure>
+        <div class="mt-5 flex items-start justify-between gap-4">
+          <div>
+            <h3 class="font-display text-xl md:text-2xl font-bold tracking-tight">Nordvine</h3>
+            <p class="font-mono text-[10px] tracking-[0.25em] text-muted mt-1.5">AMAZON FBA · SUPPLEMENTS</p>
+          </div>
+          <div class="text-right shrink-0">
+            <p class="font-display text-2xl font-bold text-mint">19 DAYS</p>
+            <p class="font-mono text-[9px] tracking-[0.2em] text-muted mt-0.5">TO SELL-OUT</p>
+          </div>
+        </div>
+        <p class="mt-3 text-muted text-sm md:text-[15px] leading-relaxed max-w-lg">A cold-start brand that moved its first 2,000 units in nineteen days — teaser arc, 40 micro-creators, one hero SKU.</p>
+        <button data-case="nordvine" class="mt-4 inline-flex items-center gap-2 font-mono text-[10px] tracking-[0.25em] text-ink hover:text-mint transition-colors">
+          READ CASE STUDY
+          <svg class="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </button>
+      </article>
+
+      <!-- side note -->
+      <div class="md:col-span-4 md:col-start-1 self-center hidden" data-reveal>
+        <p class="font-mono text-[10px] tracking-[0.3em] text-mint mb-4">+ 20 MORE BUILDS</p>
+        <p class="text-muted leading-relaxed">The rest of my case work lives under NDA or inside client dashboards. Want the full deck? Ask and it's yours.</p>
+        <a href="mailto:hello@alexrivera.co?subject=Full%20case%20deck%20request" class="mt-5 inline-flex items-center gap-2 font-mono text-[10px] tracking-[0.25em] text-ink border-b border-mint/40 pb-1 hover:text-mint hover:border-mint transition-colors">
+          REQUEST FULL DECK
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+        </a>
+      </div>
+
+      
+
+    </div>
+  </section>
+
+  <!-- ================= CAPABILITIES ================= -->
+  <section id="skills" class="max-w-7xl mx-auto px-6 pb-24 md:pb-32">
+    <div class="flex flex-wrap items-end justify-between gap-6 mb-12 md:mb-16" data-reveal>
+      <div>
+        <p class="font-mono text-[10px] tracking-[0.35em] text-mint mb-4">02 / CAPABILITIES</p>
+        <h2 class="font-display text-4xl md:text-5xl font-extrabold tracking-tight">Ten ways I move<br class="hidden md:block"> the needle<span class="text-mint">.</span></h2>
+      </div>
+      <p class="hidden md:block font-mono text-[10px] tracking-[0.15em] text-muted max-w-[240px] text-right leading-relaxed">TAP ANY LINE FOR THE FULL BREAKDOWN — EVERY SKILL SHIPS WITH RECEIPTS.</p>
+    </div>
+
+    <ul class="border-t border-line">
+      <!-- 01 -->
+      <li data-reveal>
+        <button class="skill-row group w-full text-left border-b border-line hover:bg-surface/50 transition-colors duration-300" aria-haspopup="dialog">
+          <span class="grid grid-cols-[2.5rem_1fr_auto] md:grid-cols-[4.5rem_1fr_9.5rem_2.5rem] items-center gap-x-4 md:gap-x-8 py-6 md:py-7 px-2 md:px-4">
+            <span class="font-mono text-[11px] text-muted group-hover:text-mint transition-colors duration-300">01</span>
+            <span class="block min-w-0">
+              <span class="block font-display text-xl md:text-2xl font-bold tracking-tight transition-transform duration-300 ease-out group-hover:translate-x-2">Content Creation</span>
+              <span class="block mt-1.5 text-sm text-muted leading-relaxed max-w-xl">Reels, TikToks, carousels and captions built to stop the scroll — scripted, shot and edited end to end.</span>
+            </span>
+            <span class="hidden md:inline-flex justify-self-start badge badge-outline rounded-full font-mono text-[9px] tracking-[0.25em] text-muted border-line group-hover:text-neon group-hover:border-neon/60 transition-colors">CREATIVE</span>
+            <svg class="w-5 h-5 justify-self-end text-muted group-hover:text-mint group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+          </span>
+        </button>
+      </li>
+      <!-- 02 -->
+      <li data-reveal style="--d:.04s">
+        <button class="skill-row group w-full text-left border-b border-line hover:bg-surface/50 transition-colors duration-300" aria-haspopup="dialog">
+          <span class="grid grid-cols-[2.5rem_1fr_auto] md:grid-cols-[4.5rem_1fr_9.5rem_2.5rem] items-center gap-x-4 md:gap-x-8 py-6 md:py-7 px-2 md:px-4">
+            <span class="font-mono text-[11px] text-muted group-hover:text-mint transition-colors duration-300">02</span>
+            <span class="block min-w-0">
+              <span class="block font-display text-xl md:text-2xl font-bold tracking-tight transition-transform duration-300 ease-out group-hover:translate-x-2">Content Calendar Management</span>
+              <span class="block mt-1.5 text-sm text-muted leading-relaxed max-w-xl">A rolling 30-day calendar per brand: planned, batched and scheduled so the feed never skips a beat.</span>
+            </span>
+            <span class="hidden md:inline-flex justify-self-start badge badge-outline rounded-full font-mono text-[9px] tracking-[0.25em] text-muted border-line group-hover:text-neon group-hover:border-neon/60 transition-colors">OPERATIONS</span>
+            <svg class="w-5 h-5 justify-self-end text-muted group-hover:text-mint group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+          </span>
+        </button>
+      </li>
+      <!-- 03 -->
+      <li data-reveal style="--d:.08s">
+        <button class="skill-row group w-full text-left border-b border-line hover:bg-surface/50 transition-colors duration-300" aria-haspopup="dialog">
+          <span class="grid grid-cols-[2.5rem_1fr_auto] md:grid-cols-[4.5rem_1fr_9.5rem_2.5rem] items-center gap-x-4 md:gap-x-8 py-6 md:py-7 px-2 md:px-4">
+            <span class="font-mono text-[11px] text-muted group-hover:text-mint transition-colors duration-300">03</span>
+            <span class="block min-w-0">
+              <span class="block font-display text-xl md:text-2xl font-bold tracking-tight transition-transform duration-300 ease-out group-hover:translate-x-2">Content Strategies</span>
+              <span class="block mt-1.5 text-sm text-muted leading-relaxed max-w-xl">Platform-native strategy anchored in analytics — the right hook, format and cadence for every channel.</span>
+            </span>
+            <span class="hidden md:inline-flex justify-self-start badge badge-outline rounded-full font-mono text-[9px] tracking-[0.25em] text-muted border-line group-hover:text-neon group-hover:border-neon/60 transition-colors">STRATEGY</span>
+            <svg class="w-5 h-5 justify-self-end text-muted group-hover:text-mint group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+          </span>
+        </button>
+      </li>
+      <!-- 04 -->
+      <li data-reveal style="--d:.12s">
+        <button class="skill-row group w-full text-left border-b border-line hover:bg-surface/50 transition-colors duration-300" aria-haspopup="dialog">
+          <span class="grid grid-cols-[2.5rem_1fr_auto] md:grid-cols-[4.5rem_1fr_9.5rem_2.5rem] items-center gap-x-4 md:gap-x-8 py-6 md:py-7 px-2 md:px-4">
+            <span class="font-mono text-[11px] text-muted group-hover:text-mint transition-colors duration-300">04</span>
+            <span class="block min-w-0">
+              <span class="block font-display text-xl md:text-2xl font-bold tracking-tight transition-transform duration-300 ease-out group-hover:translate-x-2">Organic Growth Strategies</span>
+              <span class="block mt-1.5 text-sm text-muted leading-relaxed max-w-xl">No paid shortcuts: hooks, collaborations, SEO and community loops that compound reach for free.</span>
+            </span>
+            <span class="hidden md:inline-flex justify-self-start badge badge-outline rounded-full font-mono text-[9px] tracking-[0.25em] text-muted border-line group-hover:text-neon group-hover:border-neon/60 transition-colors">GROWTH</span>
+            <svg class="w-5 h-5 justify-self-end text-muted group-hover:text-mint group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+          </span>
+        </button>
+      </li>
+      <!-- 05 -->
+      <li data-reveal style="--d:.16s">
+        <button class="skill-row group w-full text-left border-b border-line hover:bg-surface/50 transition-colors duration-300" aria-haspopup="dialog">
+          <span class="grid grid-cols-[2.5rem_1fr_auto] md:grid-cols-[4.5rem_1fr_9.5rem_2.5rem] items-center gap-x-4 md:gap-x-8 py-6 md:py-7 px-2 md:px-4">
+            <span class="font-mono text-[11px] text-muted group-hover:text-mint transition-colors duration-300">05</span>
+            <span class="block min-w-0">
+              <span class="block font-display text-xl md:text-2xl font-bold tracking-tight transition-transform duration-300 ease-out group-hover:translate-x-2">Community Engagement</span>
+              <span class="block mt-1.5 text-sm text-muted leading-relaxed max-w-xl">Comments, DMs and mentions handled like a front desk — fast, on-brand and unmistakably human.</span>
+            </span>
+            <span class="hidden md:inline-flex justify-self-start badge badge-outline rounded-full font-mono text-[9px] tracking-[0.25em] text-muted border-line group-hover:text-neon group-hover:border-neon/60 transition-colors">RETENTION</span>
+            <svg class="w-5 h-5 justify-self-end text-muted group-hover:text-mint group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+          </span>
+        </button>
+      </li>
+      <!-- 06 -->
+      <li data-reveal style="--d:.2s">
+        <button class="skill-row group w-full text-left border-b border-line hover:bg-surface/50 transition-colors duration-300" aria-haspopup="dialog">
+          <span class="grid grid-cols-[2.5rem_1fr_auto] md:grid-cols-[4.5rem_1fr_9.5rem_2.5rem] items-center gap-x-4 md:gap-x-8 py-6 md:py-7 px-2 md:px-4">
+            <span class="font-mono text-[11px] text-muted group-hover:text-mint transition-colors duration-300">06</span>
+            <span class="block min-w-0">
+              <span class="block font-display text-xl md:text-2xl font-bold tracking-tight transition-transform duration-300 ease-out group-hover:translate-x-2">Page Setup &amp; Engagement</span>
+              <span class="block mt-1.5 text-sm text-muted leading-relaxed max-w-xl">Bio-to-checkout audits: profiles, highlights and pinned posts tuned to convert first-time visitors.</span>
+            </span>
+            <span class="hidden md:inline-flex justify-self-start badge badge-outline rounded-full font-mono text-[9px] tracking-[0.25em] text-muted border-line group-hover:text-neon group-hover:border-neon/60 transition-colors">CONVERSION</span>
+            <svg class="w-5 h-5 justify-self-end text-muted group-hover:text-mint group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+          </span>
+        </button>
+      </li>
+      <!-- 07 -->
+      <li data-reveal style="--d:.24s">
+        <button class="skill-row group w-full text-left border-b border-line hover:bg-surface/50 transition-colors duration-300" aria-haspopup="dialog">
+          <span class="grid grid-cols-[2.5rem_1fr_auto] md:grid-cols-[4.5rem_1fr_9.5rem_2.5rem] items-center gap-x-4 md:gap-x-8 py-6 md:py-7 px-2 md:px-4">
+            <span class="font-mono text-[11px] text-muted group-hover:text-mint transition-colors duration-300">07</span>
+            <span class="block min-w-0">
+              <span class="block font-display text-xl md:text-2xl font-bold tracking-tight transition-transform duration-300 ease-out group-hover:translate-x-2">Attention to Detail</span>
+              <span class="block mt-1.5 text-sm text-muted leading-relaxed max-w-xl">Captions proofed, links tested, alt text written — the small things never ship broken.</span>
+            </span>
+            <span class="hidden md:inline-flex justify-self-start badge badge-outline rounded-full font-mono text-[9px] tracking-[0.25em] text-muted border-line group-hover:text-neon group-hover:border-neon/60 transition-colors">QUALITY</span>
+            <svg class="w-5 h-5 justify-self-end text-muted group-hover:text-mint group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+          </span>
+        </button>
+      </li>
+      <!-- 08 -->
+      <li data-reveal style="--d:.28s">
+        <button class="skill-row group w-full text-left border-b border-line hover:bg-surface/50 transition-colors duration-300" aria-haspopup="dialog">
+          <span class="grid grid-cols-[2.5rem_1fr_auto] md:grid-cols-[4.5rem_1fr_9.5rem_2.5rem] items-center gap-x-4 md:gap-x-8 py-6 md:py-7 px-2 md:px-4">
+            <span class="font-mono text-[11px] text-muted group-hover:text-mint transition-colors duration-300">08</span>
+            <span class="block min-w-0">
+              <span class="block font-display text-xl md:text-2xl font-bold tracking-tight transition-transform duration-300 ease-out group-hover:translate-x-2">AI Fluent</span>
+              <span class="block mt-1.5 text-sm text-muted leading-relaxed max-w-xl">ChatGPT, Midjourney and automation workflows that halve production time without touching quality.</span>
+            </span>
+            <span class="hidden md:inline-flex justify-self-start badge badge-outline rounded-full font-mono text-[9px] tracking-[0.25em] text-muted border-line group-hover:text-neon group-hover:border-neon/60 transition-colors">LEVERAGE</span>
+            <svg class="w-5 h-5 justify-self-end text-muted group-hover:text-mint group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+          </span>
+        </button>
+      </li>
+      <!-- 09 -->
+      <li data-reveal style="--d:.32s">
+        <button class="skill-row group w-full text-left border-b border-line hover:bg-surface/50 transition-colors duration-300" aria-haspopup="dialog">
+          <span class="grid grid-cols-[2.5rem_1fr_auto] md:grid-cols-[4.5rem_1fr_9.5rem_2.5rem] items-center gap-x-4 md:gap-x-8 py-6 md:py-7 px-2 md:px-4">
+            <span class="font-mono text-[11px] text-muted group-hover:text-mint transition-colors duration-300">09</span>
+            <span class="block min-w-0">
+              <span class="block font-display text-xl md:text-2xl font-bold tracking-tight transition-transform duration-300 ease-out group-hover:translate-x-2">E-commerce Website Management</span>
+              <span class="block mt-1.5 text-sm text-muted leading-relaxed max-w-xl">Shopify storefronts kept in lockstep with the feed — products, banners and drops, always in sync.</span>
+            </span>
+            <span class="hidden md:inline-flex justify-self-start badge badge-outline rounded-full font-mono text-[9px] tracking-[0.25em] text-muted border-line group-hover:text-neon group-hover:border-neon/60 transition-colors">DTC</span>
+            <svg class="w-5 h-5 justify-self-end text-muted group-hover:text-mint group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+          </span>
+        </button>
+      </li>
+      <!-- 10 -->
+      <li data-reveal style="--d:.36s">
+        <button class="skill-row group w-full text-left border-b border-line hover:bg-surface/50 transition-colors duration-300" aria-haspopup="dialog">
+          <span class="grid grid-cols-[2.5rem_1fr_auto] md:grid-cols-[4.5rem_1fr_9.5rem_2.5rem] items-center gap-x-4 md:gap-x-8 py-6 md:py-7 px-2 md:px-4">
+            <span class="font-mono text-[11px] text-muted group-hover:text-mint transition-colors duration-300">10</span>
+            <span class="block min-w-0">
+              <span class="block font-display text-xl md:text-2xl font-bold tracking-tight transition-transform duration-300 ease-out group-hover:translate-x-2">Etsy Seller Central · Amazon FBA</span>
+              <span class="block mt-1.5 text-sm text-muted leading-relaxed max-w-xl">Listings, ads and inventory across Etsy and FBA — from keyword SEO to sell-through.</span>
+            </span>
+            <span class="hidden md:inline-flex justify-self-start badge badge-outline rounded-full font-mono text-[9px] tracking-[0.25em] text-muted border-line group-hover:text-neon group-hover:border-neon/60 transition-colors">MARKETPLACES</span>
+            <svg class="w-5 h-5 justify-self-end text-muted group-hover:text-mint group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+          </span>
+        </button>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ================= PROCESS ================= -->
+  <section id="process" class="max-w-7xl mx-auto px-6 pb-24 md:pb-32">
+    <div class="grid lg:grid-cols-12 gap-12 lg:gap-16">
+
+      <div class="lg:col-span-4">
+        <div class="lg:sticky lg:top-28" data-reveal>
+          <p class="font-mono text-[10px] tracking-[0.35em] text-mint mb-4">03 / PROCESS</p>
+          <h2 class="font-display text-4xl md:text-5xl font-extrabold tracking-tight leading-[1.05]">A system,<br>not a scramble<span class="text-mint">.</span></h2>
+          <p class="mt-5 text-muted leading-relaxed max-w-sm">Every engagement runs on the same four-gear engine — tuned to your brand in week one, rebuilt every ninety days.</p>
+          <div class="mt-8 border border-line rounded-xl p-5 flex gap-3.5 items-start bg-surface/40">
+            <span class="relative flex h-2 w-2 mt-1 shrink-0">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-mint opacity-60"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-mint"></span>
+            </span>
+            <div>
+              <p class="font-mono text-[9px] tracking-[0.3em] text-ink">EVERY MONDAY — 09:00</p>
+              <p class="mt-1.5 text-sm text-muted leading-relaxed">Weekly performance report lands in your inbox before your first coffee cools.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="lg:col-span-8">
+        <div class="group grid md:grid-cols-[110px_1fr] gap-3 md:gap-8 py-8 md:py-10 border-t border-line" data-reveal>
+          <div class="ghost-num font-display text-6xl md:text-7xl font-extrabold leading-none select-none" aria-hidden="true">01</div>
+          <div>
+            <div class="flex flex-wrap items-baseline gap-x-4 gap-y-1">
+              <h3 class="font-display text-xl md:text-2xl font-bold tracking-tight">Audit &amp; research</h3>
+              <span class="font-mono text-[9px] tracking-[0.25em] text-neon">WK 01 — DISCOVERY</span>
+            </div>
+            <p class="mt-2.5 text-muted leading-relaxed max-w-xl">Deep-dive into your niche, competitors and platform analytics to find the gaps worth owning — and the formats your audience is already rewarding.</p>
+          </div>
+        </div>
+        <div class="group grid md:grid-cols-[110px_1fr] gap-3 md:gap-8 py-8 md:py-10 border-t border-line" data-reveal style="--d:.06s">
+          <div class="ghost-num font-display text-6xl md:text-7xl font-extrabold leading-none select-none" aria-hidden="true">02</div>
+          <div>
+            <div class="flex flex-wrap items-baseline gap-x-4 gap-y-1">
+              <h3 class="font-display text-xl md:text-2xl font-bold tracking-tight">Strategy &amp; calendar</h3>
+              <span class="font-mono text-[9px] tracking-[0.25em] text-neon">WK 02 — ROADMAP</span>
+            </div>
+            <p class="mt-2.5 text-muted leading-relaxed max-w-xl">A 90-day roadmap translated into a living content calendar — themes, hooks, formats and posting cadence, signed off before a single post ships.</p>
+          </div>
+        </div>
+        <div class="group grid md:grid-cols-[110px_1fr] gap-3 md:gap-8 py-8 md:py-10 border-t border-line" data-reveal style="--d:.12s">
+          <div class="ghost-num font-display text-6xl md:text-7xl font-extrabold leading-none select-none" aria-hidden="true">03</div>
+          <div>
+            <div class="flex flex-wrap items-baseline gap-x-4 gap-y-1">
+              <h3 class="font-display text-xl md:text-2xl font-bold tracking-tight">Create &amp; publish</h3>
+              <span class="font-mono text-[9px] tracking-[0.25em] text-neon">ONGOING — PRODUCTION</span>
+            </div>
+            <p class="mt-2.5 text-muted leading-relaxed max-w-xl">Batch production, on-brand editing, scheduled drops. Your feed stays consistent while you run the actual business.</p>
+          </div>
+        </div>
+        <div class="group grid md:grid-cols-[110px_1fr] gap-3 md:gap-8 py-8 md:py-10 border-t border-b border-line" data-reveal style="--d:.18s">
+          <div class="ghost-num font-display text-6xl md:text-7xl font-extrabold leading-none select-none" aria-hidden="true">04</div>
+          <div>
+            <div class="flex flex-wrap items-baseline gap-x-4 gap-y-1">
+              <h3 class="font-display text-xl md:text-2xl font-bold tracking-tight">Analyze &amp; scale</h3>
+              <span class="font-mono text-[9px] tracking-[0.25em] text-neon">WEEKLY — REPORTING</span>
+            </div>
+            <p class="mt-2.5 text-muted leading-relaxed max-w-xl">Weekly reporting on what actually converts — then double down, cut, and compound. Every 90 days the strategy evolves with the data.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= TOOL TICKER ================= -->
+  <div class="marquee border-y border-line py-8 overflow-hidden select-none" aria-hidden="true">
+    <div class="marquee-track rev items-center" id="toolTicker">
+      <span class="flex items-center gap-10 pr-10">
+        <span class="tools-outline font-display font-extrabold uppercase text-4xl md:text-6xl tracking-tight whitespace-nowrap">Meta Business Suite</span>
+        <svg class="w-5 h-5 text-neon shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.1 7.9L22 12l-7.9 2.1L12 22l-2.1-7.9L2 12l7.9-2.1z"/></svg>
+        <span class="tools-outline font-display font-extrabold uppercase text-4xl md:text-6xl tracking-tight whitespace-nowrap">TikTok Studio</span>
+        <svg class="w-5 h-5 text-neon shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.1 7.9L22 12l-7.9 2.1L12 22l-2.1-7.9L2 12l7.9-2.1z"/></svg>
+        <span class="tools-outline font-display font-extrabold uppercase text-4xl md:text-6xl tracking-tight whitespace-nowrap">Shopify</span>
+        <svg class="w-5 h-5 text-neon shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.1 7.9L22 12l-7.9 2.1L12 22l-2.1-7.9L2 12l7.9-2.1z"/></svg>
+        <span class="tools-outline font-display font-extrabold uppercase text-4xl md:text-6xl tracking-tight whitespace-nowrap">Seller Central</span>
+        <svg class="w-5 h-5 text-neon shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.1 7.9L22 12l-7.9 2.1L12 22l-2.1-7.9L2 12l7.9-2.1z"/></svg>
+        <span class="tools-outline font-display font-extrabold uppercase text-4xl md:text-6xl tracking-tight whitespace-nowrap">Helium 10</span>
+        <svg class="w-5 h-5 text-neon shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.1 7.9L22 12l-7.9 2.1L12 22l-2.1-7.9L2 12l7.9-2.1z"/></svg>
+        <span class="tools-outline font-display font-extrabold uppercase text-4xl md:text-6xl tracking-tight whitespace-nowrap">Later</span>
+        <svg class="w-5 h-5 text-neon shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.1 7.9L22 12l-7.9 2.1L12 22l-2.1-7.9L2 12l7.9-2.1z"/></svg>
+        <span class="tools-outline font-display font-extrabold uppercase text-4xl md:text-6xl tracking-tight whitespace-nowrap">Klaviyo</span>
+        <svg class="w-5 h-5 text-neon shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.1 7.9L22 12l-7.9 2.1L12 22l-2.1-7.9L2 12l7.9-2.1z"/></svg>
+        <span class="tools-outline font-display font-extrabold uppercase text-4xl md:text-6xl tracking-tight whitespace-nowrap">Figma</span>
+        <svg class="w-5 h-5 text-neon shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.1 7.9L22 12l-7.9 2.1L12 22l-2.1-7.9L2 12l7.9-2.1z"/></svg>
+        <span class="tools-outline font-display font-extrabold uppercase text-4xl md:text-6xl tracking-tight whitespace-nowrap">CapCut</span>
+        <svg class="w-5 h-5 text-neon shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.1 7.9L22 12l-7.9 2.1L12 22l-2.1-7.9L2 12l7.9-2.1z"/></svg>
+        <span class="tools-outline font-display font-extrabold uppercase text-4xl md:text-6xl tracking-tight whitespace-nowrap">Notion</span>
+        <svg class="w-5 h-5 text-neon shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.1 7.9L22 12l-7.9 2.1L12 22l-2.1-7.9L2 12l7.9-2.1z"/></svg>
+        <span class="tools-outline font-display font-extrabold uppercase text-4xl md:text-6xl tracking-tight whitespace-nowrap">Google Analytics</span>
+        <svg class="w-5 h-5 text-neon shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.1 7.9L22 12l-7.9 2.1L12 22l-2.1-7.9L2 12l7.9-2.1z"/></svg>
+        <span class="tools-outline font-display font-extrabold uppercase text-4xl md:text-6xl tracking-tight whitespace-nowrap">ChatGPT</span>
+        <svg class="w-5 h-5 text-neon shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.1 7.9L22 12l-7.9 2.1L12 22l-2.1-7.9L2 12l7.9-2.1z"/></svg>
+      </span>
+    </div>
+  </div>
+
+  <!-- ================= TESTIMONIALS ================= -->
+  <section class="max-w-7xl mx-auto px-6 py-24 md:py-32">
+    <div class="grid lg:grid-cols-12 gap-12 lg:gap-16">
+      <figure class="lg:col-span-7" data-reveal>
+        <div class="font-serif text-7xl text-mint leading-[0.4] select-none mb-6" aria-hidden="true">&ldquo;</div>
+        <blockquote class="font-display text-2xl md:text-[2rem] leading-snug font-medium tracking-tight">
+          Alex rebuilt our entire content engine from scratch. Six months in, we're outselling all of last year — without spending a single dollar on ads.
+        </blockquote>
+        <figcaption class="mt-7 flex items-center gap-4">
+          <span class="w-11 h-11 rounded-full overflow-hidden border border-line shrink-0">
+            <img src="https://picsum.photos/seed/ar-dana/96/96.jpg" alt="Portrait of Dana Whitfield" loading="lazy" decoding="async" class="w-full h-full object-cover img-dim">
+          </span>
+          <span>
+            <span class="block font-display font-bold text-sm">Dana Whitfield</span>
+            <span class="block font-mono text-[9px] tracking-[0.25em] text-muted mt-1">FOUNDER — LUMEN SKINCARE</span>
+          </span>
+        </figcaption>
+      </figure>
+
+      <figure class="lg:col-span-4 lg:col-start-9 lg:mt-24 border-l-2 border-gold pl-6 md:pl-8" data-reveal style="--d:.12s">
+        <blockquote class="text-lg md:text-xl leading-relaxed text-ink/90">
+          The rare mix of a creative eye and a spreadsheet brain. Our launch calendar basically ran itself.
+        </blockquote>
+        <figcaption class="mt-6 font-mono text-[9px] tracking-[0.25em] text-muted">MARCUS LEE — OPS LEAD, NORDVINE</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ================= CONTACT ================= -->
+  <section id="contact" class="border-t border-line">
+    <div class="max-w-4xl mx-auto px-6 py-28 md:py-36 text-center">
+      <p class="font-mono text-[10px] tracking-[0.35em] text-mint mb-6" data-reveal>04 / NEXT STEP</p>
+      <h2 class="font-display font-extrabold tracking-tight leading-[1.02] text-[clamp(2.4rem,6.2vw,5rem)]" data-reveal="lines">
+        <span class="line"><span>Let's grow something</span></span>
+        <span class="line"><span style="--d:.12s"><em class="font-serif italic font-normal text-mint text-[1.05em]">worth following</em><span class="text-mint">.</span></span></span>
+      </h2>
+      <p class="mt-6 text-muted leading-relaxed max-w-xl mx-auto" data-reveal style="--d:.25s">
+        Tell me where your brand is stuck — reach, revenue, or consistency — and I'll come back with a plan, not a pitch.
+      </p>
+      <div class="mt-9 flex flex-wrap items-center justify-center gap-4" data-reveal style="--d:.35s">
+        <a href="mailto:hello@alexrivera.co?subject=Free%2020-min%20audit%20request" class="group inline-flex items-center gap-2.5 bg-mint text-onaccent font-semibold text-sm px-8 py-4 rounded-full glow hover:-translate-y-0.5">
+          BOOK A FREE 20-MIN AUDIT
+          <svg class="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+        </a>
+        <button class="copy-email inline-flex items-center gap-2.5 border border-line text-muted hover:text-mint hover:border-mint/60 font-mono text-[11px] tracking-[0.18em] px-6 py-4 rounded-full transition-colors">
+          <svg class="copy-ic w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          <svg class="check-ic w-3.5 h-3.5 text-mint hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+          HELLO@ALEXRIVERA.CO
+        </button>
+      </div>
+      <p class="mt-6 font-mono text-[9px] tracking-[0.3em] text-muted" data-reveal style="--d:.45s">AVG. RESPONSE TIME — UNDER 24 HOURS</p>
+
+      <div class="mt-12 flex items-center justify-center gap-3" data-reveal style="--d:.5s">
+        <a class="w-11 h-11 rounded-full border border-line flex items-center justify-center text-muted hover:text-mint hover:border-mint hover:-translate-y-0.5 transition-all" href="https://instagram.com/alexrivera" target="_blank" rel="noopener" aria-label="Instagram profile">
+          <svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+        </a>
+        <a class="w-11 h-11 rounded-full border border-line flex items-center justify-center text-muted hover:text-mint hover:border-mint hover:-translate-y-0.5 transition-all" href="https://linkedin.com/in/alexrivera" target="_blank" rel="noopener" aria-label="LinkedIn profile">
+          <svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        </a>
+        <a class="w-11 h-11 rounded-full border border-line flex items-center justify-center text-muted hover:text-mint hover:border-mint hover:-translate-y-0.5 transition-all" href="https://x.com/alexrivera" target="_blank" rel="noopener" aria-label="X (Twitter) profile">
+          <svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg>
+        </a>
+        <a class="w-11 h-11 rounded-full border border-line flex items-center justify-center text-muted hover:text-mint hover:border-mint hover:-translate-y-0.5 transition-all" href="https://youtube.com/@alexrivera" target="_blank" rel="noopener" aria-label="YouTube channel">
+          <svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"/><path d="m10 15 5-3-5-3z"/></svg>
+        </a>
+        <a class="w-11 h-11 rounded-full border border-line flex items-center justify-center text-muted hover:text-mint hover:border-mint hover:-translate-y-0.5 transition-all" href="mailto:hello@alexrivera.co" aria-label="Send an email">
+          <svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer class="border-t border-line">
+  <div class="max-w-7xl mx-auto px-6 py-7 flex flex-col md:flex-row items-center justify-between gap-4 font-mono text-[9px] tracking-[0.25em] text-muted">
+    <p>© <span id="year">2025</span> ALEX RIVERA — ALL RIGHTS RESERVED</p>
+    <p class="flex items-center gap-2.5">LOCAL TIME <span id="clock" class="text-ink tabular-nums">00:00:00</span></p>
+    <a href="#top" class="flex items-center gap-2 hover:text-mint transition-colors">BACK TO TOP
+      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg>
+    </a>
+  </div>
+</footer>
+
+<!-- floating skill preview (desktop, cursor-follow) -->
+<div id="skillPreview" class="fixed left-0 top-0 z-40 pointer-events-none hidden lg:block w-[300px] h-[200px]">
+  <div class="inner w-full h-full rounded-lg overflow-hidden border border-line sh-card relative bg-surface">
+    <img src="https://picsum.photos/seed/ar-skill-1/480/320.jpg"  alt="" loading="lazy" class="absolute inset-0 w-full h-full object-cover img-dim opacity-0 transition-opacity duration-200">
+    <img src="https://picsum.photos/seed/ar-skill-2/480/320.jpg"  alt="" loading="lazy" class="absolute inset-0 w-full h-full object-cover img-dim opacity-0 transition-opacity duration-200">
+    <img src="https://picsum.photos/seed/ar-skill-3/480/320.jpg"  alt="" loading="lazy" class="absolute inset-0 w-full h-full object-cover img-dim opacity-0 transition-opacity duration-200">
+    <img src="https://picsum.photos/seed/ar-skill-4/480/320.jpg"  alt="" loading="lazy" class="absolute inset-0 w-full h-full object-cover img-dim opacity-0 transition-opacity duration-200">
+    <img src="https://picsum.photos/seed/ar-skill-5/480/320.jpg"  alt="" loading="lazy" class="absolute inset-0 w-full h-full object-cover img-dim opacity-0 transition-opacity duration-200">
+    <img src="https://picsum.photos/seed/ar-skill-6/480/320.jpg"  alt="" loading="lazy" class="absolute inset-0 w-full h-full object-cover img-dim opacity-0 transition-opacity duration-200">
+    <img src="https://picsum.photos/seed/ar-skill-7/480/320.jpg"  alt="" loading="lazy" class="absolute inset-0 w-full h-full object-cover img-dim opacity-0 transition-opacity duration-200">
+    <img src="https://picsum.photos/seed/ar-skill-8/480/320.jpg"  alt="" loading="lazy" class="absolute inset-0 w-full h-full object-cover img-dim opacity-0 transition-opacity duration-200">
+    <img src="https://picsum.photos/seed/ar-skill-9/480/320.jpg"  alt="" loading="lazy" class="absolute inset-0 w-full h-full object-cover img-dim opacity-0 transition-opacity duration-200">
+    <img src="https://picsum.photos/seed/ar-skill-10/480/320.jpg" alt="" loading="lazy" class="absolute inset-0 w-full h-full object-cover img-dim opacity-0 transition-opacity duration-200">
+  </div>
+</div>
+
+<!-- toast -->
+<div id="toast" class="fixed bottom-6 left-1/2 z-[80] flex items-center gap-2.5 bg-surface border border-mint/30 text-ink text-sm px-5 py-3 rounded-full backdrop-blur-md sh-card">
+  <svg class="w-4 h-4 text-mint" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+  <span id="toastMsg">Copied</span>
+</div>
+
+<!-- shared dialog for case studies + capabilities -->
+<dialog id="caseModal" class="w-[min(92vw,660px)] max-h-[90vh] overflow-y-auto rounded-2xl bg-pop">
+  <div id="modalBody"></div>
+</dialog>
+
+<noscript><style>[data-reveal]{opacity:1;transform:none}[data-reveal="lines"] .line>span{transform:none}</style></noscript>
+
+<script>
+/* ============================================================
+   Alex Rivera — portfolio interactions
+   ============================================================ */
+const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const EMAIL = 'hello@alexrivera.co';
+
+/* ---------- theme toggle ---------- */
+const themeBtn  = document.getElementById('themeToggle');
+const themeMeta = document.querySelector('meta[name="theme-color"]');
+function setTheme(t, animate){
+  const root = document.documentElement;
+  if (animate && !RM){
+    root.classList.add('theming');
+    clearTimeout(setTheme._t);
+    setTheme._t = setTimeout(() => root.classList.remove('theming'), 620);
+  }
+  root.dataset.theme = t;
+  try{ localStorage.setItem('ar-theme', t); }catch(_){}
+  if (themeMeta) themeMeta.content = (t === 'light') ? '#F6F7F9' : '#090D16';
+  themeBtn.setAttribute('aria-label', (t === 'light') ? 'Switch to dark theme' : 'Switch to light theme');
+}
+themeBtn.addEventListener('click', () => {
+  setTheme(document.documentElement.dataset.theme === 'light' ? 'dark' : 'light', true);
+});
+setTheme(document.documentElement.dataset.theme || 'dark', false); /* sync label + meta on load */
+
+/* ---------- count-up ---------- */
+function startCount(el, delay = 0){
+  const t = parseFloat(el.dataset.target),
+        dec = +(el.dataset.decimals || 0),
+        pre = el.dataset.prefix || '',
+        suf = el.dataset.suffix || '';
+  if (RM){ el.textContent = pre + t.toFixed(dec) + suf; return; }
+  const dur = 1900; let st = null;
+  function fr(ts){
+    if (!st) st = ts;
+    const p = Math.min((ts - st) / dur, 1);
+    const e = 1 - Math.pow(2, -10 * p);
+    el.textContent = pre + (t * e).toFixed(dec) + suf;
+    if (p < 1) requestAnimationFrame(fr); else el.textContent = pre + t.toFixed(dec) + suf;
+  }
+  setTimeout(() => requestAnimationFrame(fr), delay);
+}
+
+/* ---------- scroll reveal / counters / chart trigger ---------- */
+const io = new IntersectionObserver(entries => {
+  entries.forEach(en => {
+    if (!en.isIntersecting) return;
+    en.target.classList.add('in');
+    if (en.target.id === 'chartCard' && window.__drawChart) window.__drawChart();
+    if (en.target.hasAttribute('data-count-group'))
+      en.target.querySelectorAll('[data-target]').forEach((el, i) => startCount(el, i * 140));
+    io.unobserve(en.target);
+  });
+}, { threshold: .15, rootMargin: '0px 0px -8% 0px' });
+document.querySelectorAll('[data-reveal], #chartCard, [data-count-group]').forEach(el => io.observe(el));
+
+/* ---------- header + progress bar ---------- */
+const nav = document.getElementById('nav'), prog = document.getElementById('progress');
+let ticking = false;
+addEventListener('scroll', () => {
+  if (ticking) return; ticking = true;
+  requestAnimationFrame(() => {
+    const y = scrollY, h = document.documentElement.scrollHeight - innerHeight;
+    nav.classList.toggle('scrolled', y > 24);
+    prog.style.transform = 'scaleX(' + (h ? y / h : 0) + ')';
+    ticking = false;
+  });
+}, { passive: true });
+
+/* ---------- mobile menu ---------- */
+const menu = document.getElementById('mobileMenu'),
+      menuBtn = document.getElementById('menuBtn'),
+      iconMenu = document.getElementById('iconMenu'),
+      iconClose = document.getElementById('iconClose');
+function setMenu(open){
+  menu.classList.toggle('open', open);
+  menuBtn.setAttribute('aria-expanded', open);
+  document.body.style.overflow = open ? 'hidden' : '';
+  iconMenu.classList.toggle('hidden', open);
+  iconClose.classList.toggle('hidden', !open);
+}
+menuBtn.addEventListener('click', () => setMenu(!menu.classList.contains('open')));
+document.getElementById('menuCloseBtn').addEventListener('click', () => setMenu(false));
+menu.querySelectorAll('[data-close]').forEach(a => a.addEventListener('click', () => setMenu(false)));
+
+/* ---------- marquees (duplicate for a seamless loop) ---------- */
+['skillTicker','toolTicker'].forEach(id => {
+  const t = document.getElementById(id), set = t.innerHTML;
+  t.innerHTML = set + set + set + set;
+});
+
+/* ---------- toast ---------- */
+let toastTimer;
+function toast(msg){
+  const t = document.getElementById('toast');
+  document.getElementById('toastMsg').textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2400);
+}
+
+/* ---------- copy email ---------- */
+document.querySelectorAll('.copy-email').forEach(btn => btn.addEventListener('click', async () => {
+  try { await navigator.clipboard.writeText(EMAIL); }
+  catch(_){
+    const ta = document.createElement('textarea');
+    ta.value = EMAIL; document.body.appendChild(ta); ta.select();
+    document.execCommand('copy'); ta.remove();
+  }
+  const c = btn.querySelector('.copy-ic'), k = btn.querySelector('.check-ic');
+  if (c && k){
+    c.classList.add('hidden'); k.classList.remove('hidden');
+    setTimeout(() => { c.classList.remove('hidden'); k.classList.add('hidden'); }, 2000);
+  }
+  toast('Email copied — talk soon.');
+}));
+
+/* ---------- footer clock + year ---------- */
+const clock = document.getElementById('clock');
+function tickClock(){ clock.textContent = new Date().toLocaleTimeString('en-GB', { hour12: false }); }
+tickClock(); setInterval(tickClock, 1000);
+document.getElementById('year').textContent = new Date().getFullYear();
+
+/* ============================================================
+   HERO — interactive growth chart
+   (all colors reference CSS vars, so it re-tints with the theme)
+   ============================================================ */
+(function(){
+  const svg = document.getElementById('growthSvg');
+  const NS = 'http://www.w3.org/2000/svg';
+  const months = ['AUG','SEP','OCT','NOV','DEC','JAN','FEB','MAR','APR','MAY','JUN','JUL'];
+  const dNow  = [12.4,12.9,13.8,15.1,16.9,19.6,23.2,27.5,33.4,40.8,49.6,61.2];
+  const dPrev = [11.8,12.1,11.6,12.3,12.0,12.6,12.2,12.8,13.1,12.7,13.4,13.9];
+  const W=560,H=280,PL=16,PR=16,PT=18,PB=34,vmin=8,vmax=66,n=dNow.length;
+  const X = i => PL + i * (W - PL - PR) / (n - 1);
+  const Y = v => PT + (1 - (v - vmin) / (vmax - vmin)) * (H - PT - PB);
+  const el = (t, a, parent) => {
+    const e = document.createElementNS(NS, t);
+    for (const k in a) e.setAttribute(k, a[k]);
+    (parent || svg).appendChild(e); return e;
+  };
+
+  /* grid + labels */
+  [20,35,50,65].forEach(v => {
+    el('line', { x1:PL, x2:W-PR, y1:Y(v), y2:Y(v), style:'stroke:var(--c-chart-grid)' });
+    const t = el('text', { x:PL, y:Y(v)-5, 'font-size':'8.5','font-family':'JetBrains Mono, monospace', style:'fill:var(--c-chart-label)' });
+    t.textContent = v + 'K';
+  });
+  months.forEach((m,i) => {
+    const t = el('text', { x:X(i), y:H-10, 'font-size':'8.5','text-anchor':'middle','font-family':'JetBrains Mono, monospace', style:'fill:var(--c-chart-label)' });
+    t.textContent = m;
+  });
+
+  /* series */
+  const lineD = a => a.map((v,i) => (i ? 'L' : 'M') + X(i).toFixed(1) + ',' + Y(v).toFixed(1)).join(' ');
+  const area = el('path', { d: lineD(dNow) + ` L${X(n-1)},${Y(vmin)} L${X(0)},${Y(vmin)} Z`, style:'fill:rgb(var(--c-mint)); fill-opacity:.07; opacity:0' });
+  const prev = el('path', { d: lineD(dPrev), fill:'none', stroke:'#7000FF','stroke-width':1.5,'stroke-dasharray':'5 7','stroke-linecap':'round', style:'opacity:0' });
+  const now  = el('path', { d: lineD(dNow), fill:'none','stroke-width':2.25,'stroke-linejoin':'round','stroke-linecap':'round', style:'stroke:rgb(var(--c-mint))' });
+
+  /* endpoint pulse */
+  const ex = X(n-1), ey = Y(dNow[n-1]);
+  const pulseG = el('g', { style:'opacity:0' });
+  const pulse = el('circle', { cx:ex, cy:ey, r:4, style:'fill:rgb(var(--c-mint))' }, pulseG);
+  const a1 = document.createElementNS(NS,'animate');
+  a1.setAttribute('attributeName','r'); a1.setAttribute('values','4;12');
+  a1.setAttribute('dur','1.8s'); a1.setAttribute('repeatCount','indefinite'); pulse.appendChild(a1);
+  const a2 = document.createElementNS(NS,'animate');
+  a2.setAttribute('attributeName','opacity'); a2.setAttribute('values','.5;0');
+  a2.setAttribute('dur','1.8s'); a2.setAttribute('repeatCount','indefinite'); pulse.appendChild(a2);
+  const dot = el('circle', { cx:ex, cy:ey, r:3.2, style:'fill:rgb(var(--c-mint)); opacity:0' });
+  const endLbl = el('text', { x:ex-10, y:ey-12, 'font-size':'10','text-anchor':'end','font-family':'JetBrains Mono, monospace', style:'fill:rgb(var(--c-ink)); opacity:0' });
+  endLbl.textContent = '61.2K';
+
+  /* hover crosshair */
+  const cross = el('line', { y1:PT, y2:Y(vmin), 'stroke-dasharray':'2 4', style:'stroke:var(--c-cross); opacity:0; transition:opacity .2s' });
+  const hdot  = el('circle', { r:3.5, 'stroke-width':2, style:'fill:var(--c-pop); stroke:rgb(var(--c-mint)); opacity:0; transition:opacity .2s' });
+  const tip = document.getElementById('chartTip');
+
+  svg.addEventListener('mousemove', e => {
+    const r = svg.getBoundingClientRect();
+    const px = (e.clientX - r.left) / r.width * W;
+    let i = Math.round((px - PL) / ((W - PL - PR) / (n - 1)));
+    i = Math.max(0, Math.min(n - 1, i));
+    const cx = X(i), cy = Y(dNow[i]);
+    cross.setAttribute('x1', cx); cross.setAttribute('x2', cx);
+    hdot.setAttribute('cx', cx);  hdot.setAttribute('cy', cy);
+    tip.style.left = Math.min(88, Math.max(12, cx / W * 100)) + '%';
+    tip.style.top  = (cy / H * 100) + '%';
+    tip.innerHTML = '<b class="text-mint font-medium">' + months[i] + '</b>&nbsp;' + dNow[i].toFixed(1) +
+                    'K <span class="text-muted">/ ' + dPrev[i].toFixed(1) + 'K LY</span>';
+    cross.style.opacity = 1; hdot.style.opacity = 1; tip.style.opacity = 1;
+  });
+  svg.addEventListener('mouseleave', () => {
+    cross.style.opacity = 0; hdot.style.opacity = 0; tip.style.opacity = 0;
+  });
+
+  /* self-drawing reveal */
+  window.__drawChart = function(){
+    if (svg.dataset.drawn) return; svg.dataset.drawn = 1;
+    if (RM){
+      area.style.opacity = '1'; prev.style.opacity = '1';
+      dot.style.opacity = '1'; pulseG.style.opacity = '1'; endLbl.style.opacity = '1';
+      startCount(document.getElementById('growthCount')); return;
+    }
+    const L = now.getTotalLength();
+    now.style.strokeDasharray = L; now.style.strokeDashoffset = L;
+    now.getBoundingClientRect(); /* reflow */
+    now.style.transition = 'stroke-dashoffset 1.9s cubic-bezier(.5,0,.15,1) .2s';
+    now.style.strokeDashoffset = '0';
+    area.style.transition = 'opacity .9s ease 1.3s'; area.style.opacity = '1';
+    prev.style.transition = 'opacity .9s ease 1.1s'; prev.style.opacity = '1';
+    [dot, endLbl].forEach((o,i) => {
+      o.style.transition = 'opacity .5s ease ' + (1.9 + i * .15) + 's';
+      o.style.opacity = '1';
+    });
+    pulseG.style.transition = 'opacity .5s ease 2.1s'; pulseG.style.opacity = '1';
+    startCount(document.getElementById('growthCount'));
+  };
+})();
+
+/* ============================================================
+   CAPABILITIES — data
+   ============================================================ */
+const SKILLS = [
+  { cat:'CREATIVE', desc:'Reels, TikToks, carousels and captions built to stop the scroll — scripted, shot and edited end to end.',
+    more:'Every asset is native to its platform — no recycled cross-posts that scream "repurposed".',
+    inc:['Short-form video — ideation to final edit','Carousel & static post design','Caption copywriting & hook writing','Subtitles & basic motion graphics'],
+    tools:['CapCut','Figma','Canva','Midjourney'] },
+  { cat:'OPERATIONS', desc:'A rolling 30-day calendar per brand: planned, batched and scheduled so the feed never skips a beat.',
+    more:'You always know what goes out, when, and why — one board, zero chaos.',
+    inc:['Rolling 30-day content calendar','Batch production scheduling','Cross-platform posting cadence','Seasonal & launch mapping'],
+    tools:['Notion','Later','Buffer','Google Sheets'] },
+  { cat:'STRATEGY', desc:'Platform-native strategy anchored in analytics — the right hook, format and cadence for every channel.',
+    more:'Strategy docs you will actually use: one page, plain English, next steps attached.',
+    inc:['Channel & competitor audits','Format & hook frameworks','90-day strategic roadmaps','Trend monitoring system'],
+    tools:['Meta Business Suite','TikTok Analytics','GA4'] },
+  { cat:'GROWTH', desc:'No paid shortcuts: hooks, collaborations, SEO and community loops that compound reach for free.',
+    more:'Growth that survives algorithm updates because it is built on audience, not tricks.',
+    inc:['Hook & retention engineering','Collab & cross-promo pipelines','Platform SEO — tags, keywords, alt text','Repost & distribution loops'],
+    tools:['TikTok Studio','Meta Business Suite','VidIQ'] },
+  { cat:'RETENTION', desc:'Comments, DMs and mentions handled like a front desk — fast, on-brand and unmistakably human.',
+    more:'Your community becomes your best content engine — screenshots sell better than ads.',
+    inc:['Comment & DM management','Response playbooks & tone guides','UGC & testimonial capture','Escalation & moderation flows'],
+    tools:['Meta Inbox','Buffer Engage'] },
+  { cat:'CONVERSION', desc:'Bio-to-checkout audits: profiles, highlights and pinned posts tuned to convert first-time visitors.',
+    more:'First impressions are measured in milliseconds; we make every one count.',
+    inc:['Profile & bio conversion audit','Highlight & pin architecture','Link-in-bio & funnel checks','First-impression A/B tests'],
+    tools:['Linkpop','Shopify','Canva'] },
+  { cat:'QUALITY', desc:'Captions proofed, links tested, alt text written — the small things never ship broken.',
+    more:'Clients stay because nothing slips — details compound into trust.',
+    inc:['Pre-publish QA checklists','Link, tag & CTA testing','Accessibility — alt text, captions','Brand-consistency reviews'],
+    tools:['Notion','Grammarly','Google Lighthouse'] },
+  { cat:'LEVERAGE', desc:'ChatGPT, Midjourney and automation workflows that halve production time without touching quality.',
+    more:'AI drafts, you approve — your voice stays yours, the workload does not.',
+    inc:['Custom GPT prompts & playbooks','AI-assisted ideation workflows','Image generation & cleanup','Automation via Make & Zapier'],
+    tools:['ChatGPT','Midjourney','Make'] },
+  { cat:'DTC', desc:'Shopify storefronts kept in lockstep with the feed — products, banners and drops, always in sync.',
+    more:'The store and the feed finally tell the same story on the same day.',
+    inc:['Product page updates & drops','Banner & collection merchandising','Feed-to-store launch sync','Basic CRO on product pages'],
+    tools:['Shopify','Klaviyo','GA4'] },
+  { cat:'MARKETPLACES', desc:'Listings, ads and inventory across Etsy and FBA — from keyword SEO to sell-through.',
+    more:'Marketplace fluency means your content and your inventory never argue.',
+    inc:['Listing SEO & keyword research','Amazon FBA inventory & ads','Etsy shop optimization','Review & rating pipelines'],
+    tools:['Seller Central','Helium 10','eRank'] }
+];
+SKILLS.forEach((s, i) => s.img = 'https://picsum.photos/seed/ar-skill-' + (i + 1) + '/1200/640.jpg');
+
+/* ============================================================
+   CASE STUDIES — data + shared dialog
+   ============================================================ */
+const CASES = {
+  lumen: {
+    title:'Lumen Skincare', meta:'ETSY · DTC SKINCARE — 6-MONTH ENGAGEMENT',
+    img:'https://res.cloudinary.com/disivcuqr/image/upload/v1790355227/snippets-assets/v_3ww9.jpg', alt:'Lumen Skincare campaign visual',
+    p1:'Lumen had a beautiful product and a storefront nobody could find. We rebuilt their content engine around a reel-first format: ingredient breakdowns, founder story arcs, and a weekly drop ritual.',
+    p2:'Within two quarters, organic search inside Etsy became their #1 traffic source, and a single viral restock video drove 9,200 sessions in a weekend — all pointed at listings that were finally ready to convert.',
+    stats:[['+212%','ORGANIC REACH'],['41K','MONTHLY VISITS'],['$310K','ATTRIBUTED SALES']],
+    tags:['CONTENT STRATEGY','ETSY SEO','UGC']
+  },
+  nordvine: {
+    title:'Nordvine', meta:'AMAZON FBA · SUPPLEMENTS — LAUNCH',
+    img:'https://res.cloudinary.com/disivcuqr/image/upload/v1790355658/snippets-assets/v_8iyc.jpg', alt:'Nordvine launch campaign visual',
+    p1:'Nordvine came to me eight weeks before launch with stock in a warehouse and zero audience. We built a teaser arc across TikTok and Instagram, seeded 40 micro-creators, and pointed everything at a single hero SKU.',
+    p2:'The first drop sold through in 19 days. We fed the momentum back into listing copy, A+ content, and a review-capture flow that Amazon\u2019s algorithm rewarded within the first reorder cycle.',
+    stats:[['19 DAYS','TO SELL-OUT'],['2.0K','UNITS, FIRST DROP'],['+38%','PDP CONV. LIFT']],
+    tags:['AMAZON FBA','LAUNCH STRATEGY','CREATOR SEEDING']
+  },
+  bloomco: {
+    title:'Bloom & Co', meta:'TIKTOK · COMMUNITY — 11 MONTHS',
+    img:'https://res.cloudinary.com/disivcuqr/image/upload/v1790356038/snippets-assets/v_nrny.jpg', alt:'Bloom & Co community content frame',
+    p1:'Bloom & Co wanted a community, not a follower count. We committed to a strict format mix — education, behind-the-scenes, and customer stories — posted on a cadence the team could actually sustain.',
+    p2:'Eleven months later: 80,000 followers, a comment section that sells for us, and an engagement rate most paid accounts would envy. No ads. No giveaways. Just consistency with taste.',
+    stats:[['0 → 80K','FOLLOWERS'],['7.4%','ENG. RATE'],["$0",'AD SPEND']],
+    tags:['ORGANIC GROWTH','COMMUNITY','SHORT-FORM']
+  }
+};
+
+const ARROW = '<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>';
+const CHECK = '<svg class="w-3.5 h-3.5 text-mint shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
+const XICON = '<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>';
+
+const modal = document.getElementById('caseModal'), modalBody = document.getElementById('modalBody');
+modal.addEventListener('close', () => document.body.style.overflow = '');
+modal.addEventListener('click', e => { if (e.target === modal) modal.close(); });
+modalBody.addEventListener('click', e => { if (e.target.closest('#modalClose')) modal.close(); });
+
+function shell(img, alt, meta, title, inner){
+  return `
+  <div class="relative">
+    <img src="${img}" alt="${alt}" class="w-full h-52 md:h-60 object-cover img-dim">
+    <button id="modalClose" aria-label="Close dialog" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-obsidian/80 border border-line flex items-center justify-center hover:border-mint hover:text-mint transition-colors">${XICON}</button>
+  </div>
+  <div class="p-6 md:p-8">
+    <p class="font-mono text-[9px] tracking-[0.3em] text-mint">${meta}</p>
+    <h3 class="font-display text-2xl md:text-3xl font-bold tracking-tight mt-2">${title}</h3>
+    ${inner}
+  </div>`;
+}
+
+function openCase(key){
+  const c = CASES[key]; if (!c) return;
+  modalBody.innerHTML = shell(c.img, c.alt, c.meta, c.title, `
+    <p class="mt-4 text-muted leading-relaxed">${c.p1}</p>
+    <p class="mt-3 text-muted leading-relaxed">${c.p2}</p>
+    <div class="mt-6 grid grid-cols-3 gap-px bg-line border border-line rounded-xl overflow-hidden">
+      ${c.stats.map(s => `<div class="bg-pop px-3 py-4 text-center">
+        <p class="font-display font-bold text-lg md:text-xl text-mint">${s[0]}</p>
+        <p class="font-mono text-[8px] tracking-[0.2em] text-muted mt-1.5">${s[1]}</p></div>`).join('')}
+    </div>
+    <div class="mt-5 flex flex-wrap gap-2">
+      ${c.tags.map(t => `<span class="badge badge-outline rounded-full font-mono text-[9px] tracking-[0.2em] text-muted border-line">${t}</span>`).join('')}
+    </div>
+    <a href="mailto:${EMAIL}?subject=${encodeURIComponent('Project like ' + c.title)}" class="mt-7 inline-flex items-center gap-2.5 bg-mint text-onaccent font-semibold text-sm px-6 py-3 rounded-full glow hover:-translate-y-0.5">
+      DISCUSS A SIMILAR PROJECT ${ARROW}</a>`);
+  modal.showModal(); document.body.style.overflow = 'hidden';
+}
+
+function openSkill(i){
+  const s = SKILLS[i]; if (!s) return;
+  modalBody.innerHTML = shell(s.img, 'Abstract visual for capability ' + (i + 1),
+    'CAPABILITY ' + String(i + 1).padStart(2,'0') + ' / ' + s.cat, document.querySelectorAll('.skill-row .font-display')[i]?.textContent || '', `
+    <p class="mt-4 text-muted leading-relaxed">${s.desc} ${s.more}</p>
+    <p class="mt-6 font-mono text-[9px] tracking-[0.3em] text-ink">WHAT'S INCLUDED</p>
+    <ul class="mt-3 grid sm:grid-cols-2 gap-x-6 gap-y-2.5">
+      ${s.inc.map(x => `<li class="flex gap-2.5 text-sm text-muted leading-relaxed">${CHECK}<span>${x}</span></li>`).join('')}
+    </ul>
+    <p class="mt-6 font-mono text-[9px] tracking-[0.3em] text-ink">TOOLBOX</p>
+    <div class="mt-3 flex flex-wrap gap-2">
+      ${s.tools.map(t => `<span class="badge badge-outline rounded-full font-mono text-[9px] tracking-[0.2em] text-muted border-line">${t}</span>`).join('')}
+    </div>
+    <a href="mailto:${EMAIL}?subject=${encodeURIComponent('Capability: ' + s.cat)}" class="mt-7 inline-flex items-center gap-2.5 bg-mint text-onaccent font-semibold text-sm px-6 py-3 rounded-full glow hover:-translate-y-0.5">
+      START WITH THIS ${ARROW}</a>`);
+  modal.showModal(); document.body.style.overflow = 'hidden';
+}
+
+document.querySelectorAll('[data-case]').forEach(b => b.addEventListener('click', () => openCase(b.dataset.case)));
+
+/* ---------- skill rows ---------- */
+const rows = Array.from(document.querySelectorAll('.skill-row'));
+rows.forEach((b, i) => b.addEventListener('click', () => openSkill(i)));
+
+/* ---------- cursor-follow preview (fine pointers only) ---------- */
+const fine = matchMedia('(hover:hover) and (pointer:fine)');
+if (fine.matches && !RM){
+  const pv = document.getElementById('skillPreview');
+  const imgs = pv.querySelectorAll('img');
+  let tx = 0, ty = 0, cx = 0, cy = 0;
+  rows.forEach((row, idx) => row.addEventListener('mouseenter', () => {
+    imgs.forEach((im, j) => im.style.opacity = (j === idx) ? 1 : 0);
+    pv.classList.add('on');
+  }));
+  document.getElementById('skills').addEventListener('mouseleave', () => pv.classList.remove('on'));
+  addEventListener('mousemove', e => { tx = e.clientX; ty = e.clientY; });
+  (function loop(){
+    cx += (tx - cx) * .14; cy += (ty - cy) * .14;
+    const rot = Math.max(-6, Math.min(6, (tx - cx) * .05));
+    pv.style.transform = `translate3d(${cx + 28}px,${cy - 110}px,0) rotate(${rot}deg)`;
+    requestAnimationFrame(loop);
+  })();
+}
+</script>
+</body>
+</html>
