@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FluentSMTP Gmail / Google Workspace OAuth 2.0 Setup Guide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            200: '#bfdbfe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            900: '#1e3a8a',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 9999px;
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background: #334155;
+        }
+        .step-card {
+            transition: all 0.2s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-900 dark:text-slate-100 font-sans antialiased selection:bg-brand-500 selection:text-white min-h-screen flex flex-col">
+
+    <header class="sticky top-0 z-40 w-full border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo & Title -->
+                <div class="flex items-center space-x-3">
+                    <button id="mobile-menu-btn" class="lg:hidden p-2 text-slate-600 dark:text-slate-300 hover:text-brand-600 focus:outline-none" aria-label="Toggle Navigation">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-brand-600 to-indigo-600 flex items-center justify-center text-white shadow-md shadow-brand-500/20">
+                            <i class="fa-solid fa-paper-plane text-sm"></i>
+                        </div>
+                        <span class="font-bold text-lg tracking-tight bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-300 bg-clip-text text-transparent">
+                            FluentSMTP <span class="text-brand-600 dark:text-brand-500 font-medium">Docs</span>
+                        </span>
+                    </div>
+                    <span class="hidden sm:inline-block px-2.5 py-0.5 text-xs font-semibold rounded-full bg-brand-50 dark:bg-brand-900/30 text-brand-600 dark:text-brand-400 border border-brand-200 dark:border-brand-800">
+                        OAuth 2.0 Integration
+                    </span>
+                </div>
+
+                <!-- Right Actions Header -->
+                <div class="flex items-center space-x-4">
+                    <!-- Progress summary badge -->
+                    <div class="hidden md:flex items-center space-x-2 px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+                        <i class="fa-solid fa-list-check text-xs text-brand-600 dark:text-brand-400"></i>
+                        <span class="text-xs font-medium text-slate-600 dark:text-slate-300">Progress:</span>
+                        <span id="header-progress-text" class="text-xs font-bold text-brand-600 dark:text-brand-400">0/7 (0%)</span>
+                    </div>
+
+                    <!-- Theme Toggle -->
+                    <button id="theme-toggle" class="p-2 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 focus:outline-none" title="Toggle Light/Dark Mode">
+                        <i id="theme-toggle-dark-icon" class="fa-solid fa-moon text-lg hidden"></i>
+                        <i id="theme-toggle-light-icon" class="fa-solid fa-sun text-lg hidden"></i>
+                    </button>
+
+                    <!-- Quick Action Button -->
+                    <a href="#interactive-validator" class="hidden sm:inline-flex items-center space-x-1.5 text-xs font-semibold px-3 py-2 rounded-lg bg-brand-600 hover:bg-brand-700 text-white transition-colors shadow-sm">
+                        <i class="fa-solid fa-vial-circle-check"></i>
+                        <span>Test Connection Keys</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex-1 flex flex-col lg:flex-row gap-8 py-8">
+
+        <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-72 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 p-6 transform -translate-x-full lg:translate-x-0 lg:static lg:w-64 lg:p-0 lg:bg-transparent lg:border-none transition-transform duration-300 ease-in-out shrink-0">
+            <div class="sticky top-24 space-y-6">
+                <!-- Mobile Sidebar Close Header -->
+                <div class="flex items-center justify-between lg:hidden pb-4 border-b border-slate-200 dark:border-slate-800">
+                    <span class="font-bold text-slate-900 dark:text-white">Setup Menu</span>
+                    <button id="close-sidebar-btn" class="p-1 text-slate-500 hover:text-slate-700 dark:hover:text-slate-300">
+                        <i class="fa-solid fa-xmark text-xl"></i>
+                    </button>
+                </div>
+
+                <!-- Global Progress Box -->
+                <div class="p-4 rounded-xl bg-white dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700/80 shadow-sm">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Setup Status</span>
+                        <span id="progress-percent" class="text-xs font-bold text-brand-600 dark:text-brand-400">0%</span>
+                    </div>
+                    <div class="w-full bg-slate-100 dark:bg-slate-700 h-2 rounded-full overflow-hidden">
+                        <div id="progress-bar-fill" class="bg-gradient-to-r from-brand-500 to-indigo-600 h-2 rounded-full transition-all duration-500 w-0"></div>
+                    </div>
+                    <div class="mt-3 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
+                        <span id="steps-completed-label">0 of 7 steps done</span>
+                        <button id="reset-progress-btn" class="text-slate-400 hover:text-red-500 transition-colors" title="Reset all checked steps">
+                            <i class="fa-solid fa-rotate-right"></i> Reset
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Navigation Links -->
+                <nav class="space-y-1">
+                    <p class="px-3 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Setup Steps</p>
+                    
+                    <a href="#overview" class="nav-item group flex items-center px-3 py-2 text-xs font-medium rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                        <i class="fa-solid fa-circle-info w-5 text-slate-400 group-hover:text-brand-500"></i>
+                        <span>Overview & Benefits</span>
+                    </a>
+                    
+                    <a href="#step-1" class="nav-item group flex items-center justify-between px-3 py-2 text-xs font-medium rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" data-step="1">
+                        <div class="flex items-center truncate">
+                            <i class="fa-solid fa-1 w-5 text-slate-400 group-hover:text-brand-500"></i>
+                            <span class="truncate">1. Initiate WordPress Setup</span>
+                        </div>
+                        <i class="step-check-icon fa-regular fa-circle text-slate-300 dark:text-slate-600 ml-2"></i>
+                    </a>
+
+                    <a href="#step-2" class="nav-item group flex items-center justify-between px-3 py-2 text-xs font-medium rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" data-step="2">
+                        <div class="flex items-center truncate">
+                            <i class="fa-solid fa-2 w-5 text-slate-400 group-hover:text-brand-500"></i>
+                            <span class="truncate">2. Create Cloud Project</span>
+                        </div>
+                        <i class="step-check-icon fa-regular fa-circle text-slate-300 dark:text-slate-600 ml-2"></i>
+                    </a>
+
+                    <a href="#step-3" class="nav-item group flex items-center justify-between px-3 py-2 text-xs font-medium rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" data-step="3">
+                        <div class="flex items-center truncate">
+                            <i class="fa-solid fa-3 w-5 text-slate-400 group-hover:text-brand-500"></i>
+                            <span class="truncate">3. Enable Gmail API</span>
+                        </div>
+                        <i class="step-check-icon fa-regular fa-circle text-slate-300 dark:text-slate-600 ml-2"></i>
+                    </a>
+
+                    <a href="#step-4" class="nav-item group flex items-center justify-between px-3 py-2 text-xs font-medium rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" data-step="4">
+                        <div class="flex items-center truncate">
+                            <i class="fa-solid fa-4 w-5 text-slate-400 group-hover:text-brand-500"></i>
+                            <span class="truncate">4. OAuth Consent Screen</span>
+                        </div>
+                        <i class="step-check-icon fa-regular fa-circle text-slate-300 dark:text-slate-600 ml-2"></i>
+                    </a>
+
+                    <a href="#step-5" class="nav-item group flex items-center justify-between px-3 py-2 text-xs font-medium rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" data-step="5">
+                        <div class="flex items-center truncate">
+                            <i class="fa-solid fa-5 w-5 text-slate-400 group-hover:text-brand-500"></i>
+                            <span class="truncate">5. Generate Credentials</span>
+                        </div>
+                        <i class="step-check-icon fa-regular fa-circle text-slate-300 dark:text-slate-600 ml-2"></i>
+                    </a>
+
+                    <a href="#step-6" class="nav-item group flex items-center justify-between px-3 py-2 text-xs font-medium rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" data-step="6">
+                        <div class="flex items-center truncate">
+                            <i class="fa-solid fa-6 w-5 text-slate-400 group-hover:text-brand-500"></i>
+                            <span class="truncate">6. Authenticate in WP</span>
+                        </div>
+                        <i class="step-check-icon fa-regular fa-circle text-slate-300 dark:text-slate-600 ml-2"></i>
+                    </a>
+
+                    <a href="#step-7" class="nav-item group flex items-center justify-between px-3 py-2 text-xs font-medium rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" data-step="7">
+                        <div class="flex items-center truncate">
+                            <i class="fa-solid fa-7 w-5 text-slate-400 group-hover:text-brand-500"></i>
+                            <span class="truncate">7. Test Delivery</span>
+                        </div>
+                        <i class="step-check-icon fa-regular fa-circle text-slate-300 dark:text-slate-600 ml-2"></i>
+                    </a>
+
+                    <p class="px-3 text-xs font-semibold text-slate-400 uppercase tracking-wider mt-6 mb-2">Tools & Support</p>
+                    <a href="#interactive-validator" class="nav-item group flex items-center px-3 py-2 text-xs font-medium rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                        <i class="fa-solid fa-vial w-5 text-slate-400 group-hover:text-brand-500"></i>
+                        <span>Credential Validator</span>
+                    </a>
+                    <a href="#faq-section" class="nav-item group flex items-center px-3 py-2 text-xs font-medium rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                        <i class="fa-solid fa-circle-question w-5 text-slate-400 group-hover:text-brand-500"></i>
+                        <span>Troubleshooting & FAQ</span>
+                    </a>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Overlay backdrop for mobile menu -->
+        <div id="sidebar-backdrop" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-40 hidden lg:hidden"></div>
+
+        <main class="flex-1 min-w-0 space-y-10">
+
+            <!-- Hero Section -->
+            <section id="overview" class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-brand-600 via-brand-700 to-indigo-900 text-white p-6 sm:p-10 shadow-xl">
+                <!-- Background visual decor -->
+                <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-white/5 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="relative z-10 space-y-4">
+                    <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-xs font-medium text-brand-100">
+                        <i class="fa-brands fa-google"></i>
+                        <span>Official OAuth 2.0 Integration Guide</span>
+                    </div>
+                    <h1 class="text-2xl sm:text-4xl font-extrabold tracking-tight leading-tight">
+                        Connecting Gmail & Google Workspace to FluentSMTP
+                    </h1>
+                    <p class="text-slate-200 text-sm sm:text-base max-w-3xl leading-relaxed">
+                        Configure secure, reliable API-based email routing for your WordPress site. Prevent transactional emails from being flagged as spam or blocked using Google's modern OAuth 2.0 security protocols.
+                    </p>
+
+                    <!-- Feature comparison highlight -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-white/10 mt-6">
+                        <div class="flex items-start space-x-3 bg-white/10 p-3.5 rounded-xl border border-white/10">
+                            <i class="fa-solid fa-shield-halved text-emerald-300 text-lg mt-0.5"></i>
+                            <div>
+                                <h2 class="text-xs font-bold text-white uppercase tracking-wider">OAuth 2.0 (Recommended)</h2>
+                                <p class="text-xs text-slate-200 mt-0.5">Secure token authorization. No stored passwords, high deliverability, and full compliance with modern Google security standards.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3 bg-white/5 p-3.5 rounded-xl border border-white/5 opacity-80">
+                            <i class="fa-solid fa-triangle-exclamation text-amber-300 text-lg mt-0.5"></i>
+                            <div>
+                                <h2 class="text-xs font-bold text-slate-300 uppercase tracking-wider">Basic Password / SMTP</h2>
+                                <p class="text-xs text-slate-300 mt-0.5">Prone to authentication blocks, frequent password resets, lower delivery confidence, and deprecation risk.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- STEP 1 -->
+            <section id="step-1" class="step-card bg-white dark:bg-slate-800 rounded-2xl p-6 sm:p-8 border border-slate-200 dark:border-slate-700 shadow-sm relative">
+                <div class="flex items-start justify-between gap-4">
+                    <div class="flex items-center space-x-3">
+                        <span class="flex items-center justify-center w-8 h-8 rounded-xl bg-brand-100 dark:bg-brand-900/50 text-brand-600 dark:text-brand-400 font-bold text-sm">
+                            1
+                        </span>
+                        <h2 class="text-xl font-bold text-slate-900 dark:text-white">Initiate Setup in WordPress</h2>
+                    </div>
+                    <label class="flex items-center space-x-2 cursor-pointer select-none">
+                        <input type="checkbox" data-step-target="1" class="step-checkbox w-5 h-5 rounded text-brand-600 focus:ring-brand-500 dark:bg-slate-700 border-slate-300 dark:border-slate-600">
+                        <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">Mark Complete</span>
+                    </label>
+                </div>
+
+                <div class="mt-6 space-y-4 text-sm text-slate-600 dark:text-slate-300">
+                    <p>Start by getting your WordPress site's unique redirect URI from FluentSMTP. This tells Google Cloud where to return the authentication credentials after you approve the connection.</p>
+                    
+                    <ol class="list-decimal list-inside space-y-2.5 font-medium text-slate-700 dark:text-slate-200 pl-1">
+                        <li>Log in to your WordPress Admin Dashboard.</li>
+                        <li>Navigate to <strong class="text-slate-900 dark:text-white">Settings → FluentSMTP</strong>.</li>
+                        <li>If you already have another provider connected, click <span class="px-2 py-0.5 bg-slate-100 dark:bg-slate-700 rounded text-xs">Settings</span> in the top navbar and click <strong class="text-slate-900 dark:text-white">+ Add Connection</strong>.</li>
+                        <li>Select the <strong class="text-brand-600 dark:text-brand-400">Gmail / Google Workspace</strong> tab.</li>
+                        <li>Locate the <strong class="text-slate-900 dark:text-white">Authorized Redirect URI</strong> field and copy the displayed URL.</li>
+                    </ol>
+
+                    <!-- Interactive Code / Copy Box -->
+                    <div class="mt-4 p-4 rounded-xl bg-slate-900 text-slate-100 dark:bg-slate-950 font-mono text-xs relative group">
+                        <div class="flex justify-between items-center mb-2 text-slate-400 text-[11px] uppercase tracking-wider font-sans border-b border-slate-800 pb-2">
+                            <span>Sample Authorized Redirect URI Format</span>
+                            <span class="text-brand-400">WordPress FluentSMTP</span>
+                        </div>
+                        <div class="flex items-center justify-between gap-2 overflow-x-auto py-1">
+                            <code id="sample-redirect-uri" class="text-emerald-400">https://yourdomain.com/wp-json/fluentsmtp/v1/gmail/callback</code>
+                            <button onclick="copyToClipboard('sample-redirect-uri')" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-sans transition-colors flex items-center space-x-1 shrink-0">
+                                <i class="fa-regular fa-copy"></i>
+                                <span>Copy</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="p-3.5 rounded-xl bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800/40 flex items-start space-x-3 text-xs text-blue-800 dark:text-blue-300">
+                        <i class="fa-solid fa-lightbulb text-base text-blue-500 shrink-0 mt-0.5"></i>
+                        <p><strong>Tip:</strong> Keep this WordPress tab open in your browser! You will return here in Step 6 to paste the API credentials generated in Google Cloud.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- STEP 2 -->
+            <section id="step-2" class="step-card bg-white dark:bg-slate-800 rounded-2xl p-6 sm:p-8 border border-slate-200 dark:border-slate-700 shadow-sm relative">
+                <div class="flex items-start justify-between gap-4">
+                    <div class="flex items-center space-x-3">
+                        <span class="flex items-center justify-center w-8 h-8 rounded-xl bg-brand-100 dark:bg-brand-900/50 text-brand-600 dark:text-brand-400 font-bold text-sm">
+                            2
+                        </span>
+                        <h2 class="text-xl font-bold text-slate-900 dark:text-white">Create a Project in Google Cloud Console</h2>
+                    </div>
+                    <label class="flex items-center space-x-2 cursor-pointer select-none">
+                        <input type="checkbox" data-step-target="2" class="step-checkbox w-5 h-5 rounded text-brand-600 focus:ring-brand-500 dark:bg-slate-700 border-slate-300 dark:border-slate-600">
+                        <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">Mark Complete</span>
+                    </label>
+                </div>
+
+                <div class="mt-6 space-y-4 text-sm text-slate-600 dark:text-slate-300">
+                    <p>Google Cloud Console organizes API access through <em>Projects</em>. Create a designated project for your WordPress email routing.</p>
+                    
+                    <ol class="list-decimal list-inside space-y-2.5 font-medium text-slate-700 dark:text-slate-200 pl-1">
+                        <li>Open a new browser tab and log into the <a href="https://console.cloud.google.com/" target="_blank" rel="noopener" class="text-brand-600 dark:text-brand-400 underline hover:text-brand-700">Google Cloud Console <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i></a> using the <strong>exact Gmail or Google Workspace email</strong> you want to send emails from.</li>
+                        <li>Click the <strong>Project Dropdown</strong> near the top left (next to the Google Cloud logo).</li>
+                        <li>In the modal window, click <strong>New Project</strong> in the top-right corner.</li>
+                        <li>Enter a recognizable <strong>Project Name</strong> (e.g., <code class="bg-slate-100 dark:bg-slate-700 px-1.5 py-0.5 rounded text-slate-800 dark:text-slate-200">WordPress SMTP Mailer</code>).</li>
+                        <li>Click <strong>Create</strong> and wait a few seconds for the setup to complete.</li>
+                        <li>Ensure your newly created project is selected in the top bar project dropdown.</li>
+                    </ol>
+
+                    <div class="p-3.5 rounded-xl bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800/40 flex items-start space-x-3 text-xs text-amber-800 dark:text-amber-300">
+                        <i class="fa-solid fa-triangle-exclamation text-base text-amber-500 shrink-0 mt-0.5"></i>
+                        <p><strong>Important Account Check:</strong> Make sure you are logged into the correct Google Account in your browser. If you have multiple Gmail accounts active, verify the account profile icon at the top right of Google Cloud Console.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- STEP 3 -->
+            <section id="step-3" class="step-card bg-white dark:bg-slate-800 rounded-2xl p-6 sm:p-8 border border-slate-200 dark:border-slate-700 shadow-sm relative">
+                <div class="flex items-start justify-between gap-4">
+                    <div class="flex items-center space-x-3">
+                        <span class="flex items-center justify-center w-8 h-8 rounded-xl bg-brand-100 dark:bg-brand-900/50 text-brand-600 dark:text-brand-400 font-bold text-sm">
+                            3
+                        </span>
+                        <h2 class="text-xl font-bold text-slate-900 dark:text-white">Enable the Gmail API</h2>
+                    </div>
+                    <label class="flex items-center space-x-2 cursor-pointer select-none">
+                        <input type="checkbox" data-step-target="3" class="step-checkbox w-5 h-5 rounded text-brand-600 focus:ring-brand-500 dark:bg-slate-700 border-slate-300 dark:border-slate-600">
+                        <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">Mark Complete</span>
+                    </label>
+                </div>
+
+                <div class="mt-6 space-y-4 text-sm text-slate-600 dark:text-slate-300">
+                    <p>By default, new Google Cloud projects do not have API access enabled. Enable the official Gmail API service for your project.</p>
+                    
+                    <ol class="list-decimal list-inside space-y-2.5 font-medium text-slate-700 dark:text-slate-200 pl-1">
+                        <li>In the left sidebar menu, hover over <strong>APIs & Services</strong> and click <strong>Enabled APIs & Services</strong>.</li>
+                        <li>Click the blue <strong>+ ENABLE APIS AND SERVICES</strong> button at the top of the dashboard.</li>
+                        <li>In the search box, type <code class="bg-slate-100 dark:bg-slate-700 px-1.5 py-0.5 rounded text-slate-800 dark:text-slate-200">Gmail API</code> and press Enter.</li>
+                        <li>Click on the <strong>Gmail API</strong> card in the search results.</li>
+                        <li>Click the blue <strong>Enable</strong> button.</li>
+                    </ol>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-2">
+                        <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-700 flex items-center space-x-3 text-xs">
+                            <i class="fa-solid fa-check-circle text-emerald-500 text-lg"></i>
+                            <div>
+                                <span class="font-bold text-slate-800 dark:text-white">API Status</span>
+                                <p class="text-slate-500 dark:text-slate-400">Gmail API will show "Enabled"</p>
+                            </div>
+                        </div>
+                        <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-700 flex items-center space-x-3 text-xs">
+                            <i class="fa-solid fa-bolt text-brand-500 text-lg"></i>
+                            <div>
+                                <span class="font-bold text-slate-800 dark:text-white">Free Tier Usage</span>
+                                <p class="text-slate-500 dark:text-slate-400">Generous daily quota included for WordPress emails</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- STEP 4 -->
+            <section id="step-4" class="step-card bg-white dark:bg-slate-800 rounded-2xl p-6 sm:p-8 border border-slate-200 dark:border-slate-700 shadow-sm relative">
+                <div class="flex items-start justify-between gap-4">
+                    <div class="flex items-center space-x-3">
+                        <span class="flex items-center justify-center w-8 h-8 rounded-xl bg-brand-100 dark:bg-brand-900/50 text-brand-600 dark:text-brand-400 font-bold text-sm">
+                            4
+                        </span>
+                        <h2 class="text-xl font-bold text-slate-900 dark:text-white">Configure the OAuth Consent Screen</h2>
+                    </div>
+                    <label class="flex items-center space-x-2 cursor-pointer select-none">
+                        <input type="checkbox" data-step-target="4" class="step-checkbox w-5 h-5 rounded text-brand-600 focus:ring-brand-500 dark:bg-slate-700 border-slate-300 dark:border-slate-600">
+                        <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">Mark Complete</span>
+                    </label>
+                </div>
+
+                <div class="mt-6 space-y-4 text-sm text-slate-600 dark:text-slate-300">
+                    <p>The OAuth Consent Screen defines how your application identifies itself to Google's authentication system.</p>
+
+                    <!-- Interactive User Type Decision Tool -->
+                    <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700 space-y-3">
+                        <h3 class="font-bold text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400">Which User Type Should You Choose?</h3>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="p-4 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="font-bold text-slate-900 dark:text-white">Internal</span>
+                                    <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-300">Paid Google Workspace</span>
+                                </div>
+                                <p class="text-xs text-slate-500 dark:text-slate-400">Choose this if you have a paid Google Workspace domain (e.g., <code class="text-slate-700 dark:text-slate-300">you@company.com</code>). Email access is restricted strictly to users inside your organization.</p>
+                            </div>
+
+                            <div class="p-4 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="font-bold text-slate-900 dark:text-white">External</span>
+                                    <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300">Free @gmail.com</span>
+                                </div>
+                                <p class="text-xs text-slate-500 dark:text-slate-400">Choose this if you use a free personal account ending in <code class="text-slate-700 dark:text-slate-300">@gmail.com</code> or <code class="text-slate-700 dark:text-slate-300">@googlemail.com</code>.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <ol class="list-decimal list-inside space-y-2.5 font-medium text-slate-700 dark:text-slate-200 pl-1">
+                        <li>In the left sidebar, click <strong>APIs & Services → OAuth consent screen</strong>.</li>
+                        <li>Select your <strong>User Type</strong> (Internal or External) and click <strong>Create</strong>.</li>
+                        <li>Fill in the essential App Information:
+                            <ul class="list-disc list-inside pl-5 mt-1 space-y-1 text-xs text-slate-600 dark:text-slate-400 font-normal">
+                                <li><strong>App name:</strong> e.g., <code class="bg-slate-100 dark:bg-slate-700 px-1 rounded">My Website Email Router</code></li>
+                                <li><strong>User support email:</strong> Select your Gmail address.</li>
+                                <li><strong>Developer contact information:</strong> Enter your email address.</li>
+                            </ul>
+                        </li>
+                        <li>Click <strong>Save and Continue</strong> through the <strong>Scopes</strong> and <strong>Test Users</strong> steps without making changes (If you selected External, you can add your own email as a test user if desired).</li>
+                        <li>Navigate back to the OAuth Consent Screen main tab.</li>
+                        <li><strong class="text-amber-600 dark:text-amber-400">Critical Step:</strong> If your Publishing Status displays <em>"Testing"</em>, click the <strong>Publish App</strong> button and confirm. Publishing prevents your OAuth authorization tokens from expiring every 7 days!</li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- STEP 5 -->
+            <section id="step-5" class="step-card bg-white dark:bg-slate-800 rounded-2xl p-6 sm:p-8 border border-slate-200 dark:border-slate-700 shadow-sm relative">
+                <div class="flex items-start justify-between gap-4">
+                    <div class="flex items-center space-x-3">
+                        <span class="flex items-center justify-center w-8 h-8 rounded-xl bg-brand-100 dark:bg-brand-900/50 text-brand-600 dark:text-brand-400 font-bold text-sm">
+                            5
+                        </span>
+                        <h2 class="text-xl font-bold text-slate-900 dark:text-white">Generate API Credentials</h2>
+                    </div>
+                    <label class="flex items-center space-x-2 cursor-pointer select-none">
+                        <input type="checkbox" data-step-target="5" class="step-checkbox w-5 h-5 rounded text-brand-600 focus:ring-brand-500 dark:bg-slate-700 border-slate-300 dark:border-slate-600">
+                        <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">Mark Complete</span>
+                    </label>
+                </div>
+
+                <div class="mt-6 space-y-4 text-sm text-slate-600 dark:text-slate-300">
+                    <p>Now generate the OAuth Client ID and Secret key pair required by FluentSMTP.</p>
+                    
+                    <ol class="list-decimal list-inside space-y-2.5 font-medium text-slate-700 dark:text-slate-200 pl-1">
+                        <li>In the Google Cloud left sidebar, click <strong>Credentials</strong>.</li>
+                        <li>Click the <strong>+ CREATE CREDENTIALS</strong> button at the top and select <strong>OAuth client ID</strong>.</li>
+                        <li>In the <em>Application type</em> dropdown, choose <strong>Web application</strong>.</li>
+                        <li>Scroll down to the <strong>Authorized redirect URIs</strong> section and click <strong>+ ADD URI</strong>.</li>
+                        <li>Paste the <strong>Authorized Redirect URI</strong> that you copied from FluentSMTP in Step 1.</li>
+                        <li>Click <strong>Create</strong>.</li>
+                    </ol>
+
+                    <div class="p-4 rounded-xl bg-slate-900 text-slate-100 dark:bg-slate-950 space-y-3 font-mono text-xs">
+                        <div class="flex justify-between items-center text-slate-400 text-[11px] font-sans border-b border-slate-800 pb-2">
+                            <span>Google Pop-Up Credentials Window</span>
+                            <span class="text-amber-400"><i class="fa-solid fa-key"></i> Keep Secret</span>
+                        </div>
+                        <div class="space-y-2">
+                            <div>
+                                <span class="text-slate-500 text-[11px] block font-sans">Client ID Format Example:</span>
+                                <div class="flex items-center justify-between text-brand-300">
+                                    <span class="truncate">123456789012-abc123def456.apps.googleusercontent.com</span>
+                                </div>
+                            </div>
+                            <div>
+                                <span class="text-slate-500 text-[11px] block font-sans">Client Secret Format Example:</span>
+                                <div class="flex items-center justify-between text-emerald-400">
+                                    <span class="truncate">GOCSPX-abc123XYZ_SecretKeyString</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p class="text-xs text-slate-500 dark:text-slate-400">Copy both your <strong>Client ID</strong> and <strong>Client Secret</strong> from the pop-up dialogue. You will paste them into WordPress in the next step.</p>
+                </div>
+            </section>
+
+            <!-- STEP 6 -->
+            <section id="step-6" class="step-card bg-white dark:bg-slate-800 rounded-2xl p-6 sm:p-8 border border-slate-200 dark:border-slate-700 shadow-sm relative">
+                <div class="flex items-start justify-between gap-4">
+                    <div class="flex items-center space-x-3">
+                        <span class="flex items-center justify-center w-8 h-8 rounded-xl bg-brand-100 dark:bg-brand-900/50 text-brand-600 dark:text-brand-400 font-bold text-sm">
+                            6
+                        </span>
+                        <h2 class="text-xl font-bold text-slate-900 dark:text-white">Complete Setup & Authenticate in FluentSMTP</h2>
+                    </div>
+                    <label class="flex items-center space-x-2 cursor-pointer select-none">
+                        <input type="checkbox" data-step-target="6" class="step-checkbox w-5 h-5 rounded text-brand-600 focus:ring-brand-500 dark:bg-slate-700 border-slate-300 dark:border-slate-600">
+                        <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">Mark Complete</span>
+                    </label>
+                </div>
+
+                <div class="mt-6 space-y-4 text-sm text-slate-600 dark:text-slate-300">
+                    <p>Return to your WordPress tab and finalize the connection.</p>
+                    
+                    <ol class="list-decimal list-inside space-y-2.5 font-medium text-slate-700 dark:text-slate-200 pl-1">
+                        <li>Switch back to your browser tab with <strong>FluentSMTP Settings</strong>.</li>
+                        <li>Fill out the Sender Settings form fields:
+                            <ul class="list-disc list-inside pl-5 mt-1 space-y-1 text-xs text-slate-600 dark:text-slate-400 font-normal">
+                                <li><strong>From Email:</strong> Your exact Gmail or Google Workspace email address.</li>
+                                <li><strong>From Name:</strong> The sender name recipients will see (e.g., <em>My Store Support</em>).</li>
+                                <li><strong>Application Client ID:</strong> Paste the Client ID copied from Google.</li>
+                                <li><strong>Application Client Secret:</strong> Paste the Client Secret copied from Google.</li>
+                            </ul>
+                        </li>
+                        <li>Click <strong>Authenticate with Google & Get Access Token</strong>.</li>
+                        <li>In the Google authorization pop-up, select the <strong>same Gmail/Workspace account</strong> used to set up the project.</li>
+                    </ol>
+
+                    <!-- Unverified App Warning Highlight -->
+                    <div class="p-4 rounded-xl bg-amber-500/10 border border-amber-500/30 space-y-2">
+                        <div class="flex items-center space-x-2 text-amber-700 dark:text-amber-400 font-bold text-xs uppercase tracking-wider">
+                            <i class="fa-solid fa-triangle-exclamation text-base"></i>
+                            <span>Bypassing Google's "Unverified App" Prompt</span>
+                        </div>
+                        <p class="text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
+                            Because you created a custom private Google Cloud application, Google will display a security prompt stating <em>"Google hasn't verified this app"</em>. This is <strong>100% normal and expected</strong>.
+                        </p>
+                        <div class="bg-white/60 dark:bg-slate-900/60 p-3 rounded-lg text-xs space-y-1 border border-amber-200 dark:border-amber-900/50">
+                            <p class="font-semibold text-slate-800 dark:text-slate-200">How to proceed:</p>
+                            <p class="text-slate-600 dark:text-slate-400">1. Click the small <strong class="text-slate-900 dark:text-white">Advanced</strong> link at the bottom left of the prompt screen.</p>
+                            <p class="text-slate-600 dark:text-slate-400">2. Click <strong class="text-brand-600 dark:text-brand-400 underline">Go to [Your App Name] (unsafe)</strong>.</p>
+                            <p class="text-slate-600 dark:text-slate-400">3. Click <strong class="text-slate-900 dark:text-white">Continue / Allow</strong> to grant FluentSMTP permission to route emails.</p>
+                        </div>
+                    </div>
+
+                    <p class="text-xs text-slate-600 dark:text-slate-400">Once authorized, Google redirects you back to FluentSMTP with an access token automatically generated. Click <strong>Save Connection Settings</strong>.</p>
+                </div>
+            </section>
+
+            <!-- STEP 7 -->
+            <section id="step-7" class="step-card bg-white dark:bg-slate-800 rounded-2xl p-6 sm:p-8 border border-slate-200 dark:border-slate-700 shadow-sm relative">
+                <div class="flex items-start justify-between gap-4">
+                    <div class="flex items-center space-x-3">
+                        <span class="flex items-center justify-center w-8 h-8 rounded-xl bg-brand-100 dark:bg-brand-900/50 text-brand-600 dark:text-brand-400 font-bold text-sm">
+                            7
+                        </span>
+                        <h2 class="text-xl font-bold text-slate-900 dark:text-white">Test Email Delivery</h2>
+                    </div>
+                    <label class="flex items-center space-x-2 cursor-pointer select-none">
+                        <input type="checkbox" data-step-target="7" class="step-checkbox w-5 h-5 rounded text-brand-600 focus:ring-brand-500 dark:bg-slate-700 border-slate-300 dark:border-slate-600">
+                        <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">Mark Complete</span>
+                    </label>
+                </div>
+
+                <div class="mt-6 space-y-4 text-sm text-slate-600 dark:text-slate-300">
+                    <p>Confirm that your Google API connection sends emails properly from your WordPress site.</p>
+                    
+                    <ol class="list-decimal list-inside space-y-2.5 font-medium text-slate-700 dark:text-slate-200 pl-1">
+                        <li>In the FluentSMTP dashboard, click on the <strong class="text-brand-600 dark:text-brand-400">Email Test</strong> tab.</li>
+                        <li>Enter an active email address in the <strong>Send To</strong> field.</li>
+                        <li>Click <strong>Send Test Email</strong>.</li>
+                        <li>Check the inbox of the target email account. If you receive the confirmation message, your WordPress emails are fully configured and authenticated via Google OAuth 2.0!</li>
+                    </ol>
+
+                    <div class="p-4 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/50 flex items-center space-x-3 text-xs text-emerald-800 dark:text-emerald-300">
+                        <i class="fa-solid fa-circle-check text-xl text-emerald-500 shrink-0"></i>
+                        <div>
+                            <span class="font-bold text-sm">Congratulations!</span>
+                            <p class="mt-0.5">Your site emails are now routed through Google's secure API servers. You can review delivery status anytime under the <strong>Email Logs</strong> tab in FluentSMTP.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- INTERACTIVE CREDENTIAL VALIDATOR TOOL -->
+            <section id="interactive-validator" class="bg-gradient-to-br from-slate-900 to-slate-800 text-white rounded-2xl p-6 sm:p-8 shadow-lg border border-slate-700 space-y-6">
+                <div class="flex items-center justify-between border-b border-slate-700 pb-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-xl bg-brand-500/20 border border-brand-500/40 flex items-center justify-center text-brand-400">
+                            <i class="fa-solid fa-vial text-lg"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-lg font-bold">Interactive Connection Key Syntax Validator</h2>
+                            <p class="text-xs text-slate-400">Verify your Client ID and Client Secret format before saving in WordPress.</p>
+                        </div>
+                    </div>
+                    <span class="text-xs px-2.5 py-1 rounded-full bg-slate-800 text-slate-300 border border-slate-700">Pre-Flight Tool</span>
+                </div>
+
+                <form id="validator-form" class="space-y-4" onsubmit="return false;">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-medium text-slate-300 mb-1">From Email Address</label>
+                            <input type="email" id="test-email" placeholder="you@domain.com or @gmail.com" class="w-full px-3 py-2 text-xs rounded-lg bg-slate-950 border border-slate-700 text-white placeholder-slate-500 focus:outline-none focus:border-brand-500">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-slate-300 mb-1">Google App User Type</label>
+                            <select id="test-user-type" class="w-full px-3 py-2 text-xs rounded-lg bg-slate-950 border border-slate-700 text-white focus:outline-none focus:border-brand-500">
+                                <option value="external">External (@gmail.com / personal)</option>
+                                <option value="internal">Internal (Google Workspace domain)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-medium text-slate-300 mb-1">Application Client ID</label>
+                        <input type="text" id="test-client-id" placeholder="123456789012-xxxxxx.apps.googleusercontent.com" class="w-full px-3 py-2 text-xs font-mono rounded-lg bg-slate-950 border border-slate-700 text-white placeholder-slate-500 focus:outline-none focus:border-brand-500">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-medium text-slate-300 mb-1">Application Client Secret</label>
+                        <input type="text" id="test-client-secret" placeholder="GOCSPX-xxxxxxxxxxxxxxxxxxxxxxxx" class="w-full px-3 py-2 text-xs font-mono rounded-lg bg-slate-950 border border-slate-700 text-white placeholder-slate-500 focus:outline-none focus:border-brand-500">
+                    </div>
+
+                    <button id="validate-btn" type="button" class="w-full py-2.5 rounded-xl bg-brand-600 hover:bg-brand-500 font-semibold text-xs text-white transition-colors shadow-md flex items-center justify-center space-x-2">
+                        <i class="fa-solid fa-magnifying-glass-chart"></i>
+                        <span>Check Key Syntax Readiness</span>
+                    </button>
+                </form>
+
+                <!-- Validation Output Results -->
+                <div id="validator-result" class="hidden p-4 rounded-xl text-xs space-y-2 border"></div>
+            </section>
+
+            <!-- TROUBLESHOOTING & FAQ ACCORDION -->
+            <section id="faq-section" class="bg-white dark:bg-slate-800 rounded-2xl p-6 sm:p-8 border border-slate-200 dark:border-slate-700 shadow-sm space-y-6">
+                <div class="flex items-center space-x-3">
+                    <i class="fa-solid fa-circle-question text-brand-600 dark:text-brand-400 text-2xl"></i>
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-900 dark:text-white">Troubleshooting & Frequently Asked Questions</h2>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">Quick answers to common OAuth connection issues.</p>
+                    </div>
+                </div>
+
+                <div class="space-y-3" id="accordion-group">
+                    <!-- FAQ Item 1 -->
+                    <div class="border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden">
+                        <button class="faq-toggle w-full px-4 py-3.5 text-left text-xs font-bold text-slate-800 dark:text-slate-200 flex justify-between items-center hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+                            <span>Why do I keep getting token expiration errors after 7 days?</span>
+                            <i class="fa-solid fa-chevron-down text-slate-400 transition-transform duration-200"></i>
+                        </button>
+                        <div class="faq-content hidden px-4 pb-4 pt-1 text-xs text-slate-600 dark:text-slate-300 border-t border-slate-100 dark:border-slate-700/50 bg-slate-50/50 dark:bg-slate-900/30">
+                            This happens if your Google Cloud OAuth Consent Screen is stuck in <strong>"Testing"</strong> mode. When in testing mode, Google automatically invalidates refresh tokens every 7 days. Go to <strong>Google Cloud Console → APIs & Services → OAuth consent screen</strong> and click <strong>Publish App</strong> to keep connection tokens active indefinitely.
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 2 -->
+                    <div class="border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden">
+                        <button class="faq-toggle w-full px-4 py-3.5 text-left text-xs font-bold text-slate-800 dark:text-slate-200 flex justify-between items-center hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+                            <span>What does "redirect_uri_mismatch" mean during authentication?</span>
+                            <i class="fa-solid fa-chevron-down text-slate-400 transition-transform duration-200"></i>
+                        </button>
+                        <div class="faq-content hidden px-4 pb-4 pt-1 text-xs text-slate-600 dark:text-slate-300 border-t border-slate-100 dark:border-slate-700/50 bg-slate-50/50 dark:bg-slate-900/30">
+                            This error means the URL entered under <strong>Authorized redirect URIs</strong> in Google Cloud Console does not match your WordPress site's current URL character-for-character (including <code>http://</code> vs <code>https://</code> or <code>www</code> vs non-www). Copy the exact URL from FluentSMTP Step 1 and re-paste it into Google Cloud Credentials.
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 3 -->
+                    <div class="border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden">
+                        <button class="faq-toggle w-full px-4 py-3.5 text-left text-xs font-bold text-slate-800 dark:text-slate-200 flex justify-between items-center hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+                            <span>Can I use one Google OAuth Client ID for multiple WordPress sites?</span>
+                            <i class="fa-solid fa-chevron-down text-slate-400 transition-transform duration-200"></i>
+                        </button>
+                        <div class="faq-content hidden px-4 pb-4 pt-1 text-xs text-slate-600 dark:text-slate-300 border-t border-slate-100 dark:border-slate-700/50 bg-slate-50/50 dark:bg-slate-900/30">
+                            Yes! You can add multiple redirect URIs under the same OAuth Client ID in Google Cloud Console, or create separate credentials for each website under the same project.
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <div id="toast" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 ease-out bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900 px-4 py-3 rounded-xl shadow-2xl flex items-center space-x-2 text-xs font-semibold">
+        <i class="fa-solid fa-circle-check text-emerald-400 dark:text-emerald-600 text-base"></i>
+        <span id="toast-message">Copied to clipboard!</span>
+    </div>
+
+    <script>
+        // State management
+        const TOTAL_STEPS = 7;
+        let completedSteps = JSON.parse(localStorage.getItem('fluentsmtp_completed_steps') || '[]');
+
+        // Initialize App
+        document.addEventListener('DOMContentLoaded', () => {
+            initTheme();
+            initProgress();
+            initEventListeners();
+        });
+
+        function initTheme() {
+            const darkIcon = document.getElementById('theme-toggle-dark-icon');
+            const lightIcon = document.getElementById('theme-toggle-light-icon');
+
+            if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+                lightIcon.classList.remove('hidden');
+            } else {
+                document.documentElement.classList.remove('dark');
+                darkIcon.classList.remove('hidden');
+            }
+
+            document.getElementById('theme-toggle').addEventListener('click', () => {
+                darkIcon.classList.toggle('hidden');
+                lightIcon.classList.toggle('hidden');
+
+                if (document.documentElement.classList.contains('dark')) {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('color-theme', 'light');
+                } else {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('color-theme', 'dark');
+                }
+            });
+        }
+
+        function initProgress() {
+            updateUIProgress();
+
+            // Bind checkboxes
+            document.querySelectorAll('.step-checkbox').forEach(checkbox => {
+                const stepNum = parseInt(checkbox.dataset.stepTarget);
+                checkbox.checked = completedSteps.includes(stepNum);
+
+                checkbox.addEventListener('change', (e) => {
+                    if (e.target.checked) {
+                        if (!completedSteps.includes(stepNum)) completedSteps.push(stepNum);
+                    } else {
+                        completedSteps = completedSteps.filter(id => id !== stepNum);
+                    }
+                    saveAndRefreshProgress();
+                });
+            });
+
+            // Reset button
+            document.getElementById('reset-progress-btn').addEventListener('click', () => {
+                completedSteps = [];
+                document.querySelectorAll('.step-checkbox').forEach(cb => cb.checked = false);
+                saveAndRefreshProgress();
+                showToast('Progress reset successfully');
+            });
+        }
+
+        function saveAndRefreshProgress() {
+            localStorage.setItem('fluentsmtp_completed_steps', JSON.stringify(completedSteps));
+            updateUIProgress();
+        }
+
+        function updateUIProgress() {
+            const count = completedSteps.length;
+            const percent = Math.round((count / TOTAL_STEPS) * 100);
+
+            // Update Progress Bar
+            document.getElementById('progress-bar-fill').style.width = `${percent}%`;
+            document.getElementById('progress-percent').textContent = `${percent}%`;
+            document.getElementById('steps-completed-label').textContent = `${count} of ${TOTAL_STEPS} steps done`;
+            document.getElementById('header-progress-text').textContent = `${count}/${TOTAL_STEPS} (${percent}%)`;
+
+            // Update Sidebar Step Icons
+            document.querySelectorAll('.nav-item[data-step]').forEach(item => {
+                const stepNum = parseInt(item.dataset.step);
+                const icon = item.querySelector('.step-check-icon');
+                if (completedSteps.includes(stepNum)) {
+                    icon.className = 'step-check-icon fa-solid fa-circle-check text-emerald-500 ml-2';
+                } else {
+                    icon.className = 'step-check-icon fa-regular fa-circle text-slate-300 dark:text-slate-600 ml-2';
+                }
+            });
+        }
+
+        function initEventListeners() {
+            // Mobile Sidebar Drawer
+            const sidebar = document.getElementById('sidebar');
+            const backdrop = document.getElementById('sidebar-backdrop');
+            const mobileBtn = document.getElementById('mobile-menu-btn');
+            const closeBtn = document.getElementById('close-sidebar-btn');
+
+            function openSidebar() {
+                sidebar.classList.remove('-translate-x-full');
+                backdrop.classList.remove('hidden');
+            }
+
+            function closeSidebar() {
+                sidebar.classList.add('-translate-x-full');
+                backdrop.classList.add('hidden');
+            }
+
+            mobileBtn?.addEventListener('click', openSidebar);
+            closeBtn?.addEventListener('click', closeSidebar);
+            backdrop?.addEventListener('click', closeSidebar);
+
+            // Close sidebar on link click on mobile
+            document.querySelectorAll('.nav-item').forEach(link => {
+                link.addEventListener('click', () => {
+                    if (window.innerWidth < 1024) closeSidebar();
+                });
+            });
+
+            // Accordion Toggles
+            document.querySelectorAll('.faq-toggle').forEach(button => {
+                button.addEventListener('click', () => {
+                    const content = button.nextElementSibling;
+                    const icon = button.querySelector('i');
+                    
+                    content.classList.toggle('hidden');
+                    icon.classList.toggle('rotate-180');
+                });
+            });
+
+            // Interactive Validator Logic
+            document.getElementById('validate-btn').addEventListener('click', validateCredentials);
+        }
+
+        function copyToClipboard(elementId) {
+            const textToCopy = document.getElementById(elementId).innerText;
+            
+            // Temporary textarea fallback for iframe security environments
+            const tempInput = document.createElement('textarea');
+            tempInput.value = textToCopy;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+
+            showToast('Redirect URI copied to clipboard!');
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-message').textContent = message;
+            
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+
+        function validateCredentials() {
+            const email = document.getElementById('test-email').value.trim();
+            const userType = document.getElementById('test-user-type').value;
+            const clientId = document.getElementById('test-client-id').value.trim();
+            const clientSecret = document.getElementById('test-client-secret').value.trim();
+            const resultBox = document.getElementById('validator-result');
+
+            resultBox.classList.remove('hidden', 'bg-emerald-950/40', 'border-emerald-800', 'bg-red-950/40', 'border-red-800');
+            
+            let errors = [];
+            let warnings = [];
+
+            // Email check
+            if (!email || !email.includes('@')) {
+                errors.push('Enter a valid sender email address.');
+            } else if (userType === 'external' && !email.endsWith('@gmail.com') && !email.endsWith('@googlemail.com')) {
+                warnings.push('You selected External user type, but your email is not @gmail.com. Paid domain accounts should typically use Internal.');
+            }
+
+            // Client ID format check
+            if (!clientId) {
+                errors.push('Client ID is missing.');
+            } else if (!clientId.endsWith('.apps.googleusercontent.com')) {
+                errors.push('Client ID syntax error: Standard Google Client IDs end with ".apps.googleusercontent.com".');
+            }
+
+            // Client Secret format check
+            if (!clientSecret) {
+                errors.push('Client Secret is missing.');
+            } else if (clientSecret.length < 15) {
+                warnings.push('Client Secret looks unusually short. Double-check that you copied the complete key.');
+            }
+
+            // Render Results
+            if (errors.length === 0) {
+                resultBox.classList.add('bg-emerald-950/40', 'border-emerald-800', 'text-emerald-300');
+                resultBox.innerHTML = `
+                    <div class="flex items-center space-x-2 font-bold text-sm">
+                        <i class="fa-solid fa-circle-check text-emerald-400"></i>
+                        <span>Credentials Format Validated!</span>
+                    </div>
+                    <p class="text-slate-300">Your Client ID and Secret key syntax match Google Cloud's OAuth 2.0 standards. You are ready to authenticate in FluentSMTP.</p>
+                    ${warnings.length ? `<div class="mt-2 pt-2 border-t border-emerald-800/50 text-amber-300 font-normal">${warnings.join('<br>')}</div>` : ''}
+                `;
+            } else {
+                resultBox.classList.add('bg-red-950/40', 'border-red-800', 'text-red-300');
+                resultBox.innerHTML = `
+                    <div class="flex items-center space-x-2 font-bold text-sm">
+                        <i class="fa-solid fa-circle-xmark text-red-400"></i>
+                        <span>Validation Issues Detected</span>
+                    </div>
+                    <ul class="list-disc list-inside space-y-1 mt-1 text-slate-300">
+                        ${errors.map(err => `<li>${err}</li>`).join('')}
+                    </ul>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>

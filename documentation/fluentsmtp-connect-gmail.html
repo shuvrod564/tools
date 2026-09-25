@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FluentSMTP Setup Guide - Gmail App Password Method</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .step-card {
+            transition: all 0.2s ease-in-out;
+        }
+        .step-card:hover {
+            transform: translateY(-2px);
+        }
+        pre, code {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-100 min-h-screen transition-colors duration-200">
+
+    <!-- Top Navigation -->
+    <header class="sticky top-0 z-40 bg-white/80 dark:bg-gray-800/80 backdrop-blur border-b border-gray-200 dark:border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="bg-gradient-to-tr from-green-500 to-emerald-600 p-2 rounded-lg text-white">
+                    <i class="fa-solid fa-paper-plane text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg leading-tight">FluentSMTP Guide</h1>
+                    <p class="text-xs text-gray-500 dark:text-gray-400">Gmail via Other SMTP (App Password Method)</p>
+                </div>
+            </div>
+            
+            <div class="flex items-center space-x-4">
+                <button id="themeToggle" class="p-2 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300">
+                    <i class="fa-solid fa-moon dark:hidden"></i>
+                    <i class="fa-solid fa-sun hidden dark:inline"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+        <!-- Hero Banner -->
+        <div class="bg-gradient-to-r from-emerald-600 to-teal-700 rounded-2xl p-6 sm:p-8 text-white mb-8 shadow-xl">
+            <div class="max-w-3xl">
+                <span class="bg-emerald-500/30 text-emerald-100 text-xs font-semibold px-3 py-1 rounded-full border border-emerald-400/30">Alternative Setup</span>
+                <h2 class="text-2xl sm:text-3xl font-extrabold mt-3">Connect Gmail/Workspace using App Passwords</h2>
+                <p class="mt-2 text-emerald-100 text-sm sm:text-base">
+                    This method uses Google's App Passwords feature to authenticate via FluentSMTP's <strong>Other SMTP</strong> driver. It bypasses the complex OAuth 2.0 Cloud Console setup process while maintaining secure delivery.
+                </p>
+            </div>
+        </div>
+
+        <!-- Layout Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            
+            <!-- Main Content Area -->
+            <div class="lg:col-span-3 space-y-6">
+
+                <!-- Step 1 -->
+                <div class="step-card bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700 shadow-sm">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <span class="flex items-center justify-center w-8 h-8 rounded-full bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 font-bold text-sm">1</span>
+                        <h3 class="text-xl font-bold">Enable 2-Step Verification on Your Google Account</h3>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-300 text-sm mb-4">
+                        Google requires 2-Step Verification to be enabled on your Google Account before you can generate an App Password.
+                    </p>
+                    <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-300 list-disc list-inside bg-gray-50 dark:bg-gray-900/50 p-4 rounded-lg border border-gray-100 dark:border-gray-700">
+                        <li>Go to your <a href="https://myaccount.google.com/" target="_blank" class="text-emerald-600 dark:text-emerald-400 underline font-medium">Google Account Security Settings</a>.</li>
+                        <li>Under <strong>Signing in to Google</strong>, select <strong>2-Step Verification</strong>.</li>
+                        <li>Follow the on-screen steps to complete the setup if it is not already enabled.</li>
+                    </ul>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="step-card bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700 shadow-sm">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <span class="flex items-center justify-center w-8 h-8 rounded-full bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 font-bold text-sm">2</span>
+                        <h3 class="text-xl font-bold">Generate a Google App Password</h3>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-300 text-sm mb-4">
+                        An App Password is a 16-digit passcode that allows FluentSMTP to access your Gmail account securely without sharing your primary password.
+                    </p>
+                    <ol class="space-y-3 text-sm text-gray-600 dark:text-gray-300 list-decimal list-inside bg-gray-50 dark:bg-gray-900/50 p-4 rounded-lg border border-gray-100 dark:border-gray-700">
+                        <li>Navigate directly to the <a href="https://myaccount.google.com/apppasswords" target="_blank" class="text-emerald-600 dark:text-emerald-400 underline font-medium">Google App Passwords Page</a>.</li>
+                        <li>Enter an app name in the text field (e.g., <code class="bg-gray-200 dark:bg-gray-700 px-1.5 py-0.5 rounded">WordPress FluentSMTP</code>).</li>
+                        <li>Click <strong>Create</strong>.</li>
+                        <li>A pop-up modal will display a 16-character generated password (e.g., <code class="bg-gray-200 dark:bg-gray-700 px-1.5 py-0.5 rounded">abcd efgh ijkl mnop</code>).</li>
+                        <li>Copy this password immediately. <span class="text-amber-600 dark:text-amber-400 font-medium">Do not close the modal until you have copied it safely.</span></li>
+                    </ol>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="step-card bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700 shadow-sm">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <span class="flex items-center justify-center w-8 h-8 rounded-full bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 font-bold text-sm">3</span>
+                        <h3 class="text-xl font-bold">Configure FluentSMTP with "Other SMTP"</h3>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-300 text-sm mb-4">
+                        Now apply the generated app credentials to your WordPress FluentSMTP plugin settings.
+                    </p>
+
+                    <div class="space-y-3 text-sm text-gray-600 dark:text-gray-300">
+                        <p>1. Log in to your WordPress Admin Dashboard.</p>
+                        <p>2. Navigate to <strong>Settings → FluentSMTP</strong> (or click <strong>+ Add Connection</strong> if another provider exists).</p>
+                        <p>3. Select the <strong>Other SMTP</strong> tab.</p>
+                    </div>
+
+                    <!-- Server Settings Table -->
+                    <div class="mt-6 border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
+                        <table class="w-full text-left text-sm">
+                            <thead class="bg-gray-100 dark:bg-gray-700/50 text-gray-700 dark:text-gray-300 font-semibold">
+                                <tr>
+                                    <th class="p-3 border-b border-gray-200 dark:border-gray-700">Field Name</th>
+                                    <th class="p-3 border-b border-gray-200 dark:border-gray-700">Value / Setting</th>
+                                    <th class="p-3 border-b border-gray-200 dark:border-gray-700 w-24">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+                                <tr>
+                                    <td class="p-3 font-medium">From Email</td>
+                                    <td class="p-3 text-gray-500 dark:text-gray-400">Your full Gmail or Google Workspace email</td>
+                                    <td class="p-3 text-xs text-gray-400">Manual</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 font-medium">From Name</td>
+                                    <td class="p-3 text-gray-500 dark:text-gray-400">Your site name or sender name</td>
+                                    <td class="p-3 text-xs text-gray-400">Manual</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 font-medium">SMTP Host</td>
+                                    <td class="p-3 font-mono text-emerald-600 dark:text-emerald-400">smtp.gmail.com</td>
+                                    <td class="p-3">
+                                        <button onclick="copyToClipboard('smtp.gmail.com')" class="text-xs bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded hover:bg-gray-200 dark:hover:bg-gray-600">Copy</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 font-medium">Port & Encryption</td>
+                                    <td class="p-3 text-gray-500 dark:text-gray-400"><strong>587</strong> (TLS) OR <strong>465</strong> (SSL)</td>
+                                    <td class="p-3">
+                                        <button onclick="copyToClipboard('587')" class="text-xs bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded hover:bg-gray-200 dark:hover:bg-gray-600">Copy 587</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 font-medium">Authentication</td>
+                                    <td class="p-3 text-gray-500 dark:text-gray-400">Yes (Toggle ON)</td>
+                                    <td class="p-3 text-xs text-gray-400">Enable</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 font-medium">SMTP Username</td>
+                                    <td class="p-3 text-gray-500 dark:text-gray-400">Your full Gmail address</td>
+                                    <td class="p-3 text-xs text-gray-400">Manual</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 font-medium">SMTP Password</td>
+                                    <td class="p-3 text-gray-500 dark:text-gray-400">16-character App Password (spaces optional)</td>
+                                    <td class="p-3 text-xs text-gray-400">Paste</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="mt-4">
+                        <p class="text-sm text-gray-600 dark:text-gray-300">4. Click <strong>Save Connection Settings</strong>.</p>
+                    </div>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="step-card bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700 shadow-sm">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <span class="flex items-center justify-center w-8 h-8 rounded-full bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 font-bold text-sm">4</span>
+                        <h3 class="text-xl font-bold">Send a Test Email</h3>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-300 text-sm mb-4">
+                        Verify that outgoing emails are delivering correctly through the Google SMTP relay.
+                    </p>
+                    <ol class="space-y-2 text-sm text-gray-600 dark:text-gray-300 list-decimal list-inside bg-gray-50 dark:bg-gray-900/50 p-4 rounded-lg border border-gray-100 dark:border-gray-700">
+                        <li>In FluentSMTP dashboard, click the <strong>Email Test</strong> tab.</li>
+                        <li>Enter a valid destination email address in the <strong>Send To</strong> field.</li>
+                        <li>Click <strong>Send Test Email</strong>.</li>
+                        <li>Check the inbox of the recipient address to confirm success.</li>
+                    </ol>
+                </div>
+
+            </div>
+
+            <!-- Sidebar Info Panel -->
+            <div class="lg:col-span-1 space-y-6">
+                
+                <!-- Quick Info Box -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl p-5 border border-gray-200 dark:border-gray-700 shadow-sm space-y-4">
+                    <h4 class="font-bold text-sm uppercase tracking-wider text-gray-500 dark:text-gray-400">Recommended Settings</h4>
+                    <div class="space-y-3 text-sm">
+                        <div>
+                            <span class="text-xs text-gray-400 block">SMTP Host</span>
+                            <span class="font-mono font-medium">smtp.gmail.com</span>
+                        </div>
+                        <div>
+                            <span class="text-xs text-gray-400 block">Port / Encryption</span>
+                            <span class="font-medium">587 / TLS</span>
+                        </div>
+                        <div>
+                            <span class="text-xs text-gray-400 block">Auth Method</span>
+                            <span class="font-medium">App Password (16-digit)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Troubleshooting Box -->
+                <div class="bg-amber-50 dark:bg-amber-950/30 rounded-xl p-5 border border-amber-200 dark:border-amber-800/50 text-amber-900 dark:text-amber-200 space-y-3 text-sm">
+                    <div class="flex items-center space-x-2 font-bold text-amber-800 dark:text-amber-300">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                        <span>Troubleshooting</span>
+                    </div>
+                    <ul class="space-y-2 list-disc list-inside text-xs leading-relaxed text-amber-800/90 dark:text-amber-300/90">
+                        <li><strong>Authentication Error:</strong> Ensure 2-Step Verification is active on your Google account.</li>
+                        <li><strong>Connection Timeout:</strong> Switch between Port 587 (TLS) and Port 465 (SSL) if your host blocks specific outgoing ports.</li>
+                        <li><strong>Invalid Password:</strong> Copy the 16-character App Password without trailing spaces.</li>
+                    </ul>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="fixed bottom-5 right-5 bg-gray-900 text-white dark:bg-white dark:text-gray-900 px-4 py-2.5 rounded-lg shadow-lg text-sm font-medium transform translate-y-20 opacity-0 transition-all duration-300 flex items-center space-x-2">
+        <i class="fa-solid fa-check text-emerald-400 dark:text-emerald-600"></i>
+        <span id="toastMessage">Copied to clipboard!</span>
+    </div>
+
+    <script>
+        // Dark Mode Toggle Logic
+        const themeToggleBtn = document.getElementById('themeToggle');
+        
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.theme = 'light';
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.theme = 'dark';
+            }
+        });
+
+        // Copy Helper Logic
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                showToast(`Copied "${text}" to clipboard!`);
+            });
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            toastMessage.textContent = message;
+            
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+            
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
