@@ -1,0 +1,13 @@
+{
+  "name": "Ayesha Rahman — Social Media, AI & E-Commerce Strategist",
+  "short_name": "AR Portfolio",
+  "description": "Data-driven social media management, AI content automation and e-commerce operations (Amazon FBA, Etsy, Shopify).",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#090D16",
+  "theme_color": "#090D16",
+  "icons": [
+    { "src": "assets/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "assets/apple-touch-icon.png", "sizes": "180x180", "type": "image/png", "purpose": "any" }
+  ]
+}
