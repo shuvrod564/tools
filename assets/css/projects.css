@@ -1094,7 +1094,8 @@ body.menu-open { overflow: hidden; } /* scroll lock while menu is open */
  .pcard h3 {
    font-size: 1.28rem;
    font-weight: 700;
-   margin-top: 15px
+   margin-top: 15px;
+   min-height: 3rem;
  }
 
  .p-tag {
@@ -1138,9 +1139,17 @@ body.menu-open { overflow: hidden; } /* scroll lock while menu is open */
  }
 
  .case-btn svg {
-   width: 11px;
-   height: 11px;
+   width: 13px;
+   height: 13px;
    stroke: currentColor
+ }
+ .case-btn img {
+   width: 14px;
+   height: 14px; 
+   transition: filter .2s ease;
+ }
+ .case-btn:hover img {
+   filter: invert(1) brightness(1.2);
  }
 
  .case-btn:hover {

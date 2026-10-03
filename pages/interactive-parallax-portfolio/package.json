@@ -1,0 +1,15 @@
+{
+  "name": "interactive-parallax-portfolio",
+  "version": "1.0.0",
+  "description": "Interactive parallax portfolio — Social Media, AI Automation & E-Commerce (Amazon FBA, Etsy, Shopify). Built with Tailwind CSS + DaisyUI.",
+  "private": true,
+  "scripts": {
+    "build:css": "tailwindcss -i ./src/input.css -o ./css/style.css --minify",
+    "watch:css": "tailwindcss -i ./src/input.css -o ./css/style.css --watch",
+    "serve": "npx serve ."
+  },
+  "devDependencies": {
+    "daisyui": "^4.12.24",
+    "tailwindcss": "^3.4.17"
+  }
+}

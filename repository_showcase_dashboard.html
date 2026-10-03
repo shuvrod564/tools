@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shuvro Dev — Repositories Showcase & Dashboard</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Phosphor Icons & Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f7ff',
+                            100: '#e0effe',
+                            500: '#0284c7',
+                            600: '#0369a1',
+                            700: '#075985',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'Fira Code', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+
+        /* Subtle custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        .glass-header {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+        }
+
+        .card-hover-effect {
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .card-hover-effect:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(14, 165, 233, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.03);
+        }
+        
+        .toast-notification {
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+    </style>
+</head>
+<body class="text-slate-800 bg-slate-50 min-h-screen flex flex-col antialiased">
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast-notification fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 pointer-events-none bg-slate-900 text-white text-xs font-medium px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2 border border-slate-700">
+        <i class="bi bi-check-circle-fill text-emerald-400 text-sm"></i>
+        <span id="toast-message">Repository link copied to clipboard!</span>
+    </div>
+
+    <!-- Top Navigation Header -->
+    <header class="sticky top-0 z-40 glass-header border-b border-slate-200/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 gap-4">
+                
+                <!-- Brand Title -->
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-sky-500 to-blue-600 text-white font-bold flex items-center justify-center shadow-md shadow-sky-500/20 text-sm tracking-wider">
+                        SD
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <h1 class="text-base font-bold text-slate-900 leading-tight">Shuvro Dev</h1>
+                            <span class="px-2 py-0.5 text-[10px] font-semibold bg-sky-50 text-sky-700 border border-sky-200 rounded-full">Portfolio Repos</span>
+                        </div>
+                        <p class="text-xs text-slate-500">Full-Stack Developer &bull; Code Directory & Architecture</p>
+                    </div>
+                </div>
+
+                <!-- Action Controls -->
+                <div class="flex items-center gap-2">
+                    <a href="https://github.com/shuvrod564" target="_blank" rel="noopener" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-slate-700 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 hover:border-slate-300 transition shadow-sm">
+                        <i class="bi bi-github text-slate-900"></i>
+                        <span>shuvrod564</span>
+                    </a>
+                    <a href="https://github.com/suvrod830-wq" target="_blank" rel="noopener" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-slate-700 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 hover:border-slate-300 transition shadow-sm">
+                        <i class="bi bi-github text-slate-900"></i>
+                        <span>suvrod830-wq</span>
+                    </a>
+                    <a href="https://gitlab.com/thalakkadsumesh" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-orange-700 bg-orange-50 border border-orange-200 rounded-lg hover:bg-orange-100/60 transition">
+                        <i class="bi bi-gitlab text-orange-600"></i>
+                        <span class="hidden xs:inline">GitLab</span>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-1 w-full space-y-6">
+
+        <!-- Top Banner / Quick Stats Grid -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <div class="bg-white border border-slate-200/80 rounded-xl p-3.5 shadow-sm flex items-center justify-between">
+                <div>
+                    <p class="text-[11px] font-medium uppercase tracking-wider text-slate-400">Total Projects</p>
+                    <p class="text-xl font-extrabold text-slate-900 mt-0.5" id="stat-total">39</p>
+                </div>
+                <div class="w-9 h-9 rounded-lg bg-sky-50 text-sky-600 flex items-center justify-center font-semibold text-base">
+                    <i class="bi bi-folder2-open"></i>
+                </div>
+            </div>
+
+            <div class="bg-white border border-slate-200/80 rounded-xl p-3.5 shadow-sm flex items-center justify-between">
+                <div>
+                    <p class="text-[11px] font-medium uppercase tracking-wider text-slate-400">Featured Stars</p>
+                    <p class="text-xl font-extrabold text-amber-600 mt-0.5">4</p>
+                </div>
+                <div class="w-9 h-9 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center font-semibold text-base">
+                    <i class="bi bi-star-fill"></i>
+                </div>
+            </div>
+
+            <div class="bg-white border border-slate-200/80 rounded-xl p-3.5 shadow-sm flex items-center justify-between">
+                <div>
+                    <p class="text-[11px] font-medium uppercase tracking-wider text-slate-400">Needs Deploy</p>
+                    <p class="text-xl font-extrabold text-rose-600 mt-0.5">2</p>
+                </div>
+                <div class="w-9 h-9 rounded-lg bg-rose-50 text-rose-600 flex items-center justify-center font-semibold text-base">
+                    <i class="bi bi-rocket-takeoff-fill"></i>
+                </div>
+            </div>
+
+            <div class="bg-white border border-slate-200/80 rounded-xl p-3.5 shadow-sm flex items-center justify-between">
+                <div>
+                    <p class="text-[11px] font-medium uppercase tracking-wider text-slate-400">Git Accounts</p>
+                    <p class="text-xl font-extrabold text-indigo-600 mt-0.5">3</p>
+                </div>
+                <div class="w-9 h-9 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center font-semibold text-base">
+                    <i class="bi bi-person-workspace"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filter Controls & Search Toolbar -->
+        <div class="bg-white border border-slate-200/80 rounded-2xl p-3 shadow-sm flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3">
+            
+            <!-- Category Filter Tabs -->
+            <div class="flex items-center gap-1 overflow-x-auto pb-1 lg:pb-0 text-xs font-medium scrollbar-none" id="filter-container">
+                <button onclick="setFilter('all')" id="tab-all" class="filter-tab px-3.5 py-2 rounded-xl bg-slate-900 text-white font-semibold shadow-sm transition whitespace-nowrap">
+                    All Repos <span class="ml-1 px-1.5 py-0.2 text-[10px] bg-slate-700 rounded-full">39</span>
+                </button>
+                <button onclick="setFilter('featured')" id="tab-featured" class="filter-tab px-3.5 py-2 rounded-xl text-slate-600 hover:bg-amber-50 hover:text-amber-700 transition whitespace-nowrap">
+                    <i class="bi bi-star-fill text-amber-500 mr-1"></i> Featured
+                </button>
+                <button onclick="setFilter('suvrod830')" id="tab-suvrod830" class="filter-tab px-3.5 py-2 rounded-xl text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition whitespace-nowrap">
+                    suvrod830-wq <span class="ml-1 px-1.5 py-0.2 text-[10px] bg-slate-200 text-slate-700 rounded-full">31</span>
+                </button>
+                <button onclick="setFilter('shuvrod564')" id="tab-shuvrod564" class="filter-tab px-3.5 py-2 rounded-xl text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition whitespace-nowrap">
+                    shuvrod564 <span class="ml-1 px-1.5 py-0.2 text-[10px] bg-slate-200 text-slate-700 rounded-full">7</span>
+                </button>
+                <button onclick="setFilter('deploy')" id="tab-deploy" class="filter-tab px-3.5 py-2 rounded-xl text-slate-600 hover:bg-rose-50 hover:text-rose-700 transition whitespace-nowrap">
+                    <i class="bi bi-rocket-takeoff mr-1 text-rose-500"></i> Need Deploy
+                </button>
+                <button onclick="setFilter('gitlab')" id="tab-gitlab" class="filter-tab px-3.5 py-2 rounded-xl text-slate-600 hover:bg-orange-50 hover:text-orange-700 transition whitespace-nowrap">
+                    GitLab
+                </button>
+            </div>
+
+            <!-- Search Input -->
+            <div class="relative w-full lg:w-72">
+                <i class="bi bi-search absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                <input type="text" id="searchInput" oninput="handleSearch()" placeholder="Search project name or tag..." 
+                    class="w-full pl-9 pr-8 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-sky-500 focus:bg-white transition">
+                <button id="clearSearch" onclick="clearSearchInput()" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 text-xs">
+                    <i class="bi bi-x-circle-fill"></i>
+                </button>
+            </div>
+
+        </div>
+
+        <!-- Repositories Grid Display -->
+        <div id="repo-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5">
+            <!-- Cards will be populated dynamically via JavaScript -->
+        </div>
+
+        <!-- Empty State Container -->
+        <div id="empty-state" class="hidden bg-white border border-dashed border-slate-300 rounded-2xl p-12 text-center">
+            <div class="w-12 h-12 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center mx-auto mb-3 text-xl">
+                <i class="bi bi-search"></i>
+            </div>
+            <h3 class="text-sm font-bold text-slate-800">No repositories matched your filter</h3>
+            <p class="text-xs text-slate-500 mt-1 max-w-sm mx-auto">Try clearing your search query or switching to another category filter tab.</p>
+            <button onclick="resetAllFilters()" class="mt-4 px-4 py-2 bg-sky-50 text-sky-700 text-xs font-semibold rounded-xl hover:bg-sky-100 transition">
+                Reset All Filters
+            </button>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200/80 py-4 mt-8">
+        <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-500 flex flex-col sm:flex-row items-center justify-between gap-2">
+            <p>&copy; Shuvro Dev Repository Showcase &bull; Modern Light Theme Dashboard</p>
+            <div class="flex items-center gap-4 text-slate-400">
+                <span class="inline-flex items-center gap-1"><i class="bi bi-shield-check text-emerald-500"></i> Self-Hosted Catalog</span>
+                <span>&bull;</span>
+                <span class="inline-flex items-center gap-1"><i class="bi bi-lightning-charge-fill text-amber-500"></i> Ultra Compact</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Data Engine & Interaction Logic -->
+    <script>
+        // Master Repositories Dataset
+        const reposData = [
+            // Featured / Starred Repositories
+            {
+                name: "php-shuvro-portfolio",
+                account: "suvrod830",
+                accountName: "suvrod830-wq",
+                url: "https://github.com/suvrod830-wq/php-shuvro-portfolio",
+                visibility: "Private",
+                badge: "⭐⭐ Spotlight Portfolio",
+                badgeColor: "bg-amber-50 text-amber-700 border-amber-200",
+                tech: "PHP / Modular",
+                desc: "Personal full-stack portfolio platform engineered with Core PHP, performance caching, and dynamic project showcase.",
+                isFeatured: true,
+                needDeploy: false,
+                isLocked: false
+            },
+            {
+                name: "laravel-newspaper-mamun",
+                account: "suvrod830",
+                accountName: "suvrod830-wq",
+                url: "https://github.com/suvrod830-wq/laravel-newspaper-mamun",
+                visibility: "Private",
+                badge: "⭐ Featured",
+                badgeColor: "bg-amber-50 text-amber-700 border-amber-200",
+                tech: "Laravel / CMS",
+                desc: "High-traffic digital news publication platform featuring editorial workflow, category streaming, and content management.",
+                isFeatured: true,
+                needDeploy: false,
+                isLocked: false
+            },
+            {
+                name: "laravel-thembadge-app-sheer-sir",
+                account: "suvrod830",
+                accountName: "suvrod830-wq",
+                url: "https://github.com/suvrod830-wq/laravel-thembadge-app-sheer-sir",
+                visibility: "Private",
+                badge: "⭐ Featured",
+                badgeColor: "bg-amber-50 text-amber-700 border-amber-200",
+                tech: "Laravel Backend",
+                desc: "Custom badge generation & identity system with verification workflows and scalable database schemas.",
+                isFeatured: true,
+                needDeploy: false,
+                isLocked: false
+            },
+            {
+                name: "sheer-sir-multiple-projects",
+                account: "suvrod830",
+                accountName: "suvrod830-wq",
+                url: "https://github.com/suvrod830-wq/sheer-sir-multiple-projects",
+                visibility: "Private",
+                badge: "⭐ Featured",
+                badgeColor: "bg-amber-50 text-amber-700 border-amber-200",
+                tech: "Multi-App Suite",
+                desc: "Monorepo containing specialized web applications and client custom implementations.",
+                isFeatured: true,
+                needDeploy: false,
+                isLocked: false
+            },
+
+            // Deploy Needed
+            {
+                name: "building-materials-html-ui-pages",
+                account: "suvrod830",
+                accountName: "suvrod830-wq",
+                url: "https://github.com/suvrod830-wq/building-materials-html-ui-pages",
+                visibility: "Private",
+                badge: "🚀 Deploy Needed",
+                badgeColor: "bg-rose-50 text-rose-700 border-rose-200",
+                tech: "HTML5 / Tailwind",
+                desc: "Responsive storefront UI templates for building materials components and modern product catalogs.",
+                isFeatured: false,
+                needDeploy: true,
+                isLocked: false
+            },
+            {
+                name: "la-veera-html-ui",
+                account: "suvrod830",
+                accountName: "suvrod830-wq",
+                url: "https://github.com/suvrod830-wq/la-veera-html-ui",
+                visibility: "Private",
+                badge: "🚀 Deploy Needed",
+                badgeColor: "bg-rose-50 text-rose-700 border-rose-200",
+                tech: "HTML5 / CSS Grid",
+                desc: "Elegantly styled fashion UI landing pages with custom micro-interactions.",
+                isFeatured: false,
+                needDeploy: true,
+                isLocked: false
+            },
+
+            // Special Locked / Self-Hosted
+            {
+                name: "collectionlist-php-selfhosted-project",
+                account: "suvrod830",
+                accountName: "suvrod830-wq",
+                url: "https://github.com/suvrod830-wq/collectionlist-php-selfhosted-project",
+                visibility: "Private",
+                badge: "🔒 Self-Hosted",
+                badgeColor: "bg-slate-100 text-slate-700 border-slate-300",
+                tech: "PHP / Self-Hosted",
+                desc: "Custom self-hosted directory and listing management application.",
+                isFeatured: false,
+                needDeploy: false,
+                isLocked: true
+            },
+
+            // GitLab
+            {
+                name: "amco",
+                account: "gitlab",
+                accountName: "GitLab (thalakkadsumesh)",
+                url: "https://gitlab.com/thalakkadsumesh/amco.git",
+                visibility: "External",
+                badge: "GitLab Repository",
+                badgeColor: "bg-orange-50 text-orange-700 border-orange-200",
+                tech: "GitLab Project",
+                desc: "Collaborative repository hosted on GitLab for organizational workflow tracking.",
+                isFeatured: false,
+                needDeploy: false,
+                isLocked: false
+            },
+
+            // Shuvrod564 Repositories
+            {
+                name: "almas-hospital",
+                account: "shuvrod564",
+                accountName: "shuvrod564",
+                url: "https://github.com/shuvrod564/almas-hospital",
+                visibility: "Private",
+                badge: "Healthcare",
+                badgeColor: "bg-emerald-50 text-emerald-700 border-emerald-200",
+                tech: "PHP / Database",
+                desc: "Hospital workflow management system handling appointments and departmental records.",
+                isFeatured: false,
+                needDeploy: false,
+                isLocked: false
+            },
+            {
+                name: "bimcafe",
+                account: "shuvrod564",
+                accountName: "shuvrod564",
+                url: "https://github.com/shuvrod564/bimcafe",
+                visibility: "Private",
+                badge: "Ordering System",
+                badgeColor: "bg-sky-50 text-sky-700 border-sky-200",
+                tech: "Web Application",
+                desc: "Digital menu and POS ordering solution engineered for cafe and restaurant operations.",
+                isFeatured: false,
+                needDeploy: false,
+                isLocked: false
+            },
+            {
+                name: "servicopros",
+                account: "shuvrod564",
+                accountName: "shuvrod564 (mamun)",
+                url: "https://github.com/shuvrod564/servicopros",
+                visibility: "Private",
+                badge: "Service Portal",
+                badgeColor: "bg-indigo-50 text-indigo-700 border-indigo-200",
+                tech: "Full-Stack",
+                desc: "Professional services directory and booking management system.",
+                isFeatured: false,
+                needDeploy: false,
+                isLocked: false
+            },
+            {
+                name: "techpullers",
+                account: "shuvrod564",
+                accountName: "shuvrod564",
+                url: "https://github.com/shuvrod564/techpullers",
+                visibility: "Private",
+                badge: "Corporate Site",
+                badgeColor: "bg-sky-50 text-sky-700 border-sky-200",
+                tech: "PHP Framework",
+                desc: "Official agency web application and showcase portal.",
+                isFeatured: false,
+                needDeploy: false,
+                isLocked: false
+            },
+            {
+                name: "homexuk",
+                account: "shuvrod564",
+                accountName: "shuvrod564",
+                url: "https://github.com/shuvrod564/homexuk",
+                visibility: "Private",
+                badge: "Real Estate UI",
+                badgeColor: "bg-purple-50 text-purple-700 border-purple-200",
+                tech: "PHP / Web",
+                desc: "Property listing and UK real estate application platform.",
+                isFeatured: false,
+                needDeploy: false,
+                isLocked: false
+            },
+            {
+                name: "novoclad",
+                account: "shuvrod564",
+                accountName: "shuvrod564",
+                url: "https://github.com/shuvrod564/novoclad",
+                visibility: "Private",
+                badge: "Industrial UI",
+                badgeColor: "bg-slate-100 text-slate-700 border-slate-200",
+                tech: "Web Portal",
+                desc: "Architectural and cladding solutions catalog website.",
+                isFeatured: false,
+                needDeploy: false,
+                isLocked: false
+            },
+            {
+                name: "book-demo-system",
+                account: "shuvrod564",
+                accountName: "shuvrod564",
+                url: "https://github.com/shuvrod564/book-demo-system",
+                visibility: "Public",
+                badge: "Public Demo",
+                badgeColor: "bg-emerald-50 text-emerald-700 border-emerald-200",
+                tech: "JavaScript / PHP",
+                desc: "Public booking demonstration module with real-time slot selection.",
+                isFeatured: false,
+                needDeploy: false,
+                isLocked: false
+            },
+
+            // suvrod830-wq Remaining Items
+            {
+                name: "pixmango-php-alitycommerce",
+                account: "suvrod830",
+                accountName: "suvrod830-wq",
+                url: "https://github.com/suvrod830-wq/pixmango-php-alitycommerce",
+                visibility: "Private",
+                badge: "E-Commerce",
+                badgeColor: "bg-blue-50 text-blue-700 border-blue-200",
+                tech: "PHP Backend",
+                desc: "E-commerce platform API and inventory management system.",
+                isFeatured: false, needDeploy: false, isLocked: false
+            },
+            {
+                name: "leno-php-amcolawfirm",
+                account: "suvrod830",
+                accountName: "suvrod830-wq",
+                url: "https://github.com/suvrod830-wq/leno-php-amcolawfirm",
+                visibility: "Private",
+                badge: "Legal Portal",
+                badgeColor: "bg-slate-100 text-slate-700 border-slate-200",
+                tech: "PHP / CMS",
+                desc: "Law firm consultation and case scheduling web portal.",
+                isFeatured: false, needDeploy: false, isLocked: false
+            },
+            {
+                name: "pixmango-laravel-alitywholesale-backend",
+                account: "suvrod830",
+                accountName: "suvrod830-wq",
+                url: "https://github.com/suvrod830-wq/pixmango-laravel-alitywholesale-backend",
+                visibility: "Private",
+                badge: "Wholesale Backend",
+                badgeColor: "bg-red-50 text-red-700 border-red-200",
+                tech: "Laravel API",
+                desc: "Bulk wholesale order processing and multi-vendor distribution system.",
+                isFeatured: false, needDeploy: false, isLocked: false
+            },
+            {
+                name: "pixmango-php-mainsite",
+                account: "suvrod830",
+                accountName: "suvrod830-wq",
+                url: "https://github.com/suvrod830-wq/pixmango-php-mainsite",
+                visibility: "Private",
+                badge: "Main Site",
+                badgeColor: "bg-sky-50 text-sky-700 border-sky-200",
+                tech: "PHP Core",
+                desc: "Main corporate web portal for Pixmango digital media operations.",
+                isFeatured: false, needDeploy: false, isLocked: false
+            },
+            {
+                name: "pixmango-php-static-cms-photoeditinstudio",
+                account: "suvrod830",
+                accountName: "suvrod830-wq",
+                url: "https://github.com/suvrod830-wq/pixmango-php-static-cms-photoeditinstudio",
+                visibility: "Private",
+                badge: "Studio CMS",
+                badgeColor: "bg-indigo-50 text-indigo-700 border-indigo-200",
+                tech: "Static PHP CMS",
+                desc: "Photo editing agency studio showcase and client booking intake.",
+                isFeatured: false, needDeploy: false, isLocked: false
+            },
+            {
+                name: "bimcafe-livesite-fullstack",
+                account: "suvrod830",
+                accountName: "suvrod830-wq",
+                url: "https://github.com/suvrod830-wq/bimcafe-livesite-fullstack",
+                visibility: "Private",
+                badge: "Live Site",
+                badgeColor: "bg-emerald-50 text-emerald-700 border-emerald-200",
+                tech: "Full-Stack PHP",
+                desc: "Live production deployment files for Bimcafe digital infrastructure.",
+                isFeatured: false, needDeploy: false, isLocked: false
+            },
+            {
+                name: "php-fullstack-cms-orivo",
+                account: "suvrod830",
+                accountName: "suvrod830-wq",
+                url: "https://github.com/suvrod830-wq/php-fullstack-cms-orivo",
+                visibility: "Private",
+                badge: "Custom CMS",
+                badgeColor: "bg-violet-50 text-violet-700 border-violet-200",
+                tech: "PHP / CMS Engine",
+                desc: "Orivo custom full-stack content management framework.",
+                isFeatured: false, needDeploy: false, isLocked: false
+            },
+            {
+                name: "php-fullstack-cab-booking-app",
+                account: "suvrod830",
+                accountName: "suvrod830-wq",
+                url: "https://github.com/suvrod830-wq/php-fullstack-cab-booking-app",
+                visibility: "Private",
+                badge: "Transport Booking",
+                badgeColor: "bg-amber-50 text-amber-700 border-amber-200",
+                tech: "PHP Full-Stack",
+                desc: "Vehicle rental and taxi ride dispatching system with distance fare calculation.",
+                isFeatured: false, needDeploy: false, isLocked: false
+            },
+            {
+                name: "laspinas-media-glazeelectrical-codignator-php",
+                account: "suvrod830",
+                accountName: "suvrod830-wq",
+                url: "https://github.com/suvrod830-wq/laspinas-media-glazeelectrical-codignator-php",
+                visibility: "Private",
+                badge: "CodeIgniter",
+                badgeColor: "bg-orange-50 text-orange-700 border-orange-200",
+                tech: "CodeIgniter PHP",
+                desc: "Electrical supply chain management backend built with CodeIgniter framework.",
+                isFeatured: false, needDeploy: false, isLocked: false
+            },
+            {
+                name: "laspinas-media-laspinusgroup-main-site",
+                account: "suvrod830",
+                accountName: "suvrod830-wq",
+                url: "https://github.com/suvrod830-wq/laspinas-media-laspinusgroup-main-site",
+                visibility: "Private",
+                badge: "Media Group",
+                badgeColor: "bg-sky-50 text-sky-700 border-sky-200",
+                tech: "PHP / Web",
+                desc: "Official enterprise site for Laspinas Group digital properties.",
+                isFeatured: false, needDeploy: false, isLocked: false
+            },
+            {
+                name: "laravel-hospital-management-application",
+                account: "suvrod830",
+                accountName: "suvrod830-wq",
+                url: "https://github.com/suvrod830-wq/laravel-hospital-management-application",
+                visibility: "Private",
+                badge: "Healthcare HMS",
+                badgeColor: "bg-red-50 text-red-700 border-red-200",
+                tech: "Laravel 10",
+                desc: "Comprehensive hospital ERP managing patient registration, billing, and doctor rosters.",
+                isFeatured: false, needDeploy: false, isLocked: false
+            },
+            {
+                name: "leno-php-static-luxury-perfume",
+                account: "suvrod830",
+                accountName: "suvrod830-wq",
+                url: "https://github.com/suvrod830-wq/leno-php-static-luxury-perfume",
+                visibility: "Private",
+                badge: "Luxury Brand",
+                badgeColor: "bg-purple-50 text-purple-700 border-purple-200",
+                tech: "PHP / UI",
+                desc: "High-end luxury perfume showcase website with bespoke typography.",
+                isFeatured: false, needDeploy: false, isLocked: false
+            },
+            {
+                name: "php-static-right-angle",
+                account: "suvrod830",
+                accountName: "suvrod830-wq",
+                url: "https://github.com/suvrod830-wq/php-static-right-angle",
+                visibility: "Private",
+                badge: "Agency Site",
+                badgeColor: "bg-slate-100 text-slate-700 border-slate-200",
+                tech: "PHP",
+                desc: "Right Angle creative digital agency client site.",
+                isFeatured: false, needDeploy: false, isLocked: false
+            },
+            {
+                name: "php-static-rishikeshyognirvana",
+                account: "suvrod830",
+                accountName: "suvrod830-wq",
+                url: "https://github.com/suvrod830-wq/php-static-rishikeshyognirvana",
+                visibility: "Private",
+                badge: "Wellness Retreat",
+                badgeColor: "bg-teal-50 text-teal-700 border-teal-200",
+                tech: "PHP",
+                desc: "Yoga retreat booking and retreat schedule management portal.",
+                isFeatured: false, needDeploy: false, isLocked: false
+            },
+            {
+                name: "php-static-admin-panel-ui-jaybro",
+                account: "suvrod830",
+                accountName: "suvrod830-wq",
+                url: "https://github.com/suvrod830-wq/php-static-admin-panel-ui-jaybro",
+                visibility: "Private",
+                badge: "Admin Dashboard",
+                badgeColor: "bg-indigo-50 text-indigo-700 border-indigo-200",
+                tech: "PHP Admin UI",
+                desc: "Custom lightweight dashboard administration template.",
+                isFeatured: false, needDeploy: false, isLocked: false
+            },
+            {
+                name: "php-taherpur-ankush_shaw",
+                account: "suvrod830",
+                accountName: "suvrod830-wq",
+                url: "https://github.com/suvrod830-wq/php-taherpur-ankush_shaw",
+                visibility: "Private",
+                badge: "Client Site",
+                badgeColor: "bg-slate-100 text-slate-700 border-slate-200",
+                tech: "PHP",
+                desc: "Custom web development project built for client specific needs.",
+                isFeatured: false, needDeploy: false, isLocked: false
+            },
+            {
+                name: "techpullers-multiple-projects",
+                account: "suvrod830",
+                accountName: "suvrod830-wq",
+                url: "https://github.com/suvrod830-wq/techpullers-multiple-projects",
+                visibility: "Private",
+                badge: "Monorepo",
+                badgeColor: "bg-sky-50 text-sky-700 border-sky-200",
+                tech: "PHP Multi-Site",
+                desc: "Central repository containing client builds under Techpullers.",
+                isFeatured: false, needDeploy: false, isLocked: false
+            },
+            {
+                name: "turbolix-paints",
+                account: "suvrod830",
+                accountName: "suvrod830-wq",
+                url: "https://github.com/suvrod830-wq/turbolix-paints",
+                visibility: "Private",
+                badge: "Product Showcase",
+                badgeColor: "bg-cyan-50 text-cyan-700 border-cyan-200",
+                tech: "PHP / Web",
+                desc: "Industrial coatings and paint catalog presentation site.",
+                isFeatured: false, needDeploy: false, isLocked: false
+            },
+            {
+                name: "own-selfhosted-multiple-sites",
+                account: "suvrod830",
+                accountName: "suvrod830-wq",
+                url: "https://github.com/suvrod830-wq/own-selfhosted-multiple-sites",
+                visibility: "Private",
+                badge: "Infrastructure",
+                badgeColor: "bg-slate-100 text-slate-700 border-slate-200",
+                tech: "PHP Multi-Tenant",
+                desc: "Self-hosted server deployment configs and internal management web tools.",
+                isFeatured: false, needDeploy: false, isLocked: false
+            },
+            {
+                name: "dubai-harbour-frontend-ui-php",
+                account: "suvrod830",
+                accountName: "suvrod830-wq",
+                url: "https://github.com/suvrod830-wq/dubai-harbour-frontend-ui-php",
+                visibility: "Private",
+                badge: "Maritime UI",
+                badgeColor: "bg-blue-50 text-blue-700 border-blue-200",
+                tech: "PHP Frontend",
+                desc: "Dubai Harbour luxury waterfront portal user interface.",
+                isFeatured: false, needDeploy: false, isLocked: false
+            },
+            {
+                name: "clexen-rentals-php",
+                account: "suvrod830",
+                accountName: "suvrod830-wq",
+                url: "https://github.com/suvrod830-wq/clexen-rentals-php",
+                visibility: "Private",
+                badge: "Rental System",
+                badgeColor: "bg-emerald-50 text-emerald-700 border-emerald-200",
+                tech: "PHP",
+                desc: "Equipment and luxury asset rental reservation backend.",
+                isFeatured: false, needDeploy: false, isLocked: false
+            },
+            {
+                name: "kerela-cruise-houseboat-booking-cms",
+                account: "suvrod830",
+                accountName: "suvrod830-wq",
+                url: "https://github.com/suvrod830-wq/kerela-cruise-houseboat-booking-cms",
+                visibility: "Private",
+                badge: "Tourism CMS",
+                badgeColor: "bg-amber-50 text-amber-700 border-amber-200",
+                tech: "PHP CMS",
+                desc: "Kerala houseboat cruise reservation and itinerary booking system.",
+                isFeatured: false, needDeploy: false, isLocked: false
+            },
+            {
+                name: "learneverythingbd-php-fullstack",
+                account: "suvrod830",
+                accountName: "suvrod830-wq",
+                url: "https://github.com/suvrod830-wq/learneverythingbd-php-fullstack",
+                visibility: "Private",
+                badge: "EdTech Platform",
+                badgeColor: "bg-indigo-50 text-indigo-700 border-indigo-200",
+                tech: "PHP LMS",
+                desc: "Online learning platform featuring course materials and user progression.",
+                isFeatured: false, needDeploy: false, isLocked: false
+            },
+            {
+                name: "oasis-tour-india",
+                account: "suvrod830",
+                accountName: "suvrod830-wq",
+                url: "https://github.com/suvrod830-wq/oasis-tour-india",
+                visibility: "Private",
+                badge: "Travel Agency",
+                badgeColor: "bg-teal-50 text-teal-700 border-teal-200",
+                tech: "PHP / Dynamic",
+                desc: "India travel tour packages reservation portal with custom inquiry system.",
+                isFeatured: false, needDeploy: false, isLocked: false
+            }
+        ];
+
+        // State variables
+        let currentFilter = 'all';
+        let searchQuery = '';
+
+        // Render Cards Function
+        function renderGrid() {
+            const grid = document.getElementById('repo-grid');
+            const emptyState = document.getElementById('empty-state');
+            grid.innerHTML = '';
+
+            const filtered = reposData.filter(repo => {
+                // Filter tabs matching logic
+                let matchesFilter = false;
+                if (currentFilter === 'all') matchesFilter = true;
+                else if (currentFilter === 'featured') matchesFilter = repo.isFeatured;
+                else if (currentFilter === 'deploy') matchesFilter = repo.needDeploy;
+                else if (currentFilter === 'suvrod830') matchesFilter = repo.account === 'suvrod830';
+                else if (currentFilter === 'shuvrod564') matchesFilter = repo.account === 'shuvrod564';
+                else if (currentFilter === 'gitlab') matchesFilter = repo.account === 'gitlab';
+
+                // Search query matching logic
+                let matchesSearch = true;
+                if (searchQuery.trim() !== '') {
+                    const q = searchQuery.toLowerCase();
+                    matchesSearch = repo.name.toLowerCase().includes(q) ||
+                                    repo.tech.toLowerCase().includes(q) ||
+                                    repo.accountName.toLowerCase().includes(q) ||
+                                    repo.desc.toLowerCase().includes(q);
+                }
+
+                return matchesFilter && matchesSearch;
+            });
+
+            if (filtered.length === 0) {
+                emptyState.classList.remove('hidden');
+            } else {
+                emptyState.classList.add('hidden');
+                filtered.forEach(repo => {
+                    grid.appendChild(createRepoCard(repo));
+                });
+            }
+        }
+
+        // Card Element Builder
+        function createRepoCard(repo) {
+            const card = document.createElement('div');
+            
+            // Border highlight based on special flags
+            let borderClass = "border-slate-200/90";
+            if (repo.isFeatured) borderClass = "border-amber-300 ring-1 ring-amber-200/50";
+            else if (repo.needDeploy) borderClass = "border-rose-300 ring-1 ring-rose-200/50";
+            else if (repo.account === 'gitlab') borderClass = "border-orange-200";
+
+            card.className = `card-hover-effect bg-white border ${borderClass} rounded-2xl p-4 flex flex-col justify-between shadow-sm relative group`;
+
+            card.innerHTML = `
+                <div>
+                    <!-- Card Top Header -->
+                    <div class="flex items-start justify-between gap-2 mb-2">
+                        <span class="inline-flex items-center gap-1 text-[11px] font-semibold px-2 py-0.5 rounded-md border ${repo.badgeColor}">
+                            ${repo.badge}
+                        </span>
+                        
+                        <div class="flex items-center gap-1.5">
+                            <span class="text-[10px] font-bold px-1.5 py-0.5 rounded ${repo.visibility === 'Public' ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-600'}">
+                                ${repo.visibility}
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Repository Name -->
+                    <h3 class="font-bold text-slate-900 text-sm hover:text-sky-600 transition break-all mt-1">
+                        <a href="${repo.url}" target="_blank" rel="noopener" class="focus:outline-none flex items-center gap-1.5">
+                            <span>${repo.name}</span>
+                            <i class="bi bi-box-arrow-up-right text-[10px] text-slate-400 group-hover:text-sky-600 transition"></i>
+                        </a>
+                    </h3>
+
+                    <!-- Description -->
+                    <p class="text-xs text-slate-500 mt-1.5 line-clamp-2 leading-relaxed">
+                        ${repo.desc}
+                    </p>
+                </div>
+
+                <!-- Card Footer Controls -->
+                <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+                    <div class="flex items-center gap-1.5">
+                        <i class="bi ${repo.account === 'gitlab' ? 'bi-gitlab text-orange-600' : 'bi-github text-slate-800'} text-xs"></i>
+                        <span class="text-[11px] font-mono text-slate-500">${repo.accountName}</span>
+                    </div>
+
+                    <div class="flex items-center gap-2">
+                        <span class="text-[10px] font-semibold bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full">
+                            ${repo.tech}
+                        </span>
+                        <button onclick="copyCloneCommand('${repo.url}', '${repo.name}')" title="Copy Clone URL" 
+                            class="text-slate-400 hover:text-sky-600 hover:bg-sky-50 p-1.5 rounded-lg transition">
+                            <i class="bi bi-copy text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            return card;
+        }
+
+        // Filter Controller
+        function setFilter(filter) {
+            currentFilter = filter;
+            
+            // Update Tab UI Styles
+            document.querySelectorAll('.filter-tab').forEach(tab => {
+                tab.className = 'filter-tab px-3.5 py-2 rounded-xl text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition whitespace-nowrap';
+            });
+
+            const activeBtn = document.getElementById(`tab-${filter}`);
+            if (activeBtn) {
+                if (filter === 'all') {
+                    activeBtn.className = 'filter-tab px-3.5 py-2 rounded-xl bg-slate-900 text-white font-semibold shadow-sm transition whitespace-nowrap';
+                } else if (filter === 'featured') {
+                    activeBtn.className = 'filter-tab px-3.5 py-2 rounded-xl bg-amber-500 text-white font-semibold shadow-sm transition whitespace-nowrap';
+                } else if (filter === 'deploy') {
+                    activeBtn.className = 'filter-tab px-3.5 py-2 rounded-xl bg-rose-500 text-white font-semibold shadow-sm transition whitespace-nowrap';
+                } else if (filter === 'gitlab') {
+                    activeBtn.className = 'filter-tab px-3.5 py-2 rounded-xl bg-orange-600 text-white font-semibold shadow-sm transition whitespace-nowrap';
+                } else {
+                    activeBtn.className = 'filter-tab px-3.5 py-2 rounded-xl bg-sky-600 text-white font-semibold shadow-sm transition whitespace-nowrap';
+                }
+            }
+
+            renderGrid();
+        }
+
+        // Search Input Handler
+        function handleSearch() {
+            const input = document.getElementById('searchInput');
+            const clearBtn = document.getElementById('clearSearch');
+            searchQuery = input.value;
+
+            if (searchQuery.length > 0) {
+                clearBtn.classList.remove('hidden');
+            } else {
+                clearBtn.classList.add('hidden');
+            }
+
+            renderGrid();
+        }
+
+        function clearSearchInput() {
+            const input = document.getElementById('searchInput');
+            input.value = '';
+            handleSearch();
+            input.focus();
+        }
+
+        function resetAllFilters() {
+            document.getElementById('searchInput').value = '';
+            searchQuery = '';
+            document.getElementById('clearSearch').classList.add('hidden');
+            setFilter('all');
+        }
+
+        // Copy Command Clipboard Helper
+        function copyCloneCommand(url, name) {
+            const cloneCmd = `git clone ${url}`;
+            
+            // execCommand fallback mechanism for iframe sandboxes
+            const tempInput = document.createElement('input');
+            tempInput.value = cloneCmd;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+
+            // Trigger Toast UI
+            showToast(`Copied clone command for "${name}"!`);
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toast-message');
+            
+            toastMsg.innerText = msg;
+            toast.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
+            
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
+            }, 2500);
+        }
+
+        // Initial Initialization
+        window.addEventListener('DOMContentLoaded', () => {
+            renderGrid();
+        });
+    </script>
+</body>
+</html>

@@ -764,10 +764,32 @@
         img: "https://res.cloudinary.com/disivcuqr/image/upload/v1790349296/snippets-assets/v_ort3.webp",
         glyph: "blocks"
       },
+      {
+        id: "beep",
+        num: 15,
+        title: "Beep - ecommerce shop", 
+        tag: "Static HTML, CSS, and JavaScript frontend UI powered by a clean, lightweight PHP backend.", 
+        type: "PHP",
+        year: "2025",
+        status: "LIVE",
+        role: "Frontend Developer",
+        stack: ["PHP", "HTML", "CSS", "JavaScript", "Bootstrap", "Responsive Design", "Frontend Optimization"],
+        desc: "Beep is a custom e-commerce shop featuring a static frontend UI built with modern HTML5, Bootstrap, custom CSS, and vanilla JavaScript. It is paired with a lightweight PHP backend for structured rendering, fast asset delivery, and a responsive, high-performance shopping experience.",
+        highlights: [
+          "Static Frontend Architecture Built with Semantic HTML5, CSS3, & Modern JS",
+          "Responsive, Mobile-First UI Engineered with Bootstrap Framework",
+          "Modular PHP Template Structure for Clean Component Rendering",
+          "Ultra-Fast Page Load Speeds & Optimized Cross-Browser Compatibility",
+        ],
+        live: "https://beep.html-5.me/",
+        repo: "https://github.com/suvrod830-wq/ecommerce-frontend-php",
+        img: "https://res.cloudinary.com/disivcuqr/image/upload/v1791022911/snippets-assets/v_toq3.webp",
+        glyph: "blocks"
+      },
 
     ];
 
-
+ 
     /*=========
     *** 1000/666
     *** 800/533
@@ -957,7 +979,7 @@
           <p class="p-stack">${p.stack.join(' · ')}</p>
           <div class="p-foot">
             ${p.live ? `<a class="case-btn solid" href="${p.live}" target="_blank" rel="noopener" data-track="Live Site">LIVE SITE<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M7 17L17 7M8 7h9v9"/></svg></a>` : ''}
-            ${p.repo ? `<a class="case-btn" href="${p.repo}" target="_blank" rel="noopener" data-track="Code">CODE<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M7 17L17 7M8 7h9v9"/></svg></a>` : ''}
+            ${p.repo ? `<a class="case-btn" href="${p.repo}" target="_blank" rel="noopener" data-track="Code">CODE<img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/github/default.svg" alt="Code preview" loading="lazy"/></a>` : ''}
             <span class="open-btn">OPEN SHEET<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span>
           </div>
         </article>`).join('');
