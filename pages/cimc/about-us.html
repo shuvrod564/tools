@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About CIMC — Canadian Institute for Media and Communication</title>
+<meta name="description" content="CIMC is a Canada-based nonprofit institution working at the intersection of media, communication, education, research, technology and institutional capacity building.">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config={theme:{extend:{
+  colors:{brand:{DEFAULT:'#AC0E16',50:'#FBEFEF',100:'#F7DCDD',700:'#8A0B12',800:'#65080D'},charcoal:'#27313A',ink:'#1A222A',paper:'#F7F7F5',mist:'#DCE0E3'},
+  fontFamily:{sans:['"Libre Franklin"','ui-sans-serif','system-ui','sans-serif'],serif:['"Source Serif 4"','Georgia','serif']},
+  boxShadow:{card:'0 10px 30px -12px rgba(39,49,58,.16)',lift:'0 18px 44px -16px rgba(39,49,58,.30)'}
+}}}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600;700;800;900&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400;1,8..60,600&display=swap" rel="stylesheet">
+<script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.14.1/dist/cdn.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js"></script>
+<style>
+  [x-cloak]{display:none!important}
+  html{scroll-behavior:smooth}
+  body{text-rendering:optimizeLegibility}
+  ::selection{background:#AC0E16;color:#fff}
+  :focus-visible{outline:3px solid #AC0E16;outline-offset:2px;border-radius:6px}
+  section[id]{scroll-margin-top:7.5rem}
+  @media(min-width:1024px){section[id]{scroll-margin-top:10.5rem}}
+
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:.55rem;font-weight:600;border-radius:.8rem;padding:.8rem 1.5rem;transition:all .22s ease;white-space:nowrap}
+  .btn-primary{background:#AC0E16;color:#fff;box-shadow:0 10px 22px -10px rgba(172,14,22,.55)}
+  .btn-primary:hover{background:#8A0B12;transform:translateY(-2px)}
+  .btn-secondary{border:1.5px solid #27313A;color:#27313A}
+  .btn-secondary:hover{border-color:#AC0E16;color:#AC0E16;transform:translateY(-2px)}
+  .btn-light{background:#fff;color:#27313A}
+  .btn-light:hover{transform:translateY(-2px);box-shadow:0 12px 26px -12px rgba(0,0,0,.45)}
+  .btn-ghost{border:1.5px solid rgba(255,255,255,.4);color:#fff}
+  .btn-ghost:hover{background:rgba(255,255,255,.1)}
+  .btn svg{transition:transform .22s ease}.btn:hover svg{transform:translateX(3px)}
+
+  .card{background:#fff;border:1px solid #DCE0E3;border-radius:1.1rem;box-shadow:0 10px 30px -12px rgba(39,49,58,.14);transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease}
+  .card:hover{transform:translateY(-4px);box-shadow:0 18px 40px -16px rgba(39,49,58,.26);border-color:rgba(172,14,22,.35)}
+  .icon-chip{width:46px;height:46px;border-radius:13px;background:#FBEFEF;color:#AC0E16;display:flex;align-items:center;justify-content:center;flex:none;transition:all .25s ease}
+  .card:hover .icon-chip{background:#AC0E16;color:#fff}
+  .label{font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:rgba(39,49,58,.55);font-weight:700}
+  .field-title{font-weight:700;color:#27313A;display:flex;align-items:center;gap:.55rem}
+  .field-title::before{content:'';width:8px;height:8px;background:#AC0E16;border-radius:2px;flex:none}
+  .badge{display:inline-flex;align-items:center;gap:.4rem;border-radius:9999px;padding:.32rem .8rem;font-size:11px;font-weight:700}
+  .badge-green{background:#E7F4EC;color:#146B3A}.badge-amber{background:#FBF1DC;color:#8A5A00}.badge-red{background:#F7DCDD;color:#8A0B12}
+  .pill{border:1px solid #DCE0E3;border-radius:9999px;padding:.45rem 1rem;font-size:.82rem;font-weight:600;color:#45525C;background:#fff;transition:all .2s}
+  .pill:hover{border-color:#AC0E16;color:#AC0E16}
+  .subnav-link{padding:.45rem .9rem;border-radius:9999px;font-size:.82rem;font-weight:600;color:rgba(39,49,58,.6);transition:all .2s;white-space:nowrap}
+  .subnav-link:hover{background:#F7F7F5;color:#AC0E16}
+  .subnav-link.active{background:#FBEFEF;color:#AC0E16}
+  .no-bar::-webkit-scrollbar{display:none}.no-bar{scrollbar-width:none}
+
+  .nav-link{position:relative;display:inline-flex;align-items:center;gap:.3rem;padding:.55rem .75rem;border-radius:.6rem;font-size:.9rem;font-weight:600;color:#27313A;transition:color .2s}
+  .nav-link:hover{color:#AC0E16}
+  .nav-link::after{content:'';position:absolute;left:.75rem;right:.75rem;bottom:.2rem;height:2px;background:#AC0E16;border-radius:2px;transform:scaleX(0);transform-origin:left;transition:transform .25s ease}
+  .nav-link:hover::after,.nav-link.active::after{transform:scaleX(1)}
+  .nav-link.active{color:#AC0E16}
+  .dropdown{position:absolute;top:100%;left:50%;transform:translate(-50%,10px);margin-top:10px;visibility:hidden;opacity:0;transition:opacity .22s ease,transform .22s ease,visibility .22s;z-index:40}
+  .nav-item:hover .dropdown,.nav-item:focus-within .dropdown{visibility:visible;opacity:1;transform:translate(-50%,0)}
+  .dropdown::before{content:'';position:absolute;top:-14px;left:0;right:0;height:14px}
+  .dd-link{display:block;padding:.55rem .9rem;border-radius:.6rem;font-size:.87rem;font-weight:500;color:#3a454f;transition:all .15s}
+  .dd-link:hover{background:#F7F7F5;color:#AC0E16}
+  .m-link{display:flex;align-items:center;justify-content:space-between;gap:.5rem;width:100%;padding:.85rem 1rem;border-radius:.8rem;font-weight:600;color:#27313A;transition:background .15s}
+  .m-link:hover{background:#F7F7F5}
+  .m-sub{display:block;padding:.55rem 1rem;border-radius:.6rem;font-size:.9rem;color:rgba(39,49,58,.75)}
+  .m-sub:hover{background:#F7F7F5;color:#AC0E16}
+  .lang-btn{padding:.25rem .65rem;border-radius:9999px;font-weight:700;font-size:11px;transition:all .2s}
+  .lang-btn:hover{color:#fff}
+  .lang-btn.active{background:#AC0E16;color:#fff}
+
+  .utility{max-height:44px;opacity:1;overflow:hidden;transition:max-height .35s ease,opacity .3s ease}
+  .is-scrolled .utility{max-height:0;opacity:0}
+  .mainbar{transition:box-shadow .35s ease}
+  .is-scrolled .mainbar{box-shadow:0 12px 30px -18px rgba(39,49,58,.4)}
+
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s cubic-bezier(.22,.61,.36,1)}
+  .reveal.revealed{opacity:1;transform:none}
+  .d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}
+  .dotgrid{background-image:radial-gradient(rgba(39,49,58,.10) 1px,transparent 1.4px);background-size:22px 22px}
+  .dotgrid-light{background-image:radial-gradient(rgba(255,255,255,.12) 1px,transparent 1.4px);background-size:22px 22px}
+
+  #toast{transform:translate(-50%,16px);opacity:0;pointer-events:none;transition:all .35s cubic-bezier(.22,.61,.36,1)}
+  #toast.show{transform:translate(-50%,0);opacity:1}
+  #toTop{opacity:0;pointer-events:none;transform:translateY(8px);transition:all .3s ease}
+  #toTop.show{opacity:1;pointer-events:auto;transform:none}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.reveal{opacity:1;transform:none;transition:none}.animate-bounce,.animate-ping{animation:none!important}}
+</style>
+</head>
+<body class="bg-white text-charcoal font-sans antialiased">
+
+<a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:bg-white focus:text-charcoal focus:px-4 focus:py-2 focus:rounded-lg focus:shadow-lift">Skip to main content</a>
+<div id="progress-bar" class="fixed top-0 left-0 h-[3px] bg-brand z-[90]" style="width:0%"></div>
+
+<!-- ============ HEADER ============ -->
+<header id="site-header" class="fixed inset-x-0 top-0 z-50">
+  <div class="utility bg-charcoal text-white/75">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-9 flex items-center justify-between text-xs">
+      <p class="hidden md:block">Canadian Institute for Media and Communication &nbsp;·&nbsp; cimcweb.com</p>
+      <div class="flex items-center gap-5 ml-auto">
+        <a href="#contact" data-i18n="nav.contact" class="hover:text-white font-medium">Contact</a>
+        <div class="flex items-center gap-1 rounded-full border border-white/25 p-0.5" role="group" aria-label="Language / Langue">
+          <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
+          <button class="lang-btn" data-lang="fr" onclick="setLang('fr')">FR</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="mainbar border-b border-mist/80" style="background:rgba(255,255,255,.93);backdrop-filter:blur(8px)">
+    <nav class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16 lg:h-[74px]" aria-label="Primary" x-data="{ mobileOpen:false, sub:null }">
+      <a href="index.html" class="flex items-center gap-2.5 shrink-0" aria-label="CIMC home">
+        <svg viewBox="0 0 512 512" class="h-9 w-9 text-brand" fill="currentColor" aria-hidden="true"><path d="M256 40 L292 140 L380 108 L352 196 L452 184 L396 262 L480 300 L380 328 L412 412 L312 360 L288 430 L262 472 L250 472 L224 430 L200 360 L100 412 L132 328 L32 300 L116 262 L60 184 L160 196 L132 108 L220 140 Z"/></svg>
+        <span class="leading-none">
+          <span class="block text-[26px] font-black tracking-tight text-brand">CIMC</span>
+          <span class="block text-[9.5px] font-semibold tracking-wide text-charcoal/60 uppercase" data-i18n="brand.sub">Canadian Institute for Media &amp; Communication</span>
+        </span>
+      </a>
+
+      <ul class="hidden lg:flex items-center gap-0.5">
+        <li class="nav-item relative">
+          <a href="about.html" data-i18n="nav.about" class="nav-link active" aria-current="page">About CIMC
+            <svg class="h-3.5 w-3.5 opacity-60" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/></svg></a>
+          <div class="dropdown w-64 rounded-2xl border border-mist bg-white p-2 shadow-lift">
+            <a class="dd-link" href="#mission">Our Mission &amp; Vision</a>
+            <a class="dd-link" href="#profile">Institutional Profile</a>
+            <a class="dd-link" href="#governance">Governance &amp; Leadership</a>
+            <a class="dd-link" href="#advisory">Advisory Network</a>
+            <a class="dd-link" href="#conduct">Professional Conduct</a>
+          </div>
+        </li>
+        <li class="nav-item relative">
+          <a href="what-we-do.html" data-i18n="nav.what" class="nav-link">What We Do
+            <svg class="h-3.5 w-3.5 opacity-60" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/></svg></a>
+          <div class="dropdown w-72 rounded-2xl border border-mist bg-white p-2 shadow-lift">
+            <a class="dd-link" href="what-we-do.html#media">Media &amp; Strategic Communication</a>
+            <a class="dd-link" href="what-we-do.html#education">Education &amp; Capacity Building</a>
+            <a class="dd-link" href="what-we-do.html#digital">Digital Learning &amp; Technology Adoption</a>
+            <a class="dd-link" href="what-we-do.html#knowledge">Knowledge Translation</a>
+            <a class="dd-link" href="what-we-do.html#institutional">Institutional Development &amp; International Cooperation</a>
+          </div>
+        </li>
+        <li class="nav-item relative">
+          <a href="index.html#projects" data-i18n="nav.projects" class="nav-link">Projects &amp; Impact
+            <svg class="h-3.5 w-3.5 opacity-60" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/></svg></a>
+          <div class="dropdown w-60 rounded-2xl border border-mist bg-white p-2 shadow-lift">
+            <a class="dd-link" href="index.html#projects">Featured Projects</a>
+            <a class="dd-link" href="index.html#projects">Project Portfolio</a>
+            <a class="dd-link" href="index.html#projects">Geographic Reach</a>
+            <a class="dd-link" href="index.html#projects">Outcomes &amp; Impact</a>
+          </div>
+        </li>
+        <li class="nav-item relative">
+          <a href="index.html#research" data-i18n="nav.research" class="nav-link">Research &amp; Innovation
+            <svg class="h-3.5 w-3.5 opacity-60" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/></svg></a>
+          <div class="dropdown w-64 rounded-2xl border border-mist bg-white p-2 shadow-lift">
+            <a class="dd-link" href="index.html#research">Research Priorities</a>
+            <a class="dd-link" href="index.html#research">Collaborative Research</a>
+            <a class="dd-link" href="index.html#research">Inclusive Communication &amp; Technology</a>
+            <a class="dd-link" href="index.html#research">Publications &amp; Insights</a>
+          </div>
+        </li>
+        <li class="nav-item relative">
+          <a href="index.html#membership" data-i18n="nav.membership" class="nav-link">Membership
+            <svg class="h-3.5 w-3.5 opacity-60" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/></svg></a>
+          <div class="dropdown w-60 rounded-2xl border border-mist bg-white p-2 shadow-lift">
+            <a class="dd-link" href="index.html#membership">Why Join CIMC</a>
+            <a class="dd-link" href="index.html#membership">Membership Benefits</a>
+            <a class="dd-link" href="index.html#membership">Professional Community</a>
+            <a class="dd-link" href="index.html#membership">Join / Renew Membership</a>
+          </div>
+        </li>
+        <li class="nav-item relative">
+          <a href="index.html#partnerships" data-i18n="nav.partnerships" class="nav-link">Partnerships
+            <svg class="h-3.5 w-3.5 opacity-60" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/></svg></a>
+          <div class="dropdown w-64 rounded-2xl border border-mist bg-white p-2 shadow-lift">
+            <a class="dd-link" href="index.html#partnerships">Institutional Partnerships</a>
+            <a class="dd-link" href="index.html#partnerships">Universities &amp; Research Institutions</a>
+            <a class="dd-link" href="index.html#partnerships">International Cooperation</a>
+            <a class="dd-link" href="index.html#partnerships">Collaborate With CIMC</a>
+          </div>
+        </li>
+        <li><a href="index.html#learning" data-i18n="nav.learning" class="nav-link">Learning Portal</a></li>
+      </ul>
+
+      <div class="flex items-center gap-3">
+        <a href="index.html#membership" data-i18n="nav.join" class="btn btn-primary hidden lg:inline-flex !py-2.5 !px-5">Join CIMC</a>
+        <button @click="mobileOpen=true" class="lg:hidden inline-flex h-11 w-11 items-center justify-center rounded-xl border border-mist text-charcoal" aria-label="Open menu" :aria-expanded="mobileOpen">
+          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg>
+        </button>
+      </div>
+
+      <!-- Mobile slide-over -->
+      <div x-cloak x-show="mobileOpen" class="fixed inset-0 z-[70] lg:hidden" @keydown.escape.window="mobileOpen=false">
+        <div x-show="mobileOpen" x-transition.opacity.duration.300ms class="absolute inset-0 bg-charcoal/60 backdrop-blur-sm" @click="mobileOpen=false"></div>
+        <div x-show="mobileOpen"
+             x-transition:enter="transition ease-out duration-300" x-transition:enter-start="translate-x-full" x-transition:enter-end="translate-x-0"
+             x-transition:leave="transition ease-in duration-200" x-transition:leave-start="translate-x-0" x-transition:leave-end="translate-x-full"
+             class="absolute right-0 top-0 flex h-full w-[88%] max-w-sm flex-col bg-white shadow-2xl">
+          <div class="flex items-center justify-between border-b border-mist px-5 py-4">
+            <span class="flex items-center gap-2">
+              <svg viewBox="0 0 512 512" class="h-7 w-7 text-brand" fill="currentColor"><path d="M256 40 L292 140 L380 108 L352 196 L452 184 L396 262 L480 300 L380 328 L412 412 L312 360 L288 430 L262 472 L250 472 L224 430 L200 360 L100 412 L132 328 L32 300 L116 262 L60 184 L160 196 L132 108 L220 140 Z"/></svg>
+              <span class="text-xl font-black text-brand">CIMC</span>
+            </span>
+            <button @click="mobileOpen=false" class="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-mist" aria-label="Close menu">
+              <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"/></svg>
+            </button>
+          </div>
+          <div class="flex-1 space-y-1 overflow-y-auto p-4">
+            <button @click="sub=sub==='about'?null:'about'" class="m-link" :aria-expanded="sub==='about'">About CIMC
+              <svg class="h-4 w-4 transition-transform" :class="sub==='about' && 'rotate-180'" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/></svg></button>
+            <div x-show="sub==='about'" x-collapse class="pl-3">
+              <a @click="mobileOpen=false" href="#mission" class="m-sub">Our Mission &amp; Vision</a>
+              <a @click="mobileOpen=false" href="#profile" class="m-sub">Institutional Profile</a>
+              <a @click="mobileOpen=false" href="#governance" class="m-sub">Governance &amp; Leadership</a>
+              <a @click="mobileOpen=false" href="#advisory" class="m-sub">Advisory Network</a>
+              <a @click="mobileOpen=false" href="#conduct" class="m-sub">Professional Conduct</a>
+            </div>
+            <button @click="sub=sub==='what'?null:'what'" class="m-link" :aria-expanded="sub==='what'">What We Do
+              <svg class="h-4 w-4 transition-transform" :class="sub==='what' && 'rotate-180'" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/></svg></button>
+            <div x-show="sub==='what'" x-collapse class="pl-3">
+              <a @click="mobileOpen=false" href="what-we-do.html#media" class="m-sub">Media &amp; Strategic Communication</a>
+              <a @click="mobileOpen=false" href="what-we-do.html#education" class="m-sub">Education &amp; Capacity Building</a>
+              <a @click="mobileOpen=false" href="what-we-do.html#digital" class="m-sub">Digital Learning &amp; Technology</a>
+              <a @click="mobileOpen=false" href="what-we-do.html#knowledge" class="m-sub">Knowledge Translation</a>
+              <a @click="mobileOpen=false" href="what-we-do.html#institutional" class="m-sub">Institutional Development &amp; Cooperation</a>
+            </div>
+            <a @click="mobileOpen=false" href="index.html#projects" class="m-link mt-1">Projects &amp; Impact</a>
+            <a @click="mobileOpen=false" href="index.html#research" class="m-link">Research &amp; Innovation</a>
+            <a @click="mobileOpen=false" href="index.html#membership" class="m-link">Membership</a>
+            <a @click="mobileOpen=false" href="index.html#partnerships" class="m-link">Partnerships</a>
+            <a @click="mobileOpen=false" href="index.html#learning" class="m-link">Learning Portal</a>
+          </div>
+          <div class="space-y-3 border-t border-mist p-5">
+            <a href="index.html#membership" @click="mobileOpen=false" data-i18n="nav.join" class="btn btn-primary w-full">Join CIMC</a>
+            <div class="flex items-center justify-between">
+              <a href="#contact" @click="mobileOpen=false" data-i18n="nav.contact" class="text-sm font-semibold text-charcoal hover:text-brand">Contact</a>
+              <div class="flex items-center gap-1 rounded-full border border-mist p-0.5" role="group" aria-label="Language">
+                <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
+                <button class="lang-btn" data-lang="fr" onclick="setLang('fr')">FR</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ============ PAGE HERO ============ -->
+  <section class="relative overflow-hidden bg-paper pt-36 pb-14 lg:pt-44 lg:pb-16">
+    <div class="dotgrid absolute inset-0 opacity-60" aria-hidden="true"></div>
+    <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="grid items-center gap-12 lg:grid-cols-12">
+        <div class="lg:col-span-7 reveal">
+          <nav aria-label="Breadcrumb" class="text-xs font-semibold text-charcoal/50">
+            <a href="index.html" class="transition hover:text-brand">Home</a>
+            <span class="mx-2">/</span><span class="text-brand">About CIMC</span>
+          </nav>
+          <h1 class="mt-4 text-4xl font-extrabold tracking-tight sm:text-5xl" data-i18n="about.h1">About CIMC</h1>
+          <p class="mt-5 max-w-2xl text-lg leading-relaxed text-charcoal/75" data-i18n="about.lead">
+            A credible, distinctly Canadian, internationally engaged nonprofit institution — working at the intersection of media, communication, education, research, technology and institutional capacity building.
+          </p>
+          <div class="mt-8 flex flex-wrap gap-2">
+            <a href="#mission" class="pill">Mission &amp; Vision</a>
+            <a href="#profile" class="pill">Institutional Profile</a>
+            <a href="#governance" class="pill">Governance</a>
+            <a href="#advisory" class="pill">Advisory Network</a>
+            <a href="#conduct" class="pill">Professional Conduct</a>
+          </div>
+        </div>
+        <div class="lg:col-span-5 reveal d1">
+          <div class="relative overflow-hidden rounded-3xl bg-brand p-8 text-white shadow-lift dotgrid-light sm:p-9">
+            <svg viewBox="0 0 512 512" class="absolute -bottom-10 -right-10 h-44 w-44 text-white/10" fill="currentColor" aria-hidden="true"><path d="M256 40 L292 140 L380 108 L352 196 L452 184 L396 262 L480 300 L380 328 L412 412 L312 360 L288 430 L262 472 L250 472 L224 430 L200 360 L100 412 L132 328 L32 300 L116 262 L60 184 L160 196 L132 108 L220 140 Z"/></svg>
+            <p class="text-[11px] font-bold uppercase tracking-[0.26em] text-white/60">Institutional signature</p>
+            <p class="mt-4 font-serif italic text-2xl leading-snug">“Meeting Thresholds. Setting Benchmarks.”</p>
+            <div class="mt-6 border-t border-white/20 pt-5 text-sm text-white/80">
+              <p class="font-semibold text-white">Institut canadien des médias et de la communication</p>
+              <p class="mt-1">Canada-based nonprofit · Bilingual by design · EN / FR</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sticky in-page nav -->
+  <div class="sticky top-16 lg:top-[74px] z-30 border-b border-mist bg-white/95 backdrop-blur">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="no-bar flex gap-1.5 overflow-x-auto py-2.5">
+        <a href="#mission" class="subnav-link">Mission &amp; Vision</a>
+        <a href="#profile" class="subnav-link">Institutional Profile</a>
+        <a href="#governance" class="subnav-link">Governance &amp; Leadership</a>
+        <a href="#advisory" class="subnav-link">Advisory Network</a>
+        <a href="#conduct" class="subnav-link">Professional Conduct</a>
+        <a href="#contact" class="subnav-link">Contact</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ MISSION & VISION ============ -->
+  <section id="mission" data-spy-section class="bg-paper py-16 lg:py-24">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl reveal">
+        <p class="text-[11px] font-bold uppercase tracking-[0.24em] text-brand">Our Mission &amp; Vision</p>
+        <h2 class="mt-4 text-3xl font-extrabold tracking-tight sm:text-4xl">Why the Institute exists</h2>
+      </div>
+
+      <div class="mt-10 grid gap-6 lg:grid-cols-2">
+        <article class="card p-8 sm:p-10 reveal">
+          <span class="icon-chip"><svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582m15.686 0A11.953 11.953 0 0 1 12 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0 1 21 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0 1 12 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 0 1 3 12c0-1.605.42-3.113 1.157-4.418"/></svg></span>
+          <h3 class="mt-5 text-xl font-bold">Mission</h3>
+          <p class="mt-3 leading-relaxed text-charcoal/75">To advance communication competencies, media development, institutional effectiveness and international cooperation for public benefit — connecting people and institutions so they can inform, learn and act.</p>
+          <ul class="mt-6 space-y-3 text-sm text-charcoal/70">
+            <li class="flex gap-3"><svg class="mt-0.5 h-5 w-5 flex-none text-brand" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/></svg>Advance communication competencies across sectors</li>
+            <li class="flex gap-3"><svg class="mt-0.5 h-5 w-5 flex-none text-brand" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/></svg>Strengthen institutional effectiveness with partners</li>
+            <li class="flex gap-3"><svg class="mt-0.5 h-5 w-5 flex-none text-brand" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/></svg>Foster international cooperation with public benefit at the centre</li>
+          </ul>
+        </article>
+
+        <article class="card p-8 sm:p-10 reveal d1">
+          <span class="icon-chip"><svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/></svg></span>
+          <h3 class="mt-5 text-xl font-bold">Vision</h3>
+          <p class="mt-3 leading-relaxed text-charcoal/75">Institutions and communities everywhere communicate clearly, learn continuously and cooperate across borders — with Canadian values of accessibility, inclusion and bilingualism informing how we work.</p>
+          <ul class="mt-6 space-y-3 text-sm text-charcoal/70">
+            <li class="flex gap-3"><svg class="mt-0.5 h-5 w-5 flex-none text-brand" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/></svg>Clear, inclusive communication as an institutional capability</li>
+            <li class="flex gap-3"><svg class="mt-0.5 h-5 w-5 flex-none text-brand" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/></svg>Lifelong professional learning as an accessible pathway</li>
+            <li class="flex gap-3"><svg class="mt-0.5 h-5 w-5 flex-none text-brand" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/></svg>Cooperation that outlasts any single project</li>
+          </ul>
+        </article>
+      </div>
+      <p class="mt-5 text-xs italic text-charcoal/45 reveal">Draft statements presented for CIMC review — to be confirmed before publication.</p>
+
+      <!-- Three identity aspects -->
+      <h3 class="mt-16 text-xl font-bold reveal">Three complementary aspects of our identity</h3>
+      <div class="mt-6 grid gap-6 md:grid-cols-3">
+        <article class="card group p-7 reveal">
+          <span class="font-serif text-4xl font-bold text-mist transition-colors group-hover:text-brand">01</span>
+          <h4 class="mt-4 font-bold">An international capacity-building institute</h4>
+          <p class="mt-2 text-sm leading-relaxed text-charcoal/70">Advancing communication competencies, media development, institutional effectiveness and international cooperation.</p>
+          <a href="what-we-do.html" class="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-brand">What We Do <svg class="h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg></a>
+        </article>
+        <article class="card group p-7 reveal d1">
+          <span class="font-serif text-4xl font-bold text-mist transition-colors group-hover:text-brand">02</span>
+          <h4 class="mt-4 font-bold">A professional membership &amp; learning community</h4>
+          <p class="mt-2 text-sm leading-relaxed text-charcoal/70">Connecting practitioners, educators, researchers and institutions through professional development, knowledge exchange and continuing education.</p>
+          <a href="index.html#membership" class="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-brand">Membership <svg class="h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg></a>
+        </article>
+        <article class="card group p-7 reveal d2">
+          <span class="font-serif text-4xl font-bold text-mist transition-colors group-hover:text-brand">03</span>
+          <h4 class="mt-4 font-bold">An emerging applied research &amp; innovation institution</h4>
+          <p class="mt-2 text-sm leading-relaxed text-charcoal/70">Facilitating collaborative research, knowledge translation, inclusive technology adoption and practical solutions to communication and development challenges.</p>
+          <a href="index.html#research" class="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-brand">Research &amp; Innovation <svg class="h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg></a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ INSTITUTIONAL PROFILE ============ -->
+  <section id="profile" data-spy-section class="bg-white py-16 lg:py-24">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl reveal">
+        <p class="text-[11px] font-bold uppercase tracking-[0.24em] text-brand">Institutional Profile</p>
+        <h2 class="mt-4 text-3xl font-extrabold tracking-tight sm:text-4xl">A public-benefit mandate, plainly stated</h2>
+      </div>
+
+      <div class="mt-10 grid gap-10 lg:grid-cols-2 lg:gap-16">
+        <div class="reveal">
+          <p class="leading-relaxed text-charcoal/75">The Canadian Institute for Media and Communication was established in Canada as a nonprofit institution with a clear public-benefit mandate: to advance communication competencies, media development, institutional effectiveness and international cooperation.</p>
+          <p class="mt-5 leading-relaxed text-charcoal/75">Its programmes, resources and partnerships exist to serve those institutional purposes. Where CIMC undertakes paid training, institutional services or contractual projects, it does so only where consistent with that mandate. Being nonprofit does not mean being non-commercial in every activity — it means that activities and resources must serve institutional purposes.</p>
+          <p class="mt-5 leading-relaxed text-charcoal/75">CIMC describes its role through public-benefit outcomes rather than commercial claims about market dominance, technology ownership or global scale.</p>
+
+          <dl class="mt-8 grid gap-x-8 gap-y-5 sm:grid-cols-2">
+            <div><dt class="label">Status</dt><dd class="mt-1 font-semibold">Canadian nonprofit institution</dd></div>
+            <div><dt class="label">Base</dt><dd class="mt-1 font-semibold">Canada</dd></div>
+            <div><dt class="label">Working languages</dt><dd class="mt-1 font-semibold">English &amp; French — bilingual architecture by design</dd></div>
+            <div><dt class="label">Focus areas</dt><dd class="mt-1 font-semibold">Media · Communication · Education · Research · Technology · Capacity building</dd></div>
+            <div><dt class="label">Learning platform</dt><dd class="mt-1 font-semibold"><a href="https://cimc.education" target="_blank" rel="noopener" class="text-brand hover:underline underline-offset-4">cimc.education</a> (WordPress + LearnDash)</dd></div>
+            <div><dt class="label">Signature</dt><dd class="mt-1 font-serif italic">“Meeting Thresholds. Setting Benchmarks.”</dd></div>
+          </dl>
+        </div>
+
+        <!-- Non-negotiable identity boundary -->
+        <div class="reveal d1">
+          <div class="rounded-2xl border-2 border-brand/25 bg-brand-50/60 p-7 sm:p-9">
+            <div class="flex items-center gap-3">
+              <span class="icon-chip"><svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z"/></svg></span>
+              <div>
+                <h3 class="text-lg font-bold">A non-negotiable brand boundary</h3>
+                <p class="text-xs text-charcoal/60">Who CIMC is — and is not</p>
+              </div>
+            </div>
+            <div class="mt-6 grid gap-6 sm:grid-cols-2">
+              <div>
+                <p class="label !text-[#146B3A]">CIMC is</p>
+                <ul class="mt-3 space-y-2.5 text-sm text-charcoal/80">
+                  <li class="flex gap-2.5"><svg class="mt-0.5 h-4 w-4 flex-none text-emerald-600" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/></svg>A Canadian nonprofit institution</li>
+                  <li class="flex gap-2.5"><svg class="mt-0.5 h-4 w-4 flex-none text-emerald-600" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/></svg>Public-benefit mandate</li>
+                  <li class="flex gap-2.5"><svg class="mt-0.5 h-4 w-4 flex-none text-emerald-600" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/></svg>Education and capacity building</li>
+                  <li class="flex gap-2.5"><svg class="mt-0.5 h-4 w-4 flex-none text-emerald-600" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/></svg>Applied research &amp; knowledge translation</li>
+                  <li class="flex gap-2.5"><svg class="mt-0.5 h-4 w-4 flex-none text-emerald-600" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/></svg>Membership and professional learning</li>
+                  <li class="flex gap-2.5"><svg class="mt-0.5 h-4 w-4 flex-none text-emerald-600" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/></svg>International institutional cooperation</li>
+                </ul>
+              </div>
+              <div>
+                <p class="label !text-[#8A0B12]">CIMC is not</p>
+                <ul class="mt-3 space-y-2.5 text-sm text-charcoal/80">
+                  <li class="flex gap-2.5"><svg class="mt-0.5 h-4 w-4 flex-none text-brand" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"/></svg>A for-profit company</li>
+                  <li class="flex gap-2.5"><svg class="mt-0.5 h-4 w-4 flex-none text-brand" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"/></svg>A commercial business mandate</li>
+                  <li class="flex gap-2.5"><svg class="mt-0.5 h-4 w-4 flex-none text-brand" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"/></svg>Client services and consulting</li>
+                  <li class="flex gap-2.5"><svg class="mt-0.5 h-4 w-4 flex-none text-brand" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"/></svg>Commercial project execution</li>
+                  <li class="flex gap-2.5"><svg class="mt-0.5 h-4 w-4 flex-none text-brand" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"/></svg>Business development and contracts</li>
+                  <li class="flex gap-2.5"><svg class="mt-0.5 h-4 w-4 flex-none text-brand" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"/></svg>Commercial partnerships and investment activity</li>
+                </ul>
+              </div>
+            </div>
+            <p class="mt-6 border-t border-brand/20 pt-4 text-xs leading-relaxed text-charcoal/60">Technology collaborators — including Renaiscent — are acknowledged as collaborators where relevant, and are never presented as owners, operators or governing partners of CIMC.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ GOVERNANCE & LEADERSHIP ============ -->
+  <section id="governance" data-spy-section class="bg-paper py-16 lg:py-24">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl reveal">
+        <p class="text-[11px] font-bold uppercase tracking-[0.24em] text-brand">Governance &amp; Leadership</p>
+        <h2 class="mt-4 text-3xl font-extrabold tracking-tight sm:text-4xl">Accountable by design</h2>
+        <p class="mt-5 leading-relaxed text-charcoal/70">CIMC operates under nonprofit governance with clear oversight, professional stewardship and published accountability practices.</p>
+      </div>
+
+      <div class="mt-10 grid gap-6 md:grid-cols-3">
+        <article class="card p-7 reveal">
+          <span class="icon-chip"><svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21v-8.25M15.75 21v-8.25M17.25 21v-8.25M6.75 21v-8.25M3 3h18M4.5 21h15M4.5 9.75h15m-16.5 0a3.75 3.75 0 0 1 3.75-3.75h9a3.75 3.75 0 0 1 3.75 3.75m-16.5 0V21m16.5-11.25V21"/></svg></span>
+          <h3 class="mt-5 text-lg font-bold">Board of Directors</h3>
+          <p class="mt-2 text-sm leading-relaxed text-charcoal/70">Governance oversight, fiduciary accountability and strategic direction for the Institute.</p>
+        </article>
+        <article class="card p-7 reveal d1">
+          <span class="icon-chip"><svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z"/></svg></span>
+          <h3 class="mt-5 text-lg font-bold">Executive Leadership</h3>
+          <p class="mt-2 text-sm leading-relaxed text-charcoal/70">Day-to-day stewardship of programmes, partnerships, membership and the learning platform.</p>
+        </article>
+        <article class="card p-7 reveal d2">
+          <span class="icon-chip"><svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z"/></svg></span>
+          <h3 class="mt-5 text-lg font-bold">Accountability Practices</h3>
+          <p class="mt-2 text-sm leading-relaxed text-charcoal/70">Documented project outcomes, published policies, and privacy and accessibility statements as approved content becomes available.</p>
+        </article>
+      </div>
+
+      <!-- Leadership placeholders -->
+      <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div class="rounded-2xl border-2 border-dashed border-mist bg-white p-7 text-center reveal">
+          <span class="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-paper text-charcoal/40"><svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"/></svg></span>
+          <p class="mt-4 font-bold text-charcoal/70">Leadership profile</p>
+          <p class="mt-1 text-xs text-charcoal/50">Biography published as approved content becomes available</p>
+        </div>
+        <div class="rounded-2xl border-2 border-dashed border-mist bg-white p-7 text-center reveal d1">
+          <span class="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-paper text-charcoal/40"><svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"/></svg></span>
+          <p class="mt-4 font-bold text-charcoal/70">Leadership profile</p>
+          <p class="mt-1 text-xs text-charcoal/50">Biography published as approved content becomes available</p>
+        </div>
+        <div class="rounded-2xl border-2 border-dashed border-mist bg-white p-7 text-center reveal d2">
+          <span class="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-paper text-charcoal/40"><svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"/></svg></span>
+          <p class="mt-4 font-bold text-charcoal/70">Leadership profile</p>
+          <p class="mt-1 text-xs text-charcoal/50">Biography published as approved content becomes available</p>
+        </div>
+      </div>
+      <p class="mt-5 text-xs italic text-charcoal/45 reveal">Governance documents, board composition and leadership biographies are published only once approved by CIMC.</p>
+    </div>
+  </section>
+
+  <!-- ============ ADVISORY NETWORK ============ -->
+  <section id="advisory" data-spy-section class="bg-white py-16 lg:py-24">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="grid gap-12 lg:grid-cols-2 lg:gap-16">
+        <div class="reveal">
+          <p class="text-[11px] font-bold uppercase tracking-[0.24em] text-brand">Advisory Network</p>
+          <h2 class="mt-4 text-3xl font-extrabold tracking-tight sm:text-4xl">Expertise that informs our work</h2>
+          <p class="mt-5 leading-relaxed text-charcoal/75">CIMC draws on a network of advisors — practitioners, educators, researchers and institutional leaders — who help keep programmes relevant, credible and grounded in field experience.</p>
+
+          <div class="mt-8 flex flex-wrap gap-2">
+            <span class="pill">Practitioners</span>
+            <span class="pill">Educators</span>
+            <span class="pill">Researchers</span>
+            <span class="pill">Institutional leaders</span>
+            <span class="pill">Technologists</span>
+          </div>
+
+          <a href="mailto:info@cimcweb.com?subject=Advisory%20Network%20—%20Expression%20of%20Interest" class="btn btn-primary mt-8">Express interest
+            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg></a>
+        </div>
+
+        <div class="space-y-5">
+          <div class="card flex gap-5 p-6 reveal d1">
+            <span class="font-serif text-3xl font-bold text-mist">1</span>
+            <div><h3 class="font-bold">Identify expertise</h3><p class="mt-1 text-sm text-charcoal/70">Advisors are invited where their expertise aligns with CIMC's programme and research priorities.</p></div>
+          </div>
+          <div class="card flex gap-5 p-6 reveal d2">
+            <span class="font-serif text-3xl font-bold text-mist">2</span>
+            <div><h3 class="font-bold">Advise programmes</h3><p class="mt-1 text-sm text-charcoal/70">Advisors contribute to programme design, reviews and knowledge translation activities.</p></div>
+          </div>
+          <div class="card flex gap-5 p-6 reveal d3">
+            <span class="font-serif text-3xl font-bold text-mist">3</span>
+            <div><h3 class="font-bold">Exchange knowledge</h3><p class="mt-1 text-sm text-charcoal/70">Insights flow back into the professional community through the learning platform and publications.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PROFESSIONAL CONDUCT ============ -->
+  <section id="conduct" data-spy-section class="bg-paper py-16 lg:py-24">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl reveal">
+        <p class="text-[11px] font-bold uppercase tracking-[0.24em] text-brand">Professional Conduct</p>
+        <h2 class="mt-4 text-3xl font-extrabold tracking-tight sm:text-4xl">The standards we hold</h2>
+      </div>
+
+      <div class="mt-10 grid gap-10 lg:grid-cols-2 lg:gap-16">
+        <div class="reveal">
+          <div class="card p-7 sm:p-8">
+            <p class="label">Code of Professional Conduct — commitments</p>
+            <ul class="mt-5 space-y-4 text-[15px]">
+              <li class="flex gap-3"><svg class="mt-0.5 h-5 w-5 flex-none text-brand" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/></svg><span><strong>Integrity first</strong> — act honestly and transparently in every programme, project and partnership.</span></li>
+              <li class="flex gap-3"><svg class="mt-0.5 h-5 w-5 flex-none text-brand" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/></svg><span><strong>Evidence-based communication</strong> — no unsupported figures or inflated claims; documented outcomes only.</span></li>
+              <li class="flex gap-3"><svg class="mt-0.5 h-5 w-5 flex-none text-brand" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/></svg><span><strong>Respect &amp; inclusion</strong> — treat people and communities with dignity; design for accessibility.</span></li>
+              <li class="flex gap-3"><svg class="mt-0.5 h-5 w-5 flex-none text-brand" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/></svg><span><strong>Confidentiality &amp; privacy</strong> — protect partner information and member data.</span></li>
+              <li class="flex gap-3"><svg class="mt-0.5 h-5 w-5 flex-none text-brand" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/></svg><span><strong>Accessibility</strong> — target WCAG 2.2 AA across what we build and deliver.</span></li>
+            </ul>
+          </div>
+          <div class="mt-5 rounded-2xl border border-mist bg-white p-6 text-sm leading-relaxed text-charcoal/70">
+            The Code is part of membership: it is accepted within the membership process on <a href="https://cimc.education" target="_blank" rel="noopener" class="font-semibold text-brand hover:underline underline-offset-4">cimc.education</a>, and is expected across all CIMC programmes, projects and partnerships.
+          </div>
+        </div>
+
+        <div class="reveal d1">
+          <p class="label">Institutional voice — how we write</p>
+          <div class="mt-4 grid gap-5 sm:grid-cols-2">
+            <div class="card p-6">
+              <p class="font-bold text-[#146B3A] flex items-center gap-2"><svg class="h-4.5 w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/></svg>We say</p>
+              <ul class="mt-3 space-y-2 text-sm text-charcoal/75">
+                <li>Canadian nonprofit institution</li>
+                <li>International cooperation</li>
+                <li>Institutional capacity building</li>
+                <li>Applied research &amp; knowledge translation</li>
+                <li>Professional learning &amp; development</li>
+                <li>Documented project outcomes</li>
+                <li>Responsible technology adoption</li>
+                <li>Collaboration and public benefit</li>
+              </ul>
+            </div>
+            <div class="card p-6">
+              <p class="font-bold text-[#8A0B12] flex items-center gap-2"><svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"/></svg>We avoid</p>
+              <ul class="mt-3 space-y-2 text-sm text-charcoal/75">
+                <li>Global commercial powerhouse</li>
+                <li>Worldwide market domination</li>
+                <li>Disrupting every industry</li>
+                <li>Revolutionary AI solutions</li>
+                <li>Degrees or accreditation without authorization</li>
+                <li>Unsupported impact figures</li>
+                <li>AI-first transformation at any cost</li>
+                <li>Lead-generation language dominating pages</li>
+              </ul>
+            </div>
+          </div>
+          <p class="mt-4 text-xs italic text-charcoal/45">Confident, precise, restrained, evidence-based — the tone standard for everything published under the CIMC name.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTACT CTA ============ -->
+  <section id="contact" data-spy-section class="relative overflow-hidden bg-brand text-white">
+    <div class="dotgrid-light absolute inset-0 opacity-50" aria-hidden="true"></div>
+    <svg viewBox="0 0 512 512" class="absolute -bottom-16 -right-16 h-80 w-80 text-white/[0.07]" fill="currentColor" aria-hidden="true"><path d="M256 40 L292 140 L380 108 L352 196 L452 184 L396 262 L480 300 L380 328 L412 412 L312 360 L288 430 L262 472 L250 472 L224 430 L200 360 L100 412 L132 328 L32 300 L116 262 L60 184 L160 196 L132 108 L220 140 Z"/></svg>
+    <div class="relative mx-auto max-w-4xl px-4 py-20 text-center sm:px-6 lg:py-24">
+      <h2 class="font-serif text-4xl font-semibold tracking-tight sm:text-5xl" data-i18n="cta.title">Contact CIMC</h2>
+      <p class="mx-auto mt-5 max-w-xl text-white/80" data-i18n="about.ctaSub">In English or French — we welcome inquiries about programmes, partnerships, membership and collaboration.</p>
+      <div class="mt-9 flex flex-wrap items-center justify-center gap-4">
+        <a href="mailto:info@cimcweb.com" class="btn btn-light">info@cimcweb.com
+          <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg></a>
+        <a href="index.html#partnerships" class="btn btn-ghost">Explore Partnerships</a>
+      </div>
+      <p class="mt-8 text-sm text-white/70">Institut canadien des médias et de la communication · Canada · cimcweb.com</p>
+    </div>
+  </section>
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer id="footer" class="bg-ink text-white/65">
+  <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+    <div class="grid gap-12 md:grid-cols-2 lg:grid-cols-[1.5fr,1fr,1fr,1.3fr]">
+      <div>
+        <a href="index.html" class="flex items-center gap-2.5">
+          <svg viewBox="0 0 512 512" class="h-9 w-9 text-brand" fill="currentColor" aria-hidden="true"><path d="M256 40 L292 140 L380 108 L352 196 L452 184 L396 262 L480 300 L380 328 L412 412 L312 360 L288 430 L262 472 L250 472 L224 430 L200 360 L100 412 L132 328 L32 300 L116 262 L60 184 L160 196 L132 108 L220 140 Z"/></svg>
+          <span class="text-2xl font-black tracking-tight text-white">CIMC</span>
+        </a>
+        <p class="mt-5 max-w-sm text-sm leading-relaxed">A Canada-based nonprofit advancing education, media and communication capacity, applied research and international cooperation.</p>
+        <p class="mt-3 font-serif italic text-sm text-white/50">Institut canadien des médias et de la communication</p>
+        <p class="mt-6 inline-flex items-center gap-2 rounded-full border border-white/15 px-3.5 py-1.5 text-xs font-semibold text-white/70">
+          <svg viewBox="0 0 512 512" class="h-3.5 w-3.5 text-brand" fill="currentColor" aria-hidden="true"><path d="M256 40 L292 140 L380 108 L352 196 L452 184 L396 262 L480 300 L380 328 L412 412 L312 360 L288 430 L262 472 L250 472 L224 430 L200 360 L100 412 L132 328 L32 300 L116 262 L60 184 L160 196 L132 108 L220 140 Z"/></svg>
+          Proudly Canadian
+        </p>
+      </div>
+      <nav aria-label="Explore">
+        <p class="text-xs font-bold uppercase tracking-[0.18em] text-white">Explore</p>
+        <ul class="mt-5 space-y-3 text-sm">
+          <li><a href="about.html" class="transition hover:text-white">About CIMC</a></li>
+          <li><a href="what-we-do.html" class="transition hover:text-white">What We Do</a></li>
+          <li><a href="index.html#projects" class="transition hover:text-white">Projects &amp; Impact</a></li>
+          <li><a href="index.html#research" class="transition hover:text-white">Research &amp; Innovation</a></li>
+          <li><a href="index.html#sdg" class="transition hover:text-white">Global Goals (SDGs)</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Participate">
+        <p class="text-xs font-bold uppercase tracking-[0.18em] text-white">Participate</p>
+        <ul class="mt-5 space-y-3 text-sm">
+          <li><a href="index.html#membership" class="transition hover:text-white">Membership</a></li>
+          <li><a href="https://cimc.education" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 transition hover:text-white">Learning Portal
+            <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg></a></li>
+          <li><a href="index.html#partnerships" class="transition hover:text-white">Partnerships</a></li>
+          <li><a href="#contact" class="transition hover:text-white">Contact</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Governance and policies">
+        <p class="text-xs font-bold uppercase tracking-[0.18em] text-white">Governance &amp; Policies</p>
+        <ul class="mt-5 space-y-3 text-sm">
+          <li><a href="#mission" class="transition hover:text-white">Our Mission &amp; Vision</a></li>
+          <li><a href="#governance" class="transition hover:text-white">Governance &amp; Leadership</a></li>
+          <li><a href="#advisory" class="transition hover:text-white">Advisory Network</a></li>
+          <li><a href="#conduct" class="transition hover:text-white">Professional Conduct</a></li>
+          <li><a href="#" data-soon="Privacy Statement — Phase 4 (quality assurance) of the rollout." class="transition hover:text-white">Privacy Statement</a></li>
+          <li><a href="#" data-soon="Accessibility Statement — Phase 4 (quality assurance) of the rollout." class="transition hover:text-white">Accessibility Statement</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="mt-14 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-7 text-xs sm:flex-row">
+      <p>© <span id="year">2025</span> Canadian Institute for Media and Communication · cimcweb.com</p>
+      <p class="font-serif italic text-white/45">Meeting Thresholds. Setting Benchmarks.</p>
+    </div>
+  </div>
+</footer>
+
+<button id="toTop" class="fixed bottom-6 right-6 z-[60] flex h-11 w-11 items-center justify-center rounded-full border border-mist bg-white text-charcoal shadow-lift transition hover:text-brand" aria-label="Back to top">
+  <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18"/></svg>
+</button>
+<div id="toast" class="fixed bottom-6 left-1/2 z-[80]" role="status" aria-live="polite">
+  <div class="flex items-center gap-3 rounded-xl border border-white/10 bg-charcoal px-5 py-3.5 text-sm text-white shadow-lift">
+    <svg viewBox="0 0 512 512" class="h-4 w-4 flex-none text-brand" fill="currentColor" aria-hidden="true"><path d="M256 40 L292 140 L380 108 L352 196 L452 184 L396 262 L480 300 L380 328 L412 412 L312 360 L288 430 L262 472 L250 472 L224 430 L200 360 L100 412 L132 328 L32 300 L116 262 L60 184 L160 196 L132 108 L220 140 Z"/></svg>
+    <span id="toast-msg"></span>
+  </div>
+</div>
+
+<script>
+  /* i18n (nav + page headings) — full FR translation follows the approved review process */
+  const I18N={
+    en:{'brand.sub':'Canadian Institute for Media &amp; Communication','nav.about':'About CIMC','nav.what':'What We Do','nav.projects':'Projects &amp; Impact','nav.research':'Research &amp; Innovation','nav.membership':'Membership','nav.partnerships':'Partnerships','nav.learning':'Learning Portal','nav.contact':'Contact','nav.join':'Join CIMC','about.h1':'About CIMC','about.lead':'A credible, distinctly Canadian, internationally engaged nonprofit institution — working at the intersection of media, communication, education, research, technology and institutional capacity building.','cta.title':'Contact CIMC','about.ctaSub':'In English or French — we welcome inquiries about programmes, partnerships, membership and collaboration.','fr.toast':'Partial French version — full translation follows our approved review process.'},
+    fr:{'brand.sub':'Institut canadien des médias et de la communication','nav.about':'À propos de l’ICMC','nav.what':'Nos actions','nav.projects':'Projets et impact','nav.research':'Recherche et innovation','nav.membership':'Adhésion','nav.partnerships':'Partenariats','nav.learning':'Portail d’apprentissage','nav.contact':'Contact','nav.join':'Devenir membre','about.h1':'À propos de l’ICMC','about.lead':'Une institution canadienne à but non lucratif, crédible et engagée à l’international — à la croisée des médias, de la communication, de l’éducation, de la recherche, de la technologie et du renforcement des capacités institutionnelles.','cta.title':'Contacter l’ICMC','about.ctaSub':'En anglais ou en français — nous accueillons vos questions sur les programmes, les partenariats, l’adhésion et la collaboration.','fr.toast':'Version française partielle — la traduction complète suivra notre processus approuvé.'}
+  };
+  function setLang(lang){
+    const d=I18N[lang]; if(!d) return;
+    document.querySelectorAll('[data-i18n]').forEach(el=>{ const k=el.dataset.i18n; if(d[k]!==undefined) el.innerHTML=d[k]; });
+    document.documentElement.lang=lang;
+    document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',b.dataset.lang===lang));
+    try{localStorage.setItem('cimc-lang',lang)}catch(e){}
+    if(lang==='fr') showToast(d['fr.toast']);
+  }
+  let toastTimer;
+  function showToast(msg){
+    const t=document.getElementById('toast');
+    document.getElementById('toast-msg').textContent=msg;
+    t.classList.add('show'); clearTimeout(toastTimer);
+    toastTimer=setTimeout(()=>t.classList.remove('show'),4200);
+  }
+  document.querySelectorAll('[data-soon]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();showToast(a.dataset.soon||'This page will be published in a later phase of the rollout.')}));
+
+  const header=document.getElementById('site-header'),progress=document.getElementById('progress-bar'),toTop=document.getElementById('toTop');
+  let ticking=false;
+  function onScroll(){
+    const y=window.scrollY;
+    header.classList.toggle('is-scrolled',y>24);
+    toTop.classList.toggle('show',y>700);
+    const h=document.documentElement.scrollHeight-window.innerHeight;
+    progress.style.width=(h>0?(y/h)*100:0)+'%'; ticking=false;
+  }
+  window.addEventListener('scroll',()=>{if(!ticking){requestAnimationFrame(onScroll);ticking=true}},{passive:true});
+  toTop.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+  onScroll();
+
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('revealed');io.unobserve(e.target)}})},{threshold:.12,rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  /* Sticky sub-nav scrollspy */
+  const subLinks=document.querySelectorAll('.subnav-link');
+  if(subLinks.length){
+    const map={}; subLinks.forEach(l=>map[l.getAttribute('href').split('#')[1]]=l);
+    const so=new IntersectionObserver(es=>{
+      es.forEach(en=>{ if(en.isIntersecting){
+        subLinks.forEach(l=>l.classList.remove('active'));
+        if(map[en.target.id]) map[en.target.id].classList.add('active');
+      }});
+    },{rootMargin:'-35% 0px -55% 0px'});
+    document.querySelectorAll('[data-spy-section]').forEach(s=>so.observe(s));
+  }
+
+  document.getElementById('year').textContent=new Date().getFullYear();
+  try{const s=localStorage.getItem('cimc-lang'); if(s&&s!=='en')setLang(s); else setLang('en');}catch(e){setLang('en')}
+</script>
+<noscript><style>.reveal{opacity:1;transform:none}</style></noscript>
+</body>
+</html>
