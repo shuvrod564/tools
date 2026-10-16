@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CIMC | Contact Us & Team</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --red:#C8102E; --red2:#E01A3C; --ink:#0E1526; --slate:#4B5A72;
+  --line:#E7EBF3; --soft:#F5F7FB; --navy:#0B1220;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;color:var(--ink);background:#fff;line-height:1.65;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:'Plus Jakarta Sans',sans-serif;line-height:1.22;letter-spacing:-.02em}
+a{text-decoration:none}
+.wrap{max-width:1160px;margin:0 auto;padding:0 28px}
+
+/* nav */
+.topnote{background:var(--navy);color:#cbd5e1;text-align:center;font-size:12.5px;padding:8px 16px}
+.topnote b{color:#fff}
+header.nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.86);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:76px}
+.logo{display:flex;align-items:center;gap:10px;font-family:'Plus Jakarta Sans';font-weight:800;font-size:24px;color:var(--red)}
+.menu{display:flex;align-items:center;gap:28px;list-style:none}
+.menu a{font-size:14px;font-weight:600;color:var(--slate);transition:.2s}
+.menu a:hover{color:var(--ink)}
+.menu a.active{color:var(--red);position:relative}
+.menu a.active::after{content:"";position:absolute;left:0;right:0;bottom:-9px;height:3px;border-radius:3px;background:var(--red)}
+.btn{display:inline-flex;align-items:center;gap:9px;cursor:pointer;font-family:'Plus Jakarta Sans';font-weight:700;border-radius:12px;transition:.25s}
+.btn-red{background:linear-gradient(135deg,var(--red),var(--red2));color:#fff;padding:12px 22px;font-size:14px;box-shadow:0 10px 24px rgba(200,16,46,.28)}
+.btn-red:hover{transform:translateY(-2px);box-shadow:0 14px 30px rgba(200,16,46,.38)}
+.btn-ghost{background:#fff;color:var(--ink);border:1.5px solid var(--line);padding:11px 20px;font-size:14px}
+.btn-ghost:hover{border-color:var(--red);color:var(--red)}
+.btn-white{background:#fff;color:var(--red);padding:13px 26px;font-size:14.5px;box-shadow:0 12px 28px rgba(0,0,0,.25)}
+.btn-white:hover{transform:translateY(-2px)}
+
+/* hero */
+.hero{position:relative;overflow:hidden;color:#fff;padding:74px 0 96px;
+  background:radial-gradient(900px 460px at 85% -20%,rgba(200,16,46,.30),transparent 60%),
+             radial-gradient(700px 420px at 0% 130%,rgba(59,72,107,.55),transparent 60%),
+             linear-gradient(160deg,#131C33,var(--navy))}
+.hero::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(255,255,255,.025) 0 1px,transparent 1px 120px);pointer-events:none}
+.hero-in{position:relative;z-index:1}
+.crumbs{font-size:13px;color:#8A94A8;margin-bottom:24px}
+.crumbs b{color:#fff}
+.crumbs .sep{margin:0 8px;color:var(--red)}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:12px;font-weight:700;letter-spacing:.22em;color:#FF7A8F;text-transform:uppercase}
+.eyebrow::before{content:"";width:26px;height:2px;background:var(--red2);border-radius:2px}
+.hero h1{font-size:clamp(36px,5vw,56px);font-weight:800;margin:16px 0 16px}
+.hero h1 em{font-style:normal;color:var(--red2)}
+.hero p.lead{max-width:640px;color:#B9C2D6;font-size:16.5px}
+.hero-meta{display:flex;gap:14px;margin-top:30px;flex-wrap:wrap}
+.pill{display:inline-flex;align-items:center;gap:9px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.13);border-radius:999px;padding:9px 18px;font-size:13.5px;color:#dbe3f0}
+.pill b{color:#fff;font-family:'Plus Jakarta Sans'}
+.dot{width:7px;height:7px;border-radius:50%;background:#4ADE80;box-shadow:0 0 0 4px rgba(74,222,128,.2)}
+
+/* contact split */
+.contact-split{display:grid;grid-template-columns:.85fr 1.15fr;gap:28px;margin-top:-46px;position:relative;z-index:2}
+.info-col{display:flex;flex-direction:column;gap:16px}
+.info-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px 24px;display:flex;gap:16px;align-items:flex-start;
+  box-shadow:0 12px 32px rgba(14,21,38,.07);transition:.25s}
+.info-card:hover{transform:translateY(-3px);box-shadow:0 20px 44px rgba(14,21,38,.11)}
+.info-card .ico{width:46px;height:46px;border-radius:13px;background:#FDECEF;color:var(--red);display:flex;align-items:center;justify-content:center;font-size:20px;flex:none}
+.info-card h4{font-size:14.5px;margin-bottom:2px}
+.info-card p{font-size:13.5px;color:var(--slate)}
+.info-card a{color:var(--red);font-weight:600}
+.info-note{background:linear-gradient(135deg,#FFF7F8,#FDEEF1);border:1px solid #F5CBD3;border-radius:18px;padding:20px 24px;font-size:13.5px;color:var(--slate)}
+.info-note b{color:var(--red)}
+
+/* form */
+.form-card{background:#fff;border:1px solid var(--line);border-radius:24px;box-shadow:0 24px 60px rgba(14,21,38,.09);padding:38px 40px}
+.form-card h2{font-size:24px;margin-bottom:6px}
+.form-card .fsub{font-size:14px;color:var(--slate);margin-bottom:26px}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px}
+.frow.three{grid-template-columns:1fr 1fr 1fr}
+.field label{display:block;font-size:12.5px;font-weight:700;color:var(--ink);margin-bottom:7px;letter-spacing:.02em}
+.field label span{color:var(--red)}
+.field input,.field select,.field textarea{width:100%;font:inherit;font-size:14.5px;color:var(--ink);
+  background:var(--soft);border:1.5px solid var(--line);border-radius:12px;padding:12px 15px;outline:none;transition:.2s}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--red);background:#fff;box-shadow:0 0 0 4px rgba(200,16,46,.08)}
+.field textarea{min-height:130px;resize:vertical}
+.field select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%234B5A72' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 15px center}
+.captcha{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin:8px 0 22px}
+.captcha-box{display:flex;align-items:center;gap:10px;background:var(--soft);border:1.5px dashed #C9D2E0;border-radius:12px;padding:11px 16px;font-size:12.5px;color:var(--slate)}
+.captcha-box .rc{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,#4285F4,#34A853);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-family:'Plus Jakarta Sans'}
+.send-row{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.send-note{font-size:12.5px;color:#8A94A8}
+.privacy{text-align:center;font-size:13.5px;color:var(--slate);margin-top:22px}
+.privacy a{color:var(--red);font-weight:700}
+
+/* team */
+.team-sec{padding-top:90px}
+.sec-head{text-align:center;margin-bottom:44px}
+.badge{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:7px 14px;border-radius:999px;background:#FDECEF;color:var(--red);width:max-content}
+.sec-head h2{font-size:clamp(26px,3.4vw,38px);font-weight:800;margin-top:12px}
+.sec-head p{color:var(--slate);max-width:620px;margin:10px auto 0;font-size:15.5px}
+.team-grid{display:grid;grid-template-columns:1fr 1fr;gap:26px}
+.tcard{background:#fff;border:1px solid var(--line);border-radius:22px;overflow:hidden;display:flex;flex-direction:column;
+  box-shadow:0 12px 32px rgba(14,21,38,.06);transition:.25s}
+.tcard:hover{transform:translateY(-4px);box-shadow:0 26px 54px rgba(14,21,38,.12)}
+.t-photo{position:relative;min-height:230px;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(140deg,var(--a,#64748B),var(--b,#334155))}
+.t-photo .cap{color:rgba(255,255,255,.92);font-weight:600;font-size:13px;text-align:center;padding:14px;position:relative;z-index:1}
+.t-photo .cap small{display:block;opacity:.7;font-weight:500;margin-top:4px}
+.t-photo::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,rgba(11,18,32,.55))}
+.t-name{position:absolute;left:22px;bottom:16px;z-index:2;color:#fff}
+.t-name h3{font-size:21px}
+.t-name span{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#FFB3BE}
+.t-body{padding:24px 26px 26px;display:flex;flex-direction:column;gap:12px;flex:1}
+.role-tag{display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;width:max-content;padding:5px 12px;border-radius:999px;background:var(--soft);border:1px solid var(--line);color:var(--slate)}
+.t-body p.bio{font-size:13.8px;color:var(--slate);display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;transition:.3s}
+.t-body p.bio.open{-webkit-line-clamp:unset}
+.bio-toggle{background:none;border:none;color:var(--red);font:inherit;font-size:13.5px;font-weight:700;cursor:pointer;align-self:flex-start;padding:0}
+.creds{display:flex;flex-wrap:wrap;gap:6px}
+.cred{font-size:11px;font-weight:600;color:var(--slate);background:var(--soft);border:1px solid var(--line);padding:4px 10px;border-radius:999px}
+
+/* CTA */
+.cta-in{background:linear-gradient(120deg,var(--red),#7A0A1E);border-radius:28px;padding:52px 56px;margin:80px auto 0;
+  display:flex;align-items:center;justify-content:space-between;gap:30px;color:#fff;position:relative;overflow:hidden}
+.cta-in::before{content:"";position:absolute;width:340px;height:340px;border-radius:50%;background:rgba(255,255,255,.09);right:-100px;top:-140px}
+.cta-in h2{font-size:clamp(23px,3vw,32px)}
+.cta-in p{opacity:.9;margin-top:6px}
+
+/* footer */
+footer{background:var(--navy);color:#B9C2D4;margin-top:80px}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:44px;padding:60px 0 40px}
+footer h4{color:#fff;font-size:14px;letter-spacing:.09em;text-transform:uppercase;margin-bottom:16px}
+footer a{color:#B9C2D4;font-size:14px;display:block;padding:5px 0;transition:.2s}
+footer a:hover{color:#fff}
+.foot-desc{font-size:14px;max-width:320px;margin-top:14px}
+.foot-bottom{border-top:1px solid rgba(255,255,255,.08);padding:20px 0 26px;display:flex;justify-content:space-between;align-items:center;font-size:13px;flex-wrap:wrap;gap:14px}
+.socials{display:flex;gap:10px}
+.socials a{width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.09);display:flex;align-items:center;justify-content:center;padding:0}
+.socials a:hover{background:var(--red)}
+
+@media(max-width:960px){
+  .menu{display:none}
+  .contact-split{grid-template-columns:1fr}
+  .frow,.frow.three{grid-template-columns:1fr}
+  .team-grid{grid-template-columns:1fr}
+  .form-card{padding:28px 22px}
+  .cta-in{flex-direction:column;text-align:center;padding:40px 28px}
+}
+</style>
+</head>
+<body>
+
+<div class="topnote">🎨 <b>UI Concept v1</b> — team photos &amp; contact image are placeholders for your existing photos · form is visual only in this mockup</div>
+
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="logo" href="#">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="var(--red)"><path d="M12 1.5l1.9 3.4 3.1-.9-.6 3.5 3.2 1.4-2.3 2.6 2 3-4.3.9.3 3.6-3.3-1.6-3.3 1.6.3-3.6-4.3-.9 2-3L4.4 8.9l3.2-1.4L7 4l3.1.9zM11.2 17h1.6l.2 5h-2z"/></svg>
+      CIMC
+    </a>
+    <ul class="menu">
+      <li><a href="#">Home</a></li>
+      <li><a href="#">Projects</a></li>
+      <li><a href="#">Portfolio ▾</a></li>
+      <li><a href="#">Education</a></li>
+      <li><a href="#">Research ▾</a></li>
+      <li><a href="#">Blog</a></li>
+    </ul>
+    <a class="btn btn-red active" href="#" style="box-shadow:none;background:#FDECEF;color:var(--red)">Contact</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap hero-in">
+    <div class="crumbs">Home<span class="sep">/</span><b>Contact Us</b></div>
+    <span class="eyebrow">Get in touch</span>
+    <h1>We'd love to <em>hear from you.</em></h1>
+    <p class="lead">Whether it's a partnership, a project inquiry, research collaboration or a general question — send us a detailed message and our team will respond as soon as possible.</p>
+    <div class="hero-meta">
+      <span class="pill"><span class="dot"></span>We reply within <b>1–2 business days</b></span>
+      <span class="pill">📍 Ottawa, Canada</span>
+      <span class="pill">✉ info@cimc.ca</span>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT SPLIT -->
+<section style="padding-bottom:10px">
+  <div class="wrap">
+    <div class="contact-split">
+
+      <!-- info column -->
+      <div class="info-col">
+        <div class="info-card">
+          <span class="ico">✉️</span>
+          <div><h4>Email us</h4><p><a href="mailto:info@cimc.ca">info@cimc.ca</a><br>For partnerships &amp; general inquiries</p></div>
+        </div>
+        <div class="info-card">
+          <span class="ico">📍</span>
+          <div><h4>Location</h4><p>Ottawa, Ontario, Canada<br>We work globally — Uganda · Ethiopia · India</p></div>
+        </div>
+        <div class="info-card">
+          <span class="ico">⏱️</span>
+          <div><h4>Response time</h4><p>Within 1–2 business days<br>Monday – Friday, 9am – 5pm EST</p></div>
+        </div>
+        <div class="info-card">
+          <span class="ico">🤝</span>
+          <div><h4>Partnerships</h4><p>Universities, NGOs and agencies — see our <a href="#">Research Spotlight</a> and <a href="#">Projects</a> pages.</p></div>
+        </div>
+        <div class="info-note">🔒 Your information is handled per <b>CIMC's Privacy Policy</b>. This form is protected by reCAPTCHA.</div>
+      </div>
+
+      <!-- form column -->
+      <div class="form-card">
+        <h2>Send us a message</h2>
+        <p class="fsub">Send us a detailed message, and we'll respond as soon as possible.</p>
+
+        <form onsubmit="event.preventDefault()">
+          <div class="frow three">
+            <div class="field"><label>First Name <span>*</span></label><input type="text" placeholder="Jane"></div>
+            <div class="field"><label>Last Name <span>*</span></label><input type="text" placeholder="Doe"></div>
+            <div class="field"><label>Email <span>*</span></label><input type="email" placeholder="jane@email.com"></div>
+          </div>
+          <div class="frow three">
+            <div class="field"><label>Phone</label><input type="tel" placeholder="+1 (___) ___-____"></div>
+            <div class="field"><label>City</label><input type="text" placeholder="Ottawa"></div>
+            <div class="field"><label>Country</label><input type="text" placeholder="Canada"></div>
+          </div>
+          <div class="frow" style="grid-template-columns:1fr">
+            <div class="field">
+              <label>Subject <span>*</span></label>
+              <select>
+                <option>Select a subject…</option>
+                <option>General Inquiry</option>
+                <option>Partnership / Collaboration</option>
+                <option>Projects &amp; Programs</option>
+                <option>Educational Videos (ELV) Access</option>
+                <option>Research Spotlight Submission</option>
+                <option>Media &amp; Press</option>
+                <option>Support Our Work</option>
+              </select>
+            </div>
+          </div>
+          <div class="frow" style="grid-template-columns:1fr">
+            <div class="field"><label>Detailed Message <span>*</span></label><textarea placeholder="Tell us more about your inquiry…"></textarea></div>
+          </div>
+          <div class="captcha">
+            <div class="captcha-box"><span class="rc">R</span> protected by <b>reCAPTCHA</b> &nbsp;·&nbsp; Privacy · Terms</div>
+            <div class="send-row">
+              <button class="btn btn-red" type="submit" style="padding:14px 34px;font-size:15px">Send Message ➤</button>
+              <span class="send-note">* Required fields</span>
+            </div>
+          </div>
+        </form>
+        <p class="privacy">Read CIMC's <a href="#">Privacy Policy</a> to learn how we protect your data.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="team-sec">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="badge" style="margin:0 auto">Our People</span>
+      <h2>Meet Our Team</h2>
+      <p>Educators, economists, coaches and development professionals — united by CIMC's mission to advance education, media and communication capacity worldwide.</p>
+    </div>
+
+    <div class="team-grid">
+
+      <div class="tcard">
+        <div class="t-photo" style="--a:#7F1D1D;--b:#312E81">
+          <div class="cap">Santosh Shail's photo<small>existing photo replaces this tile</small></div>
+          <div class="t-name"><h3>Santosh Shail</h3><span>Founder · Educational Media</span></div>
+        </div>
+        <div class="t-body">
+          <span class="role-tag">🎓 Educational Media Consultant</span>
+          <p class="bio">Santosh Shail has over 35 years' international experience in educational content creation for distance education, providing ICT expertise across on-line Learning Management Systems, synchronous and asynchronous learning. He has comprehensive experience producing broadcast media — educational television, documentaries, PSAs, news, telefilms and corporate publicity — and has worked on international development projects for UNESCO, UNICEF, WHO, World Bank and Global Affairs Canada. He served as Educational Media Consultant for the Indira Gandhi National Open University, India, and the Commonwealth of Learning, Canada. Santosh received the 2007 'International Media Achievement Award' in India for his accomplishments in global education projects and capacity building in developing communities across Africa and Asia.</p>
+          <button class="bio-toggle">Read full bio ↓</button>
+          <div class="creds"><span class="cred">UNESCO</span><span class="cred">UNICEF</span><span class="cred">World Bank</span><span class="cred">Global Affairs Canada</span><span class="cred">2007 Intl Media Award</span></div>
+        </div>
+      </div>
+
+      <div class="tcard">
+        <div class="t-photo" style="--a:#9F1239;--b:#581C87">
+          <div class="cap">Khatera Akbari's photo<small>existing photo replaces this tile</small></div>
+          <div class="t-name"><h3>Khatera Akbari</h3><span>Finance · Governance</span></div>
+        </div>
+        <div class="t-body">
+          <span class="role-tag">💼 Chartered Professional Accountant</span>
+          <p class="bio">Khatera Akbari, a Chartered Professional Accountant, is currently an executive in the federal public service after several years in the private sector and on Parliament Hill. She focuses on professional training and development, optimal communication strategies, public speaking and change management. She is a member of the Board of Directors for the Financial Management Institute (FMI) and a facilitator for the Canadian Professional Accountants of Ontario (CPAO). Khatera is also active in the community, volunteering with several organizations including the United Way and the Paul Martin Mentorship Program.</p>
+          <button class="bio-toggle">Read full bio ↓</button>
+          <div class="creds"><span class="cred">CPA</span><span class="cred">FMI Board</span><span class="cred">CPA Ontario</span><span class="cred">United Way</span></div>
+        </div>
+      </div>
+
+      <div class="tcard">
+        <div class="t-photo" style="--a:#1E3A8A;--b:#0F172A">
+          <div class="cap">Sam Lanfranco's photo<small>existing photo replaces this tile</small></div>
+          <div class="t-name"><h3>Sam Lanfranco</h3><span>Development Economics</span></div>
+        </div>
+        <div class="t-body">
+          <span class="role-tag">🏛 Prof. Emeritus, York University</span>
+          <p class="bio">Sam Lanfranco, Professor Emeritus &amp; Senior Scholar at York University, Toronto, is a development economist with a PhD in Economics from the University of California at Berkeley. He has taught for over 50 years, with breaks to work for the UN, the World Bank, and various national and non-governmental development organizations. His work focuses on three areas: (1) the rights and duties of digital citizenship in the Internet ecosystem and the integrity of digital governance, business, and social media practices; (2) Director with the Society for the Advancement of Science in Africa (SASA); and (3) Advisor to the Mumbai-based Ambedkar Centre for Justice and Peace (ACJP). Sam's work is guided by a quest for greater social justice and the belief that "We can get there from here" by engaging all stakeholders and asking the right questions about context, expertise, knowledge, and technology, as much as by having access to resources.</p>
+          <button class="bio-toggle">Read full bio ↓</button>
+          <div class="creds"><span class="cred">PhD Berkeley</span><span class="cred">York University</span><span class="cred">UN</span><span class="cred">World Bank</span></div>
+        </div>
+      </div>
+
+      <div class="tcard">
+        <div class="t-photo" style="--a:#0D9488;--b:#134E4A">
+          <div class="cap">Alexandra Keenan's photo<small>existing photo replaces this tile</small></div>
+          <div class="t-name"><h3>Alexandra Keenan</h3><span>Public Speaking Coach</span></div>
+        </div>
+        <div class="t-body">
+          <span class="role-tag">🎤 Founder, Stage Light Communications</span>
+          <p class="bio">Alexandra Keenan is a Public Speaking Coach and founder of Stage Light Communications. She has vast experience as a featured speaker, and conducts career-enhancing workshops on Team Building and Leadership Development. She works with businesses, professionals and change makers who recognize that public speaking is a crucial tool for success. With a deep understanding of how to bridge communication gaps, she helps her clients speak confidently, find the right words, and build a stage presence that is powerfully authentic. Alex also drives the 'Eloquent Ottawa' program, a CIMC initiative to provide Public Speech training.</p>
+          <button class="bio-toggle">Read full bio ↓</button>
+          <div class="creds"><span class="cred">Stage Light Communications</span><span class="cred">Eloquent Ottawa</span><span class="cred">Leadership Workshops</span></div>
+        </div>
+      </div>
+
+      <div class="tcard">
+        <div class="t-photo" style="--a:#B45309;--b:#713F12">
+          <div class="cap">Lalith Gunaratne's photo<small>existing photo replaces this tile</small></div>
+          <div class="t-name"><h3>Lalith Gunaratne</h3><span>Leadership · Mindfulness</span></div>
+        </div>
+        <div class="t-body">
+          <span class="role-tag">🧭 Cross-Cultural Leadership Coach</span>
+          <p class="bio">Lalith Gunaratne is a cross-cultural leadership coach, business strategist, and mindfulness advocate with over 15 years of experience working across Asia, Africa, and North America. He co-founded Sage Training in Sri Lanka and Sage Ontario in Canada, promoting mindful, values-based leadership. Lalith blends mindfulness, cultural sensitivity, and ethical grounding to help leaders foster inclusive, resilient organizations. His clients span private, public, and non-profit sectors globally. A Certified Coach in Canada and British Council-trained facilitator, Lalith holds credentials in engineering, marketing, and business responsibility, and is a published thought leader on sustainability, leadership, and well-being. He has led numerous training programs, specializing in strategic communications, emotional intelligence, and conflict resolution — bridging cultural differences while aligning leadership with purpose and impact.</p>
+          <button class="bio-toggle">Read full bio ↓</button>
+          <div class="creds"><span class="cred">Sage Training</span><span class="cred">Certified Coach</span><span class="cred">British Council</span></div>
+        </div>
+      </div>
+
+      <div class="tcard">
+        <div class="t-photo" style="--a:#6D28D9;--b:#312E81">
+          <div class="cap">Susan Zeko-Hart's photo<small>existing photo replaces this tile</small></div>
+          <div class="t-name"><h3>Susan Zeko-Hart</h3><span>Social Development</span></div>
+        </div>
+        <div class="t-body">
+          <span class="role-tag">🌍 Social Development Professional</span>
+          <p class="bio">Susan Zeko-Hart is a highly experienced Social Development Professional with over two decades of expertise in administration, program and project management, human resources, and office management within international development and health organizations. Her extensive career includes a significant impact on USAID-funded projects in Africa, spanning Zambia, Botswana, South Africa, Kenya, Tanzania, and Lesotho — reflecting her unwavering commitment to global community betterment. Susan excels in coordinating and implementing initiatives, facilitating seamless collaboration among diverse teams and stakeholders. Complementing her international development portfolio, she also serves in a distinguished public service role with the Government of Canada, showcasing her dedication to societal improvement and adding depth to her skill set — making her an ideal fit for CIMC's mission.</p>
+          <button class="bio-toggle">Read full bio ↓</button>
+          <div class="creds"><span class="cred">USAID Projects</span><span class="cred">6 African Nations</span><span class="cred">Govt. of Canada</span></div>
+        </div>
+      </div>
+
+      <div class="tcard">
+        <div class="t-photo" style="--a:#DC2626;--b:#7F1D1D">
+          <div class="cap">Mallyna Hing's photo<small>existing photo replaces this tile</small></div>
+          <div class="t-name"><h3>Mallyna Hing</h3><span>Program Strategy</span></div>
+        </div>
+        <div class="t-body">
+          <span class="role-tag">📋 Program Strategy Consultant</span>
+          <p class="bio">Mallyna Hing is a Program Strategy Consultant with a strong background in Global Development. Holding a degree in Global and International Studies from Carleton University, Mallyna specializes in crafting and implementing strategies that drive impactful development programs. With extensive knowledge in government departments, NGOs, and international companies, Mallyna excels in guiding non-profit initiatives, enhancing program frameworks, and securing grants to advance CIMC's organizational goals. Her role involves advising on strategic planning, increasing visibility, and connecting key stakeholders to foster successful and sustainable development outcomes.</p>
+          <button class="bio-toggle">Read full bio ↓</button>
+          <div class="creds"><span class="cred">Carleton University</span><span class="cred">Global Development</span><span class="cred">Grant Strategy</span></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-in">
+      <div style="position:relative;z-index:1">
+        <h2>Prefer a quick answer?</h2>
+        <p>Reach us directly at <b>info@cimc.ca</b> — we reply within 1–2 business days.</p>
+      </div>
+      <a class="btn btn-white" href="mailto:info@cimc.ca" style="position:relative;z-index:1">✉ Email CIMC Directly</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap foot-grid">
+    <div>
+      <a class="logo" href="#" style="color:#fff">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="var(--red2)"><path d="M12 1.5l1.9 3.4 3.1-.9-.6 3.5 3.2 1.4-2.3 2.6 2 3-4.3.9.3 3.6-3.3-1.6-3.3 1.6.3-3.6-4.3-.9 2-3L4.4 8.9l3.2-1.4L7 4l3.1.9zM11.2 17h1.6l.2 5h-2z"/></svg>
+        CIMC
+      </a>
+      <p class="foot-desc">A Canada-based nonprofit advancing education, media and communication capacity, applied research and international cooperation.</p>
+    </div>
+    <div>
+      <h4>Explore</h4>
+      <a href="#">About CIMC</a><a href="#">What We Do</a><a href="#">Projects &amp; Impact</a><a href="#">Research &amp; Innovation</a><a href="#">Global Goals (SDGs)</a>
+    </div>
+    <div>
+      <h4>Governance &amp; Policies</h4>
+      <a href="#">Our Mission &amp; Vision</a><a href="#">Governance &amp; Leadership</a><a href="#">Advisory Network</a><a href="#">Professional Conduct</a><a href="#">Privacy Statement</a><a href="#">Accessibility Statement</a>
+    </div>
+  </div>
+  <div class="wrap foot-bottom">
+    <span>Copyright © 2026 Canadian Institute for Media &amp; Communication, Canada</span>
+    <div class="socials">
+      <a href="#" aria-label="LinkedIn"><svg width="16" height="16" viewBox="0 0 24 24" fill="#fff"><path d="M4.98 3.5a2.5 2.5 0 1 1-.02 0zM.5 8h4v15.5h-4V8zm7.5 0h3.8v2.1h.1c.5-1 1.9-2.1 3.9-2.1 4.2 0 5 2.8 5 6.4v9.1h-4v-8.4c0-2-.1-4.6-2.8-4.6s-3.2 2.2-3.2 4.5v8.5H8V8z"/></svg></a>
+      <a href="#" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="#fff"><path d="M14 8.5V6.8c0-.8.5-1 1-1h2.5V2H14c-3 0-4.5 2.2-4.5 4.6V8.5H7V12h2.5v10H14V12h2.8l.4-3.5H14z"/></svg></a>
+      <a href="#" aria-label="X"><svg width="15" height="15" viewBox="0 0 24 24" fill="#fff"><path d="M18.9 2H22l-6.8 7.8L23 22h-6.3l-4.9-6.4L6.2 22H3l7.3-8.3L1.5 2h6.4l4.4 5.9L18.9 2zm-1.1 18h1.7L7 3.9H5.2L17.8 20z"/></svg></a>
+      <a href="#" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="2.5" y="2.5" width="19" height="19" rx="5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.2" cy="6.8" r="1.2" fill="#fff" stroke="none"/></svg></a>
+    </div>
+  </div>
+</footer>
+
+<script>
+document.querySelectorAll('.bio-toggle').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const bio=btn.parentElement.querySelector('.bio');
+    const open=bio.classList.toggle('open');
+    btn.textContent=open?'Show less ↑':'Read full bio ↓';
+  });
+});
+</script>
+
+</body>
+</html>

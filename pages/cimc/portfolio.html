@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CIMC | Educational Lecture Videos — Sample Lessons</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --red:#C8102E; --red2:#E01A3C; --ink:#0E1526; --slate:#4B5A72;
+  --line:#E7EBF3; --soft:#F5F7FB; --navy:#0B1220;
+  --bio:#16A34A; --chem:#DC2626; --phy:#2563EB; --math:#CA8A04;
+  --geo:#0D9488; --civ:#65A30D; --eng:#6D28D9;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;color:var(--ink);background:#fff;line-height:1.65;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:'Plus Jakarta Sans',sans-serif;line-height:1.22;letter-spacing:-.02em}
+a{text-decoration:none}
+.wrap{max-width:1160px;margin:0 auto;padding:0 28px}
+
+/* nav */
+.topnote{background:var(--navy);color:#cbd5e1;text-align:center;font-size:12.5px;padding:8px 16px}
+.topnote b{color:#fff}
+header.nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.86);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:76px}
+.logo{display:flex;align-items:center;gap:10px;font-family:'Plus Jakarta Sans';font-weight:800;font-size:24px;color:var(--red)}
+.menu{display:flex;align-items:center;gap:28px;list-style:none}
+.menu a{font-size:14px;font-weight:600;color:var(--slate);transition:.2s}
+.menu a:hover{color:var(--ink)}
+.menu a.active{color:var(--red);position:relative}
+.menu a.active::after{content:"";position:absolute;left:0;right:0;bottom:-9px;height:3px;border-radius:3px;background:var(--red)}
+.btn{display:inline-flex;align-items:center;gap:9px;cursor:pointer;font-family:'Plus Jakarta Sans';font-weight:700;border-radius:12px;transition:.25s}
+.btn-red{background:linear-gradient(135deg,var(--red),var(--red2));color:#fff;padding:12px 22px;font-size:14px;box-shadow:0 10px 24px rgba(200,16,46,.28)}
+.btn-red:hover{transform:translateY(-2px)}
+.btn-ghost{background:#fff;color:var(--ink);border:1.5px solid var(--line);padding:11px 20px;font-size:14px}
+.btn-ghost:hover{border-color:var(--red);color:var(--red)}
+.btn-white{background:#fff;color:var(--red);padding:13px 26px;font-size:14.5px;box-shadow:0 12px 28px rgba(0,0,0,.25)}
+.btn-white:hover{transform:translateY(-2px)}
+
+/* hero */
+.hero{position:relative;overflow:hidden;color:#fff;padding:74px 0 96px;
+  background:radial-gradient(900px 460px at 85% -20%,rgba(200,16,46,.30),transparent 60%),
+             radial-gradient(700px 420px at 0% 130%,rgba(22,163,74,.20),transparent 60%),
+             linear-gradient(160deg,#131C33,var(--navy))}
+.hero::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(255,255,255,.025) 0 1px,transparent 1px 120px);pointer-events:none}
+.hero-in{position:relative;z-index:1}
+.crumbs{font-size:13px;color:#8A94A8;margin-bottom:24px}
+.crumbs b{color:#fff}
+.crumbs .sep{margin:0 8px;color:var(--red)}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:12px;font-weight:700;letter-spacing:.22em;color:#FF7A8F;text-transform:uppercase}
+.eyebrow::before{content:"";width:26px;height:2px;background:var(--red2);border-radius:2px}
+.hero h1{font-size:clamp(36px,5vw,56px);font-weight:800;margin:16px 0 16px;max-width:860px}
+.hero h1 em{font-style:normal;color:var(--red2)}
+.hero p.lead{max-width:760px;color:#B9C2D6;font-size:16.5px}
+.hero p.lead b{color:#fff}
+.hero .lead a{color:#FF9DAC;font-weight:600;border-bottom:1px solid rgba(255,157,172,.4)}
+.hero-meta{display:flex;gap:14px;margin-top:30px;flex-wrap:wrap}
+.pill{display:inline-flex;align-items:center;gap:9px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.13);border-radius:999px;padding:9px 18px;font-size:13.5px;color:#dbe3f0}
+.pill b{color:#fff;font-family:'Plus Jakarta Sans'}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--red2);box-shadow:0 0 0 4px rgba(224,26,60,.2)}
+
+/* subject dots legend */
+.legend{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.lg{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:600;color:#c6cedf;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);padding:6px 14px;border-radius:999px}
+.lg i{width:9px;height:9px;border-radius:50%;display:inline-block}
+
+/* filter bar */
+.filterbar{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;
+  background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px 18px;margin:-46px auto 36px;
+  box-shadow:0 18px 44px rgba(14,21,38,.10);position:relative;z-index:2}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{font-size:13px;font-weight:600;color:var(--slate);background:var(--soft);border:1px solid var(--line);padding:8px 16px;border-radius:999px;cursor:pointer;transition:.2s;user-select:none;display:inline-flex;align-items:center;gap:8px}
+.chip i{width:8px;height:8px;border-radius:50%}
+.chip:hover{border-color:var(--red);color:var(--red)}
+.chip.active{background:linear-gradient(135deg,var(--red),var(--red2));color:#fff;border-color:transparent;box-shadow:0 8px 18px rgba(200,16,46,.3)}
+.count{font-size:13px;color:var(--slate)}
+.count b{color:var(--ink);font-family:'Plus Jakarta Sans'}
+
+/* featured lesson */
+.featured{display:grid;grid-template-columns:1.2fr 1fr;background:#fff;border:1px solid var(--line);border-radius:24px;
+  box-shadow:0 24px 60px rgba(14,21,38,.08);overflow:hidden;margin-bottom:38px}
+.vthumb{position:relative;display:flex;align-items:center;justify-content:center;min-height:340px;
+  background:linear-gradient(140deg,var(--a,#16A34A),var(--b,#14532D))}
+.vthumb .cap{color:rgba(255,255,255,.92);font-weight:600;font-size:13.5px;text-align:center;padding:16px;position:relative;z-index:1}
+.vthumb .cap small{display:block;opacity:.7;font-weight:500;margin-top:4px}
+.vthumb .play{position:absolute;inset:0;margin:auto;width:72px;height:72px;border-radius:50%;z-index:2;
+  background:rgba(255,255,255,.95);display:flex;align-items:center;justify-content:center;box-shadow:0 10px 30px rgba(0,0,0,.35);transition:.25s}
+.vthumb .play::after{content:"";border-left:19px solid var(--red);border-top:12px solid transparent;border-bottom:12px solid transparent;margin-left:5px}
+.vthumb:hover .play{transform:scale(1.1)}
+.dur{position:absolute;right:12px;bottom:12px;z-index:2;background:rgba(11,18,32,.85);color:#fff;font-size:12px;font-weight:600;padding:4px 10px;border-radius:8px}
+.f-body{padding:40px 42px;display:flex;flex-direction:column;gap:14px}
+.badge{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:7px 14px;border-radius:999px;background:#FDECEF;color:var(--red);width:max-content}
+.badge.sub{color:#fff}
+.f-body h2{font-size:clamp(23px,2.6vw,30px)}
+.f-body p{color:var(--slate);font-size:15px}
+.lesson-meta{display:flex;gap:10px;flex-wrap:wrap}
+.lm{font-size:12.5px;font-weight:600;background:var(--soft);border:1px solid var(--line);padding:6px 13px;border-radius:999px;color:var(--slate)}
+
+/* lesson grid */
+.sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin:14px 0 26px}
+.sec-head h2{font-size:clamp(24px,3vw,34px);font-weight:800;margin-top:8px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:26px}
+.lcard{background:#fff;border:1px solid var(--line);border-radius:20px;overflow:hidden;display:flex;flex-direction:column;
+  box-shadow:0 12px 32px rgba(14,21,38,.06);transition:.25s}
+.lcard:hover{transform:translateY(-4px);box-shadow:0 26px 54px rgba(14,21,38,.12)}
+.lcard .vthumb{min-height:230px;border-radius:0}
+.lcard .vthumb .play{width:58px;height:58px}
+.lcard .vthumb .play::after{border-left-width:15px;border-top-width:9px;border-bottom-width:9px}
+.lcard .body{padding:26px;display:flex;flex-direction:column;gap:11px;flex:1}
+.sub-tag{display:inline-flex;align-items:center;gap:8px;font-size:11.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;width:max-content;padding:6px 13px;border-radius:8px;color:#fff}
+.lcard h3{font-size:20px}
+.lcard p{color:var(--slate);font-size:14px}
+.more{display:inline-flex;align-items:center;gap:8px;color:var(--red);font-weight:700;font-size:14px;margin-top:auto;transition:gap .2s}
+.more:hover{gap:13px}
+
+/* library features */
+.lib{background:linear-gradient(160deg,#F7F9FC,#FDF3F5);border-radius:28px;border:1px solid var(--line);padding:50px;margin-top:70px}
+.lib h2{text-align:center;font-size:clamp(24px,3vw,34px);font-weight:800}
+.lib .sub{text-align:center;color:var(--slate);max-width:640px;margin:10px auto 34px;font-size:15.5px}
+.lib-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.lib-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:30px 28px;text-align:center;box-shadow:0 10px 26px rgba(14,21,38,.05)}
+.lib-card .ico{width:58px;height:58px;margin:0 auto 16px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:26px;background:#FDECEF}
+.lib-card h3{font-size:18px;margin-bottom:8px}
+.lib-card p{font-size:14px;color:var(--slate)}
+
+/* CTA */
+.cta-in{background:linear-gradient(120deg,var(--red),#7A0A1E);border-radius:28px;padding:52px 56px;margin:80px auto 0;
+  display:flex;align-items:center;justify-content:space-between;gap:30px;color:#fff;position:relative;overflow:hidden}
+.cta-in::before{content:"";position:absolute;width:340px;height:340px;border-radius:50%;background:rgba(255,255,255,.09);right:-100px;top:-140px}
+.cta-in h2{font-size:clamp(23px,3vw,32px)}
+.cta-in p{opacity:.9;margin-top:6px;max-width:560px}
+
+/* footer */
+footer{background:var(--navy);color:#B9C2D4;margin-top:80px}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:44px;padding:60px 0 40px}
+footer h4{color:#fff;font-size:14px;letter-spacing:.09em;text-transform:uppercase;margin-bottom:16px}
+footer a{color:#B9C2D4;font-size:14px;display:block;padding:5px 0;transition:.2s}
+footer a:hover{color:#fff}
+.foot-desc{font-size:14px;max-width:320px;margin-top:14px}
+.foot-bottom{border-top:1px solid rgba(255,255,255,.08);padding:20px 0 26px;display:flex;justify-content:space-between;align-items:center;font-size:13px;flex-wrap:wrap;gap:14px}
+.socials{display:flex;gap:10px}
+.socials a{width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.09);display:flex;align-items:center;justify-content:center;padding:0}
+.socials a:hover{background:var(--red)}
+
+@media(max-width:960px){
+  .menu{display:none}
+  .featured,.grid2,.lib-grid{grid-template-columns:1fr}
+  .featured .vthumb{min-height:230px}
+  .f-body{padding:28px}
+  .lib{padding:34px 24px}
+  .cta-in{flex-direction:column;text-align:center;padding:40px 28px}
+}
+</style>
+</head>
+<body>
+
+<div class="topnote">🎨 <b>UI Concept v1</b> — gradient tiles mark where your lecture video embeds go · colored chips are clickable in this mockup</div>
+
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="logo" href="#">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="var(--red)"><path d="M12 1.5l1.9 3.4 3.1-.9-.6 3.5 3.2 1.4-2.3 2.6 2 3-4.3.9.3 3.6-3.3-1.6-3.3 1.6.3-3.6-4.3-.9 2-3L4.4 8.9l3.2-1.4L7 4l3.1.9zM11.2 17h1.6l.2 5h-2z"/></svg>
+      CIMC
+    </a>
+    <ul class="menu">
+      <li><a href="#">Home</a></li>
+      <li><a href="#">Projects</a></li>
+      <li><a class="active" href="#">Portfolio ▾</a></li>
+      <li><a href="#">Education</a></li>
+      <li><a href="#">Research ▾</a></li>
+      <li><a href="#">Blog</a></li>
+    </ul>
+    <a class="btn btn-red" href="#">Support Our Work</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap hero-in">
+    <div class="crumbs">Home<span class="sep">/</span>Media Portfolio<span class="sep">/</span><b>Educational Lecture Videos</b></div>
+    <span class="eyebrow">ELV · Ethiopia</span>
+    <h1>Sample lessons from a library of <em>1,626</em> lecture videos.</h1>
+    <p class="lead">The videos below are samples of <b>Educational Lecture Videos (ELVs)</b> designed for convenient self-paced e-learning — covering the <b>entire study material for grades 9–12 in Ethiopia</b>. For complete <b>Online On-Demand access</b> across the country, including remote regions, please <a href="#">contact the Canadian Institute of Mass Communication</a>.</p>
+    <div class="hero-meta">
+      <span class="pill"><span class="dot"></span><b>1,626</b>&nbsp;full lessons</span>
+      <span class="pill"><b>7</b>&nbsp;subjects</span>
+      <span class="pill">Grades <b>9–12</b></span>
+      <span class="pill">🇪🇹 Nationwide syllabus</span>
+    </div>
+    <div class="legend">
+      <span class="lg"><i style="background:var(--bio)"></i>Biology</span>
+      <span class="lg"><i style="background:var(--chem)"></i>Chemistry</span>
+      <span class="lg"><i style="background:var(--phy)"></i>Physics</span>
+      <span class="lg"><i style="background:var(--math)"></i>Maths</span>
+      <span class="lg"><i style="background:var(--geo)"></i>Geography</span>
+      <span class="lg"><i style="background:var(--civ)"></i>Civics</span>
+      <span class="lg"><i style="background:var(--eng)"></i>English</span>
+    </div>
+  </div>
+</section>
+
+<!-- SUBJECT FILTER -->
+<div class="wrap">
+  <div class="filterbar">
+    <div class="chips" id="filters">
+      <span class="chip active" data-f="all">All Samples</span>
+      <span class="chip" data-f="bio"><i style="background:var(--bio)"></i>Biology</span>
+      <span class="chip" data-f="chem"><i style="background:var(--chem)"></i>Chemistry</span>
+      <span class="chip" data-f="phy"><i style="background:var(--phy)"></i>Physics</span>
+      <span class="chip" data-f="math"><i style="background:var(--math)"></i>Maths</span>
+      <span class="chip" data-f="geo"><i style="background:var(--geo)"></i>Geography</span>
+      <span class="chip" data-f="civ"><i style="background:var(--civ)"></i>Civics</span>
+      <span class="chip" data-f="eng"><i style="background:var(--eng)"></i>English</span>
+    </div>
+    <span class="count"><b>7</b> sample lessons</span>
+  </div>
+</div>
+
+<!-- FEATURED LESSON -->
+<section style="padding-top:4px">
+  <div class="wrap">
+    <div class="featured">
+      <div class="vthumb" style="--a:#16A34A;--b:#14532D">
+        <div class="cap">"BIOLOGY — The Function of the Kidney, Part II"<small>existing ELV video embed replaces this tile</small></div>
+        <span class="play"></span>
+        <span class="dur">Full Lesson</span>
+      </div>
+      <div class="f-body">
+        <span class="badge">Featured Sample · 🇪🇹 Ethiopia</span>
+        <h2>The Function of the Kidney — Part II</h2>
+        <div class="lesson-meta">
+          <span class="lm">📗 Biology</span><span class="lm">Grade 10</span><span class="lm">Unit 03</span><span class="lm">Lesson 41</span>
+        </div>
+        <p>A studio-produced lecture from the full ELV library — every lesson follows the national curriculum, presented by expert teachers with on-screen diagrams, animations and chapter structure designed for self-paced learning.</p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:6px">
+          <a class="btn btn-red" href="#">▶ Play Sample Lesson</a>
+          <a class="btn btn-ghost" href="#">Browse All 1,626 Lessons</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- LESSON GRID -->
+    <div class="sec-head">
+      <div><span class="badge">Sample Lessons</span><h2>One sample from every subject</h2></div>
+    </div>
+
+    <div class="grid2" id="grid">
+
+      <div class="lcard" data-s="chem">
+        <div class="vthumb" style="--a:#DC2626;--b:#7F1D1D">
+          <div class="cap">"CHEMISTRY — Oxidizing and Reducing Agents"<small>existing embed</small></div>
+          <span class="play"></span><span class="dur">Full Lesson</span>
+        </div>
+        <div class="body">
+          <span class="sub-tag" style="background:var(--chem)">⚗ Chemistry</span>
+          <h3>Oxidizing and Reducing Agents</h3>
+          <div class="lesson-meta"><span class="lm">Grade 09</span><span class="lm">Unit 04</span><span class="lm">Lesson 74</span></div>
+          <p>Understanding electron transfer in redox reactions, with worked examples from the Ethiopian national chemistry syllabus.</p>
+          <a class="more" href="#">Play lesson →</a>
+        </div>
+      </div>
+
+      <div class="lcard" data-s="phy">
+        <div class="vthumb" style="--a:#2563EB;--b:#1E3A8A">
+          <div class="cap">"PHYSICS — Fluid Dynamics, Part IV"<small>existing embed</small></div>
+          <span class="play"></span><span class="dur">Full Lesson</span>
+        </div>
+        <div class="body">
+          <span class="sub-tag" style="background:var(--phy)">🧲 Physics</span>
+          <h3>Fluid Dynamics — Part IV</h3>
+          <div class="lesson-meta"><span class="lm">Grade 11</span><span class="lm">Unit 08</span><span class="lm">Lesson 20</span></div>
+          <p>Pressure, flow and Bernoulli's principle explained step by step with visual demonstrations and practice problems.</p>
+          <a class="more" href="#">Play lesson →</a>
+        </div>
+      </div>
+
+      <div class="lcard" data-s="math">
+        <div class="vthumb" style="--a:#CA8A04;--b:#713F12">
+          <div class="cap">"MATHS — Equation of a Sphere"<small>existing embed</small></div>
+          <span class="play"></span><span class="dur">Full Lesson</span>
+        </div>
+        <div class="body">
+          <span class="sub-tag" style="background:var(--math)">📐 Maths</span>
+          <h3>Equation of a Sphere</h3>
+          <div class="lesson-meta"><span class="lm">Grade 12</span><span class="lm">Unit 06</span><span class="lm">Lesson 09</span></div>
+          <p>Three-dimensional coordinate geometry: deriving and applying the equation of a sphere in space.</p>
+          <a class="more" href="#">Play lesson →</a>
+        </div>
+      </div>
+
+      <div class="lcard" data-s="geo">
+        <div class="vthumb" style="--a:#0D9488;--b:#134E4A">
+          <div class="cap">"GEOGRAPHY — The Study of Topographic Maps"<small>existing embed</small></div>
+          <span class="play"></span><span class="dur">Full Lesson</span>
+        </div>
+        <div class="body">
+          <span class="sub-tag" style="background:var(--geo)">🗺 Geography</span>
+          <h3>The Study of Topographic Maps</h3>
+          <div class="lesson-meta"><span class="lm">Grade 12</span><span class="lm">Unit 02</span><span class="lm">Lesson 01</span></div>
+          <p>Reading contour lines, scale and relief features — the foundations of map interpretation for Grade 12 geography.</p>
+          <a class="more" href="#">Play lesson →</a>
+        </div>
+      </div>
+
+      <div class="lcard" data-s="civ">
+        <div class="vthumb" style="--a:#65A30D;--b:#3F6212">
+          <div class="cap">"CIVICS — The Pursuit of Truth"<small>existing embed</small></div>
+          <span class="play"></span><span class="dur">Full Lesson</span>
+        </div>
+        <div class="body">
+          <span class="sub-tag" style="background:var(--civ)">⚖ Civics</span>
+          <h3>The Pursuit of Truth</h3>
+          <div class="lesson-meta"><span class="lm">Grade 09</span><span class="lm">Unit 13</span><span class="lm">Lesson 08</span></div>
+          <p>Critical thinking, evidence and honest inquiry as pillars of active citizenship in a democratic society.</p>
+          <a class="more" href="#">Play lesson →</a>
+        </div>
+      </div>
+
+      <div class="lcard" data-s="eng">
+        <div class="vthumb" style="--a:#6D28D9;--b:#312E81">
+          <div class="cap">"ENGLISH — Study Skills: Learning New Words"<small>existing embed</small></div>
+          <span class="play"></span><span class="dur">Full Lesson</span>
+        </div>
+        <div class="body">
+          <span class="sub-tag" style="background:var(--eng)">📖 English</span>
+          <h3>Study Skills — Learning New Words</h3>
+          <div class="lesson-meta"><span class="lm">Grade 09</span><span class="lm">Unit 07</span><span class="lm">Lesson 77</span></div>
+          <p>Vocabulary-building strategies: context clues, word families and spaced repetition for long-term retention.</p>
+          <a class="more" href="#">Play lesson →</a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- FULL LIBRARY -->
+    <div class="lib">
+      <h2>Inside the full ELV library</h2>
+      <p class="sub">The samples above are 7 of 1,626 studio-produced lessons covering the complete Ethiopian national curriculum for grades 9–12.</p>
+      <div class="lib-grid">
+        <div class="lib-card">
+          <div class="ico">📚</div>
+          <h3>Complete Syllabus Coverage</h3>
+          <p>Biology, Chemistry, Physics, Maths, Geography, Civics and English — every unit, every lesson, grades 9–12.</p>
+        </div>
+        <div class="lib-card">
+          <div class="ico">📶</div>
+          <h3>Online On-Demand Access</h3>
+          <p>High-definition lessons streamed securely on demand, reaching students across the country — including remote regions.</p>
+        </div>
+        <div class="lib-card">
+          <div class="ico">📱</div>
+          <h3>Built for Every Student</h3>
+          <p>Customized mobile devices distribute the e-content to students, so learning isn't limited by connectivity.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-in">
+      <div style="position:relative;z-index:1">
+        <h2>Want full access to all 1,626 lessons?</h2>
+        <p>Schools, partners and students can get Online On-Demand access to the complete ELV library.</p>
+      </div>
+      <a class="btn btn-white" href="#" style="position:relative;z-index:1">Contact CIMC →</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap foot-grid">
+    <div>
+      <a class="logo" href="#" style="color:#fff">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="var(--red2)"><path d="M12 1.5l1.9 3.4 3.1-.9-.6 3.5 3.2 1.4-2.3 2.6 2 3-4.3.9.3 3.6-3.3-1.6-3.3 1.6.3-3.6-4.3-.9 2-3L4.4 8.9l3.2-1.4L7 4l3.1.9zM11.2 17h1.6l.2 5h-2z"/></svg>
+        CIMC
+      </a>
+      <p class="foot-desc">A Canada-based nonprofit advancing education, media and communication capacity, applied research and international cooperation.</p>
+    </div>
+    <div>
+      <h4>Explore</h4>
+      <a href="#">About CIMC</a><a href="#">What We Do</a><a href="#">Projects &amp; Impact</a><a href="#">Research &amp; Innovation</a><a href="#">Global Goals (SDGs)</a>
+    </div>
+    <div>
+      <h4>Governance &amp; Policies</h4>
+      <a href="#">Our Mission &amp; Vision</a><a href="#">Governance &amp; Leadership</a><a href="#">Advisory Network</a><a href="#">Professional Conduct</a><a href="#">Privacy Statement</a><a href="#">Accessibility Statement</a>
+    </div>
+  </div>
+  <div class="wrap foot-bottom">
+    <span>Copyright © 2026 Canadian Institute for Media &amp; Communication, Canada</span>
+    <div class="socials">
+      <a href="#" aria-label="LinkedIn"><svg width="16" height="16" viewBox="0 0 24 24" fill="#fff"><path d="M4.98 3.5a2.5 2.5 0 1 1-.02 0zM.5 8h4v15.5h-4V8zm7.5 0h3.8v2.1h.1c.5-1 1.9-2.1 3.9-2.1 4.2 0 5 2.8 5 6.4v9.1h-4v-8.4c0-2-.1-4.6-2.8-4.6s-3.2 2.2-3.2 4.5v8.5H8V8z"/></svg></a>
+      <a href="#" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="#fff"><path d="M14 8.5V6.8c0-.8.5-1 1-1h2.5V2H14c-3 0-4.5 2.2-4.5 4.6V8.5H7V12h2.5v10H14V12h2.8l.4-3.5H14z"/></svg></a>
+      <a href="#" aria-label="X"><svg width="15" height="15" viewBox="0 0 24 24" fill="#fff"><path d="M18.9 2H22l-6.8 7.8L23 22h-6.3l-4.9-6.4L6.2 22H3l7.3-8.3L1.5 2h6.4l4.4 5.9L18.9 2zm-1.1 18h1.7L7 3.9H5.2L17.8 20z"/></svg></a>
+      <a href="#" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="2.5" y="2.5" width="19" height="19" rx="5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.2" cy="6.8" r="1.2" fill="#fff" stroke="none"/></svg></a>
+    </div>
+  </div>
+</footer>
+
+<script>
+const chips=document.querySelectorAll('#filters .chip');
+chips.forEach(c=>c.addEventListener('click',()=>{
+  chips.forEach(x=>x.classList.remove('active'));
+  c.classList.add('active');
+  const f=c.dataset.f;
+  let n=0;
+  document.querySelectorAll('#grid .lcard').forEach(card=>{
+    const show=f==='all'||card.dataset.s===f;
+    card.style.display=show?'':'none';
+    if(show)n++;
+  });
+  document.querySelector('.count').innerHTML=`<b>${n}</b> sample lesson${n!==1?'s':''}`;
+}));
+</script>
+
+</body>
+</html>
