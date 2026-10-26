@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CIMC | Learning Portal — Grades 9–12 On-Demand</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --red:#C8102E; --red2:#E01A3C; --ink:#0E1526; --slate:#4B5A72;
+  --line:#E7EBF3; --soft:#F5F7FB; --navy:#0B1220;
+  --bio:#16A34A; --chem:#DC2626; --phy:#2563EB; --math:#CA8A04;
+  --geo:#0D9488; --civ:#65A30D; --eng:#6D28D9;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;color:var(--ink);background:#fff;line-height:1.65;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:'Plus Jakarta Sans',sans-serif;line-height:1.22;letter-spacing:-.02em}
+a{text-decoration:none}
+.wrap{max-width:1160px;margin:0 auto;padding:0 28px}
+
+/* nav */
+.topnote{background:var(--navy);color:#cbd5e1;text-align:center;font-size:12.5px;padding:8px 16px}
+.topnote b{color:#fff}
+header.nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.86);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:76px}
+.logo{display:flex;align-items:center;gap:10px;font-family:'Plus Jakarta Sans';font-weight:800;font-size:24px;color:var(--red)}
+.menu{display:flex;align-items:center;gap:28px;list-style:none}
+.menu a{font-size:14px;font-weight:600;color:var(--slate);transition:.2s}
+.menu a:hover{color:var(--ink)}
+.menu a.active{color:var(--red);position:relative}
+.menu a.active::after{content:"";position:absolute;left:0;right:0;bottom:-9px;height:3px;border-radius:3px;background:var(--red)}
+.btn{display:inline-flex;align-items:center;gap:9px;cursor:pointer;font-family:'Plus Jakarta Sans';font-weight:700;border-radius:12px;transition:.25s;border:none}
+.btn-red{background:linear-gradient(135deg,var(--red),var(--red2));color:#fff;padding:12px 22px;font-size:14px;box-shadow:0 10px 24px rgba(200,16,46,.28)}
+.btn-red:hover{transform:translateY(-2px);box-shadow:0 14px 30px rgba(200,16,46,.38)}
+.btn-ghost{background:#fff;color:var(--ink);border:1.5px solid var(--line);padding:11px 20px;font-size:14px}
+.btn-ghost:hover{border-color:var(--red);color:var(--red)}
+.btn-white{background:#fff;color:var(--red);padding:13px 26px;font-size:14.5px;box-shadow:0 12px 28px rgba(0,0,0,.25)}
+.btn-white:hover{transform:translateY(-2px)}
+
+/* hero */
+.hero{position:relative;overflow:hidden;color:#fff;padding:74px 0 100px;
+  background:radial-gradient(900px 460px at 85% -20%,rgba(200,16,46,.30),transparent 60%),
+             radial-gradient(700px 420px at 0% 130%,rgba(37,99,235,.25),transparent 60%),
+             linear-gradient(160deg,#131C33,var(--navy))}
+.hero::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(255,255,255,.025) 0 1px,transparent 1px 120px);pointer-events:none}
+.hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center}
+.crumbs{font-size:13px;color:#8A94A8;margin-bottom:24px}
+.crumbs b{color:#fff}
+.crumbs .sep{margin:0 8px;color:var(--red)}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:12px;font-weight:700;letter-spacing:.22em;color:#FF7A8F;text-transform:uppercase}
+.eyebrow::before{content:"";width:26px;height:2px;background:var(--red2);border-radius:2px}
+.hero h1{font-size:clamp(34px,4.6vw,52px);font-weight:800;margin:16px 0 16px}
+.hero h1 em{font-style:normal;color:var(--red2)}
+.hero p.lead{max-width:560px;color:#B9C2D6;font-size:16.5px}
+.hero-meta{display:flex;gap:12px;margin-top:28px;flex-wrap:wrap}
+.pill{display:inline-flex;align-items:center;gap:9px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.13);border-radius:999px;padding:9px 18px;font-size:13.5px;color:#dbe3f0}
+.pill b{color:#fff;font-family:'Plus Jakarta Sans'}
+.dot{width:7px;height:7px;border-radius:50%;background:#4ADE80;box-shadow:0 0 0 4px rgba(74,222,128,.2)}
+
+/* login card */
+.login{background:#fff;border-radius:22px;padding:34px 32px;box-shadow:0 30px 70px rgba(0,0,0,.35);color:var(--ink)}
+.login h3{font-size:20px}
+.login .lsub{font-size:13.5px;color:var(--slate);margin:6px 0 22px}
+.login label{display:block;font-size:12.5px;font-weight:700;margin:14px 0 7px}
+.login input{width:100%;font:inherit;font-size:14.5px;background:var(--soft);border:1.5px solid var(--line);border-radius:12px;padding:12px 15px;outline:none;transition:.2s}
+.login input:focus{border-color:var(--red);background:#fff;box-shadow:0 0 0 4px rgba(200,16,46,.08)}
+.login .row{display:flex;justify-content:space-between;align-items:center;margin:14px 0 18px;font-size:13px}
+.login .row a{color:var(--red);font-weight:600}
+.login .btn{width:100%;justify-content:center;padding:14px;font-size:15px;border-radius:13px}
+.login .divider{display:flex;align-items:center;gap:12px;color:#8A94A8;font-size:12px;margin:22px 0 14px}
+.login .divider::before,.login .divider::after{content:"";flex:1;height:1px;background:var(--line)}
+.login .no-access{text-align:center;font-size:13.5px;color:var(--slate)}
+.login .no-access a{color:var(--red);font-weight:700}
+.demo-note{margin-top:16px;background:#F0FDF4;border:1px solid #BBF7D0;color:#166534;border-radius:10px;padding:9px 14px;font-size:11.5px;text-align:center}
+
+/* section basics */
+.section{padding:80px 0 0}
+.sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:30px}
+.sec-head h2{font-size:clamp(25px,3.2vw,36px);font-weight:800;margin-top:12px}
+.sec-head p{color:var(--slate);max-width:640px;margin-top:8px;font-size:15.5px}
+.badge{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:7px 14px;border-radius:999px;background:#FDECEF;color:var(--red);width:max-content}
+
+/* grade chips */
+.gradewrap{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;
+  background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px 18px;margin-bottom:32px;
+  box-shadow:0 12px 32px rgba(14,21,38,.06)}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{font-size:13px;font-weight:600;color:var(--slate);background:var(--soft);border:1px solid var(--line);padding:8px 18px;border-radius:999px;cursor:pointer;transition:.2s;user-select:none}
+.chip:hover{border-color:var(--red);color:var(--red)}
+.chip.active{background:linear-gradient(135deg,var(--red),var(--red2));color:#fff;border-color:transparent;box-shadow:0 8px 18px rgba(200,16,46,.3)}
+.libinfo{font-size:13px;color:var(--slate)}
+.libinfo b{font-family:'Plus Jakarta Sans';color:var(--ink)}
+
+/* continue learning */
+.cont{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.ccard{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 12px 32px rgba(14,21,38,.06);transition:.25s}
+.ccard:hover{transform:translateY(-4px);box-shadow:0 24px 48px rgba(14,21,38,.11)}
+.cthumb{position:relative;min-height:150px;display:flex;align-items:center;justify-content:center;background:linear-gradient(140deg,var(--a),var(--b))}
+.cthumb .play{width:50px;height:50px;border-radius:50%;background:rgba(255,255,255,.95);display:flex;align-items:center;justify-content:center;box-shadow:0 8px 22px rgba(0,0,0,.3);transition:.25s}
+.cthumb .play::after{content:"";border-left:14px solid var(--red);border-top:9px solid transparent;border-bottom:9px solid transparent;margin-left:4px}
+.ccard:hover .play{transform:scale(1.1)}
+.clabel{position:absolute;left:12px;top:12px;background:rgba(11,18,32,.65);backdrop-filter:blur(6px);color:#fff;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:5px 12px;border-radius:999px}
+.cbody{padding:20px 22px 22px;display:flex;flex-direction:column;gap:10px;flex:1}
+.cbody h3{font-size:16.5px}
+.cmeta{font-size:12px;color:#8A94A8}
+.prog{margin-top:auto}
+.prog .bar{height:7px;border-radius:99px;background:var(--soft);overflow:hidden}
+.prog .fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--red),var(--red2))}
+.prog .pl{display:flex;justify-content:space-between;font-size:11.5px;color:#8A94A8;margin-top:6px}
+.prog .pl b{color:var(--red)}
+
+/* subjects */
+.subj-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.scard{position:relative;background:#fff;border:1px solid var(--line);border-radius:20px;overflow:hidden;display:flex;flex-direction:column;transition:.25s;box-shadow:0 10px 26px rgba(14,21,38,.05)}
+.scard:hover{transform:translateY(-5px);box-shadow:0 24px 50px rgba(14,21,38,.12)}
+.scard .top{padding:26px 24px 20px;color:#fff;position:relative;background:linear-gradient(135deg,var(--c1),var(--c2))}
+.scard .top::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(45deg,rgba(255,255,255,.06) 0 2px,transparent 2px 16px)}
+.scard .top .ic{font-size:30px;position:relative;z-index:1}
+.scard .cnt{position:absolute;right:16px;top:16px;z-index:1;background:rgba(11,18,32,.28);backdrop-filter:blur(4px);border:1px solid rgba(255,255,255,.25);color:#fff;font-size:11px;font-weight:700;padding:4px 11px;border-radius:999px}
+.scard .body{padding:18px 22px 22px;display:flex;flex-direction:column;gap:8px;flex:1}
+.scard h3{font-size:17px}
+.scard p{font-size:13px;color:var(--slate)}
+.scard .go{margin-top:auto;display:inline-flex;align-items:center;gap:7px;font-size:13.5px;font-weight:700;color:var(--red)}
+.scard .go:hover{gap:11px}
+.scard.library{background:linear-gradient(150deg,#131C33,var(--navy));border-color:transparent}
+.scard.library .body h3,.scard.library .go{color:#fff}
+.scard.library .body p{color:#B9C2D6}
+.scard.library .top{background:linear-gradient(135deg,var(--red),#7A0A1E)}
+
+/* how it works */
+.steps{background:linear-gradient(160deg,#F7F9FC,#FDF3F5);border:1px solid var(--line);border-radius:28px;padding:52px}
+.steps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:34px}
+.step{background:#fff;border:1px solid var(--line);border-radius:18px;padding:30px 28px;position:relative;box-shadow:0 10px 26px rgba(14,21,38,.05)}
+.step .num{width:44px;height:44px;border-radius:14px;background:linear-gradient(135deg,var(--red),var(--red2));color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans';font-weight:800;font-size:19px;margin-bottom:16px}
+.step h3{font-size:17.5px;margin-bottom:8px}
+.step p{font-size:14px;color:var(--slate)}
+.steps .sec-head{margin-bottom:0}
+
+/* help row */
+.help{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.hcard{display:flex;gap:16px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px 22px;box-shadow:0 8px 22px rgba(14,21,38,.05);transition:.2s}
+.hcard:hover{transform:translateY(-3px);box-shadow:0 18px 40px rgba(14,21,38,.1)}
+.hcard .ic{width:44px;height:44px;flex:none;border-radius:13px;background:#FDECEF;color:var(--red);display:flex;align-items:center;justify-content:center;font-size:19px}
+.hcard h4{font-size:14.5px;margin-bottom:3px}
+.hcard p{font-size:13px;color:var(--slate)}
+.hcard a{color:var(--red);font-weight:600}
+
+/* CTA */
+.cta-in{background:linear-gradient(120deg,var(--red),#7A0A1E);border-radius:28px;padding:52px 56px;margin:76px auto 0;
+  display:flex;align-items:center;justify-content:space-between;gap:30px;color:#fff;position:relative;overflow:hidden}
+.cta-in::before{content:"";position:absolute;width:340px;height:340px;border-radius:50%;background:rgba(255,255,255,.09);right:-100px;top:-140px}
+.cta-in h2{font-size:clamp(23px,3vw,32px)}
+.cta-in p{opacity:.9;margin-top:6px;max-width:560px}
+
+/* footer */
+footer{background:var(--navy);color:#B9C2D4;margin-top:80px}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:44px;padding:60px 0 40px}
+footer h4{color:#fff;font-size:14px;letter-spacing:.09em;text-transform:uppercase;margin-bottom:16px}
+footer a{color:#B9C2D4;font-size:14px;display:block;padding:5px 0;transition:.2s}
+footer a:hover{color:#fff}
+.foot-desc{font-size:14px;max-width:320px;margin-top:14px}
+.foot-bottom{border-top:1px solid rgba(255,255,255,.08);padding:20px 0 26px;display:flex;justify-content:space-between;align-items:center;font-size:13px;flex-wrap:wrap;gap:14px}
+.socials{display:flex;gap:10px}
+.socials a{width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.09);display:flex;align-items:center;justify-content:center;padding:0}
+.socials a:hover{background:var(--red)}
+
+@media(max-width:960px){
+  .menu{display:none}
+  .hero-grid{grid-template-columns:1fr}
+  .cont,.steps-grid,.help{grid-template-columns:1fr}
+  .subj-grid{grid-template-columns:1fr 1fr}
+  .steps{padding:34px 24px}
+  .cta-in{flex-direction:column;text-align:center;padding:40px 28px}
+}
+@media(max-width:560px){.subj-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div class="topnote">🎨 <b>UI Concept v1</b> — Learning Portal design based on the Educational Videos Online project · login &amp; filters are visual in this mockup</div>
+
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="logo" href="#">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="var(--red)"><path d="M12 1.5l1.9 3.4 3.1-.9-.6 3.5 3.2 1.4-2.3 2.6 2 3-4.3.9.3 3.6-3.3-1.6-3.3 1.6.3-3.6-4.3-.9 2-3L4.4 8.9l3.2-1.4L7 4l3.1.9zM11.2 17h1.6l.2 5h-2z"/></svg>
+      CIMC
+    </a>
+    <ul class="menu">
+      <li><a href="#">Home</a></li>
+      <li><a href="#">Projects</a></li>
+      <li><a href="#">Portfolio ▾</a></li>
+      <li><a class="active" href="#">Education ▾</a></li>
+      <li><a href="#">Research ▾</a></li>
+      <li><a href="#">Blog</a></li>
+    </ul>
+    <a class="btn btn-red" href="#signin">Student Sign In</a>
+  </div>
+</header>
+
+<!-- HERO + LOGIN -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="crumbs">Home<span class="sep">/</span>Education<span class="sep">/</span><b>Learning Portal</b></div>
+      <span class="eyebrow">CIMC Learning Portal</span>
+      <h1>Your classroom, <em>on demand.</em></h1>
+      <p class="lead">Welcome to the CIMC Learning Portal — on-demand, syllabus-based educational videos covering the <b>entire grades 9–12 curriculum</b> for students across Ethiopia, including remote regions reached through customized mobile devices.</p>
+      <div class="hero-meta">
+        <span class="pill"><span class="dot"></span>Portal online — learn anytime</span>
+        <span class="pill"><b>1,626</b>&nbsp;full lessons</span>
+        <span class="pill"><b>7</b>&nbsp;subjects · Grades <b>9–12</b></span>
+        <span class="pill">🇪🇹 Nationwide access</span>
+      </div>
+    </div>
+
+    <div class="login" id="signin">
+      <h3>Student Sign In</h3>
+      <p class="lsub">Access your lessons with the credentials on your CIMC learning device or account.</p>
+      <label>Student Email / ID</label>
+      <input type="text" placeholder="e.g., student@cimc.ca">
+      <label>Password</label>
+      <input type="password" placeholder="••••••••">
+      <div class="row">
+        <span><input type="checkbox" checked style="accent-color:var(--red)"> Remember me</span>
+        <a href="#">Forgot password?</a>
+      </div>
+      <button class="btn btn-red">Sign In to Portal ➤</button>
+      <div class="divider">NEW STUDENT?</div>
+      <p class="no-access">No access yet? <a href="#access">Get portal access</a> via your school or <a href="#">contact CIMC</a>.</p>
+      <div class="demo-note">🔒 Secure portal · protected by reCAPTCHA</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTINUE LEARNING -->
+<section class="section">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><span class="badge">For Signed-In Students</span><h2>Pick up where you left off</h2></div>
+    </div>
+    <div class="cont">
+      <div class="ccard">
+        <div class="cthumb" style="--a:#16A34A;--b:#14532D"><span class="clabel">📗 Biology</span><span class="play"></span></div>
+        <div class="cbody">
+          <h3>The Function of the Kidney — Part II</h3>
+          <span class="cmeta">Grade 10 · Unit 03 · Lesson 41</span>
+          <div class="prog"><div class="bar"><div class="fill" style="width:68%"></div></div><div class="pl"><span>Lesson progress</span><b>68%</b></div></div>
+        </div>
+      </div>
+      <div class="ccard">
+        <div class="cthumb" style="--a:#DC2626;--b:#7F1D1D"><span class="clabel">⚗️ Chemistry</span><span class="play"></span></div>
+        <div class="cbody">
+          <h3>Oxidizing and Reducing Agents</h3>
+          <span class="cmeta">Grade 09 · Unit 04 · Lesson 74</span>
+          <div class="prog"><div class="bar"><div class="fill" style="width:42%"></div></div><div class="pl"><span>Lesson progress</span><b>42%</b></div></div>
+        </div>
+      </div>
+      <div class="ccard">
+        <div class="cthumb" style="--a:#2563EB;--b:#1E3A8A"><span class="clabel">🧲 Physics</span><span class="play"></span></div>
+        <div class="cbody">
+          <h3>Fluid Dynamics — Part IV</h3>
+          <span class="cmeta">Grade 11 · Unit 08 · Lesson 20</span>
+          <div class="prog"><div class="bar"><div class="fill" style="width:15%"></div></div><div class="pl"><span>Just started</span><b>15%</b></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BROWSE LIBRARY -->
+<section class="section">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><span class="badge">Full Library</span><h2>Browse 1,626 lessons by subject</h2></div>
+    </div>
+
+    <div class="gradewrap">
+      <div class="chips" id="grades">
+        <span class="chip active">All Grades</span>
+        <span class="chip">Grade 9</span>
+        <span class="chip">Grade 10</span>
+        <span class="chip">Grade 11</span>
+        <span class="chip">Grade 12</span>
+      </div>
+      <span class="libinfo"><b>1,626</b> lessons · aligned to the Ethiopian national curriculum</span>
+    </div>
+
+    <div class="subj-grid">
+      <div class="scard" style="--c1:#16A34A;--c2:#14532D">
+        <div class="top"><span class="ic">📗</span><span class="cnt">268 lessons</span></div>
+        <div class="body"><h3>Biology</h3><p>From cells and genetics to ecology — full syllabus coverage.</p><a class="go" href="#">Browse Biology →</a></div>
+      </div>
+      <div class="scard" style="--c1:#DC2626;--c2:#7F1D1D">
+        <div class="top"><span class="ic">⚗️</span><span class="cnt">241 lessons</span></div>
+        <div class="body"><h3>Chemistry</h3><p>Reactions, bonding and lab concepts, explained step by step.</p><a class="go" href="#">Browse Chemistry →</a></div>
+      </div>
+      <div class="scard" style="--c1:#2563EB;--c2:#1E3A8A">
+        <div class="top"><span class="ic">🧲</span><span class="cnt">233 lessons</span></div>
+        <div class="body"><h3>Physics</h3><p>Mechanics, waves, electricity and modern physics topics.</p><a class="go" href="#">Browse Physics →</a></div>
+      </div>
+      <div class="scard" style="--c1:#CA8A04;--c2:#713F12">
+        <div class="top"><span class="ic">📐</span><span class="cnt">251 lessons</span></div>
+        <div class="body"><h3>Mathematics</h3><p>Algebra to calculus — worked examples in every lesson.</p><a class="go" href="#">Browse Maths →</a></div>
+      </div>
+      <div class="scard" style="--c1:#0D9488;--c2:#134E4A">
+        <div class="top"><span class="ic">🗺️</span><span class="cnt">214 lessons</span></div>
+        <div class="body"><h3>Geography</h3><p>Map skills, physical and human geography of Ethiopia &amp; beyond.</p><a class="go" href="#">Browse Geography →</a></div>
+      </div>
+      <div class="scard" style="--c1:#65A30D;--c2:#3F6212">
+        <div class="top"><span class="ic">⚖️</span><span class="cnt">197 lessons</span></div>
+        <div class="body"><h3>Civics &amp; Ethics</h3><p>Democracy, citizenship, ethics and active participation.</p><a class="go" href="#">Browse Civics →</a></div>
+      </div>
+      <div class="scard" style="--c1:#6D28D9;--c2:#312E81">
+        <div class="top"><span class="ic">📖</span><span class="cnt">222 lessons</span></div>
+        <div class="body"><h3>English</h3><p>Reading, writing, grammar and study skills development.</p><a class="go" href="#">Browse English →</a></div>
+      </div>
+      <div class="scard library">
+        <div class="top"><span class="ic">🎓</span><span class="cnt">All subjects</span></div>
+        <div class="body"><h3>Full Curriculum Access</h3><p>Schools and programs can license the complete library for their students.</p><a class="go" href="#" style="color:#FF9DAC">Request access →</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section">
+  <div class="wrap">
+    <div class="steps">
+      <div class="sec-head">
+        <div><span class="badge">Getting Started</span><h2>How students get access</h2></div>
+      </div>
+      <div class="steps-grid">
+        <div class="step">
+          <span class="num">1</span>
+          <h3>Contact CIMC</h3>
+          <p>Schools, programs and students connect with the Canadian Institute of Mass Communication to request Online On-Demand access.</p>
+        </div>
+        <div class="step">
+          <span class="num">2</span>
+          <h3>Receive your access</h3>
+          <p>Students receive portal credentials, or a customized mobile device pre-configured with the e-content for remote regions.</p>
+        </div>
+        <div class="step">
+          <span class="num">3</span>
+          <h3>Learn at your pace</h3>
+          <p>Stream any of 1,626 syllabus-aligned lessons on demand — self-paced, anytime learning for grades 9–12.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HELP -->
+<section class="section">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><span class="badge">Support</span><h2>Need a hand?</h2></div>
+    </div>
+    <div class="help">
+      <div class="hcard"><span class="ic">🔧</span><div><h4>Technical support</h4><p>Trouble signing in or streaming? <a href="#">Contact our support team</a>.</p></div></div>
+      <div class="hcard"><span class="ic">📱</span><div><h4>Device support</h4><p>Help with your CIMC learning device — setup, charging and care. <a href="#">Learn more</a>.</p></div></div>
+      <div class="hcard"><span class="ic">🏫</span><div><h4>Schools &amp; partners</h4><p>Bring the portal to your school or region. <a href="#">Start a partnership</a>.</p></div></div>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-in">
+      <div style="position:relative;z-index:1">
+        <h2>Bring the Learning Portal to your students</h2>
+        <p>Online On-Demand access to the complete grades 9–12 library — reaching every region, including remote communities.</p>
+      </div>
+      <a class="btn btn-white" href="#" style="position:relative;z-index:1">Contact CIMC →</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap foot-grid">
+    <div>
+      <a class="logo" href="#" style="color:#fff">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="var(--red2)"><path d="M12 1.5l1.9 3.4 3.1-.9-.6 3.5 3.2 1.4-2.3 2.6 2 3-4.3.9.3 3.6-3.3-1.6-3.3 1.6.3-3.6-4.3-.9 2-3L4.4 8.9l3.2-1.4L7 4l3.1.9zM11.2 17h1.6l.2 5h-2z"/></svg>
+        CIMC
+      </a>
+      <p class="foot-desc">A Canada-based nonprofit advancing education, media and communication capacity, applied research and international cooperation.</p>
+    </div>
+    <div>
+      <h4>Explore</h4>
+      <a href="#">About CIMC</a><a href="#">What We Do</a><a href="#">Projects &amp; Impact</a><a href="#">Learning Portal</a><a href="#">Research &amp; Innovation</a><a href="#">Contact Us</a>
+    </div>
+    <div>
+      <h4>Governance &amp; Policies</h4>
+      <a href="#">Our Mission &amp; Vision</a><a href="#">Governance &amp; Leadership</a><a href="#">Advisory Network</a><a href="#">Professional Conduct</a><a href="#">Privacy Statement</a><a href="#">Accessibility Statement</a>
+    </div>
+  </div>
+  <div class="wrap foot-bottom">
+    <span>Copyright © 2026 Canadian Institute for Media &amp; Communication, Canada</span>
+    <div class="socials">
+      <a href="#" aria-label="LinkedIn"><svg width="16" height="16" viewBox="0 0 24 24" fill="#fff"><path d="M4.98 3.5a2.5 2.5 0 1 1-.02 0zM.5 8h4v15.5h-4V8zm7.5 0h3.8v2.1h.1c.5-1 1.9-2.1 3.9-2.1 4.2 0 5 2.8 5 6.4v9.1h-4v-8.4c0-2-.1-4.6-2.8-4.6s-3.2 2.2-3.2 4.5v8.5H8V8z"/></svg></a>
+      <a href="#" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="#fff"><path d="M14 8.5V6.8c0-.8.5-1 1-1h2.5V2H14c-3 0-4.5 2.2-4.5 4.6V8.5H7V12h2.5v10H14V12h2.8l.4-3.5H14z"/></svg></a>
+      <a href="#" aria-label="X"><svg width="15" height="15" viewBox="0 0 24 24" fill="#fff"><path d="M18.9 2H22l-6.8 7.8L23 22h-6.3l-4.9-6.4L6.2 22H3l7.3-8.3L1.5 2h6.4l4.4 5.9L18.9 2zm-1.1 18h1.7L7 3.9H5.2L17.8 20z"/></svg></a>
+      <a href="#" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="2.5" y="2.5" width="19" height="19" rx="5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.2" cy="6.8" r="1.2" fill="#fff" stroke="none"/></svg></a>
+    </div>
+  </div>
+</footer>
+
+<script>
+document.getElementById('grades').addEventListener('click',e=>{
+  if(e.target.classList.contains('chip')){
+    document.querySelectorAll('#grades .chip').forEach(c=>c.classList.remove('active'));
+    e.target.classList.add('active');
+  }
+});
+</script>
+
+</body>
+</html>

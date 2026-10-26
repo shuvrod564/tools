@@ -1,0 +1,401 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CIMC Navigation Header</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .cimc-nav {
+      height: 73px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 0;
+      white-space: nowrap;
+    }
+
+    .nav-item {
+      position: relative;
+      height: 73px;
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      height: 100%;
+      padding: 0 14px;
+      color: #27313b;
+      font-size: 16px;
+      text-decoration: none;
+      transition: color .15s;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: #b51f24;
+    }
+
+    .arrow {
+      width: 0;
+      height: 0;
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-top: 5px solid currentColor;
+    }
+
+    .submenu {
+      position: absolute;
+      top: 39px;
+      left: 0;
+      min-width: 218px;
+      padding: 0;
+      background: #fff;
+      border-radius: 0 0 9px 9px;
+      box-shadow: 0 5px 18px rgba(0,0,0,.13);
+      visibility: hidden;
+      opacity: 0;
+      transform: translateY(5px);
+      transition: .16s ease;
+      z-index: 100;
+    }
+
+    .nav-item:hover > .submenu,
+    .nav-item:focus-within > .submenu,
+    .nav-item.open > .submenu {
+      visibility: visible;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .submenu-item {
+      position: relative;
+    }
+
+    .submenu a,
+    .submenu button {
+      box-sizing: border-box;
+      display: flex;
+      width: 100%;
+      min-height: 39px;
+      align-items: center;
+      justify-content: space-between;
+      padding: 9px 26px;
+      border: 0;
+      background: #fff;
+      color: #343d47;
+      font: inherit;
+      font-size: 15px;
+      text-align: left;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .submenu a:hover,
+    .submenu button:hover,
+    .submenu-item:hover > button {
+      background: #3d70a2;
+      color: #fff;
+    }
+
+    .submenu .side-arrow {
+      font-size: 17px;
+      margin-left: 18px;
+    }
+
+    .submenu .submenu {
+      top: 0;
+      left: 100%;
+      min-width: 220px;
+      border-radius: 0 8px 8px 8px;
+    }
+
+    .mobile-toggle {
+      display: none;
+    }
+
+    @media (max-width: 1050px) {
+      .desktop-navigation {
+        display: none;
+      }
+
+      .mobile-toggle {
+        display: block;
+      }
+
+      .mobile-navigation[hidden] {
+        display: none;
+      }
+
+      .mobile-navigation {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 100%;
+        background: #fff;
+        box-shadow: 0 8px 18px rgba(0,0,0,.12);
+        z-index: 200;
+        max-height: 80vh;
+        overflow-y: auto;
+      }
+
+      .mobile-navigation a,
+      .mobile-navigation button {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        padding: 13px 20px;
+        background: white;
+        border: 0;
+        border-bottom: 1px solid #eee;
+        color: #27313b;
+        text-decoration: none;
+        text-align: left;
+        font-size: 15px;
+      }
+
+      .mobile-navigation .mobile-children {
+        padding-left: 18px;
+        background: #f7f7f7;
+      }
+    }
+
+/* Parent submenu item */
+.submenu-item {
+  position: relative;
+}
+
+/* Second-level dropdown */
+.submenu-item > .submenu {
+  position: absolute;
+  top: 0;
+  left: 100%;
+  min-width: 220px;
+  display: block;
+  background: #fff;
+  border-radius: 0 8px 8px 8px;
+  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.13);
+  z-index: 9999;
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateX(5px);
+  transition: opacity 0.18s ease, transform 0.18s ease,
+              visibility 0.18s ease;
+}
+
+/* Open on hover, keyboard focus, or click */
+.submenu-item:hover > .submenu,
+.submenu-item:focus-within > .submenu,
+.submenu-item.open > .submenu {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateX(0);
+}
+
+  </style>
+</head>
+
+<body class="bg-white">
+
+<header class="relative z-50 w-full bg-white">
+  <div class="mx-auto flex max-w-[1240px] items-center justify-between px-5">
+
+    <!-- CIMC LOGO -->
+    <a href="/" class="flex shrink-0 items-center" aria-label="CIMC Home">
+      <!-- Replace with the original logo image for an exact match -->
+      <div class="flex items-center gap-1">
+        <svg viewBox="0 0 75 62" class="h-[53px] w-[66px]"
+             xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M36 3 43 17 52 10 49 25 64 23 51 35
+                   59 43 43 43 39 58 30 44 15 49 21 37
+                   7 31 22 27 18 15 30 20Z"
+                fill="#d6282e"/>
+          <path d="M7 35 23 40 36 33 45 40 61 34
+                   51 49 32 55 17 49Z"
+                fill="white" stroke="#d6282e" stroke-width="1.5"/>
+          <path d="M28 1 36 14 44 1 41 18 52 15 42 27
+                   46 37 35 32 25 39 27 27 17 21 29 20Z"
+                fill="#d6282e"/>
+        </svg>
+
+        <span class="text-[43px] font-bold leading-none tracking-[1px]"
+              style="color:#d6282e">CIMC</span>
+      </div>
+    </a>
+
+    <!-- DESKTOP MENU -->
+    <nav class="desktop-navigation cimc-nav"
+         aria-label="Main navigation">
+
+      <a href="/" class="nav-link active">HOME</a>
+
+      <a href="/about-cimc/" class="nav-link">About CIMC</a>
+
+      <a href="/projects-impact/" class="nav-link">
+        Projects &amp; Impact
+      </a>
+
+      <!-- PORTFOLIO -->
+      <div class="nav-item">
+        <a href="/portfolio/" class="nav-link"
+           aria-haspopup="true">
+          PORTFOLIO <span class="arrow"></span>
+        </a>
+
+        <div class="submenu">
+
+          <!-- VIDEO GALLERIES -->
+          <div class="submenu-item">
+            <a href="/portfolio/video-galleries/"
+               class="group">
+              <span>Video Galleries</span>
+              <span class="side-arrow">›</span>
+            </a>
+
+            <div class="submenu">
+              <a href="https://staging4.cimcweb.com/media-portfolio/gallery-01/">Video Gallery-01</a>
+              <a href="https://staging4.cimcweb.com/media-portfolio/gallery-02/">Video Gallery-02</a>
+              <a href="https://staging4.cimcweb.com/media-portfolio/gallery-03/">Video Gallery-03</a>
+              <a href="https://staging4.cimcweb.com/media-portfolio/gallery-04/">Video Gallery-04</a>
+              <a href="https://staging4.cimcweb.com/media-portfolio/gallery-05/">Video Gallery-05</a>
+            </div>
+          </div>
+
+          <a href="https://staging4.cimcweb.com/media-portfolio/unicef-docs/">
+            UNICEF Documentaries
+          </a>
+
+          <!-- CAMPAIGN CONTENT -->
+          <div class="submenu-item">
+            <a href="/portfolio/campaign-content/">
+              <span>Campaign Content</span>
+              <span class="side-arrow">›</span>
+            </a>
+
+            <div class="submenu">
+              <a href="https://staging4.cimcweb.com/media-portfolio/print-media/">Print media</a>
+              <a href="https://staging4.cimcweb.com/media-portfolio/social-media/">social media</a>
+            </div>
+          </div>
+
+          <a href="https://staging4.cimcweb.com/etv-ethiopia/">ETV Ethiopia</a>
+        </div>
+      </div>
+
+      <a href="https://staging4.cimcweb.com/education/" class="nav-link">EDUCATION</a>
+
+      <!-- RESEARCH -->
+      <div class="nav-item">
+        <a href="https://staging4.cimcweb.com/cimc-research/" class="nav-link"
+           aria-haspopup="true">
+          Research &amp; Innovation <span class="arrow"></span>
+        </a>
+
+        <div class="submenu">
+          <a href="https://staging4.cimcweb.com/cimc-research/">Research &amp; Innovation</a>
+          <a href="https://staging4.cimcweb.com/canadian-research-spotlight/">canadian-research-spotlight</a>
+        </div>
+      </div>
+
+    </nav>
+
+    <!-- MOBILE MENU BUTTON -->
+    <button id="mobile-toggle"
+            class="mobile-toggle rounded p-3 text-2xl"
+            type="button"
+            aria-label="Open menu"
+            aria-expanded="false">
+      ☰
+    </button>
+  </div>
+
+  <!-- MOBILE MENU -->
+  <nav id="mobile-menu" class="mobile-navigation"
+       aria-label="Mobile navigation" hidden>
+    <a href="/">HOME</a>
+    <a href="/about-cimc/">About CIMC</a>
+    <a href="/projects-impact/">Projects &amp; Impact</a>
+
+    <button class="mobile-expand" aria-expanded="false"
+            type="button" data-target="mobile-portfolio">
+      PORTFOLIO <span>+</span>
+    </button>
+
+    <div id="mobile-portfolio" class="mobile-children" hidden>
+      <button class="mobile-expand" aria-expanded="false"
+              type="button" data-target="mobile-videos">
+        Video Galleries <span>+</span>
+      </button>
+      <div id="mobile-videos" class="mobile-children" hidden>
+        <a href="/portfolio/video-gallery-01/">Video Gallery-01</a>
+        <a href="/portfolio/video-gallery-02/">Video Gallery-02</a>
+        <a href="/portfolio/video-gallery-03/">Video Gallery-03</a>
+        <a href="/portfolio/video-gallery-04/">Video Gallery-04</a>
+        <a href="/portfolio/video-gallery-05/">Video Gallery-05</a>
+      </div>
+
+      <a href="/portfolio/unicef-documentaries/">UNICEF Documentaries</a>
+      <a href="/portfolio/campaign-content/">Campaign Content</a>
+      <a href="/portfolio/etv-ethiopia/">ETV Ethiopia</a>
+    </div>
+
+    <a href="/education/">EDUCATION</a>
+
+    <button class="mobile-expand" aria-expanded="false"
+            type="button" data-target="mobile-research">
+      Research &amp; Innovation <span>+</span>
+    </button>
+    <div id="mobile-research" class="mobile-children" hidden>
+      <a href="/research-innovation/">Research &amp; Innovation</a>
+    </div>
+  </nav>
+</header>
+
+<script>
+  const mobileToggle = document.getElementById('mobile-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  mobileToggle.addEventListener('click', () => {
+    const open = mobileMenu.hidden;
+    mobileMenu.hidden = !open;
+    mobileToggle.setAttribute('aria-expanded', String(open));
+    mobileToggle.setAttribute('aria-label',
+      open ? 'Close menu' : 'Open menu');
+    mobileToggle.textContent = open ? '✕' : '☰';
+  });
+
+  document.querySelectorAll('.mobile-expand').forEach(button => {
+    button.addEventListener('click', () => {
+      const panel = document.getElementById(button.dataset.target);
+      const open = panel.hidden;
+      panel.hidden = !open;
+      button.setAttribute('aria-expanded', String(open));
+      button.querySelector('span').textContent = open ? '−' : '+';
+    });
+  });
+
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape') {
+      mobileMenu.hidden = true;
+      mobileToggle.setAttribute('aria-expanded', 'false');
+      mobileToggle.setAttribute('aria-label', 'Open menu');
+      mobileToggle.textContent = '☰';
+    }
+  });
+</script>
+
+</body>
+</html>
